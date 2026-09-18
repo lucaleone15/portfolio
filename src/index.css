@@ -1,0 +1,310 @@
+@import "tailwindcss";
+
+:root {
+  --font-display: "Plus Jakarta Sans", "Satoshi", sans-serif;
+  --font-body: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --display-tracking: -0.025em;
+  --display-weight: 700;
+}
+
+[data-font-preset="creatif"] {
+  --font-display: "Plus Jakarta Sans", "Satoshi", sans-serif;
+  --font-body: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --display-tracking: -0.025em;
+  --display-weight: 700;
+}
+
+[data-font-preset="swiss"] {
+  --font-display: "Satoshi", "Plus Jakarta Sans", sans-serif;
+  --font-body: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --display-tracking: -0.035em;
+  --display-weight: 700;
+}
+
+[data-font-preset="tech"] {
+  --font-display: "Clash Display", "Manrope", sans-serif;
+  --font-body: "Manrope", -apple-system, BlinkMacSystemFont, sans-serif;
+  --display-tracking: -0.025em;
+  --display-weight: 600;
+}
+
+[data-font-preset="editorial"] {
+  --font-display: "Instrument Serif", "Fraunces", Georgia, serif;
+  --font-body: "Work Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --display-tracking: -0.015em;
+  --display-weight: 400;
+}
+
+@theme {
+  --font-serif: var(--font-display);
+  --font-sans: var(--font-body);
+
+  --color-paper: #F7F6F3;
+  --color-surface: #EDECE8;
+  --color-surface-hover: #E4E3DF;
+  --color-graphite: #1A1A1A;
+  --color-muted: #6B6B6B;
+  --color-subtle: #9E9E9C;
+  --color-border: #E2E1DC;
+  
+  /* Two-tone accent system */
+  --color-lime: #CCFF00;
+  --color-forest: #1F5C2E;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-graphite);
+    font-family: var(--font-body);
+    letter-spacing: -0.01em;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .font-serif {
+    font-family: var(--font-display) !important;
+    letter-spacing: var(--display-tracking);
+    font-weight: var(--display-weight, 700);
+  }
+}
+
+/* Subtle grain overlay */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Highlighter: keyword with #CCFF00 background and #1A1A1A text */
+.highlight-lime {
+  background-color: #CCFF00;
+  color: #1A1A1A;
+  padding: 0.05em 0.25em;
+  display: inline-block;
+  line-height: 1.05;
+}
+
+/* Editorial subtle animations using deep forest green for line on light background */
+.editorial-link {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.editorial-link::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 1.5px;
+  bottom: -2px;
+  left: 0;
+  background-color: #1F5C2E;
+  transform-origin: bottom right;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.editorial-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* Subtle hairline borders */
+.border-editorial {
+  border-color: #E2E1DC;
+}
+
+/* Modern Liquid Glass Utilities */
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.liquid-glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.72) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 12px 36px -12px rgba(0, 0, 0, 0.06), 0 2px 8px -2px rgba(0, 0, 0, 0.02);
+}
+
+.liquid-glass-card:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.85) 100%);
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.1), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
+}
+
+.liquid-glass-pill {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.06);
+}
+
+/* Luxury Grain & Ambient Noise */
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+/* Glowing Ambient Gradients */
+.gradient-mesh {
+  background: 
+    radial-gradient(at 0% 0%, rgba(204, 255, 0, 0.12) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(255, 120, 60, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(90, 80, 255, 0.08) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(204, 255, 0, 0.08) 0px, transparent 50%);
+}
+
+.gradient-card-glow {
+  position: relative;
+}
+.gradient-card-glow::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(204, 255, 0, 0.6), rgba(255, 255, 255, 0.8), rgba(26, 26, 26, 0.15));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+.gradient-card-glow:hover::before {
+  opacity: 1;
+}
+
+/* Infinite Marquee Keyframe Animations */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+
+.animate-marquee-reverse {
+  display: flex;
+  width: max-content;
+  animation: marquee-reverse 38s linear infinite;
+}
+
+.animate-marquee:hover,
+.animate-marquee-reverse:hover {
+  animation-play-state: paused;
+}
+
+/* Edge Fade Mask for Seamless Tickers */
+.mask-marquee-edges {
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+/* Creative Gradient Text Shimmer Animation */
+@keyframes text-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-text-shimmer {
+  background: linear-gradient(90deg, #FFFFFF 0%, #CCFF00 25%, #FFFFFF 50%, #CCFF00 75%, #FFFFFF 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: text-shimmer 6s linear infinite;
+}
+
+/* Glowing Aura Pulse for Cards & Badges */
+@keyframes neon-pulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(204, 255, 0, 0.15), inset 0 0 15px rgba(204, 255, 0, 0.05);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(204, 255, 0, 0.35), inset 0 0 25px rgba(204, 255, 0, 0.12);
+  }
+}
+
+.glow-neon-pulse {
+  animation: neon-pulse 3.5s ease-in-out infinite;
+}
+
+/* Floating Ambient Motion */
+@keyframes ambient-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+.animate-float {
+  animation: ambient-float 5s ease-in-out infinite;
+}
+
+/* Interactive Shimmer Light Sweep on Glass Cards */
+.glass-shine-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-shine-hover::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -150%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.06) 45%,
+    rgba(204, 255, 0, 0.12) 50%,
+    rgba(255, 255, 255, 0.06) 55%,
+    transparent 70%
+  );
+  transform: rotate(25deg);
+  transition: all 0.75s ease-in-out;
+  pointer-events: none;
+}
+
+.glass-shine-hover:hover::after {
+  left: 100%;
+}
+
+
+
