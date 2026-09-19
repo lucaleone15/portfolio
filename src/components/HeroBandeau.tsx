@@ -44,9 +44,9 @@ export function HeroBandeau() {
   ];
 
   return (
-    <div className="w-full mt-8 sm:mt-12 select-none space-y-4">
+    <div className="w-full mt-4 sm:mt-8 select-none space-y-3 sm:space-y-4">
       {/* Bandeau 1: Clean Dark Marquee with normal font weight (not bold) */}
-      <div className="relative py-3.5 bg-[#0E0E12] border-y border-white/[0.08] overflow-hidden">
+      <div className="relative py-3 sm:py-3.5 bg-[#0E0E12] border-y border-white/[0.08] overflow-hidden">
         <div className="mask-marquee-edges w-full overflow-hidden">
           <div className="animate-marquee flex items-center gap-10 sm:gap-14 whitespace-nowrap">
             {[...competencies, ...competencies, ...competencies].map((item, idx) => (
