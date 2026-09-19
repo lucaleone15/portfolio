@@ -35,12 +35,7 @@ export function AboutSection() {
       title: 'Digital Communication Manager',
       company: 'Karting - Indépendant',
       location: 'Vuitebœuf, Vaud, Switzerland · Hybrid',
-      description: `Developing online presence and brand strategy for the karting track:
-
-• Social media management and growth (Instagram & TikTok)
-• Field photo and video production (Reels, stories, visual assets)
-• Highlighting racing championships, offers, events, and the ASK Academy
-• Content copywriting, campaign design, and audience engagement`
+      description: 'Developing online presence and brand strategy for the karting track through social media management (Instagram and TikTok), field photo and video production (Reels, stories, visual assets), promotion of racing championships, special offers, events, and the ASK Academy, as well as copywriting and targeted campaign design.'
     },
     {
       period: 'Jul 2022 · 1 mo',

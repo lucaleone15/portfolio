@@ -367,12 +367,7 @@ export const EXPERIENCE_TIMELINE = [
     title: 'Responsable communication digitale',
     company: 'Karting - Indépendant',
     location: 'Vuitebœuf, Vaud, Suisse · Hybride',
-    description: `Développement de la présence en ligne et de l’image de marque du karting :
-
-• Gestion et animation des réseaux sociaux (Instagram et TikTok)
-• Création et production de contenus photo et vidéo sur le terrain (Reels, stories, visuels)
-• Promotion des offres, des événements, des compétitions et de l’ASK Academy
-• Rédaction des publications, conception de campagnes et suivi de l'engagement`
+    description: "Développement de la présence en ligne et de l’image de marque du karting à travers la gestion des réseaux sociaux (Instagram et TikTok), la création et la production de contenus photo et vidéo sur le terrain (Reels, stories, visuels), la promotion des offres, événements, compétitions et de l’ASK Academy, ainsi que la rédaction des publications et la conception des campagnes de communication."
   },
   {
     period: 'juil. 2022 · 1 mois',

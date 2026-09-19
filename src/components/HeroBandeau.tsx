@@ -61,10 +61,10 @@ export function HeroBandeau() {
         </div>
       </div>
 
-      {/* Bandeau 2: Tools Marquee with Liquid Glass hover tooltip below logo with ample padding so it is never clipped */}
-      <div className="relative py-2 bg-transparent">
+      {/* Bandeau 2: Tools Marquee with Liquid Glass hover tooltip below logo */}
+      <div className="relative py-1 bg-transparent">
         <div className="mask-marquee-edges w-full overflow-hidden">
-          <div className="animate-marquee-reverse flex items-center gap-10 sm:gap-14 whitespace-nowrap pt-3 pb-14 sm:pb-16">
+          <div className="animate-marquee-reverse flex items-center gap-10 sm:gap-14 whitespace-nowrap pt-2 pb-8 sm:pb-10">
             {[...tools, ...tools, ...tools].map((tool, idx) => (
               <div
                 key={`tool-logo-${idx}`}
