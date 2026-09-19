@@ -113,35 +113,35 @@ export function AboutSection() {
               ))}
             </div>
 
-            {/* SEPARATED SECTION 1: LANGUES (Clean & Distinct) */}
+            {/* SEPARATED SECTION 1: LANGUES (Crisp White Background) */}
             <div className="pt-4 border-t border-white/[0.08] space-y-4">
               <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#A1A1AA]">
                 <span>{t('about.languagesTitle')}</span>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2.5">
                 {languages.map((item, idx) => (
                   <div
                     key={`lang-${idx}`}
-                    className="px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 text-xs font-medium text-[#E4E4E7] flex items-center gap-1.5"
+                    className="h-9 px-4 rounded-full bg-white text-black hover:bg-[#CCFF00] text-xs sm:text-[13px] font-syne font-semibold flex items-center gap-2 shadow-xs transition-colors duration-150 select-none cursor-default"
                   >
-                    <span className="font-semibold text-white">{item.name}</span>
-                    <span className="text-[#A1A1AA]">·</span>
-                    <span className="text-[#A1A1AA]">{item.level}</span>
+                    <span className="font-extrabold text-black">{item.name}</span>
+                    <span className="text-black/35 font-bold">·</span>
+                    <span className="text-black/75 font-medium">{item.level}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* SEPARATED SECTION 2: PASSIONS (Clean & Distinct) */}
+            {/* SEPARATED SECTION 2: PASSIONS / CENTRES D'INTÉRÊT (Crisp White Background) */}
             <div className="pt-4 border-t border-white/[0.08] space-y-4">
               <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#A1A1AA]">
                 <span>{t('about.passionsTitle')}</span>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2.5">
                 {passions.map((item, idx) => (
                   <span
                     key={`passion-${idx}`}
-                    className="px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 text-xs font-medium text-white/90"
+                    className="h-9 px-4 rounded-full bg-white text-black hover:bg-[#CCFF00] text-xs sm:text-[13px] font-syne font-bold inline-flex items-center shadow-xs transition-colors duration-150 select-none cursor-default"
                   >
                     {item}
                   </span>
@@ -164,14 +164,14 @@ export function AboutSection() {
                 <span>{t('about.educationTitle')}</span>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {education.map((item, idx) => (
                   <div
                     key={`edu-${idx}`}
-                    className="glass-shine-hover p-5 sm:p-6 rounded-2xl bg-white/[0.025] hover:bg-white/[0.05] border border-white/[0.07] hover:border-white/20 transition-all duration-300 group shadow-[0_4px_20px_rgba(0,0,0,0.2)]"
+                    className="pb-6 border-b border-white/[0.06] last:border-b-0 last:pb-0 transition-colors duration-200 group"
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
-                      <h4 className="text-base sm:text-lg font-bold text-white group-hover:text-white transition-colors">
+                      <h4 className="text-base sm:text-lg font-bold text-white group-hover:text-[#CCFF00] transition-colors">
                         {item.title}
                       </h4>
                       <span className="text-xs font-bold text-[#CCFF00] tracking-wide">
@@ -197,14 +197,14 @@ export function AboutSection() {
                 <span>{t('about.experienceTitle')}</span>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {experience.map((item, idx) => (
                   <div
                     key={`exp-${idx}`}
-                    className="glass-shine-hover p-5 sm:p-6 rounded-2xl bg-white/[0.025] hover:bg-white/[0.05] border border-white/[0.07] hover:border-white/20 transition-all duration-300 group shadow-[0_4px_20px_rgba(0,0,0,0.2)]"
+                    className="pb-6 border-b border-white/[0.06] last:border-b-0 last:pb-0 transition-colors duration-200 group"
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
-                      <h4 className="text-base sm:text-lg font-bold text-white group-hover:text-white transition-colors">
+                      <h4 className="text-base sm:text-lg font-bold text-white group-hover:text-[#CCFF00] transition-colors">
                         {item.title}
                       </h4>
                       <span className="text-xs font-bold text-[#CCFF00] tracking-wide">

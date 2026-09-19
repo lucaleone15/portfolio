@@ -40,9 +40,9 @@ export function Header({ activeSection }: HeaderProps) {
   };
 
   const navItems = [
-    { id: 'projets', label: t('nav.projects') },
-    { id: 'a-propos', label: t('nav.about') },
-    { id: 'contact', label: t('nav.contact') },
+    { id: 'projets', label: t('nav.projects'), index: t('projects.index') || '01' },
+    { id: 'a-propos', label: t('nav.about'), index: t('about.index') || '02' },
+    { id: 'contact', label: t('nav.contact'), index: t('contact.index') || '03' },
   ];
 
   return (
@@ -71,10 +71,10 @@ export function Header({ activeSection }: HeaderProps) {
             <div className="flex items-center p-1 bg-white/[0.04] border border-white/[0.08] rounded-full text-xs font-semibold backdrop-blur-md">
               <button
                 onClick={() => setLang('fr')}
-                className={`px-2.5 py-1 rounded-full transition-all cursor-pointer ${
+                className={`px-2.5 py-1 rounded-full font-syne text-xs transition-all cursor-pointer ${
                   lang === 'fr'
                     ? 'bg-white text-black font-bold shadow-xs'
-                    : 'text-[#A1A1AA] hover:text-white'
+                    : 'text-[#A1A1AA] hover:text-white font-medium'
                 }`}
                 title="Passer en français"
               >
@@ -82,10 +82,10 @@ export function Header({ activeSection }: HeaderProps) {
               </button>
               <button
                 onClick={() => setLang('en')}
-                className={`px-2.5 py-1 rounded-full transition-all cursor-pointer ${
+                className={`px-2.5 py-1 rounded-full font-syne text-xs transition-all cursor-pointer ${
                   lang === 'en'
                     ? 'bg-white text-black font-bold shadow-xs'
-                    : 'text-[#A1A1AA] hover:text-white'
+                    : 'text-[#A1A1AA] hover:text-white font-medium'
                 }`}
                 title="Switch to English"
               >
@@ -94,15 +94,15 @@ export function Header({ activeSection }: HeaderProps) {
             </div>
 
             {/* Nav displayed on desktop (md+) */}
-            <nav className="hidden md:flex items-center gap-1.5 p-1 bg-white/[0.04] border border-white/[0.08] rounded-full text-xs font-medium shadow-2xs backdrop-blur-md" aria-label="Navigation">
+            <nav className="hidden md:flex items-center gap-1.5 p-1 bg-white/[0.04] border border-white/[0.08] rounded-full text-xs font-syne shadow-2xs backdrop-blur-md" aria-label="Navigation">
               {navItems.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => scrollTo(item.id)}
-                  className={`cursor-pointer transition-all px-4 py-2 rounded-full ${
+                  className={`cursor-pointer transition-all px-4 py-2 rounded-full font-syne text-xs ${
                     activeSection === item.id
                       ? 'bg-[#CCFF00] text-black font-bold shadow-xs'
-                      : 'text-[#A1A1AA] hover:text-white hover:bg-white/[0.06]'
+                      : 'text-[#A1A1AA] hover:text-white hover:bg-white/[0.06] font-semibold'
                   }`}
                 >
                   {item.label}
@@ -115,7 +115,7 @@ export function Header({ activeSection }: HeaderProps) {
               href={USER_INFO.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white/[0.04] hover:bg-white text-white hover:text-black text-xs font-semibold border border-white/10 transition-all shadow-2xs group"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white/[0.04] hover:bg-white text-white hover:text-black text-xs font-syne font-bold border border-white/10 transition-all shadow-2xs group"
               title="Profil LinkedIn de Luca Leone"
             >
               <Linkedin className="w-3.5 h-3.5 text-white group-hover:text-black transition-colors" />
@@ -126,7 +126,7 @@ export function Header({ activeSection }: HeaderProps) {
             {/* Menu button ONLY shown on mobile/small screens (hidden on md+) */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/[0.04] hover:bg-white/10 text-white text-xs font-semibold cursor-pointer transition-all shadow-xs"
+              className="md:hidden flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/[0.04] hover:bg-white/10 text-white text-xs font-syne font-bold cursor-pointer transition-all shadow-xs"
               aria-label={t('nav.menu')}
             >
               {isMenuOpen ? <X className="w-3.5 h-3.5" /> : <Menu className="w-3.5 h-3.5 text-white" />}
@@ -178,8 +178,11 @@ export function Header({ activeSection }: HeaderProps) {
                 <button
                   key={item.id}
                   onClick={() => scrollTo(item.id)}
-                  className="w-full text-left group block cursor-pointer p-4 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all"
+                  className="w-full text-left group flex items-baseline gap-4 cursor-pointer p-4 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all"
                 >
+                  <span className="font-serif italic text-2xl sm:text-3xl text-white/40 group-hover:text-[#CCFF00] font-normal select-none transition-colors shrink-0">
+                    {item.index}
+                  </span>
                   <span className="text-3xl sm:text-4xl font-extrabold text-white group-hover:text-[#CCFF00] transition-colors">
                     {item.label}
                   </span>

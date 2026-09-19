@@ -146,18 +146,19 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
 
             {/* Thumbnail Row if multiple images */}
             {projectImages.length > 1 && (
-              <div className="flex items-center gap-3 overflow-x-auto pb-2 -mt-4">
+              <div className="flex items-center gap-3 overflow-x-auto py-2.5 px-1.5 -mt-3">
                 {projectImages.map((img, idx) => (
                   <button
                     key={idx}
+                    type="button"
                     onClick={() => setCurrentImageIndex(idx)}
-                    className={`relative w-20 sm:w-24 h-14 rounded-xl overflow-hidden shrink-0 border transition-all cursor-pointer ${
+                    className={`relative w-20 sm:w-24 h-14 sm:h-15 rounded-xl overflow-hidden shrink-0 transition-all duration-200 cursor-pointer ${
                       currentImageIndex === idx
-                        ? 'border-[#CCFF00] scale-102 ring-2 ring-[#CCFF00]/30'
-                        : 'border-white/15 opacity-60 hover:opacity-100'
+                        ? 'ring-2 ring-[#CCFF00] opacity-100 shadow-[0_0_14px_rgba(204,255,0,0.35)]'
+                        : 'border border-white/20 opacity-60 hover:opacity-100 hover:border-white/40'
                     }`}
                   >
-                    <img src={img} alt="Miniature" className="w-full h-full object-cover" />
+                    <img src={img} alt={`Miniature ${idx + 1}`} className="w-full h-full object-cover" />
                   </button>
                 ))}
               </div>
@@ -167,7 +168,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             <div>
               <div className="flex items-center justify-between text-xs text-[#A1A1AA] mb-2">
                 <span className="font-bold text-white">{activeProject.client}</span>
-                <span className="font-semibold text-white bg-white/[0.05] px-3 py-1 rounded-full border border-white/10">
+                <span className="font-syne font-bold text-black bg-white px-4 py-1.5 rounded-full text-xs shadow-xs">
                   {activeProject.role}
                 </span>
               </div>
@@ -195,25 +196,16 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               </p>
             </div>
 
-            {/* Stack & Action */}
-            <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-              <div className="flex flex-wrap gap-2">
-                {activeProject.stack.map((tech) => (
-                  <span
-                    key={tech}
-                    className="text-xs px-3.5 py-1.5 bg-white/[0.05] border border-white/10 rounded-full text-white font-medium"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-
-              <button
-                onClick={onClose}
-                className="px-6 py-2.5 rounded-full bg-white text-black hover:bg-[#CCFF00] font-bold text-xs transition-colors cursor-pointer shadow-xs"
-              >
-                {t('modal.close')}
-              </button>
+            {/* Stack Tags */}
+            <div className="pt-6 border-t border-white/10 flex flex-wrap gap-2.5">
+              {activeProject.stack.map((tech) => (
+                <span
+                  key={tech}
+                  className="h-9 px-4 rounded-full bg-white text-black hover:bg-[#CCFF00] hover:text-black text-xs sm:text-[13px] font-syne font-bold inline-flex items-center shadow-xs transition-colors duration-150 select-none cursor-default"
+                >
+                  {tech}
+                </span>
+              ))}
             </div>
           </div>
         </motion.div>

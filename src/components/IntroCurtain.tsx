@@ -9,10 +9,11 @@ export function IntroCurtain({ onDone }: IntroCurtainProps) {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
+    // Automatically lift the curtain after 900ms
     const t = setTimeout(() => {
       setVisible(false);
       if (onDone) onDone();
-    }, 1100);
+    }, 900);
     return () => clearTimeout(t);
   }, [onDone]);
 
@@ -20,9 +21,11 @@ export function IntroCurtain({ onDone }: IntroCurtainProps) {
     <AnimatePresence>
       {visible && (
         <motion.div
-          exit={{ y: '-100%' }}
-          transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
-          className="fixed inset-0 z-50 flex flex-col justify-between p-8 sm:p-14 bg-[#0A0A0C] border-b border-white/10 text-white"
+          key="intro-curtain"
+          initial={{ y: '0%' }}
+          exit={{ y: '-100%', opacity: 0.95 }}
+          transition={{ duration: 0.65, ease: [0.76, 0, 0.24, 1] }}
+          className="fixed inset-0 z-50 flex flex-col justify-between p-8 sm:p-14 bg-[#0A0A0C] border-b border-white/10 text-white pointer-events-none select-none"
           aria-hidden="true"
         >
           <div className="flex justify-between items-center text-xs text-[#71717A] tracking-wider uppercase font-semibold">

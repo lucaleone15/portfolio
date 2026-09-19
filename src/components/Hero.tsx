@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { HeroBandeau } from './HeroBandeau';
+import { HeroBandeau, CompetenciesMarquee } from './HeroBandeau';
 import { useLanguage } from '../context/LanguageContext';
 
 export function Hero() {
@@ -11,12 +11,14 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-[100dvh] pt-20 sm:pt-24 pb-2 sm:pb-6 border-b border-white/[0.06] overflow-hidden flex flex-col justify-between">
-      {/* Subtle ambient lighting - neutral dark canvas */}
-      <div className="absolute -top-32 left-1/4 w-[500px] h-[500px] bg-[#CCFF00]/5 rounded-full blur-3xl pointer-events-none -z-10" />
+    <section className="relative min-h-[100dvh] pt-16 sm:pt-20 pb-2 sm:pb-6 border-b border-white/[0.06] overflow-hidden flex flex-col justify-between bg-[#0A0A0C]">
+      {/* Competencies Ticker - Placed directly below the nav in white */}
+      <div className="relative z-10 w-full">
+        <CompetenciesMarquee />
+      </div>
 
-      {/* Main Content Area - Vertically centered in the available space above bandeau */}
-      <div className="max-w-7xl mx-auto px-5 sm:px-10 w-full my-auto py-5 sm:py-6">
+      {/* Main Content Area - Vertically centered in the available space */}
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-10 w-full my-auto py-5 sm:py-6">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -65,18 +67,18 @@ export function Hero() {
             )}
           </p>
 
-          {/* CTA Buttons - Clean styling with proportional mobile touch targets */}
+          {/* CTA Buttons - Syne typography with proportional touch targets */}
           <div className="pt-2 sm:pt-2 flex flex-wrap items-center gap-3 sm:gap-3.5">
             <button
               onClick={scrollToProjects}
-              className="py-3.5 px-7 sm:px-8 rounded-full bg-white text-black hover:bg-[#CCFF00] text-xs sm:text-xs font-bold transition-colors duration-200 inline-flex items-center justify-center cursor-pointer shadow-xs active:scale-98"
+              className="py-3.5 px-7 sm:px-8 rounded-full bg-white text-black hover:bg-[#CCFF00] text-xs sm:text-sm font-syne font-bold transition-all duration-200 inline-flex items-center justify-center cursor-pointer shadow-xs active:scale-98"
             >
               <span>{t('hero.ctaProjects')}</span>
             </button>
 
             <a
               href="#contact"
-              className="py-3.5 px-7 sm:px-8 rounded-full bg-white/[0.04] hover:bg-white/10 text-white border border-white/10 text-xs sm:text-xs font-semibold backdrop-blur-md transition-colors duration-200 cursor-pointer active:scale-98 inline-flex items-center justify-center"
+              className="py-3.5 px-7 sm:px-8 rounded-full bg-white/[0.06] hover:bg-white/15 text-white border border-white/20 text-xs sm:text-sm font-syne font-bold backdrop-blur-xl transition-all duration-200 cursor-pointer active:scale-98 inline-flex items-center justify-center shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]"
             >
               <span>{t('hero.ctaContact')}</span>
             </a>

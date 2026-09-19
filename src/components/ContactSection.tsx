@@ -195,7 +195,7 @@ export function ContactSection() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="py-4 px-10 rounded-full bg-[#CCFF00] hover:bg-[#B8E600] disabled:bg-[#CCFF00]/50 text-black font-bold text-sm tracking-wide transition-all duration-200 cursor-pointer disabled:cursor-not-allowed shadow-xs active:scale-98 inline-flex items-center justify-center"
+                  className="py-4 px-10 rounded-full bg-[#CCFF00] hover:bg-[#B8E600] disabled:bg-[#CCFF00]/50 text-black font-syne font-bold text-sm tracking-wide transition-all duration-200 cursor-pointer disabled:cursor-not-allowed shadow-xs active:scale-98 inline-flex items-center justify-center"
                 >
                   {isSubmitting ? (
                     <span>{lang === 'fr' ? 'Envoi du message...' : 'Sending message...'}</span>
@@ -229,7 +229,7 @@ export function ContactSection() {
               <button
                 type="button"
                 onClick={copyEmailToClipboard}
-                className="mt-3 inline-flex items-center px-4 py-1.5 rounded-full bg-white/[0.05] hover:bg-white/[0.1] text-xs font-medium text-white/80 transition-colors cursor-pointer border border-white/10"
+                className="mt-3 inline-flex items-center px-4 py-1.5 rounded-full bg-white/[0.05] hover:bg-white/[0.1] text-xs font-syne font-bold text-white/80 transition-colors cursor-pointer border border-white/10"
               >
                 {copied ? (
                   <span className="text-[#CCFF00]">{lang === 'fr' ? 'Email copié !' : 'Email copied!'}</span>
