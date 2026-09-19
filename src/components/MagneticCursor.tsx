@@ -81,7 +81,7 @@ export function MagneticCursor() {
           width: isHovered ? 48 : 24,
           height: isHovered ? 48 : 24,
           borderColor: isHovered ? '#CCFF00' : 'rgba(255, 255, 255, 0.3)',
-          backgroundColor: isHovered ? 'rgba(204, 255, 0, 0.12)' : 'transparent',
+          backgroundColor: isHovered ? 'rgba(204, 255, 0, 0.12)' : 'rgba(0, 0, 0, 0)',
           opacity: isHovered ? 1 : 0.6,
         }}
         transition={{ type: 'spring', stiffness: 350, damping: 25 }}

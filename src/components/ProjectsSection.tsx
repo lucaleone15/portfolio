@@ -58,10 +58,10 @@ export function ProjectsSection({ onSelectProject }: ProjectsSectionProps) {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowAllFilterPills(!showAllFilterPills)}
-              className={`px-5 py-2 rounded-full border text-xs sm:text-sm font-medium transition-all duration-200 backdrop-blur-md inline-flex items-center gap-2 cursor-pointer ${
+              className={`px-5 py-2.5 rounded-full border text-xs sm:text-sm font-syne font-bold transition-all duration-200 backdrop-blur-md inline-flex items-center gap-2 cursor-pointer ${
                 showAllFilterPills
-                  ? 'bg-white text-black border-white font-bold shadow-xs'
-                  : 'bg-white/[0.04] hover:bg-white text-white hover:text-black border-white/20'
+                  ? 'bg-white text-black border-white shadow-xs'
+                  : 'bg-white/[0.05] hover:bg-white text-white hover:text-black border-white/20'
               }`}
             >
               <Filter className="w-3.5 h-3.5" />
@@ -78,10 +78,10 @@ export function ProjectsSection({ onSelectProject }: ProjectsSectionProps) {
               <button
                 key={cat.id}
                 onClick={() => setSelectedFilter(cat.id)}
-                className={`text-xs px-4 py-2 rounded-full transition-all cursor-pointer font-medium ${
+                className={`text-xs px-4 py-2 rounded-full transition-all cursor-pointer font-syne font-bold ${
                   selectedFilter === cat.id
-                    ? 'bg-white text-black font-bold shadow-xs'
-                    : 'bg-white/[0.05] hover:bg-white/[0.1] text-[#A1A1AA] hover:text-white border border-white/[0.08]'
+                    ? 'bg-white text-black shadow-xs'
+                    : 'bg-white/[0.05] hover:bg-white/[0.12] text-[#A1A1AA] hover:text-white border border-white/[0.08]'
                 }`}
               >
                 {cat.label}

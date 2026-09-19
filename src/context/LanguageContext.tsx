@@ -42,6 +42,7 @@ export const translations = {
     'projects.reset': 'Tous les projets',
     'projects.allFilter': 'Tous',
     'projects.open': 'Ouvrir le projet',
+    'projects.viewProject': 'Voir le projet',
 
     // About Section
     'about.index': '02',
@@ -104,6 +105,7 @@ export const translations = {
     'projects.reset': 'All projects',
     'projects.allFilter': 'All',
     'projects.open': 'Open project',
+    'projects.viewProject': 'View project',
 
     // About Section
     'about.index': '02',

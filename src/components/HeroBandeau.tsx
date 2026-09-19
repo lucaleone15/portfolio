@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
 interface ToolLogo {
@@ -7,7 +6,7 @@ interface ToolLogo {
   defaultSrc: string;
 }
 
-export function HeroBandeau() {
+export function CompetenciesMarquee() {
   const { t } = useLanguage();
 
   const competencies: string[] = (t('marquee.competencies') as unknown as string[]) || [
@@ -22,6 +21,25 @@ export function HeroBandeau() {
     'COMMUNITY MANAGEMENT'
   ];
 
+  return (
+    <div className="relative w-full py-2 sm:py-3 overflow-hidden select-none">
+      <div className="mask-marquee-edges w-full overflow-hidden">
+        <div className="animate-marquee flex items-center gap-10 sm:gap-14 whitespace-nowrap">
+          {[...competencies, ...competencies, ...competencies].map((item, idx) => (
+            <span
+              key={`comp-marquee-${idx}`}
+              className="font-syne font-extrabold text-[13px] sm:text-[15px] tracking-[0.16em] text-white hover:text-[#CCFF00] uppercase transition-colors duration-200 cursor-default"
+            >
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function HeroBandeau() {
   // Comprehensive tool list mapped to all assets in /public/tools/
   const tools: ToolLogo[] = [
     { id: 'figma', name: 'Figma', defaultSrc: '/tools/figma.webp' },
@@ -44,34 +62,18 @@ export function HeroBandeau() {
   ];
 
   return (
-    <div className="w-full mt-4 sm:mt-8 select-none space-y-3 sm:space-y-4">
-      {/* Bandeau 1: Clean Dark Marquee with normal font weight (not bold) */}
-      <div className="relative py-3 sm:py-3.5 bg-[#0E0E12] border-y border-white/[0.08] overflow-hidden">
-        <div className="mask-marquee-edges w-full overflow-hidden">
-          <div className="animate-marquee flex items-center gap-10 sm:gap-14 whitespace-nowrap">
-            {[...competencies, ...competencies, ...competencies].map((item, idx) => (
-              <span
-                key={`comp-marquee-${idx}`}
-                className="font-sans font-normal text-xs sm:text-sm tracking-[0.18em] text-white/75 uppercase hover:text-white transition-colors"
-              >
-                {item}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Bandeau 2: Tools Marquee with Liquid Glass hover tooltip below logo */}
+    <div className="w-full mt-4 sm:mt-6 select-none">
+      {/* Tools Marquee with clean floating logos and liquid glass hover lens */}
       <div className="relative py-1 bg-transparent">
         <div className="mask-marquee-edges w-full overflow-hidden">
-          <div className="animate-marquee-reverse flex items-center gap-10 sm:gap-14 whitespace-nowrap pt-2 pb-8 sm:pb-10">
+          <div className="animate-marquee-reverse flex items-center gap-10 sm:gap-14 whitespace-nowrap py-4 sm:py-5">
             {[...tools, ...tools, ...tools].map((tool, idx) => (
               <div
                 key={`tool-logo-${idx}`}
-                className="relative group shrink-0 flex flex-col items-center justify-center cursor-pointer"
+                className="relative group shrink-0 flex items-center justify-center cursor-pointer"
               >
-                {/* Logo Image with uniform dimensioning */}
-                <div className="opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-200 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
+                {/* Logo Image without weird box border */}
+                <div className="opacity-80 group-hover:opacity-100 transition-all duration-200 w-11 h-11 sm:w-13 sm:h-13 flex items-center justify-center group-hover:scale-110">
                   {tool.id === 'capcut' ? (
                     <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white p-1.5 flex items-center justify-center shadow-xs">
                       <img
@@ -85,16 +87,16 @@ export function HeroBandeau() {
                     <img
                       src={tool.defaultSrc}
                       alt={tool.name}
-                      className="w-full h-full max-w-[40px] max-h-[40px] sm:max-w-[44px] sm:max-h-[44px] object-contain select-none drop-shadow-sm"
+                      className="w-full h-full max-w-[38px] max-h-[38px] sm:max-w-[44px] sm:max-h-[44px] object-contain select-none drop-shadow-sm"
                       loading="lazy"
                     />
                   )}
                 </div>
 
-                {/* Stylish Liquid Glass Tooltip on Hover - Name only, no green dot, completely unclipped */}
-                <div className="absolute top-full mt-2.5 left-1/2 -translate-x-1/2 opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 pointer-events-none z-30">
-                  <div className="relative px-3.5 py-1 rounded-full bg-white/[0.14] backdrop-blur-2xl border border-white/[0.22] shadow-[0_8px_32px_0_rgba(0,0,0,0.6),inset_0_1px_1px_0_rgba(255,255,255,0.35)] flex items-center justify-center whitespace-nowrap">
-                    <span className="text-[11px] font-semibold tracking-wide text-white drop-shadow-sm select-none">
+                {/* Liquid Glass Lens over the symbol on hover */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 pointer-events-none z-20">
+                  <div className="relative px-3.5 py-1.5 rounded-full bg-black/85 backdrop-blur-xl border border-white/25 shadow-[0_12px_28px_rgba(0,0,0,0.85)] flex items-center justify-center whitespace-nowrap">
+                    <span className="text-[11px] sm:text-xs font-syne font-bold tracking-wider text-white select-none drop-shadow-sm">
                       {tool.name}
                     </span>
                   </div>
