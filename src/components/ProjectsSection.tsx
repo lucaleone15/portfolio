@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { ArrowUpRight, Filter } from 'lucide-react';
 import { Project } from '../types';
-import { PROJECTS_FR, PROJECTS_EN } from '../data/portfolioData';
+import { getCustomProjects } from '../data/projectsStorage';
 import { ProjectCard } from './ProjectCard';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -13,27 +13,29 @@ interface ProjectsSectionProps {
 export function ProjectsSection({ onSelectProject }: ProjectsSectionProps) {
   const [selectedFilter, setSelectedFilter] = useState<string>('all');
   const [showAllFilterPills, setShowAllFilterPills] = useState<boolean>(false);
+  const [projectsData, setProjectsData] = useState(() => getCustomProjects());
   const { lang, t } = useLanguage();
 
-  const currentProjects = lang === 'fr' ? PROJECTS_FR : PROJECTS_EN;
+  useEffect(() => {
+    const handleUpdate = () => {
+      setProjectsData(getCustomProjects());
+    };
+    window.addEventListener('portfolio_projects_updated', handleUpdate);
+    return () => window.removeEventListener('portfolio_projects_updated', handleUpdate);
+  }, []);
 
-  const categories = lang === 'fr' ? [
-    { id: 'all', label: 'Tous les projets' },
-    { id: 'pulse-app', label: 'Mobile App' },
-    { id: 'lumen-studio', label: 'E-Commerce' },
-    { id: 'karting-vuiteboeuf', label: 'Communication & Réseaux' },
-    { id: 'nova-editorial', label: 'Développement Web' },
-  ] : [
-    { id: 'all', label: 'All projects' },
-    { id: 'pulse-app', label: 'Mobile App' },
-    { id: 'lumen-studio', label: 'E-Commerce' },
-    { id: 'karting-vuiteboeuf', label: 'Media & Social' },
-    { id: 'nova-editorial', label: 'Web Development' },
+  const currentProjects = lang === 'fr' ? projectsData.fr : projectsData.en;
+
+  // Dynamically compute category filters based on current projects
+  const uniqueCategories = Array.from(new Set(currentProjects.map((p) => p.category).filter(Boolean)));
+  const categories = [
+    { id: 'all', label: lang === 'fr' ? 'Tous les projets' : 'All projects' },
+    ...uniqueCategories.map((cat) => ({ id: cat, label: cat }))
   ];
 
   const filteredProjects = selectedFilter === 'all'
     ? currentProjects
-    : currentProjects.filter((p) => p.id === selectedFilter);
+    : currentProjects.filter((p) => p.category === selectedFilter || p.id === selectedFilter);
 
   return (
     <section id="projets" className="py-20 sm:py-28 border-b border-white/[0.06] bg-[#0A0A0C]">
@@ -73,7 +75,7 @@ export function ProjectsSection({ onSelectProject }: ProjectsSectionProps) {
 
         {/* Optional Filter Pills */}
         {showAllFilterPills && (
-          <div className="flex flex-wrap gap-2 mb-10 p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-md animate-in fade-in duration-200">
+          <div className="flex flex-wrap gap-2 mb-10 py-2 animate-in fade-in duration-200">
             {categories.map((cat) => (
               <button
                 key={cat.id}
@@ -81,7 +83,7 @@ export function ProjectsSection({ onSelectProject }: ProjectsSectionProps) {
                 className={`text-xs px-4 py-2 rounded-full transition-all cursor-pointer font-syne font-bold ${
                   selectedFilter === cat.id
                     ? 'bg-white text-black shadow-xs'
-                    : 'bg-white/[0.05] hover:bg-white/[0.12] text-[#A1A1AA] hover:text-white border border-white/[0.08]'
+                    : 'bg-white/[0.06] hover:bg-white text-[#A1A1AA] hover:text-black'
                 }`}
               >
                 {cat.label}

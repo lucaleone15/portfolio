@@ -5,6 +5,7 @@ import { ProjectsSection } from './components/ProjectsSection';
 import { AboutSection } from './components/AboutSection';
 import { ContactSection } from './components/ContactSection';
 import { ProjectModal } from './components/ProjectModal';
+import { AdminModal } from './components/AdminModal';
 import { MagneticCursor } from './components/MagneticCursor';
 import { IntroCurtain } from './components/IntroCurtain';
 import { Project } from './types';
@@ -12,12 +13,25 @@ import { LanguageProvider } from './context/LanguageContext';
 
 export default function App() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('hero');
 
   // Ensure clean default font preset is applied
   useEffect(() => {
     document.documentElement.removeAttribute('data-font-preset');
     localStorage.removeItem('portfolio-font-preset');
+  }, []);
+
+  // Keyboard shortcut: Ctrl+E or Cmd+E to toggle hidden admin editor
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'e') {
+        e.preventDefault();
+        setIsAdminOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   // Intersection Observer for scroll spy
@@ -64,13 +78,19 @@ export default function App() {
           <Hero />
           <ProjectsSection onSelectProject={(project) => setSelectedProject(project)} />
           <AboutSection />
-          <ContactSection />
+          <ContactSection onOpenAdmin={() => setIsAdminOpen(true)} />
         </main>
 
         {/* Detailed Project Case Study Modal */}
         <ProjectModal
           project={selectedProject}
           onClose={() => setSelectedProject(null)}
+        />
+
+        {/* Hidden In-Browser Content & Project Editor (Ctrl+E or footer trigger) */}
+        <AdminModal
+          isOpen={isAdminOpen}
+          onClose={() => setIsAdminOpen(false)}
         />
       </div>
     </LanguageProvider>

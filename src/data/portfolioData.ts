@@ -30,12 +30,12 @@ export const PROJECTS_FR: Project[] = [
     id: 'pulse-app',
     number: '01',
     title: 'PULSE',
-    subtitle: 'Application mobile · UI/UX Design',
+    subtitle: 'Application mobile de santé',
     client: "Projet d'application mobile",
     year: '2024',
-    category: 'Mobile App',
-    role: 'UI/UX Designer & Prototypage',
-    summary: "Application mobile de santé et de bien-être : suivi d'activité, visualisations de données en temps réel et interface d'interaction bienveillante.",
+    category: 'UI/UX Design',
+    role: 'UI/UX Design',
+    summary: "Application mobile de santé et bien-être : suivi d'activité, visualisations en temps réel et interface fluide.",
     overview: "Conception ergonomique complète d'une application mobile facilitant le suivi quotidien des habitudes saines. L'accent a été mis sur la clarté des indicateurs visuels et la fluidité des micro-interactions.",
     imageUrl: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=1200&auto=format&fit=crop',
     images: [
@@ -59,7 +59,7 @@ export const PROJECTS_FR: Project[] = [
       { label: 'Prototype', value: 'Interactif' },
       { label: 'Thème', value: 'Santé & Routine' }
     ],
-    stack: ['Figma', 'UI/UX Design', 'Design System', 'Mobile App', 'Prototypage'],
+    stack: ['Figma', 'UI/UX Design', 'Design System', 'Mobile App'],
     accentColor: '#CCFF00',
     badgeBg: 'bg-white/10 text-white',
     featuredType: 'custom'
@@ -68,11 +68,11 @@ export const PROJECTS_FR: Project[] = [
     id: 'lumen-studio',
     number: '02',
     title: 'LUMEN STUDIO',
-    subtitle: 'Boutique E-Commerce',
+    subtitle: 'Boutique en ligne & E-Commerce',
     client: 'Studio de luminaires & design',
     year: '2024',
-    category: 'Ecommerce website',
-    role: 'Conception UI/UX & Web',
+    category: 'UI/UX Design',
+    role: 'UI/UX Design',
     summary: "Boutique en ligne minimaliste et soignée : catalogue immersif, fiches produits sculpturales et tunnel d'achat fluide.",
     overview: "Direction artistique et conception d'une expérience de shopping numérique contemporaine pour des pièces d'éclairage architectural. Travail poussé sur le rendu des textures et l'éclairage photographique.",
     imageUrl: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?q=80&w=1200&auto=format&fit=crop',
@@ -97,7 +97,7 @@ export const PROJECTS_FR: Project[] = [
       { label: 'Responsive', value: 'Mobile-First' },
       { label: 'Tunnel', value: '3 étapes' }
     ],
-    stack: ['Vue.js', 'UI/UX Design', 'E-Commerce', 'Tailwind CSS', 'Branding'],
+    stack: ['Vue.js', 'UI/UX Design', 'E-Commerce', 'Tailwind CSS'],
     accentColor: '#CCFF00',
     badgeBg: 'bg-neutral-900 text-white',
     featuredType: 'custom'
@@ -106,13 +106,13 @@ export const PROJECTS_FR: Project[] = [
     id: 'karting-vuiteboeuf',
     number: '03',
     title: 'KARTING VUITEBOEUF',
-    subtitle: 'Communication & Réseaux',
+    subtitle: 'Création de contenus & Réseaux sociaux',
     client: 'Karting Vuiteboeuf',
     year: '2024',
-    category: 'Communication & Réseaux',
-    role: 'Responsable Communication Digitale',
-    summary: "Pilotage complet de la présence digitale : gestion active d'Instagram et TikTok, création de contenus photo et vidéo sur circuit, promotion d'offres et événements.",
-    overview: "Développement de la stratégie de marque pour l'un des plus importants complexes de karting en Suisse romande. Coordination éditoriale entre le site web et les plateformes sociales, production de visuels dynamiques et animation de la communauté.",
+    category: 'Communication Digitale',
+    role: 'Communication Digitale',
+    summary: "Gestion des réseaux sociaux, création de contenus photo/vidéo sur circuit et promotion des événements.",
+    overview: "Développement de la stratégie de marque pour l'un des plus importants complexes de karting en Suisse romande. Coordination éditoriale, production de visuels dynamiques et animation de la communauté.",
     imageUrl: 'https://images.unsplash.com/photo-1596727147705-61a532a659bd?q=80&w=1200&auto=format&fit=crop',
     images: [
       'https://images.unsplash.com/photo-1596727147705-61a532a659bd?q=80&w=1200&auto=format&fit=crop',
@@ -135,21 +135,23 @@ export const PROJECTS_FR: Project[] = [
       { label: 'Canaux', value: 'Web & Réseaux' },
       { label: 'Secteur', value: 'Sport Automobile' }
     ],
-    stack: ['Instagram', 'TikTok', 'Adobe Premiere', 'Photoshop', 'Canva', 'Stratégie de contenu'],
+    stack: ['Instagram', 'TikTok', 'Premiere Pro', 'Photoshop', 'Canva'],
     accentColor: '#CCFF00',
     badgeBg: 'bg-red-950 text-red-200',
-    featuredType: 'custom'
+    featuredType: 'custom',
+    pdfUrl: 'https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf',
+    pdfTitle: 'Dossier de communication & Plan médias · Karting Vuiteboeuf'
   },
   {
     id: 'nova-editorial',
     number: '04',
     title: 'NOVA MAGAZINE',
-    subtitle: 'Plateforme Web & Éditorial',
+    subtitle: 'Média interactif & Webzine',
     client: 'Publication digitale indépendante',
     year: '2025',
     category: 'Développement Web',
-    role: 'Développement Web & Mise en page',
-    summary: "Webzine interactif explorant les cultures numériques, le design d'interaction et la création multimédia contemporaine.",
+    role: 'Développement Web',
+    summary: "Webzine interactif explorant les cultures numériques, le design d'interaction et la création multimédia.",
     overview: "Conception et développement d'une plateforme éditoriale moderne dotée d'un mode de lecture immersif, d'animations au défilement soignées et d'un système de typographie suisse rigoureux.",
     imageUrl: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1200&auto=format&fit=crop',
     images: [
@@ -173,7 +175,7 @@ export const PROJECTS_FR: Project[] = [
       { label: 'Accessibilité', value: 'WCAG AA' },
       { label: 'Performance', value: 'Score 98+' }
     ],
-    stack: ['TypeScript', 'Tailwind CSS', 'UI/UX Design', 'Design Éditorial', 'Motion'],
+    stack: ['TypeScript', 'Tailwind CSS', 'UI/UX Design', 'Design Éditorial'],
     accentColor: '#CCFF00',
     badgeBg: 'bg-emerald-950 text-emerald-200',
     featuredType: 'custom'
@@ -185,12 +187,12 @@ export const PROJECTS_EN: Project[] = [
     id: 'pulse-app',
     number: '01',
     title: 'PULSE',
-    subtitle: 'Mobile Application · UI/UX Design',
+    subtitle: 'Health & Wellness Mobile App',
     client: 'Mobile App Project',
     year: '2024',
-    category: 'Mobile App',
-    role: 'UI/UX Designer & Prototyping',
-    summary: 'Health and wellness mobile application: daily activity tracking, real-time data visualisations, and engaging user-friendly interaction design.',
+    category: 'UI/UX Design',
+    role: 'UI/UX Design',
+    summary: 'Health and wellness mobile application: activity tracking, real-time data visualisations, and intuitive interactions.',
     overview: 'Comprehensive ergonomic design of a mobile application supporting healthy daily habits. Emphasis was placed on clear visual indicators and seamless micro-interactions.',
     imageUrl: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=1200&auto=format&fit=crop',
     images: [
@@ -214,7 +216,7 @@ export const PROJECTS_EN: Project[] = [
       { label: 'Prototype', value: 'Interactive' },
       { label: 'Theme', value: 'Health & Wellness' }
     ],
-    stack: ['Figma', 'UI/UX Design', 'Design System', 'Mobile App', 'Prototyping'],
+    stack: ['Figma', 'UI/UX Design', 'Design System', 'Mobile App'],
     accentColor: '#CCFF00',
     badgeBg: 'bg-white/10 text-white',
     featuredType: 'custom'
@@ -223,11 +225,11 @@ export const PROJECTS_EN: Project[] = [
     id: 'lumen-studio',
     number: '02',
     title: 'LUMEN STUDIO',
-    subtitle: 'E-Commerce Website',
+    subtitle: 'Online Shop & E-Commerce',
     client: 'Lighting & Architectural Design Studio',
     year: '2024',
-    category: 'Ecommerce website',
-    role: 'UI/UX & Web Design',
+    category: 'UI/UX Design',
+    role: 'UI/UX Design',
     summary: 'Refined minimalist online shop: immersive product catalog, sculptural detail pages, and seamless checkout flow.',
     overview: 'Art direction and digital shopping experience design for architectural lighting pieces. Deep focus on texture rendering and photographic lighting.',
     imageUrl: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?q=80&w=1200&auto=format&fit=crop',
@@ -252,7 +254,7 @@ export const PROJECTS_EN: Project[] = [
       { label: 'Responsive', value: 'Mobile-First' },
       { label: 'Checkout', value: '3 steps' }
     ],
-    stack: ['Vue.js', 'UI/UX Design', 'E-Commerce', 'Tailwind CSS', 'Branding'],
+    stack: ['Vue.js', 'UI/UX Design', 'E-Commerce', 'Tailwind CSS'],
     accentColor: '#CCFF00',
     badgeBg: 'bg-neutral-900 text-white',
     featuredType: 'custom'
@@ -261,13 +263,13 @@ export const PROJECTS_EN: Project[] = [
     id: 'karting-vuiteboeuf',
     number: '03',
     title: 'KARTING VUITEBOEUF',
-    subtitle: 'Social Media & Digital Communication',
+    subtitle: 'Social Media & Content Creation',
     client: 'Karting Vuiteboeuf',
     year: '2024',
-    category: 'Communication & Réseaux',
-    role: 'Digital Communication Lead',
-    summary: 'Complete management of digital presence: active administration of Instagram and TikTok, trackside photo and video production, and promotion of events.',
-    overview: "Brand strategy development for one of French-speaking Switzerland's largest karting centers. Editorial alignment between web and social platforms, high-energy visuals production, and community engagement.",
+    category: 'Communication Digitale',
+    role: 'Communication Digitale',
+    summary: 'Social media administration, trackside photo/video creation, and promotion of events.',
+    overview: "Brand strategy development for one of French-speaking Switzerland's largest karting centers. Editorial alignment, high-energy visuals production, and community engagement.",
     imageUrl: 'https://images.unsplash.com/photo-1596727147705-61a532a659bd?q=80&w=1200&auto=format&fit=crop',
     images: [
       'https://images.unsplash.com/photo-1596727147705-61a532a659bd?q=80&w=1200&auto=format&fit=crop',
@@ -281,31 +283,33 @@ export const PROJECTS_EN: Project[] = [
     ],
     solutions: [
       'Production of immersive short-form vertical videos (TikTok, Reels) highlighting adrenaline.',
-      'Branded graphic templates for race results, schedule drops, and promotional campaigns.',
-      'Direct channel cross-promotion converting social media engagement into track bookings.'
+      'Harmonized visual templates for event announcements and race results.',
+      'Direct coordination between official website and social media to convert engagement into bookings.'
     ],
     metrics: [
       { label: 'Platforms', value: 'Instagram & TikTok' },
       { label: 'Content', value: 'Photo, Video, Print' },
       { label: 'Channels', value: 'Web & Social' },
-      { label: 'Sector', value: 'Motorsport' }
+      { label: 'Industry', value: 'Motorsport' }
     ],
-    stack: ['Instagram', 'TikTok', 'Adobe Premiere', 'Photoshop', 'Canva', 'Content Strategy'],
+    stack: ['Instagram', 'TikTok', 'Premiere Pro', 'Photoshop', 'Canva'],
     accentColor: '#CCFF00',
     badgeBg: 'bg-red-950 text-red-200',
-    featuredType: 'custom'
+    featuredType: 'custom',
+    pdfUrl: 'https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf',
+    pdfTitle: 'Communication Dossier & Media Plan · Karting Vuiteboeuf'
   },
   {
     id: 'nova-editorial',
     number: '04',
     title: 'NOVA MAGAZINE',
-    subtitle: 'Web Platform & Editorial',
-    client: 'Independent Digital Publication',
+    subtitle: 'Interactive Media & Webzine',
+    client: 'Independent digital publication',
     year: '2025',
     category: 'Développement Web',
-    role: 'Web Development & Layout Design',
-    summary: 'Interactive digital publication exploring web culture, interaction design, and contemporary multimedia creation.',
-    overview: 'Architecture and front-end development of a contemporary editorial platform featuring immersive reading views, smooth scroll dynamics, and Swiss typography rules.',
+    role: 'Développement Web',
+    summary: 'Interactive webzine exploring digital cultures, interaction design, and multimedia creation.',
+    overview: 'Design and development of a modern editorial platform featuring immersive reading mode, smooth scroll animations, and a disciplined Swiss typography system.',
     imageUrl: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1200&auto=format&fit=crop',
     images: [
       'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1200&auto=format&fit=crop',
@@ -313,14 +317,14 @@ export const PROJECTS_EN: Project[] = [
       'https://images.unsplash.com/photo-1481487196290-c152efe083f5?q=80&w=1200&auto=format&fit=crop'
     ],
     challenges: [
-      'Providing a comfortable, readable experience across phone, tablet, and desktop viewports.',
-      'Integrating multimedia assets (video, galleries, audio) without impacting load speeds.',
-      'Constructing a flexible yet mathematically disciplined typographic layout grid.'
+      'Delivering a comfortable reading experience across all screen sizes.',
+      'Integrating rich multimedia (videos, image galleries, audio) without performance hitches.',
+      'Composing an expressive, flexible typographic grid.'
     ],
     solutions: [
-      'Modular component architecture with Vite, TypeScript, and lazy image optimization.',
-      'Subtle reading progress indicator and chapter navigation controls.',
-      'Instant client-side thematic filtering for articles and visual essays.'
+      'Modular TypeScript component architecture with proactive image optimization.',
+      'Reading progress indicator and discrete chapter markers.',
+      'Intuitive navigation with instant thematic filters.'
     ],
     metrics: [
       { label: 'Type', value: 'Digital Webzine' },
@@ -328,7 +332,7 @@ export const PROJECTS_EN: Project[] = [
       { label: 'Accessibility', value: 'WCAG AA' },
       { label: 'Performance', value: 'Score 98+' }
     ],
-    stack: ['TypeScript', 'Tailwind CSS', 'UI/UX Design', 'Editorial Design', 'Motion'],
+    stack: ['TypeScript', 'Tailwind CSS', 'UI/UX Design', 'Editorial Design'],
     accentColor: '#CCFF00',
     badgeBg: 'bg-emerald-950 text-emerald-200',
     featuredType: 'custom'
@@ -343,21 +347,21 @@ export const EDUCATION_TIMELINE: EducationMilestone[] = [
     title: 'Bachelor of Science en ingénierie des médias',
     institution: 'HEIG-VD',
     location: 'Yverdon-les-Bains, Suisse',
-    details: "Formation multidisciplinaire orientée stratégie et innovation digitale, combinant marketing digital, gestion de projet, analyse des besoins, développement web et conception d’interfaces (web, mobile).\n\nElle me permet de structurer des projets digitaux de A à Z : compréhension des enjeux business, définition de stratégies, conception de solutions orientées utilisateur et optimisation des performances.\n\nJ’y développe à la fois des compétences techniques (développement, UX/UI, data, outils digitaux) et stratégiques (positionnement, communication, performance marketing), avec une approche centrée sur la création de valeur et l’impact mesurable."
+    details: "Stratégie et innovation digitale, développement web, marketing et conception d’interfaces utilisateur (UX/UI)."
   },
   {
     period: '2023 - 2024',
     title: 'Maturité spécialisée communication information',
     institution: "Ecole Romande d'Arts et Communication (ERACOM)",
     location: 'Lausanne, Suisse',
-    details: "Formation préparatoire aux métiers de la communication et des médias numériques, avec une approche à la fois créative et pratique.\n\nDéveloppement de compétences en conception de projets, communication visuelle, médias interactifs et production audiovisuelle à travers la réalisation de différents supports : contenus print et numériques, vidéos et podcasts."
+    details: "Communication visuelle, médias interactifs, création print et numérique, formats audiovisuels."
   },
   {
     period: '2020 – 2023',
     title: 'Certificat de culture générale communication information',
     institution: "Gymnase d'Yverdon",
     location: 'Yverdon-les-Bains, Suisse',
-    details: "Formation générale avec option information et communication, développant l'expression écrite et orale, la culture médiatique et les bases de la communication."
+    details: ''
   }
 ];
 
@@ -367,13 +371,13 @@ export const EXPERIENCE_TIMELINE = [
     title: 'Responsable communication digitale',
     company: 'Karting - Indépendant',
     location: 'Vuitebœuf, Vaud, Suisse · Hybride',
-    description: "Développement de la présence en ligne et de l’image de marque du karting à travers la gestion des réseaux sociaux (Instagram et TikTok), la création et la production de contenus photo et vidéo sur le terrain (Reels, stories, visuels), la promotion des offres, événements, compétitions et de l’ASK Academy, ainsi que la rédaction des publications et la conception des campagnes de communication."
+    description: "Stratégie de marque et réseaux sociaux (Instagram, TikTok), production photo/vidéo sur piste et promotion d'événements."
   },
   {
     period: 'juil. 2022 · 1 mois',
     title: 'Stagiaire',
     company: 'Groupe AFH Automobile - Stage',
     location: 'Yverdon-les-Bains, Vaud, Suisse · Sur site',
-    description: "Immersion au sein du service commercial : accueil et gestion de la clientèle, support au suivi des prospects et facturation, organisation administrative et contribution à la communication digitale."
+    description: "Relation clientèle, support administratif et gestion de la communication digitale commerciale."
   }
 ];

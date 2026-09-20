@@ -11,6 +11,8 @@ export interface Project {
   overview: string;
   imageUrl: string;
   images?: string[];
+  pdfUrl?: string;
+  pdfTitle?: string;
   challenges?: string[];
   solutions?: string[];
   metrics: { label: string; value: string }[];

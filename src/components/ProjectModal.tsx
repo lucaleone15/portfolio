@@ -1,8 +1,7 @@
 import { useEffect, useState, MouseEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, FileDown } from 'lucide-react';
 import { Project } from '../types';
-import { PROJECTS_FR, PROJECTS_EN } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
 
 interface ProjectModalProps {
@@ -34,9 +33,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
 
   if (!project) return null;
 
-  // Retrieve localized project data according to current language
-  const localizedList = lang === 'fr' ? PROJECTS_FR : PROJECTS_EN;
-  const activeProject = localizedList.find((p) => p.id === project.id) || project;
+  const activeProject = project;
 
   // Multi-image gallery support
   const projectImages: string[] = (activeProject.images && activeProject.images.length > 0)
@@ -91,13 +88,13 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
 
           {/* Body */}
           <div className="p-6 sm:p-10 overflow-y-auto space-y-8">
-            {/* Multi-Image Gallery with Carousel Controls */}
-            <div className="relative aspect-16/9 w-full rounded-2xl overflow-hidden bg-[#18181B] border border-white/10 shadow-xs group">
+            {/* Multi-Image Gallery with Carousel Controls - strictly uniform 16/9 */}
+            <div className="relative aspect-[16/9] w-full max-h-[460px] rounded-2xl overflow-hidden bg-[#18181B] border border-white/10 shadow-xs group">
               <img
                 key={projectImages[currentImageIndex]}
                 src={projectImages[currentImageIndex]}
                 alt={`${activeProject.title} ${currentImageIndex + 1}`}
-                className="w-full h-full object-cover transition-opacity duration-300"
+                className="w-full h-full object-cover object-center transition-opacity duration-300"
               />
 
               {/* Navigation arrows if multiple images */}
@@ -136,7 +133,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                         aria-label={`Aller à l'image ${idx + 1}`}
                       />
                     ))}
-                    <span className="text-[11px] font-mono text-white/80 ml-1">
+                    <span className="text-[11px] font-sans font-medium text-white/80 ml-1">
                       {currentImageIndex + 1}/{projectImages.length}
                     </span>
                   </div>
@@ -168,7 +165,8 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             <div>
               <div className="flex items-center justify-between text-xs text-[#A1A1AA] mb-2">
                 <span className="font-bold text-white">{activeProject.client}</span>
-                <span className="font-syne font-bold text-black bg-white px-4 py-1.5 rounded-full text-xs shadow-xs">
+                {/* Role badge: distinct lime accent badge to stand out from competencies */}
+                <span className="font-syne font-bold text-black bg-[#CCFF00] px-4 py-1.5 rounded-full text-xs shadow-xs tracking-wide">
                   {activeProject.role}
                 </span>
               </div>
@@ -183,9 +181,9 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               </div>
             </div>
 
-            {/* Description & Overview (Clean single presentation - No challenges/solutions clutter as requested) */}
-            <div className="p-6 sm:p-8 bg-white/[0.03] rounded-3xl border border-white/10 space-y-4">
-              <h3 className="text-lg sm:text-xl font-bold text-white">
+            {/* Description & Overview - Clean unboxed layout */}
+            <div className="space-y-4 pt-1">
+              <h3 className="text-lg sm:text-xl font-syne font-bold text-white">
                 {t('modal.overview')}
               </h3>
               <p className="text-base text-[#E4E4E7] leading-relaxed font-medium">
@@ -194,14 +192,33 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               <p className="text-sm sm:text-base text-[#A1A1AA] leading-relaxed">
                 {activeProject.overview}
               </p>
+
+              {/* PDF download button directly below description: Dark pill with lime border & icon for balanced contrast without all-white clash */}
+              {activeProject.pdfUrl && (
+                <div className="pt-2">
+                  <a
+                    href={activeProject.pdfUrl}
+                    download
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/[0.08] hover:bg-white/[0.16] text-white border border-white/20 hover:border-[#CCFF00]/50 transition-all duration-150 shadow-sm cursor-pointer group"
+                    title={activeProject.pdfTitle || 'Document PDF'}
+                  >
+                    <FileDown className="w-4 h-4 text-[#CCFF00] group-hover:scale-110 transition-transform" />
+                    <span className="text-xs sm:text-sm font-syne font-semibold tracking-wide text-white">
+                      {lang === 'fr' ? 'Télécharger le document PDF' : 'Download PDF Document'}
+                    </span>
+                  </a>
+                </div>
+              )}
             </div>
 
-            {/* Stack Tags */}
+            {/* Stack Tags: distinct dark glass badge with subtle white border so it contrasts against the bright role badge */}
             <div className="pt-6 border-t border-white/10 flex flex-wrap gap-2.5">
               {activeProject.stack.map((tech) => (
                 <span
                   key={tech}
-                  className="h-9 px-4 rounded-full bg-white text-black hover:bg-[#CCFF00] hover:text-black text-xs sm:text-[13px] font-syne font-bold inline-flex items-center shadow-xs transition-colors duration-150 select-none cursor-default"
+                  className="h-8 px-3.5 rounded-full bg-white/[0.08] hover:bg-white text-[#E4E4E7] hover:text-black border border-white/15 text-xs sm:text-[13px] font-syne font-medium inline-flex items-center shadow-xs transition-colors duration-150 select-none cursor-default"
                 >
                   {tech}
                 </span>
