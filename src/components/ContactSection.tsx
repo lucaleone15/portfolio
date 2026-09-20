@@ -3,7 +3,11 @@ import { motion, AnimatePresence } from 'motion/react';
 import { USER_INFO } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
 
-export function ContactSection() {
+interface ContactSectionProps {
+  onOpenAdmin?: () => void;
+}
+
+export function ContactSection({ onOpenAdmin }: ContactSectionProps) {
   const { lang, t } = useLanguage();
   const [copied, setCopied] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -281,7 +285,18 @@ export function ContactSection() {
         {/* Minimal Clean Footer */}
         <footer className="mt-20 pt-8 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#71717A]">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-white">Luca Leone<span className="text-[#CCFF00]">.</span></span>
+            <span className="font-bold text-white">
+              Luca Leone
+              <button
+                type="button"
+                onClick={onOpenAdmin}
+                title="Éditeur de projets (Ctrl+E ou clic)"
+                className="text-[#CCFF00] hover:text-white transition-colors cursor-pointer select-none inline-block p-0.5"
+                aria-label="Ouvrir l'éditeur de projets"
+              >
+                .
+              </button>
+            </span>
             <span>© {new Date().getFullYear()}</span>
             <span>·</span>
             <span>HEIG-VD</span>

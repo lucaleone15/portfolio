@@ -31,7 +31,7 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
     >
       {/* Frameless Showcase Container */}
       <div className="relative w-full flex flex-col h-full">
-        {/* Full-width Image Container */}
+        {/* Full-width Image Container - strictly uniform 16/10 aspect ratio on every screen */}
         <div
           ref={imageContainerRef}
           onMouseEnter={(e) => {
@@ -46,7 +46,7 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
           }}
           onMouseLeave={() => setIsHovered(false)}
           onMouseMove={handleMouseMove}
-          className="relative aspect-[16/10] w-full rounded-2xl bg-[#121215]"
+          className="relative aspect-[16/10] w-full h-[220px] sm:h-[260px] md:h-[280px] lg:h-[300px] rounded-2xl bg-[#121215] shrink-0"
         >
           {/* Clipped image wrapper so image zoom stays contained */}
           <div className="w-full h-full overflow-hidden rounded-2xl">
@@ -55,8 +55,15 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
               alt={project.title}
               loading="lazy"
               referrerPolicy="no-referrer"
-              className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+              className="w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.03]"
             />
+          </div>
+
+          {/* Role Badge pinned at top-left of image for clear visual hierarchy */}
+          <div className="absolute top-3.5 left-3.5 z-20">
+            <span className="h-7 px-3 rounded-full bg-[#CCFF00] text-black text-[11px] sm:text-xs font-syne font-extrabold inline-flex items-center shadow-md tracking-wide">
+              {project.role}
+            </span>
           </div>
 
           {/* Liquid Glass Capsule following mouse position - OUTSIDE overflow-hidden with z-50 to never be cut off */}
@@ -106,23 +113,6 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
           <p className="text-xs sm:text-sm text-[#A1A1AA] leading-relaxed line-clamp-2">
             {project.summary}
           </p>
-
-          {/* Keywords / Tags with crisp solid white background pills */}
-          <div className="flex flex-wrap gap-2 pt-1 mt-auto">
-            {project.stack.slice(0, 4).map((keyword) => (
-              <span
-                key={keyword}
-                className="h-8 px-3.5 rounded-full bg-white text-black hover:bg-[#CCFF00] hover:text-black text-xs font-syne font-bold inline-flex items-center justify-center transition-colors duration-150 select-none shadow-xs"
-              >
-                {keyword}
-              </span>
-            ))}
-            {project.stack.length > 4 && (
-              <span className="h-8 px-2.5 rounded-full bg-white/20 text-white text-xs font-syne font-bold inline-flex items-center justify-center select-none">
-                +{project.stack.length - 4}
-              </span>
-            )}
-          </div>
         </div>
       </div>
     </article>

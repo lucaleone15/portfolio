@@ -11,21 +11,21 @@ export function AboutSection() {
       title: 'Bachelor of Science in Media Engineering',
       institution: 'HEIG-VD',
       location: 'Yverdon-les-Bains, Switzerland',
-      details: "Multidisciplinary program focused on digital strategy and innovation, combining digital marketing, project management, requirements analysis, web development, and UI/UX design (web & mobile).\n\nEnabling end-to-end management of digital products: business understanding, strategy definition, user-centric solution design, and performance optimization.\n\nDeveloping technical skills (code, UX/UI, data, digital tools) and strategic vision (positioning, communication, performance marketing) with an impact-driven approach."
+      details: "Digital strategy & innovation, web development, marketing, and user interface design (UX/UI)."
     },
     {
       period: '2023 - 2024',
       title: 'Specialized Baccalaureate in Communication & Information',
       institution: 'ERACOM',
       location: 'Lausanne, Switzerland',
-      details: "Preparatory training for digital communication and media professions, with both a creative and practical approach.\n\nSkill development in project design, visual communication, interactive media, and audiovisual production through diverse formats: print & digital content, videos, and podcasts."
+      details: "Visual communication, interactive media, print & digital content creation, audiovisual formats."
     },
     {
       period: '2020 – 2023',
       title: 'General Culture Certificate in Communication & Information',
       institution: "Gymnase d'Yverdon",
       location: 'Yverdon-les-Bains, Switzerland',
-      details: "General secondary education with a specialized focus on information, communication, and digital media."
+      details: ''
     }
   ];
 
@@ -35,14 +35,14 @@ export function AboutSection() {
       title: 'Digital Communication Manager',
       company: 'Karting - Indépendant',
       location: 'Vuitebœuf, Vaud, Switzerland · Hybrid',
-      description: 'Developing online presence and brand strategy for the karting track through social media management (Instagram and TikTok), field photo and video production (Reels, stories, visual assets), promotion of racing championships, special offers, events, and the ASK Academy, as well as copywriting and targeted campaign design.'
+      description: 'Brand strategy & social media (Instagram, TikTok), on-track photo/video production, and event campaigns.'
     },
     {
       period: 'Jul 2022 · 1 mo',
       title: 'Intern',
       company: 'Groupe AFH Automobile - Stage',
       location: 'Yverdon-les-Bains, Switzerland · On-site',
-      description: 'Commercial department immersion: client greeting and inquiries, lead and invoicing support, administrative management, and digital communication assistance.'
+      description: 'Customer relations, administrative support, and commercial digital communication management.'
     }
   ];
 
@@ -79,32 +79,48 @@ export function AboutSection() {
           </h2>
         </motion.div>
 
-        {/* 2-Column Clean Layout: Left = Photo & Bio & Distinct Languages/Passions, Right = Timeline */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-          {/* Left Column: Photo & Presentation with Scroll Animation */}
+        {/* Top Block: Photo + Presentation/Profil side-by-side */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center pb-16 border-b border-white/[0.08]">
+          {/* Photo: clean, zero overlay or badges */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 space-y-7"
+            className="lg:col-span-5 flex justify-center lg:justify-start"
           >
-            {/* Photo Container with natural facial crop, zoom and interactive light sweep */}
-            <div className="glass-shine-hover relative rounded-[2rem] overflow-hidden bg-[#141416] border border-white/[0.08] hover:border-white/20 shadow-[0_15px_35px_rgba(0,0,0,0.5)] aspect-[4/5] w-full group transition-all duration-300">
+            <div className="relative rounded-2xl overflow-hidden bg-[#141416] aspect-[4/5] max-w-sm sm:max-w-md w-full shadow-2xl">
               <img
                 src="/photo.jpeg"
                 alt="Luca Leone"
                 referrerPolicy="no-referrer"
-                className="w-full h-full object-cover object-[center_14%] scale-[1.28] transition-transform duration-700 ease-out group-hover:scale-[1.32]"
+                className="w-full h-full object-cover object-[center_14%] scale-[1.28] transition-transform duration-700 ease-out hover:scale-[1.32]"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.src = '/Photo.jpg';
                 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+            </div>
+          </motion.div>
+
+          {/* Profile & Bio: right next to the photo */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-7 space-y-6"
+          >
+            <div>
+              <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#A1A1AA] pb-2 border-b border-white/[0.08] mb-3">
+                <span>{lang === 'fr' ? 'Profil & Vision' : 'Profile & Vision'}</span>
+              </div>
+              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-syne font-black text-white tracking-tight">
+                Luca Leone
+              </h3>
             </div>
 
-            {/* Profile Bio split into clear paragraphs */}
+            {/* Profile Bio paragraphs */}
             <div className="space-y-4">
               {t('about.bio').split('\n\n').map((paragraph, idx) => (
                 <p key={idx} className="text-sm sm:text-base text-[#D4D4D8] leading-relaxed">
@@ -113,87 +129,60 @@ export function AboutSection() {
               ))}
             </div>
 
-            {/* SEPARATED SECTION 1: LANGUES (Crisp White Background) */}
-            <div className="pt-4 border-t border-white/[0.08] space-y-4">
-              <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#A1A1AA]">
-                <span>{t('about.languagesTitle')}</span>
+            {/* Langues & Centres d'intérêt */}
+            <div className="pt-4 border-t border-white/[0.08] grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {/* Langues: only language name by default, level revealed on hover */}
+              <div className="space-y-3">
+                <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#A1A1AA]">
+                  <span>{t('about.languagesTitle')}</span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {languages.map((item, idx) => (
+                    <div
+                      key={`lang-${idx}`}
+                      className="group/lang relative h-8 px-3.5 rounded-full bg-white text-black hover:bg-[#CCFF00] text-xs font-syne font-bold inline-flex items-center gap-1.5 shadow-xs transition-all duration-200 cursor-default select-none"
+                    >
+                      <span className="font-syne font-bold text-black">{item.name}</span>
+                      <span className="max-w-0 opacity-0 group-hover/lang:max-w-xs group-hover/lang:opacity-100 transition-all duration-200 overflow-hidden whitespace-nowrap text-black/80 font-syne font-medium pl-0.5">
+                        · {item.level}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="flex flex-wrap gap-2.5">
-                {languages.map((item, idx) => (
-                  <div
-                    key={`lang-${idx}`}
-                    className="h-9 px-4 rounded-full bg-white text-black hover:bg-[#CCFF00] text-xs sm:text-[13px] font-syne font-semibold flex items-center gap-2 shadow-xs transition-colors duration-150 select-none cursor-default"
-                  >
-                    <span className="font-extrabold text-black">{item.name}</span>
-                    <span className="text-black/35 font-bold">·</span>
-                    <span className="text-black/75 font-medium">{item.level}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
 
-            {/* SEPARATED SECTION 2: PASSIONS / CENTRES D'INTÉRÊT (Crisp White Background) */}
-            <div className="pt-4 border-t border-white/[0.08] space-y-4">
-              <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#A1A1AA]">
-                <span>{t('about.passionsTitle')}</span>
-              </div>
-              <div className="flex flex-wrap gap-2.5">
-                {passions.map((item, idx) => (
-                  <span
-                    key={`passion-${idx}`}
-                    className="h-9 px-4 rounded-full bg-white text-black hover:bg-[#CCFF00] text-xs sm:text-[13px] font-syne font-bold inline-flex items-center shadow-xs transition-colors duration-150 select-none cursor-default"
-                  >
-                    {item}
-                  </span>
-                ))}
+              {/* Passions */}
+              <div className="space-y-3">
+                <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#A1A1AA]">
+                  <span>{t('about.passionsTitle')}</span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {passions.map((item, idx) => (
+                    <span
+                      key={`passion-${idx}`}
+                      className="h-8 px-3.5 rounded-full bg-white text-black hover:bg-[#CCFF00] text-xs font-syne font-bold inline-flex items-center shadow-xs transition-colors duration-150 select-none cursor-default"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </motion.div>
+        </div>
 
-          {/* Right Column: Timelines Formations & Expériences with Scroll Animation */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-7 space-y-12"
-          >
-            {/* Formation & Éducation */}
-            <div>
-              <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#A1A1AA] mb-6 pb-3 border-b border-white/[0.08]">
-                <span>{t('about.educationTitle')}</span>
-              </div>
-
-              <div className="space-y-6">
-                {education.map((item, idx) => (
-                  <div
-                    key={`edu-${idx}`}
-                    className="pb-6 border-b border-white/[0.06] last:border-b-0 last:pb-0 transition-colors duration-200 group"
-                  >
-                    <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
-                      <h4 className="text-base sm:text-lg font-bold text-white group-hover:text-[#CCFF00] transition-colors">
-                        {item.title}
-                      </h4>
-                      <span className="text-xs font-bold text-[#CCFF00] tracking-wide">
-                        {item.period}
-                      </span>
-                    </div>
-                    <p className="text-xs text-[#A1A1AA] font-medium">
-                      {item.institution} · {item.location}
-                    </p>
-                    <div className="text-xs sm:text-sm text-[#A1A1AA] mt-3 space-y-2 leading-relaxed">
-                      {item.details.split('\n\n').map((paragraph, pIdx) => (
-                        <p key={pIdx}>{paragraph}</p>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
+        {/* Bottom Block: Expériences & Formations en dessous */}
+        <div className="pt-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
             {/* Expérience professionnelle */}
-            <div>
-              <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#A1A1AA] mb-6 pb-3 border-b border-white/[0.08]">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-6 space-y-6"
+            >
+              <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#A1A1AA] pb-3 border-b border-white/[0.08]">
                 <span>{t('about.experienceTitle')}</span>
               </div>
 
@@ -235,8 +224,49 @@ export function AboutSection() {
                   </div>
                 ))}
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+
+            {/* Formation & Éducation */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-6 space-y-6"
+            >
+              <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#A1A1AA] pb-3 border-b border-white/[0.08]">
+                <span>{t('about.educationTitle')}</span>
+              </div>
+
+              <div className="space-y-6">
+                {education.map((item, idx) => (
+                  <div
+                    key={`edu-${idx}`}
+                    className="pb-6 border-b border-white/[0.06] last:border-b-0 last:pb-0 transition-colors duration-200 group"
+                  >
+                    <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+                      <h4 className="text-base sm:text-lg font-bold text-white group-hover:text-[#CCFF00] transition-colors">
+                        {item.title}
+                      </h4>
+                      <span className="text-xs font-bold text-[#CCFF00] tracking-wide">
+                        {item.period}
+                      </span>
+                    </div>
+                    <p className="text-xs text-[#A1A1AA] font-medium">
+                      {item.institution} · {item.location}
+                    </p>
+                    {item.details && item.details.trim().length > 0 && (
+                      <div className="text-xs sm:text-sm text-[#A1A1AA] mt-3 space-y-2 leading-relaxed">
+                        {item.details.split('\n\n').map((paragraph, pIdx) => (
+                          <p key={pIdx}>{paragraph}</p>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>

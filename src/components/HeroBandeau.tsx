@@ -22,18 +22,20 @@ export function CompetenciesMarquee() {
   ];
 
   return (
-    <div className="relative w-full py-2 sm:py-3 overflow-hidden select-none">
-      <div className="mask-marquee-edges w-full overflow-hidden">
-        <div className="animate-marquee flex items-center gap-10 sm:gap-14 whitespace-nowrap">
-          {[...competencies, ...competencies, ...competencies].map((item, idx) => (
-            <span
-              key={`comp-marquee-${idx}`}
-              className="font-syne font-extrabold text-[13px] sm:text-[15px] tracking-[0.16em] text-white hover:text-[#CCFF00] uppercase transition-colors duration-200 cursor-default"
-            >
+    <div 
+      className="absolute inset-0 pointer-events-none select-none overflow-hidden z-0 flex flex-col justify-center items-center px-4 sm:px-8 py-6 opacity-[0.055]"
+      aria-hidden="true"
+    >
+      {/* Background static typographic texture - perfectly fits inside the screen without scrolling and never cut off */}
+      <div className="w-full max-w-6xl mx-auto flex flex-wrap justify-center items-center gap-x-6 sm:gap-x-10 gap-y-4 sm:gap-y-6 text-center">
+        {competencies.map((item, idx) => (
+          <div key={`bg-comp-${idx}`} className="inline-flex items-center gap-6 sm:gap-10">
+            <span className="text-white font-syne font-black text-xl sm:text-2xl md:text-3xl lg:text-4xl tracking-[0.12em] uppercase leading-tight">
               {item}
             </span>
-          ))}
-        </div>
+            <span className="text-[#CCFF00] font-black text-xl sm:text-2xl">·</span>
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -72,10 +74,10 @@ export function HeroBandeau() {
                 key={`tool-logo-${idx}`}
                 className="relative group shrink-0 flex items-center justify-center cursor-pointer"
               >
-                {/* Logo Image without weird box border */}
-                <div className="opacity-80 group-hover:opacity-100 transition-all duration-200 w-11 h-11 sm:w-13 sm:h-13 flex items-center justify-center group-hover:scale-110">
+                {/* Logo Image without weird box border - enlarged for better visibility */}
+                <div className="opacity-85 group-hover:opacity-100 transition-all duration-200 w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center group-hover:scale-110">
                   {tool.id === 'capcut' ? (
-                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white p-1.5 flex items-center justify-center shadow-xs">
+                    <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-white p-2 flex items-center justify-center shadow-sm">
                       <img
                         src={tool.defaultSrc}
                         alt={tool.name}
@@ -87,7 +89,7 @@ export function HeroBandeau() {
                     <img
                       src={tool.defaultSrc}
                       alt={tool.name}
-                      className="w-full h-full max-w-[38px] max-h-[38px] sm:max-w-[44px] sm:max-h-[44px] object-contain select-none drop-shadow-sm"
+                      className="w-full h-full max-w-[48px] max-h-[48px] sm:max-w-[56px] sm:max-h-[56px] object-contain select-none drop-shadow-md"
                       loading="lazy"
                     />
                   )}
