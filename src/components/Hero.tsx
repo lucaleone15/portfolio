@@ -1,5 +1,4 @@
 import { motion } from 'motion/react';
-import { HeroBandeau } from './HeroBandeau';
 import { useLanguage } from '../context/LanguageContext';
 
 export function Hero() {
@@ -11,23 +10,16 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-[100dvh] pt-20 sm:pt-24 pb-4 sm:pb-8 border-b border-black/[0.06] dark:border-white/[0.06] overflow-hidden flex flex-col justify-between bg-[#F9F9FB] dark:bg-[#0A0A0C] transition-colors duration-300">
-      {/* Main Content Area - Clean, airy, zero background clutter */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 w-full my-auto py-8 sm:py-14">
+    <section className="relative min-h-[90dvh] pt-24 sm:pt-32 pb-16 sm:pb-24 border-b border-black/[0.06] dark:border-white/[0.06] overflow-hidden flex flex-col justify-center bg-[#F9F9FB] dark:bg-[#0A0A0C] transition-colors duration-300">
+      {/* Main Content Area - Clean, airy, zero clutter */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 w-full py-8 sm:py-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-5xl space-y-6 sm:space-y-8"
         >
-          {/* Subtle greeting with contrasting serif typography */}
-          <div className="flex items-center gap-3">
-            <p className="font-serif italic text-lg sm:text-xl md:text-2xl text-neutral-500 dark:text-[#A1A1AA]/80 font-normal tracking-wide select-none">
-              {lang === 'fr' ? 'Salut, je suis Luca Leone' : 'Hi, I’m Luca Leone'}
-            </p>
-          </div>
-
-          {/* Main Title with enhanced desktop presence - Ultra clean monochrome in light mode, neon in dark mode */}
+          {/* Main Title with enhanced typography and subtle neon in dark mode */}
           <h1 className="text-[2.1rem] leading-[1.2] sm:text-4xl md:text-5xl lg:text-[3.6rem] xl:text-[4.1rem] sm:leading-[1.16] lg:leading-[1.12] text-neutral-900 dark:text-white/95 tracking-tight font-normal">
             {lang === 'fr' ? (
               <>
@@ -65,7 +57,7 @@ export function Hero() {
             )}
           </p>
 
-          {/* CTA Buttons - Syne typography with elegant contrast in both themes */}
+          {/* CTA Buttons */}
           <div className="pt-2 sm:pt-4 flex flex-wrap items-center gap-3.5 sm:gap-4">
             <button
               onClick={scrollToProjects}
@@ -83,15 +75,6 @@ export function Hero() {
           </div>
         </motion.div>
       </div>
-
-      {/* Double Bandeau: Competencies Ticker + Tool Brand Logos with smooth entry */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <HeroBandeau />
-      </motion.div>
     </section>
   );
 }

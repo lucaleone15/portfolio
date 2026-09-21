@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, ArrowUpRight, Linkedin, Sun, Moon } from 'lucide-react';
+import { Menu, X, ArrowUpRight, Linkedin } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { USER_INFO } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
-import { useTheme } from '../context/ThemeContext';
 
 interface HeaderProps {
   activeSection: string;
@@ -14,7 +13,6 @@ export function Header({ activeSection, onNavigateHome }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const { lang, setLang, t } = useLanguage();
-  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -81,23 +79,6 @@ export function Header({ activeSection, onNavigateHome }: HeaderProps) {
 
           {/* Right Navigation */}
           <div className="flex items-center gap-2.5 sm:gap-3">
-            {/* Theme Toggle (Dark / Light) */}
-            <button
-              onClick={toggleTheme}
-              className="p-2 sm:px-2.5 sm:py-1.5 rounded-full bg-black/[0.05] hover:bg-black/[0.1] dark:bg-white/[0.06] dark:hover:bg-white/[0.15] border border-black/[0.08] dark:border-white/[0.1] text-neutral-800 dark:text-white transition-all cursor-pointer flex items-center gap-1.5 shadow-xs"
-              title={theme === 'dark' ? 'Passer en mode clair' : 'Passer en mode sombre'}
-              aria-label="Basculer le thème"
-            >
-              {theme === 'dark' ? (
-                <Sun className="w-4 h-4 text-[#CCFF00]" />
-              ) : (
-                <Moon className="w-4 h-4 text-neutral-800" />
-              )}
-              <span className="text-xs font-syne font-semibold hidden sm:inline">
-                {theme === 'dark' ? 'Light' : 'Dark'}
-              </span>
-            </button>
-
             {/* Language Switcher (FR / EN) */}
             <div className="flex items-center p-1 bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.08] rounded-full text-xs font-semibold backdrop-blur-md">
               <button
@@ -180,13 +161,6 @@ export function Header({ activeSection, onNavigateHome }: HeaderProps) {
             <div className="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-4 text-xs text-neutral-500 dark:text-[#A1A1AA]">
               <span className="uppercase tracking-wider font-semibold">{t('nav.menu')}</span>
               <div className="flex items-center gap-2.5">
-                <button
-                  onClick={toggleTheme}
-                  className="p-2 rounded-full bg-black/5 dark:bg-white/10 text-neutral-800 dark:text-white cursor-pointer"
-                  title="Basculer le thème"
-                >
-                  {theme === 'dark' ? <Sun className="w-4 h-4 text-[#CCFF00]" /> : <Moon className="w-4 h-4" />}
-                </button>
                 <div className="flex items-center p-0.5 bg-black/5 dark:bg-white/[0.06] rounded-full text-xs font-semibold">
                   <button
                     onClick={() => setLang('fr')}

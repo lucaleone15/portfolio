@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
+import { SkillsSection } from './components/SkillsSection';
 import { ProjectsSection } from './components/ProjectsSection';
 import { AboutSection } from './components/AboutSection';
 import { ContactSection } from './components/ContactSection';
@@ -128,6 +129,7 @@ function PortfolioApp() {
       ) : (
         <main id="main-content" className="relative z-10">
           <Hero />
+          <SkillsSection />
           <ProjectsSection onSelectProject={(project) => setSelectedProject(project)} />
           <AboutSection />
           <ContactSection onOpenAdmin={() => setIsAdminOpen(true)} />

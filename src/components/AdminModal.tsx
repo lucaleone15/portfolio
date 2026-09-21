@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Plus, Trash2, RotateCcw, Save, FileText, Image as ImageIcon, Sparkles, Check } from 'lucide-react';
+import { X, Plus, Trash2, RotateCcw, Save, FileText, Image as ImageIcon, Sparkles, Check, Download } from 'lucide-react';
 import { Project } from '../types';
-import { getCustomProjects, saveCustomProjects, resetCustomProjects } from '../data/projectsStorage';
+import { getCustomProjects, saveCustomProjects, resetCustomProjects, downloadProjectsJson } from '../data/projectsStorage';
 import { useLanguage } from '../context/LanguageContext';
 
 interface AdminModalProps {
@@ -87,13 +87,24 @@ export function AdminModal({ isOpen, onClose }: AdminModalProps) {
     }
   };
 
-  const handleSaveAll = () => {
-    saveCustomProjects(data);
+  const [isSaving, setIsSaving] = useState(false);
+  const [filePersistedNotice, setFilePersistedNotice] = useState<string | null>(null);
+
+  const handleSaveAll = async () => {
+    setIsSaving(true);
+    const fileSaved = await saveCustomProjects(data);
+    setIsSaving(false);
     setSaveSuccess(true);
+    if (fileSaved) {
+      setFilePersistedNotice('Projets enregistrés dans src/data/projectsData.json (prêts pour git commit/push) !');
+    } else {
+      setFilePersistedNotice('Modifications enregistrées !');
+    }
     setTimeout(() => {
       setSaveSuccess(false);
+      setFilePersistedNotice(null);
       onClose();
-    }, 900);
+    }, 1200);
   };
 
   const handleResetToDefault = () => {
@@ -450,17 +461,35 @@ export function AdminModal({ isOpen, onClose }: AdminModalProps) {
           </div>
 
           {/* Footer Bar */}
-          <div className="flex items-center justify-between px-6 py-4 border-t border-white/10 bg-[#16161A]">
-            <button
-              type="button"
-              onClick={handleResetToDefault}
-              className="text-xs font-bold text-[#A1A1AA] hover:text-white inline-flex items-center gap-1.5 transition-colors cursor-pointer"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Réinitialiser par défaut</span>
-            </button>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-6 py-4 border-t border-white/10 bg-[#16161A]">
+            <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-start">
+              <button
+                type="button"
+                onClick={handleResetToDefault}
+                className="text-xs font-bold text-[#A1A1AA] hover:text-white inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+              >
+                <RotateCcw className="w-3.5 h-3.5" />
+                <span>Réinitialiser</span>
+              </button>
 
-            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => downloadProjectsJson(data)}
+                className="text-xs font-bold text-[#A1A1AA] hover:text-[#CCFF00] inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+                title="Télécharger une copie du fichier JSON (projectsData.json)"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>Télécharger JSON</span>
+              </button>
+            </div>
+
+            {filePersistedNotice && (
+              <div className="text-xs text-[#CCFF00] font-mono text-center sm:text-left truncate max-w-xs">
+                {filePersistedNotice}
+              </div>
+            )}
+
+            <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
               <button
                 type="button"
                 onClick={onClose}
@@ -470,18 +499,19 @@ export function AdminModal({ isOpen, onClose }: AdminModalProps) {
               </button>
               <button
                 type="button"
+                disabled={isSaving}
                 onClick={handleSaveAll}
-                className="px-6 py-2 rounded-full bg-[#CCFF00] hover:bg-[#b8e600] text-black text-xs font-syne font-bold inline-flex items-center gap-2 shadow-xs transition-colors cursor-pointer"
+                className="px-6 py-2 rounded-full bg-[#CCFF00] hover:bg-[#b8e600] disabled:opacity-50 text-black text-xs font-syne font-bold inline-flex items-center gap-2 shadow-xs transition-colors cursor-pointer"
               >
                 {saveSuccess ? (
                   <>
                     <Check className="w-4 h-4" />
-                    <span>Enregistré !</span>
+                    <span>Enregistré dans le projet !</span>
                   </>
                 ) : (
                   <>
                     <Save className="w-4 h-4" />
-                    <span>Enregistrer les modifications</span>
+                    <span>{isSaving ? 'Enregistrement...' : 'Enregistrer les modifications'}</span>
                   </>
                 )}
               </button>

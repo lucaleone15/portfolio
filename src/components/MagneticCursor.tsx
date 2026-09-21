@@ -1,104 +1,83 @@
 import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'motion/react';
-import { useTheme } from '../context/ThemeContext';
 
 export function MagneticCursor() {
-  const { theme } = useTheme();
   const [isHovered, setIsHovered] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
-  const rawX = useMotionValue(-100);
-  const rawY = useMotionValue(-100);
+  const mouseX = useMotionValue(-100);
+  const mouseY = useMotionValue(-100);
 
-  // Smooth springs for fluid tracking
-  const springX = useSpring(rawX, { stiffness: 450, damping: 32 });
-  const springY = useSpring(rawY, { stiffness: 450, damping: 32 });
+  // Very responsive, low-latency spring for instant, natural tracking
+  const cursorX = useSpring(mouseX, { stiffness: 950, damping: 48, mass: 0.2 });
+  const cursorY = useSpring(mouseY, { stiffness: 950, damping: 48, mass: 0.2 });
 
   useEffect(() => {
-    // Detect mobile touch screens to disable custom cursor cleanly
+    // Disable completely on touch devices / tablets / mobile
     if (window.matchMedia('(pointer: coarse)').matches) {
       setIsTouchDevice(true);
       return;
     }
 
+    document.documentElement.classList.add('custom-cursor-active');
+
     const onMouseMove = (e: MouseEvent) => {
       if (!isVisible) setIsVisible(true);
-      rawX.set(e.clientX);
-      rawY.set(e.clientY);
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
     };
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
       if (!target) return;
-      const interactive = target.closest('a, button, [role="button"], input, textarea, [data-interactive="true"]');
+      const interactive = target.closest('a, button, [role="button"], [data-interactive="true"]');
       setIsHovered(!!interactive);
     };
 
+    const onMouseDown = () => setIsClicked(true);
+    const onMouseUp = () => setIsClicked(false);
     const onMouseLeave = () => setIsVisible(false);
     const onMouseEnter = () => setIsVisible(true);
 
-    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
     window.addEventListener('mouseover', handleMouseOver);
+    window.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('mouseup', onMouseUp);
     document.addEventListener('mouseleave', onMouseLeave);
     document.addEventListener('mouseenter', onMouseEnter);
 
     return () => {
+      document.documentElement.classList.remove('custom-cursor-active');
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('mouseover', handleMouseOver);
+      window.removeEventListener('mousedown', onMouseDown);
+      window.removeEventListener('mouseup', onMouseUp);
       document.removeEventListener('mouseleave', onMouseLeave);
       document.removeEventListener('mouseenter', onMouseEnter);
     };
-  }, [isVisible, rawX, rawY]);
+  }, [isVisible, mouseX, mouseY, isTouchDevice]);
 
   if (isTouchDevice || !isVisible) return null;
 
-  const isDark = theme === 'dark';
-
   return (
-    <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden">
-      {/* Precision center dot */}
-      <motion.div
-        style={{
-          x: springX,
-          y: springY,
-          translateX: '-50%',
-          translateY: '-50%',
-        }}
-        animate={{
-          scale: isHovered ? 0 : 1,
-          opacity: isHovered ? 0 : 1,
-        }}
-        transition={{ duration: 0.15 }}
-        className={`w-1.5 h-1.5 rounded-full ${
-          isDark 
-            ? 'bg-[#CCFF00] shadow-[0_0_8px_#CCFF00]' 
-            : 'bg-neutral-900 shadow-[0_0_8px_rgba(0,0,0,0.4)]'
-        }`}
-      />
-
-      {/* Magnetic expanding circle with tactile hover feedback */}
-      <motion.div
-        style={{
-          x: springX,
-          y: springY,
-          translateX: '-50%',
-          translateY: '-50%',
-        }}
-        animate={{
-          width: isHovered ? 48 : 24,
-          height: isHovered ? 48 : 24,
-          borderColor: isHovered 
-            ? (isDark ? '#CCFF00' : '#18181B') 
-            : (isDark ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.25)'),
-          backgroundColor: isHovered 
-            ? (isDark ? 'rgba(204, 255, 0, 0.12)' : 'rgba(0, 0, 0, 0.08)') 
-            : 'rgba(0, 0, 0, 0)',
-          opacity: isHovered ? 1 : 0.6,
-        }}
-        transition={{ type: 'spring', stiffness: 350, damping: 25 }}
-        className="rounded-full border backdrop-blur-[2px] pointer-events-none"
-      />
-    </div>
+    <motion.div
+      style={{
+        x: cursorX,
+        y: cursorY,
+        translateX: '-50%',
+        translateY: '-50%',
+      }}
+      animate={{
+        scale: isClicked ? 0.75 : isHovered ? 2.8 : 1,
+        opacity: isVisible ? 1 : 0,
+      }}
+      transition={{
+        scale: { type: 'spring', stiffness: 500, damping: 28 },
+        opacity: { duration: 0.15 },
+      }}
+      className="pointer-events-none fixed top-0 left-0 z-50 w-3 h-3 rounded-full bg-white mix-blend-difference"
+    />
   );
 }

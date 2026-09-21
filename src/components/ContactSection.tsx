@@ -1,7 +1,9 @@
 import { useState, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Sun, Moon } from 'lucide-react';
 import { USER_INFO } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
+import { useTheme } from '../context/ThemeContext';
 
 interface ContactSectionProps {
   onOpenAdmin?: () => void;
@@ -9,6 +11,7 @@ interface ContactSectionProps {
 
 export function ContactSection({ onOpenAdmin }: ContactSectionProps) {
   const { lang, t } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
   const [copied, setCopied] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
@@ -285,13 +288,13 @@ export function ContactSection({ onOpenAdmin }: ContactSectionProps) {
         {/* Minimal Clean Footer */}
         <footer className="mt-20 pt-8 border-t border-black/[0.08] dark:border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500 dark:text-[#71717A]">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-neutral-900 dark:text-white">
+            <span className="font-bold text-neutral-900 dark:text-white inline-flex items-baseline">
               Luca Leone
               <button
                 type="button"
                 onClick={onOpenAdmin}
                 title="Éditeur de projets (Ctrl+E ou clic)"
-                className="text-neutral-900 dark:text-[#CCFF00] hover:opacity-75 transition-opacity cursor-pointer select-none inline-block p-0.5"
+                className="text-[#65A30D] dark:text-[#CCFF00] hover:opacity-75 transition-opacity cursor-pointer select-none inline-block p-0.5 font-black text-sm"
                 aria-label="Ouvrir l'éditeur de projets"
               >
                 .
@@ -301,7 +304,7 @@ export function ContactSection({ onOpenAdmin }: ContactSectionProps) {
             <span>·</span>
             <span>HEIG-VD</span>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 sm:gap-5">
             <a
               href="#projets"
               className="hover:text-neutral-900 dark:hover:text-white transition-colors"
@@ -322,6 +325,22 @@ export function ContactSection({ onOpenAdmin }: ContactSectionProps) {
             >
               LinkedIn
             </a>
+
+            {/* Discrete Theme Toggle in Footer */}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.08] hover:border-black/20 dark:hover:border-white/20 transition-all cursor-pointer opacity-75 hover:opacity-100"
+              title={theme === 'dark' ? 'Passer en mode clair' : 'Passer en mode sombre'}
+              aria-label="Basculer le thème"
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-3 h-3 text-[#CCFF00]" />
+              ) : (
+                <Moon className="w-3 h-3 text-neutral-600" />
+              )}
+              <span className="font-mono text-[10px] tracking-tight">{theme === 'dark' ? 'Light' : 'Dark'}</span>
+            </button>
           </div>
         </footer>
       </div>
