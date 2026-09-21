@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { HeroBandeau, CompetenciesMarquee } from './HeroBandeau';
+import { HeroBandeau } from './HeroBandeau';
 import { useLanguage } from '../context/LanguageContext';
 
 export function Hero() {
@@ -11,56 +11,53 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-[100dvh] pt-16 sm:pt-20 pb-2 sm:pb-6 border-b border-white/[0.06] overflow-hidden flex flex-col justify-between bg-[#0A0A0C]">
-      {/* Background static subtle texture (competencies text in background with very light opacity) */}
-      <CompetenciesMarquee />
-
-      {/* Main Content Area - Vertically centered in the available space */}
-      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-10 w-full my-auto py-8 sm:py-12">
+    <section className="relative min-h-[100dvh] pt-20 sm:pt-24 pb-4 sm:pb-8 border-b border-black/[0.06] dark:border-white/[0.06] overflow-hidden flex flex-col justify-between bg-[#F9F9FB] dark:bg-[#0A0A0C] transition-colors duration-300">
+      {/* Main Content Area - Clean, airy, zero background clutter */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 w-full my-auto py-8 sm:py-14">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-5xl space-y-6 sm:space-y-8"
         >
           {/* Subtle greeting with contrasting serif typography */}
           <div className="flex items-center gap-3">
-            <p className="font-serif italic text-lg sm:text-xl md:text-2xl text-[#A1A1AA]/80 font-normal tracking-wide select-none">
+            <p className="font-serif italic text-lg sm:text-xl md:text-2xl text-neutral-500 dark:text-[#A1A1AA]/80 font-normal tracking-wide select-none">
               {lang === 'fr' ? 'Salut, je suis Luca Leone' : 'Hi, I’m Luca Leone'}
             </p>
           </div>
 
-          {/* Main Title with enhanced desktop and tablet scale for commanding presence */}
-          <h1 className="text-[2rem] leading-[1.22] sm:text-4xl md:text-5xl lg:text-[3.5rem] xl:text-[4rem] sm:leading-[1.18] lg:leading-[1.14] text-white/95 tracking-tight font-normal">
+          {/* Main Title with enhanced desktop presence - Ultra clean monochrome in light mode, neon in dark mode */}
+          <h1 className="text-[2.1rem] leading-[1.2] sm:text-4xl md:text-5xl lg:text-[3.6rem] xl:text-[4.1rem] sm:leading-[1.16] lg:leading-[1.12] text-neutral-900 dark:text-white/95 tracking-tight font-normal">
             {lang === 'fr' ? (
               <>
                 Étudiant en{' '}
-                <span className="font-extrabold text-[#CCFF00] inline-block cursor-default whitespace-nowrap">
+                <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">
                   ingénierie des médias
                 </span>{' '}
-                à la <span className="font-extrabold text-[#CCFF00] inline-block cursor-default whitespace-nowrap">HEIG-VD,</span>{' '}
+                à la <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">HEIG-VD,</span>{' '}
                 je conçois des projets numériques où{' '}
-                <span className="font-extrabold text-[#CCFF00] inline-block cursor-default whitespace-nowrap">créativité,</span>{' '}
-                <span className="font-extrabold text-[#CCFF00] inline-block cursor-default whitespace-nowrap">design</span> et{' '}
-                <span className="font-extrabold text-[#CCFF00] inline-block cursor-default whitespace-nowrap">technologies web</span>{' '}
+                <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">créativité,</span>{' '}
+                <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">design</span> et{' '}
+                <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">technologies web</span>{' '}
                 se rencontrent.
               </>
             ) : (
               <>
-                <span className="font-extrabold text-[#CCFF00] inline-block cursor-default whitespace-nowrap">
+                <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">
                   Media Engineering
                 </span>{' '}
-                student at <span className="font-extrabold text-[#CCFF00] inline-block cursor-default whitespace-nowrap">HEIG-VD,</span>{' '}
+                student at <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">HEIG-VD,</span>{' '}
                 I craft digital projects bridging{' '}
-                <span className="font-extrabold text-[#CCFF00] inline-block cursor-default whitespace-nowrap">creativity,</span>{' '}
-                <span className="font-extrabold text-[#CCFF00] inline-block cursor-default whitespace-nowrap">design,</span> and{' '}
-                <span className="font-extrabold text-[#CCFF00] inline-block cursor-default whitespace-nowrap">web technologies.</span>
+                <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">creativity,</span>{' '}
+                <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">design,</span> and{' '}
+                <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">web technologies.</span>
               </>
             )}
           </h1>
 
           {/* Subtitle with increased desktop presence and comfort */}
-          <p className="max-w-3xl text-base sm:text-lg md:text-xl lg:text-2xl text-[#A1A1AA] leading-relaxed font-normal">
+          <p className="max-w-3xl text-base sm:text-lg md:text-xl lg:text-2xl text-neutral-600 dark:text-[#A1A1AA] leading-relaxed font-normal">
             {lang === 'fr' ? (
               "De l’idée à la réalisation : stratégie de communication, identité visuelle, création de contenus et développement web."
             ) : (
@@ -68,18 +65,18 @@ export function Hero() {
             )}
           </p>
 
-          {/* CTA Buttons - Syne typography with proportional touch targets */}
+          {/* CTA Buttons - Syne typography with elegant contrast in both themes */}
           <div className="pt-2 sm:pt-4 flex flex-wrap items-center gap-3.5 sm:gap-4">
             <button
               onClick={scrollToProjects}
-              className="py-4 px-8 sm:px-9 rounded-full bg-white text-black hover:bg-[#CCFF00] text-sm sm:text-base font-syne font-bold transition-all duration-200 inline-flex items-center justify-center cursor-pointer shadow-xs active:scale-98"
+              className="py-4 px-8 sm:px-9 rounded-full bg-neutral-900 text-white hover:bg-black dark:bg-white dark:text-black dark:hover:bg-[#CCFF00] dark:hover:text-black text-sm sm:text-base font-syne font-bold transition-all duration-200 inline-flex items-center justify-center cursor-pointer shadow-xs active:scale-98"
             >
               <span>{t('hero.ctaProjects')}</span>
             </button>
 
             <a
               href="#contact"
-              className="py-4 px-8 sm:px-9 rounded-full bg-white/[0.06] hover:bg-white/15 text-white border border-white/20 text-sm sm:text-base font-syne font-bold backdrop-blur-xl transition-all duration-200 cursor-pointer active:scale-98 inline-flex items-center justify-center shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]"
+              className="py-4 px-8 sm:px-9 rounded-full bg-black/[0.04] hover:bg-black/[0.08] text-neutral-900 border border-black/15 dark:bg-white/[0.06] dark:hover:bg-white/15 dark:text-white dark:border-white/20 text-sm sm:text-base font-syne font-bold backdrop-blur-xl transition-all duration-200 cursor-pointer active:scale-98 inline-flex items-center justify-center shadow-xs"
             >
               <span>{t('hero.ctaContact')}</span>
             </a>
@@ -87,8 +84,14 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* Double Bandeau: Competencies Ticker + Tool Brand Logos */}
-      <HeroBandeau />
+      {/* Double Bandeau: Competencies Ticker + Tool Brand Logos with smooth entry */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <HeroBandeau />
+      </motion.div>
     </section>
   );
 }

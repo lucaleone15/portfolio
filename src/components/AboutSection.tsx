@@ -61,7 +61,7 @@ export function AboutSection() {
     : ['Automotive', 'Sports', 'Travel', 'Technology'];
 
   return (
-    <section id="a-propos" className="relative py-20 sm:py-28 border-b border-white/[0.06] bg-[#0A0A0C]">
+    <section id="a-propos" className="relative py-20 sm:py-28 border-b border-black/[0.06] dark:border-white/[0.06] bg-[#F9F9FB] dark:bg-[#0A0A0C] transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 sm:px-10">
         {/* Section Header */}
         <motion.div
@@ -69,18 +69,18 @@ export function AboutSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="border-b border-white/[0.08] pb-6 mb-12 flex items-baseline gap-3.5"
+          className="border-b border-black/[0.08] dark:border-white/[0.08] pb-6 mb-12 flex items-baseline gap-3.5"
         >
-          <span className="font-serif italic text-2xl sm:text-3xl text-white/40 font-normal select-none">
+          <span className="font-serif italic text-2xl sm:text-3xl text-neutral-400 dark:text-white/40 font-normal select-none">
             {t('about.index')}
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight font-extrabold">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl text-neutral-900 dark:text-white tracking-tight font-extrabold">
             {t('about.title')}
           </h2>
         </motion.div>
 
         {/* Top Block: Photo + Presentation/Profil side-by-side */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center pb-16 border-b border-white/[0.08]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center pb-16 border-b border-black/[0.08] dark:border-white/[0.08]">
           {/* Photo: clean, zero overlay or badges */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -89,7 +89,7 @@ export function AboutSection() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 flex justify-center lg:justify-start"
           >
-            <div className="relative rounded-2xl overflow-hidden bg-[#141416] aspect-[4/5] max-w-sm sm:max-w-md w-full shadow-2xl">
+            <div className="relative rounded-2xl overflow-hidden bg-neutral-200 dark:bg-[#141416] aspect-[4/5] max-w-sm sm:max-w-md w-full shadow-2xl border border-black/5 dark:border-white/5">
               <img
                 src="/photo.jpeg"
                 alt="Luca Leone"
@@ -112,10 +112,10 @@ export function AboutSection() {
             className="lg:col-span-7 space-y-6"
           >
             <div>
-              <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#A1A1AA] pb-2 border-b border-white/[0.08] mb-3">
+              <div className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-500 dark:text-[#A1A1AA] pb-2 border-b border-black/[0.08] dark:border-white/[0.08] mb-3">
                 <span>{lang === 'fr' ? 'Profil & Vision' : 'Profile & Vision'}</span>
               </div>
-              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-syne font-black text-white tracking-tight">
+              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-syne font-black text-neutral-900 dark:text-white tracking-tight">
                 Luca Leone
               </h3>
             </div>
@@ -123,27 +123,27 @@ export function AboutSection() {
             {/* Profile Bio paragraphs */}
             <div className="space-y-4">
               {t('about.bio').split('\n\n').map((paragraph, idx) => (
-                <p key={idx} className="text-sm sm:text-base text-[#D4D4D8] leading-relaxed">
+                <p key={idx} className="text-sm sm:text-base text-neutral-700 dark:text-[#D4D4D8] leading-relaxed">
                   {paragraph}
                 </p>
               ))}
             </div>
 
             {/* Langues & Centres d'intérêt */}
-            <div className="pt-4 border-t border-white/[0.08] grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="pt-4 border-t border-black/[0.08] dark:border-white/[0.08] grid grid-cols-1 sm:grid-cols-2 gap-6">
               {/* Langues: only language name by default, level revealed on hover */}
               <div className="space-y-3">
-                <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#A1A1AA]">
+                <div className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-500 dark:text-[#A1A1AA]">
                   <span>{t('about.languagesTitle')}</span>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {languages.map((item, idx) => (
                     <div
                       key={`lang-${idx}`}
-                      className="group/lang relative h-8 px-3.5 rounded-full bg-white text-black hover:bg-[#CCFF00] text-xs font-syne font-bold inline-flex items-center gap-1.5 shadow-xs transition-all duration-200 cursor-default select-none"
+                      className="group/lang relative h-8 px-3.5 rounded-full bg-neutral-900 text-white hover:bg-black dark:bg-white dark:text-black dark:hover:bg-[#CCFF00] dark:hover:text-black text-xs font-syne font-bold inline-flex items-center gap-1.5 shadow-xs transition-all duration-200 cursor-default select-none"
                     >
-                      <span className="font-syne font-bold text-black">{item.name}</span>
-                      <span className="max-w-0 opacity-0 group-hover/lang:max-w-xs group-hover/lang:opacity-100 transition-all duration-200 overflow-hidden whitespace-nowrap text-black/80 font-syne font-medium pl-0.5">
+                      <span className="font-syne font-bold">{item.name}</span>
+                      <span className="max-w-0 opacity-0 group-hover/lang:max-w-xs group-hover/lang:opacity-100 transition-all duration-200 overflow-hidden whitespace-nowrap opacity-80 font-syne font-medium pl-0.5">
                         · {item.level}
                       </span>
                     </div>
@@ -153,14 +153,14 @@ export function AboutSection() {
 
               {/* Passions */}
               <div className="space-y-3">
-                <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#A1A1AA]">
+                <div className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-500 dark:text-[#A1A1AA]">
                   <span>{t('about.passionsTitle')}</span>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {passions.map((item, idx) => (
                     <span
                       key={`passion-${idx}`}
-                      className="h-8 px-3.5 rounded-full bg-white text-black hover:bg-[#CCFF00] text-xs font-syne font-bold inline-flex items-center shadow-xs transition-colors duration-150 select-none cursor-default"
+                      className="h-8 px-3.5 rounded-full bg-neutral-900 text-white hover:bg-black dark:bg-white dark:text-black dark:hover:bg-[#CCFF00] dark:hover:text-black text-xs font-syne font-bold inline-flex items-center shadow-xs transition-colors duration-150 select-none cursor-default"
                     >
                       {item}
                     </span>
@@ -182,7 +182,7 @@ export function AboutSection() {
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
               className="lg:col-span-6 space-y-6"
             >
-              <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#A1A1AA] pb-3 border-b border-white/[0.08]">
+              <div className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-500 dark:text-[#A1A1AA] pb-3 border-b border-black/[0.08] dark:border-white/[0.08]">
                 <span>{t('about.experienceTitle')}</span>
               </div>
 
@@ -190,28 +190,28 @@ export function AboutSection() {
                 {experience.map((item, idx) => (
                   <div
                     key={`exp-${idx}`}
-                    className="pb-6 border-b border-white/[0.06] last:border-b-0 last:pb-0 transition-colors duration-200 group"
+                    className="pb-6 border-b border-black/[0.06] dark:border-white/[0.06] last:border-b-0 last:pb-0 transition-colors duration-200 group"
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
-                      <h4 className="text-base sm:text-lg font-bold text-white group-hover:text-[#CCFF00] transition-colors">
+                      <h4 className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white group-hover:text-black dark:group-hover:text-[#CCFF00] transition-colors">
                         {item.title}
                       </h4>
-                      <span className="text-xs font-bold text-[#CCFF00] tracking-wide">
+                      <span className="text-xs font-bold text-neutral-900 dark:text-[#CCFF00] tracking-wide">
                         {item.period}
                       </span>
                     </div>
-                    <p className="text-xs text-[#A1A1AA] font-medium">
+                    <p className="text-xs text-neutral-500 dark:text-[#A1A1AA] font-medium">
                       {item.company} {item.location ? `· ${item.location}` : ''}
                     </p>
-                    <div className="text-xs sm:text-sm text-[#A1A1AA] mt-3 space-y-2.5 leading-relaxed">
+                    <div className="text-xs sm:text-sm text-neutral-600 dark:text-[#A1A1AA] mt-3 space-y-2.5 leading-relaxed">
                       {item.description.split('\n\n').map((paragraph, pIdx) => {
                         if (paragraph.includes('•')) {
                           const lines = paragraph.split('\n').filter((l) => l.trim().length > 0);
                           return (
                             <ul key={pIdx} className="space-y-2 my-2.5 pl-0.5">
                               {lines.map((line, bIdx) => (
-                                <li key={bIdx} className="flex items-start gap-2.5 text-white/85">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-[#CCFF00] mt-1.5 shrink-0" />
+                                <li key={bIdx} className="flex items-start gap-2.5 text-neutral-800 dark:text-white/85">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-neutral-900 dark:bg-[#CCFF00] mt-1.5 shrink-0" />
                                   <span>{line.replace(/^•\s*/, '')}</span>
                                 </li>
                               ))}
@@ -234,7 +234,7 @@ export function AboutSection() {
               transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               className="lg:col-span-6 space-y-6"
             >
-              <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#A1A1AA] pb-3 border-b border-white/[0.08]">
+              <div className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-500 dark:text-[#A1A1AA] pb-3 border-b border-black/[0.08] dark:border-white/[0.08]">
                 <span>{t('about.educationTitle')}</span>
               </div>
 
@@ -242,21 +242,21 @@ export function AboutSection() {
                 {education.map((item, idx) => (
                   <div
                     key={`edu-${idx}`}
-                    className="pb-6 border-b border-white/[0.06] last:border-b-0 last:pb-0 transition-colors duration-200 group"
+                    className="pb-6 border-b border-black/[0.06] dark:border-white/[0.06] last:border-b-0 last:pb-0 transition-colors duration-200 group"
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
-                      <h4 className="text-base sm:text-lg font-bold text-white group-hover:text-[#CCFF00] transition-colors">
+                      <h4 className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white group-hover:text-black dark:group-hover:text-[#CCFF00] transition-colors">
                         {item.title}
                       </h4>
-                      <span className="text-xs font-bold text-[#CCFF00] tracking-wide">
+                      <span className="text-xs font-bold text-neutral-900 dark:text-[#CCFF00] tracking-wide">
                         {item.period}
                       </span>
                     </div>
-                    <p className="text-xs text-[#A1A1AA] font-medium">
+                    <p className="text-xs text-neutral-500 dark:text-[#A1A1AA] font-medium">
                       {item.institution} · {item.location}
                     </p>
                     {item.details && item.details.trim().length > 0 && (
-                      <div className="text-xs sm:text-sm text-[#A1A1AA] mt-3 space-y-2 leading-relaxed">
+                      <div className="text-xs sm:text-sm text-neutral-600 dark:text-[#A1A1AA] mt-3 space-y-2 leading-relaxed">
                         {item.details.split('\n\n').map((paragraph, pIdx) => (
                           <p key={pIdx}>{paragraph}</p>
                         ))}

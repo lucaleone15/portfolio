@@ -10,6 +10,7 @@ import { MagneticCursor } from './components/MagneticCursor';
 import { IntroCurtain } from './components/IntroCurtain';
 import { Project } from './types';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { getCustomProjects } from './data/projectsStorage';
 
 function PortfolioApp() {
@@ -97,7 +98,7 @@ function PortfolioApp() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0C] text-white font-sans antialiased selection:bg-[#CCFF00] selection:text-black relative overflow-hidden">
+    <div className="min-h-screen bg-[#F9F9FB] text-neutral-900 dark:bg-[#0A0A0C] dark:text-white font-sans antialiased selection:bg-neutral-900 selection:text-white dark:selection:bg-[#CCFF00] dark:selection:text-black relative overflow-hidden transition-colors duration-300">
       {/* Pattern #4: Typographic Intro Curtain */}
       <IntroCurtain />
 
@@ -144,8 +145,10 @@ function PortfolioApp() {
 
 export default function App() {
   return (
-    <LanguageProvider>
-      <PortfolioApp />
-    </LanguageProvider>
+    <ThemeProvider>
+      <LanguageProvider>
+        <PortfolioApp />
+      </LanguageProvider>
+    </ThemeProvider>
   );
 }

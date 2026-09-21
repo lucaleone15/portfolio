@@ -87,20 +87,20 @@ export function ContactSection({ onOpenAdmin }: ContactSectionProps) {
   };
 
   return (
-    <section id="contact" className="relative py-20 sm:py-28 overflow-hidden bg-[#0A0A0C]">
+    <section id="contact" className="relative py-20 sm:py-28 overflow-hidden bg-[#F9F9FB] dark:bg-[#0A0A0C] transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 sm:px-10">
         
-        {/* Massive Typographic Headline with Clean Green Accent - No glow/shimmer */}
+        {/* Massive Typographic Headline with Clean High Contrast */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="mb-14 sm:mb-20"
         >
-          <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.05] font-normal text-white">
+          <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.05] font-normal text-neutral-900 dark:text-white">
             {t('contact.talkPrefix')} <br />
-            <span className="font-extrabold text-[#CCFF00]">
+            <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00]">
               {t('contact.talkHighlight')}
             </span>
           </h2>
@@ -126,7 +126,7 @@ export function ContactSection({ onOpenAdmin }: ContactSectionProps) {
                   placeholder={t('contact.namePlaceholder')}
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full pb-3 bg-transparent border-b border-white/20 text-white placeholder-white/35 text-base sm:text-lg focus:outline-none focus:border-[#CCFF00] transition-colors"
+                  className="w-full pb-3 bg-transparent border-b border-black/20 dark:border-white/20 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-white/35 text-base sm:text-lg focus:outline-none focus:border-neutral-900 dark:focus:border-[#CCFF00] transition-colors"
                 />
               </div>
 
@@ -138,7 +138,7 @@ export function ContactSection({ onOpenAdmin }: ContactSectionProps) {
                   placeholder={t('contact.emailPlaceholder')}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full pb-3 bg-transparent border-b border-white/20 text-white placeholder-white/35 text-base sm:text-lg focus:outline-none focus:border-[#CCFF00] transition-colors"
+                  className="w-full pb-3 bg-transparent border-b border-black/20 dark:border-white/20 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-white/35 text-base sm:text-lg focus:outline-none focus:border-neutral-900 dark:focus:border-[#CCFF00] transition-colors"
                 />
               </div>
 
@@ -149,7 +149,7 @@ export function ContactSection({ onOpenAdmin }: ContactSectionProps) {
                   placeholder={t('contact.subjectPlaceholder')}
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                  className="w-full pb-3 bg-transparent border-b border-white/20 text-white placeholder-white/35 text-base sm:text-lg focus:outline-none focus:border-[#CCFF00] transition-colors"
+                  className="w-full pb-3 bg-transparent border-b border-black/20 dark:border-white/20 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-white/35 text-base sm:text-lg focus:outline-none focus:border-neutral-900 dark:focus:border-[#CCFF00] transition-colors"
                 />
               </div>
 
@@ -161,7 +161,7 @@ export function ContactSection({ onOpenAdmin }: ContactSectionProps) {
                   placeholder={t('contact.messagePlaceholder')}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full pb-3 bg-transparent border-b border-white/20 text-white placeholder-white/35 text-base sm:text-lg focus:outline-none focus:border-[#CCFF00] transition-colors resize-none"
+                  className="w-full pb-3 bg-transparent border-b border-black/20 dark:border-white/20 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-white/35 text-base sm:text-lg focus:outline-none focus:border-neutral-900 dark:focus:border-[#CCFF00] transition-colors resize-none"
                 />
               </div>
 
@@ -172,9 +172,9 @@ export function ContactSection({ onOpenAdmin }: ContactSectionProps) {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="p-4 rounded-2xl bg-[#CCFF00]/10 border border-[#CCFF00]/30 text-white"
+                    className="p-4 rounded-2xl bg-neutral-900 text-white dark:bg-[#CCFF00]/15 dark:border dark:border-[#CCFF00]/40 dark:text-white"
                   >
-                    <div className="text-xs sm:text-sm text-white/90 leading-relaxed font-medium">
+                    <div className="text-xs sm:text-sm leading-relaxed font-medium">
                       {statusMessage}
                     </div>
                   </motion.div>
@@ -185,21 +185,21 @@ export function ContactSection({ onOpenAdmin }: ContactSectionProps) {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-white"
+                    className="p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400"
                   >
-                    <div className="text-xs sm:text-sm text-white/90 leading-relaxed font-medium">
+                    <div className="text-xs sm:text-sm leading-relaxed font-medium">
                       {statusMessage}
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
 
-              {/* Submit button: Fluorescent Green Pill Button with Loading State (no icons) */}
+              {/* Submit button: Pill Button with Loading State */}
               <div>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="py-4 px-10 rounded-full bg-[#CCFF00] hover:bg-[#B8E600] disabled:bg-[#CCFF00]/50 text-black font-syne font-bold text-sm tracking-wide transition-all duration-200 cursor-pointer disabled:cursor-not-allowed shadow-xs active:scale-98 inline-flex items-center justify-center"
+                  className="py-4 px-10 rounded-full bg-neutral-900 text-white hover:bg-black dark:bg-[#CCFF00] dark:text-black dark:hover:bg-[#B8E600] disabled:opacity-50 font-syne font-bold text-sm tracking-wide transition-all duration-200 cursor-pointer disabled:cursor-not-allowed shadow-xs active:scale-98 inline-flex items-center justify-center"
                 >
                   {isSubmitting ? (
                     <span>{lang === 'fr' ? 'Envoi du message...' : 'Sending message...'}</span>
@@ -221,22 +221,22 @@ export function ContactSection({ onOpenAdmin }: ContactSectionProps) {
           >
             {/* EMAIL DIRECT */}
             <div>
-              <span className="block text-xs uppercase font-bold tracking-[0.2em] text-white/40 mb-3">
+              <span className="block text-xs uppercase font-bold tracking-[0.2em] text-neutral-400 dark:text-white/40 mb-3">
                 {t('contact.directEmailLabel')}
               </span>
               <a
                 href={`mailto:${PRIMARY_EMAIL}`}
-                className="text-xl sm:text-2xl md:text-3xl font-bold text-white hover:text-[#CCFF00] transition-colors block break-all font-sans"
+                className="text-xl sm:text-2xl md:text-3xl font-bold text-neutral-900 dark:text-white hover:text-black dark:hover:text-[#CCFF00] transition-colors block break-all font-sans"
               >
                 {PRIMARY_EMAIL}
               </a>
               <button
                 type="button"
                 onClick={copyEmailToClipboard}
-                className="mt-3 inline-flex items-center px-4 py-1.5 rounded-full bg-white/[0.05] hover:bg-white/[0.1] text-xs font-syne font-bold text-white/80 transition-colors cursor-pointer border border-white/10"
+                className="mt-3 inline-flex items-center px-4 py-1.5 rounded-full bg-black/[0.04] hover:bg-black/[0.08] text-neutral-800 border border-black/10 dark:bg-white/[0.05] dark:hover:bg-white/[0.1] text-xs font-syne font-bold dark:text-white/80 transition-colors cursor-pointer dark:border-white/10"
               >
                 {copied ? (
-                  <span className="text-[#CCFF00]">{lang === 'fr' ? 'Email copié !' : 'Email copied!'}</span>
+                  <span className="text-neutral-900 dark:text-[#CCFF00] font-bold">{lang === 'fr' ? 'Email copié !' : 'Email copied!'}</span>
                 ) : (
                   <span>{lang === 'fr' ? "Copier l'email" : 'Copy email'}</span>
                 )}
@@ -245,12 +245,12 @@ export function ContactSection({ onOpenAdmin }: ContactSectionProps) {
 
             {/* NUMÉRO DIRECT */}
             <div>
-              <span className="block text-xs uppercase font-bold tracking-[0.2em] text-white/40 mb-3">
+              <span className="block text-xs uppercase font-bold tracking-[0.2em] text-neutral-400 dark:text-white/40 mb-3">
                 {t('contact.directPhoneLabel')}
               </span>
               <a
                 href={`tel:${USER_INFO.phone.replace(/\s/g, '')}`}
-                className="text-xl sm:text-2xl md:text-3xl font-bold text-white hover:text-[#CCFF00] transition-colors block font-sans"
+                className="text-xl sm:text-2xl md:text-3xl font-bold text-neutral-900 dark:text-white hover:text-black dark:hover:text-[#CCFF00] transition-colors block font-sans"
               >
                 {USER_INFO.phone}
               </a>
@@ -258,20 +258,20 @@ export function ContactSection({ onOpenAdmin }: ContactSectionProps) {
 
             {/* RÉSEAUX SOCIAUX - LinkedIn Only */}
             <div>
-              <span className="block text-xs uppercase font-bold tracking-[0.2em] text-white/40 mb-4">
+              <span className="block text-xs uppercase font-bold tracking-[0.2em] text-neutral-400 dark:text-white/40 mb-4">
                 {t('contact.socialLabel')}
               </span>
 
-              <div className="divide-y divide-white/15">
+              <div className="divide-y divide-black/10 dark:divide-white/15">
                 {/* LinkedIn */}
                 <a
                   href={USER_INFO.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-between py-4 text-base sm:text-lg font-semibold text-white hover:text-[#CCFF00] transition-colors"
+                  className="group flex items-center justify-between py-4 text-base sm:text-lg font-semibold text-neutral-900 dark:text-white hover:text-black dark:hover:text-[#CCFF00] transition-colors"
                 >
                   <span>LinkedIn</span>
-                  <span className="text-white/60 group-hover:text-[#CCFF00] group-hover:translate-x-1 transition-all">
+                  <span className="text-neutral-400 dark:text-white/60 group-hover:text-black dark:group-hover:text-[#CCFF00] group-hover:translate-x-1 transition-all">
                     →
                   </span>
                 </a>
@@ -283,15 +283,15 @@ export function ContactSection({ onOpenAdmin }: ContactSectionProps) {
         </div>
 
         {/* Minimal Clean Footer */}
-        <footer className="mt-20 pt-8 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#71717A]">
+        <footer className="mt-20 pt-8 border-t border-black/[0.08] dark:border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500 dark:text-[#71717A]">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-white">
+            <span className="font-bold text-neutral-900 dark:text-white">
               Luca Leone
               <button
                 type="button"
                 onClick={onOpenAdmin}
                 title="Éditeur de projets (Ctrl+E ou clic)"
-                className="text-[#CCFF00] hover:text-white transition-colors cursor-pointer select-none inline-block p-0.5"
+                className="text-neutral-900 dark:text-[#CCFF00] hover:opacity-75 transition-opacity cursor-pointer select-none inline-block p-0.5"
                 aria-label="Ouvrir l'éditeur de projets"
               >
                 .
@@ -304,13 +304,13 @@ export function ContactSection({ onOpenAdmin }: ContactSectionProps) {
           <div className="flex items-center gap-4">
             <a
               href="#projets"
-              className="hover:text-white transition-colors"
+              className="hover:text-neutral-900 dark:hover:text-white transition-colors"
             >
               {t('nav.projects')}
             </a>
             <a
               href="#a-propos"
-              className="hover:text-white transition-colors"
+              className="hover:text-neutral-900 dark:hover:text-white transition-colors"
             >
               {t('nav.about')}
             </a>
@@ -318,7 +318,7 @@ export function ContactSection({ onOpenAdmin }: ContactSectionProps) {
               href={USER_INFO.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-white transition-colors"
+              className="hover:text-neutral-900 dark:hover:text-white transition-colors"
             >
               LinkedIn
             </a>

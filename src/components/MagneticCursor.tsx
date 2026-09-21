@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'motion/react';
+import { useTheme } from '../context/ThemeContext';
 
 export function MagneticCursor() {
+  const { theme } = useTheme();
   const [isHovered, setIsHovered] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -51,6 +53,8 @@ export function MagneticCursor() {
 
   if (isTouchDevice || !isVisible) return null;
 
+  const isDark = theme === 'dark';
+
   return (
     <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden">
       {/* Precision center dot */}
@@ -66,7 +70,11 @@ export function MagneticCursor() {
           opacity: isHovered ? 0 : 1,
         }}
         transition={{ duration: 0.15 }}
-        className="w-1.5 h-1.5 rounded-full bg-[#CCFF00] shadow-[0_0_8px_#CCFF00]"
+        className={`w-1.5 h-1.5 rounded-full ${
+          isDark 
+            ? 'bg-[#CCFF00] shadow-[0_0_8px_#CCFF00]' 
+            : 'bg-neutral-900 shadow-[0_0_8px_rgba(0,0,0,0.4)]'
+        }`}
       />
 
       {/* Magnetic expanding circle with tactile hover feedback */}
@@ -80,8 +88,12 @@ export function MagneticCursor() {
         animate={{
           width: isHovered ? 48 : 24,
           height: isHovered ? 48 : 24,
-          borderColor: isHovered ? '#CCFF00' : 'rgba(255, 255, 255, 0.3)',
-          backgroundColor: isHovered ? 'rgba(204, 255, 0, 0.12)' : 'rgba(0, 0, 0, 0)',
+          borderColor: isHovered 
+            ? (isDark ? '#CCFF00' : '#18181B') 
+            : (isDark ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.25)'),
+          backgroundColor: isHovered 
+            ? (isDark ? 'rgba(204, 255, 0, 0.12)' : 'rgba(0, 0, 0, 0.08)') 
+            : 'rgba(0, 0, 0, 0)',
           opacity: isHovered ? 1 : 0.6,
         }}
         transition={{ type: 'spring', stiffness: 350, damping: 25 }}

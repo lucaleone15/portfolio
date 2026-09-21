@@ -6,7 +6,7 @@ interface ToolLogo {
   defaultSrc: string;
 }
 
-export function CompetenciesMarquee() {
+export function HeroBandeau() {
   const { t } = useLanguage();
 
   const competencies: string[] = (t('marquee.competencies') as unknown as string[]) || [
@@ -21,27 +21,6 @@ export function CompetenciesMarquee() {
     'COMMUNITY MANAGEMENT'
   ];
 
-  return (
-    <div 
-      className="absolute inset-0 pointer-events-none select-none overflow-hidden z-0 flex flex-col justify-center items-end pr-4 sm:pr-10 lg:pr-16 pl-6 py-6 opacity-[0.065]"
-      aria-hidden="true"
-    >
-      {/* Background static typographic texture - right-aligned, larger, perfectly uncropped */}
-      <div className="w-full max-w-5xl flex flex-wrap justify-end items-center gap-x-6 sm:gap-x-10 gap-y-4 sm:gap-y-6 text-right">
-        {competencies.map((item, idx) => (
-          <div key={`bg-comp-${idx}`} className="inline-flex items-center gap-5 sm:gap-8 justify-end">
-            <span className="text-white font-syne font-black text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] tracking-[0.08em] uppercase leading-tight">
-              {item}
-            </span>
-            <span className="text-[#CCFF00] font-black text-2xl sm:text-3xl">·</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-export function HeroBandeau() {
   // Comprehensive tool list mapped to all assets in /public/tools/
   const tools: ToolLogo[] = [
     { id: 'figma', name: 'Figma', defaultSrc: '/tools/figma.webp' },
@@ -64,11 +43,29 @@ export function HeroBandeau() {
   ];
 
   return (
-    <div className="w-full mt-4 sm:mt-6 select-none">
-      {/* Tools Marquee with clean floating logos and name tag floating directly ABOVE the icon */}
+    <div className="w-full mt-6 sm:mt-10 select-none space-y-3 sm:space-y-4">
+      {/* 1. Dedicated, crystal-clear Competencies Marquee Tape */}
+      <div className="relative py-2.5 sm:py-3 bg-black/[0.02] dark:bg-white/[0.02] border-y border-black/[0.06] dark:border-white/[0.06] overflow-hidden">
+        <div className="mask-marquee-edges w-full overflow-hidden">
+          <div className="animate-marquee flex items-center gap-6 sm:gap-10 whitespace-nowrap">
+            {[...competencies, ...competencies, ...competencies].map((item, idx) => (
+              <div key={`comp-tape-${idx}`} className="inline-flex items-center gap-6 sm:gap-10">
+                <span className="font-syne font-bold text-xs sm:text-sm tracking-[0.14em] uppercase text-neutral-800 dark:text-neutral-200">
+                  {item}
+                </span>
+                <span className="text-neutral-400 dark:text-[#CCFF00] font-bold text-xs sm:text-sm select-none">
+                  ✦
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* 2. Tools Marquee with clean floating logos and name tag floating directly ABOVE the icon */}
       <div className="relative py-1 bg-transparent">
         <div className="mask-marquee-edges w-full overflow-hidden">
-          <div className="animate-marquee-reverse flex items-center gap-10 sm:gap-14 whitespace-nowrap pt-8 pb-4 sm:pt-9 sm:pb-5">
+          <div className="animate-marquee-reverse flex items-center gap-10 sm:gap-14 whitespace-nowrap pt-7 pb-3 sm:pt-8 sm:pb-4">
             {[...tools, ...tools, ...tools].map((tool, idx) => (
               <div
                 key={`tool-logo-${idx}`}
@@ -76,19 +73,19 @@ export function HeroBandeau() {
               >
                 {/* Floating Name Badge right ABOVE the icon */}
                 <div className="absolute -top-7 left-1/2 -translate-x-1/2 opacity-0 translate-y-1.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 pointer-events-none z-30">
-                  <div className="relative px-2.5 py-1 rounded-md bg-[#18181B]/95 backdrop-blur-md border border-white/20 shadow-[0_8px_20px_rgba(0,0,0,0.8)] flex items-center justify-center whitespace-nowrap">
+                  <div className="relative px-2.5 py-1 rounded-md bg-neutral-900/95 dark:bg-[#18181B]/95 backdrop-blur-md border border-black/10 dark:border-white/20 shadow-[0_8px_20px_rgba(0,0,0,0.4)] dark:shadow-[0_8px_20px_rgba(0,0,0,0.8)] flex items-center justify-center whitespace-nowrap">
                     <span className="text-[11px] sm:text-xs font-syne font-bold tracking-wide text-white select-none">
                       {tool.name}
                     </span>
                     {/* Small downward indicator triangle */}
-                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#18181B] border-r border-b border-white/20 rotate-45" />
+                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-neutral-900 dark:bg-[#18181B] border-r border-b border-black/10 dark:border-white/20 rotate-45" />
                   </div>
                 </div>
 
                 {/* Logo Image */}
-                <div className="opacity-80 group-hover:opacity-100 transition-all duration-200 w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center group-hover:scale-110">
+                <div className="opacity-80 group-hover:opacity-100 transition-all duration-200 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center group-hover:scale-110">
                   {tool.id === 'capcut' ? (
-                    <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-white p-2 flex items-center justify-center shadow-sm">
+                    <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white p-2 flex items-center justify-center shadow-xs">
                       <img
                         src={tool.defaultSrc}
                         alt={tool.name}
@@ -100,7 +97,7 @@ export function HeroBandeau() {
                     <img
                       src={tool.defaultSrc}
                       alt={tool.name}
-                      className="w-full h-full max-w-[48px] max-h-[48px] sm:max-w-[56px] sm:max-h-[56px] object-contain select-none drop-shadow-md"
+                      className="w-full h-full max-w-[42px] max-h-[42px] sm:max-w-[48px] sm:max-h-[48px] object-contain select-none drop-shadow-xs"
                       loading="lazy"
                     />
                   )}

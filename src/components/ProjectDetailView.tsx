@@ -85,15 +85,15 @@ export function ProjectDetailView({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -16 }}
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-      className="min-h-screen bg-[#0A0A0C] text-white pt-24 sm:pt-28 pb-20 sm:pb-32"
+      className="min-h-screen bg-[#F9F9FB] text-neutral-900 dark:bg-[#0A0A0C] dark:text-white pt-24 sm:pt-28 pb-20 sm:pb-32 transition-colors duration-300"
     >
       <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Sticky-friendly Navigation Header Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6 mb-8 sm:mb-12">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-black/10 dark:border-white/10 pb-6 mb-8 sm:mb-12">
           {/* Back button */}
           <button
             onClick={onBack}
-            className="group inline-flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-full bg-white/[0.06] hover:bg-[#CCFF00] hover:text-black border border-white/15 text-white text-xs sm:text-sm font-syne font-bold transition-all duration-200 cursor-pointer active:scale-95 shadow-xs"
+            className="group inline-flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-full bg-black/[0.04] hover:bg-neutral-900 hover:text-white dark:bg-white/[0.06] dark:hover:bg-[#CCFF00] dark:hover:text-black border border-black/15 dark:border-white/15 text-neutral-900 dark:text-white text-xs sm:text-sm font-syne font-bold transition-all duration-200 cursor-pointer active:scale-95 shadow-xs"
           >
             <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
             <span>{lang === 'fr' ? 'Retour aux projets' : 'Back to projects'}</span>
@@ -101,14 +101,14 @@ export function ProjectDetailView({
 
           {/* Project Carousel Switcher Bar */}
           <div className="flex items-center gap-2 sm:gap-3">
-            <span className="text-xs sm:text-sm font-sans font-medium text-[#A1A1AA] mr-1 hidden sm:inline">
+            <span className="text-xs sm:text-sm font-sans font-medium text-neutral-500 dark:text-[#A1A1AA] mr-1 hidden sm:inline">
               {currentIndex + 1} / {projects.length}
             </span>
 
             {/* Previous Project Button */}
             <button
               onClick={goToPrevProject}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white/[0.04] hover:bg-white/[0.12] border border-white/15 text-white/90 hover:text-white text-xs font-syne font-semibold transition-all cursor-pointer group"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-black/[0.04] hover:bg-black/[0.08] dark:bg-white/[0.04] dark:hover:bg-white/[0.12] border border-black/15 dark:border-white/15 text-neutral-800 dark:text-white/90 hover:text-black dark:hover:text-white text-xs font-syne font-semibold transition-all cursor-pointer group"
               title={prevProject ? `${prevProject.title}` : ''}
             >
               <ChevronLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
@@ -118,7 +118,7 @@ export function ProjectDetailView({
             {/* Next Project Button */}
             <button
               onClick={goToNextProject}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white/[0.04] hover:bg-white/[0.12] border border-white/15 text-white/90 hover:text-white text-xs font-syne font-semibold transition-all cursor-pointer group"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-black/[0.04] hover:bg-black/[0.08] dark:bg-white/[0.04] dark:hover:bg-white/[0.12] border border-black/15 dark:border-white/15 text-neutral-800 dark:text-white/90 hover:text-black dark:hover:text-white text-xs font-syne font-semibold transition-all cursor-pointer group"
               title={nextProject ? `${nextProject.title}` : ''}
             >
               <span className="hidden md:inline">{lang === 'fr' ? 'Projet suivant' : 'Next project'}</span>
@@ -130,36 +130,36 @@ export function ProjectDetailView({
         {/* Project Meta Info Header */}
         <div className="space-y-4 mb-8 sm:mb-10">
           <div className="flex flex-wrap items-center gap-3">
-            <span className="px-3.5 py-1 rounded-full text-xs font-syne font-bold bg-white/[0.07] text-white border border-white/15">
+            <span className="px-3.5 py-1 rounded-full text-xs font-syne font-bold bg-black/[0.05] text-neutral-800 border border-black/10 dark:bg-white/[0.07] dark:text-white dark:border-white/15">
               {project.category}
             </span>
-            <span className="flex items-center gap-1.5 text-xs font-bold text-[#CCFF00]">
+            <span className="flex items-center gap-1.5 text-xs font-bold text-neutral-900 dark:text-[#CCFF00]">
               <Calendar className="w-3.5 h-3.5" />
               {project.year}
             </span>
             {project.client && (
-              <span className="flex items-center gap-1.5 text-xs text-[#A1A1AA] font-medium">
-                <User className="w-3.5 h-3.5 text-white/50" />
+              <span className="flex items-center gap-1.5 text-xs text-neutral-500 dark:text-[#A1A1AA] font-medium">
+                <User className="w-3.5 h-3.5 text-neutral-400 dark:text-white/50" />
                 {project.client}
               </span>
             )}
-            <span className="ml-auto font-syne font-bold text-black bg-[#CCFF00] px-4 py-1.5 rounded-full text-xs tracking-wide shadow-xs">
+            <span className="ml-auto font-syne font-bold bg-neutral-900 text-white dark:bg-[#CCFF00] dark:text-black px-4 py-1.5 rounded-full text-xs tracking-wide shadow-xs">
               {project.role}
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-neutral-900 dark:text-white tracking-tight leading-tight">
             {project.title}
           </h1>
 
-          <p className="text-lg sm:text-xl text-[#A1A1AA] font-normal max-w-4xl">
+          <p className="text-lg sm:text-xl text-neutral-600 dark:text-[#A1A1AA] font-normal max-w-4xl">
             {project.subtitle}
           </p>
         </div>
 
         {/* Main Gallery Showcase (16/9 ratio, Carousel & Thumbnails) */}
         <div className="space-y-4 mb-12 sm:mb-16">
-          <div className="relative aspect-[16/9] w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-[#141418] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] group">
+          <div className="relative aspect-[16/9] w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-neutral-200 dark:bg-[#141418] border border-black/10 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.8)] group">
             <AnimatePresence mode="wait">
               <motion.img
                 key={projectImages[currentImageIndex]}
@@ -225,7 +225,7 @@ export function ProjectDetailView({
                   className={`relative w-24 sm:w-32 h-16 sm:h-20 rounded-xl overflow-hidden shrink-0 transition-all duration-200 cursor-pointer ${
                     currentImageIndex === idx
                       ? 'ring-2 ring-[#CCFF00] opacity-100 shadow-[0_0_14px_rgba(204,255,0,0.35)]'
-                      : 'border border-white/20 opacity-60 hover:opacity-100 hover:border-white/40'
+                      : 'border border-black/15 dark:border-white/20 opacity-60 hover:opacity-100 hover:border-black/30 dark:hover:border-white/40'
                   }`}
                 >
                   <img src={img} alt={`Miniature ${idx + 1}`} className="w-full h-full object-cover" />
@@ -240,13 +240,13 @@ export function ProjectDetailView({
           {/* Main textual column (8 cols) */}
           <div className="lg:col-span-8 space-y-8">
             <div className="space-y-4">
-              <h2 className="text-xl sm:text-2xl font-syne font-bold text-white flex items-center gap-3">
+              <h2 className="text-xl sm:text-2xl font-syne font-bold text-neutral-900 dark:text-white flex items-center gap-3">
                 <span>{t('modal.overview')}</span>
               </h2>
-              <p className="text-lg sm:text-xl text-[#E4E4E7] leading-relaxed font-medium">
+              <p className="text-lg sm:text-xl text-neutral-800 dark:text-[#E4E4E7] leading-relaxed font-medium">
                 {project.summary}
               </p>
-              <div className="text-base sm:text-lg text-[#A1A1AA] leading-relaxed space-y-4">
+              <div className="text-base sm:text-lg text-neutral-600 dark:text-[#A1A1AA] leading-relaxed space-y-4">
                 {project.overview.split('\n\n').map((paragraph, pIdx) => (
                   <p key={pIdx}>{paragraph}</p>
                 ))}
@@ -261,10 +261,10 @@ export function ProjectDetailView({
                   download
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-white/[0.08] hover:bg-white/[0.18] text-white border border-white/20 hover:border-[#CCFF00]/50 transition-all duration-200 shadow-sm cursor-pointer group"
+                  className="inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-black/[0.04] hover:bg-black/[0.08] dark:bg-white/[0.08] dark:hover:bg-white/[0.18] text-neutral-900 dark:text-white border border-black/15 dark:border-white/20 hover:border-black dark:hover:border-[#CCFF00] transition-all duration-200 shadow-xs cursor-pointer group"
                 >
-                  <FileDown className="w-5 h-5 text-[#CCFF00] group-hover:scale-110 transition-transform" />
-                  <span className="text-sm sm:text-base font-syne font-semibold tracking-wide text-white">
+                  <FileDown className="w-5 h-5 text-neutral-900 dark:text-[#CCFF00] group-hover:scale-110 transition-transform" />
+                  <span className="text-sm sm:text-base font-syne font-semibold tracking-wide">
                     {lang === 'fr' ? 'Télécharger le document PDF' : 'Download PDF Document'}
                   </span>
                 </a>
@@ -275,16 +275,16 @@ export function ProjectDetailView({
           {/* Sidebar Info Column (4 cols) */}
           <div className="lg:col-span-4 space-y-8">
             {/* Tech Stack card */}
-            <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 space-y-4">
-              <h3 className="text-sm font-syne font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                <Layers className="w-4 h-4 text-[#CCFF00]" />
+            <div className="p-6 rounded-2xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 space-y-4">
+              <h3 className="text-sm font-syne font-bold text-neutral-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                <Layers className="w-4 h-4 text-neutral-900 dark:text-[#CCFF00]" />
                 {lang === 'fr' ? 'Technologies & Outils' : 'Tech Stack & Tools'}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {project.stack.map((tech) => (
                   <span
                     key={tech}
-                    className="h-8 px-3.5 rounded-full bg-white/[0.08] hover:bg-white text-[#E4E4E7] hover:text-black border border-white/15 text-xs font-syne font-medium inline-flex items-center shadow-xs transition-colors duration-150 select-none cursor-default"
+                    className="h-8 px-3.5 rounded-full bg-black/[0.05] hover:bg-neutral-900 hover:text-white dark:bg-white/[0.08] dark:hover:bg-white text-neutral-800 dark:text-[#E4E4E7] dark:hover:text-black border border-black/10 dark:border-white/15 text-xs font-syne font-medium inline-flex items-center shadow-xs transition-colors duration-150 select-none cursor-default"
                   >
                     {tech}
                   </span>
@@ -293,47 +293,47 @@ export function ProjectDetailView({
             </div>
 
             {/* Project Quick Overview info card */}
-            <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 space-y-4 text-xs">
+            <div className="p-6 rounded-2xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 space-y-4 text-xs">
               <div className="space-y-1">
-                <p className="text-[#A1A1AA] uppercase tracking-wider font-semibold">
+                <p className="text-neutral-500 dark:text-[#A1A1AA] uppercase tracking-wider font-semibold">
                   {lang === 'fr' ? 'Client' : 'Client'}
                 </p>
-                <p className="text-sm font-bold text-white">{project.client}</p>
+                <p className="text-sm font-bold text-neutral-900 dark:text-white">{project.client}</p>
               </div>
 
-              <div className="h-px bg-white/10" />
+              <div className="h-px bg-black/10 dark:bg-white/10" />
 
               <div className="space-y-1">
-                <p className="text-[#A1A1AA] uppercase tracking-wider font-semibold">
+                <p className="text-neutral-500 dark:text-[#A1A1AA] uppercase tracking-wider font-semibold">
                   {lang === 'fr' ? 'Rôle' : 'Role'}
                 </p>
-                <p className="text-sm font-bold text-white">{project.role}</p>
+                <p className="text-sm font-bold text-neutral-900 dark:text-white">{project.role}</p>
               </div>
 
-              <div className="h-px bg-white/10" />
+              <div className="h-px bg-black/10 dark:bg-white/10" />
 
               <div className="space-y-1">
-                <p className="text-[#A1A1AA] uppercase tracking-wider font-semibold">
+                <p className="text-neutral-500 dark:text-[#A1A1AA] uppercase tracking-wider font-semibold">
                   {lang === 'fr' ? 'Année' : 'Year'}
                 </p>
-                <p className="text-sm font-bold text-[#CCFF00]">{project.year}</p>
+                <p className="text-sm font-bold text-neutral-900 dark:text-[#CCFF00]">{project.year}</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Bottom Carousel Project Bar (Loop through projects) */}
-        <div className="mt-16 sm:mt-24 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="mt-16 sm:mt-24 pt-8 border-t border-black/10 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6">
           <button
             onClick={goToPrevProject}
-            className="w-full sm:w-auto inline-flex items-center justify-center sm:justify-start gap-3 px-6 py-4 rounded-2xl bg-white/[0.04] hover:bg-white/[0.1] border border-white/15 transition-all cursor-pointer group text-left"
+            className="w-full sm:w-auto inline-flex items-center justify-center sm:justify-start gap-3 px-6 py-4 rounded-2xl bg-black/[0.03] hover:bg-black/[0.08] dark:bg-white/[0.04] dark:hover:bg-white/[0.1] border border-black/10 dark:border-white/15 transition-all cursor-pointer group text-left"
           >
-            <ChevronLeft className="w-5 h-5 text-[#CCFF00] group-hover:-translate-x-1 transition-transform" />
+            <ChevronLeft className="w-5 h-5 text-neutral-900 dark:text-[#CCFF00] group-hover:-translate-x-1 transition-transform" />
             <div>
-              <p className="text-xs text-[#A1A1AA] uppercase font-syne font-semibold">
+              <p className="text-xs text-neutral-500 dark:text-[#A1A1AA] uppercase font-syne font-semibold">
                 {lang === 'fr' ? 'Projet précédent' : 'Previous'}
               </p>
-              <p className="text-sm sm:text-base font-syne font-bold text-white line-clamp-1">
+              <p className="text-sm sm:text-base font-syne font-bold text-neutral-900 dark:text-white line-clamp-1">
                 {prevProject.title}
               </p>
             </div>
@@ -341,24 +341,24 @@ export function ProjectDetailView({
 
           <button
             onClick={onBack}
-            className="px-6 py-3 rounded-full bg-white text-black hover:bg-[#CCFF00] text-xs sm:text-sm font-syne font-bold transition-colors cursor-pointer"
+            className="px-6 py-3 rounded-full bg-neutral-900 text-white hover:bg-black dark:bg-white dark:text-black dark:hover:bg-[#CCFF00] dark:hover:text-black text-xs sm:text-sm font-syne font-bold transition-colors cursor-pointer"
           >
             {lang === 'fr' ? 'Retourner à l’accueil' : 'Return to home'}
           </button>
 
           <button
             onClick={goToNextProject}
-            className="w-full sm:w-auto inline-flex items-center justify-center sm:justify-end gap-3 px-6 py-4 rounded-2xl bg-white/[0.04] hover:bg-white/[0.1] border border-white/15 transition-all cursor-pointer group text-right"
+            className="w-full sm:w-auto inline-flex items-center justify-center sm:justify-end gap-3 px-6 py-4 rounded-2xl bg-black/[0.03] hover:bg-black/[0.08] dark:bg-white/[0.04] dark:hover:bg-white/[0.1] border border-black/10 dark:border-white/15 transition-all cursor-pointer group text-right"
           >
             <div>
-              <p className="text-xs text-[#A1A1AA] uppercase font-syne font-semibold">
+              <p className="text-xs text-neutral-500 dark:text-[#A1A1AA] uppercase font-syne font-semibold">
                 {lang === 'fr' ? 'Projet suivant' : 'Next'}
               </p>
-              <p className="text-sm sm:text-base font-syne font-bold text-white line-clamp-1">
+              <p className="text-sm sm:text-base font-syne font-bold text-neutral-900 dark:text-white line-clamp-1">
                 {nextProject.title}
               </p>
             </div>
-            <ChevronRight className="w-5 h-5 text-[#CCFF00] group-hover:translate-x-1 transition-transform" />
+            <ChevronRight className="w-5 h-5 text-neutral-900 dark:text-[#CCFF00] group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
       </div>

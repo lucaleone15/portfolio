@@ -4,12 +4,12 @@
   <rect x="0.75" y="0.75" width="62.5" height="62.5" rx="15.25" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
 
   <!-- Groupe monogramme LL en diagonale collés -->
-  <!-- L supérieur (gauche-haut) : blanc éclatant -->
-  <path d="M12 12 H19 V30 H32 V37 H12 Z" fill="#FFFFFF"/>
+  <!-- L de GAUCHE situé EN BAS -->
+  <path d="M12 28 H20 V44 H34 V52 H12 Z" fill="#FFFFFF"/>
 
-  <!-- L inférieur (droite-bas, imbriqué en diagonale contre le premier) : blanc -->
-  <path d="M26 26 H33 V44 H46 V51 H26 Z" fill="#FFFFFF"/>
+  <!-- L de DROITE situé EN HAUT (collé en diagonale contre celui de gauche) -->
+  <path d="M26 12 H34 V28 H48 V36 H26 Z" fill="#FFFFFF"/>
 
-  <!-- Point signature vert fluo (#CCFF00) dans le prolongement de la barre du second L -->
-  <circle cx="53" cy="47.5" r="3.75" fill="#CCFF00"/>
+  <!-- Point signature vert fluo (#CCFF00) aligné avec la barre du L de droite en haut -->
+  <circle cx="54" cy="32" r="3.75" fill="#CCFF00"/>
 </svg>
