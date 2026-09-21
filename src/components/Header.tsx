@@ -6,9 +6,10 @@ import { useLanguage } from '../context/LanguageContext';
 
 interface HeaderProps {
   activeSection: string;
+  onNavigateHome?: (sectionId?: string) => void;
 }
 
-export function Header({ activeSection }: HeaderProps) {
+export function Header({ activeSection, onNavigateHome }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const { lang, setLang, t } = useLanguage();
@@ -27,6 +28,10 @@ export function Header({ activeSection }: HeaderProps) {
 
   const scrollTo = (id: string) => {
     setIsMenuOpen(false);
+    if (onNavigateHome) {
+      onNavigateHome(id);
+      return;
+    }
     const element = document.getElementById(id);
     if (element) {
       const headerOffset = 80;
@@ -57,7 +62,13 @@ export function Header({ activeSection }: HeaderProps) {
         <div className="max-w-7xl mx-auto px-6 sm:px-10 h-16 sm:h-20 flex items-center justify-between">
           {/* Logo with baseline green dot right after the 'e' */}
           <button 
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            onClick={() => {
+              if (onNavigateHome) {
+                onNavigateHome();
+              } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+            }}
             className="text-left group cursor-pointer inline-flex items-baseline"
           >
             <span className="font-sans text-xl sm:text-2xl font-black tracking-tight text-white group-hover:text-white transition-colors">

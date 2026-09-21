@@ -1,14 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <!-- Fond sombre #0A0A0C avec contours fins -->
+  <!-- Fond sombre #0A0A0C avec bordure subtile -->
   <rect width="64" height="64" rx="16" fill="#0A0A0C"/>
   <rect x="0.75" y="0.75" width="62.5" height="62.5" rx="15.25" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
 
-  <!-- Premier L (en haut) tracé vectoriel géométrique précis -->
-  <path d="M19 12 H26 V25 H37 V31 H19 Z" fill="#FFFFFF"/>
+  <!-- Groupe monogramme LL en diagonale collés -->
+  <!-- L supérieur (gauche-haut) : blanc éclatant -->
+  <path d="M12 12 H19 V30 H32 V37 H12 Z" fill="#FFFFFF"/>
 
-  <!-- Deuxième L (en bas, en dessous du premier L) -->
-  <path d="M19 35 H26 V48 H37 V54 H19 Z" fill="#FFFFFF"/>
+  <!-- L inférieur (droite-bas, imbriqué en diagonale contre le premier) : blanc -->
+  <path d="M26 26 H33 V44 H46 V51 H26 Z" fill="#FFFFFF"/>
 
-  <!-- Point signature vert fluo (#CCFF00) aligné avec la barre du L inférieur -->
-  <circle cx="45" cy="51" r="3.75" fill="#CCFF00"/>
+  <!-- Point signature vert fluo (#CCFF00) dans le prolongement de la barre du second L -->
+  <circle cx="53" cy="47.5" r="3.75" fill="#CCFF00"/>
 </svg>

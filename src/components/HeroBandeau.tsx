@@ -23,17 +23,17 @@ export function CompetenciesMarquee() {
 
   return (
     <div 
-      className="absolute inset-0 pointer-events-none select-none overflow-hidden z-0 flex flex-col justify-center items-center px-4 sm:px-8 py-6 opacity-[0.055]"
+      className="absolute inset-0 pointer-events-none select-none overflow-hidden z-0 flex flex-col justify-center items-end pr-4 sm:pr-10 lg:pr-16 pl-6 py-6 opacity-[0.065]"
       aria-hidden="true"
     >
-      {/* Background static typographic texture - perfectly fits inside the screen without scrolling and never cut off */}
-      <div className="w-full max-w-6xl mx-auto flex flex-wrap justify-center items-center gap-x-6 sm:gap-x-10 gap-y-4 sm:gap-y-6 text-center">
+      {/* Background static typographic texture - right-aligned, larger, perfectly uncropped */}
+      <div className="w-full max-w-5xl flex flex-wrap justify-end items-center gap-x-6 sm:gap-x-10 gap-y-4 sm:gap-y-6 text-right">
         {competencies.map((item, idx) => (
-          <div key={`bg-comp-${idx}`} className="inline-flex items-center gap-6 sm:gap-10">
-            <span className="text-white font-syne font-black text-xl sm:text-2xl md:text-3xl lg:text-4xl tracking-[0.12em] uppercase leading-tight">
+          <div key={`bg-comp-${idx}`} className="inline-flex items-center gap-5 sm:gap-8 justify-end">
+            <span className="text-white font-syne font-black text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] tracking-[0.08em] uppercase leading-tight">
               {item}
             </span>
-            <span className="text-[#CCFF00] font-black text-xl sm:text-2xl">·</span>
+            <span className="text-[#CCFF00] font-black text-2xl sm:text-3xl">·</span>
           </div>
         ))}
       </div>
@@ -65,17 +65,28 @@ export function HeroBandeau() {
 
   return (
     <div className="w-full mt-4 sm:mt-6 select-none">
-      {/* Tools Marquee with clean floating logos and liquid glass hover lens */}
+      {/* Tools Marquee with clean floating logos and name tag floating directly ABOVE the icon */}
       <div className="relative py-1 bg-transparent">
         <div className="mask-marquee-edges w-full overflow-hidden">
-          <div className="animate-marquee-reverse flex items-center gap-10 sm:gap-14 whitespace-nowrap py-4 sm:py-5">
+          <div className="animate-marquee-reverse flex items-center gap-10 sm:gap-14 whitespace-nowrap pt-8 pb-4 sm:pt-9 sm:pb-5">
             {[...tools, ...tools, ...tools].map((tool, idx) => (
               <div
                 key={`tool-logo-${idx}`}
-                className="relative group shrink-0 flex items-center justify-center cursor-pointer"
+                className="relative group shrink-0 flex flex-col items-center justify-center cursor-pointer"
               >
-                {/* Logo Image without weird box border - enlarged for better visibility */}
-                <div className="opacity-85 group-hover:opacity-100 transition-all duration-200 w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center group-hover:scale-110">
+                {/* Floating Name Badge right ABOVE the icon */}
+                <div className="absolute -top-7 left-1/2 -translate-x-1/2 opacity-0 translate-y-1.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 pointer-events-none z-30">
+                  <div className="relative px-2.5 py-1 rounded-md bg-[#18181B]/95 backdrop-blur-md border border-white/20 shadow-[0_8px_20px_rgba(0,0,0,0.8)] flex items-center justify-center whitespace-nowrap">
+                    <span className="text-[11px] sm:text-xs font-syne font-bold tracking-wide text-white select-none">
+                      {tool.name}
+                    </span>
+                    {/* Small downward indicator triangle */}
+                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#18181B] border-r border-b border-white/20 rotate-45" />
+                  </div>
+                </div>
+
+                {/* Logo Image */}
+                <div className="opacity-80 group-hover:opacity-100 transition-all duration-200 w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center group-hover:scale-110">
                   {tool.id === 'capcut' ? (
                     <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-white p-2 flex items-center justify-center shadow-sm">
                       <img
@@ -93,15 +104,6 @@ export function HeroBandeau() {
                       loading="lazy"
                     />
                   )}
-                </div>
-
-                {/* Liquid Glass Lens over the symbol on hover */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 pointer-events-none z-20">
-                  <div className="relative px-3.5 py-1.5 rounded-full bg-black/85 backdrop-blur-xl border border-white/25 shadow-[0_12px_28px_rgba(0,0,0,0.85)] flex items-center justify-center whitespace-nowrap">
-                    <span className="text-[11px] sm:text-xs font-syne font-bold tracking-wider text-white select-none drop-shadow-sm">
-                      {tool.name}
-                    </span>
-                  </div>
                 </div>
               </div>
             ))}
