@@ -72,8 +72,8 @@ export function Header({ activeSection, onNavigateHome }: HeaderProps) {
             }}
             className="text-left group cursor-pointer inline-flex items-baseline"
           >
-            <span className="font-sans text-xl sm:text-2xl font-black tracking-tight text-neutral-900 dark:text-white transition-colors">
-              Luca Leone<span className="text-neutral-900 dark:text-[#CCFF00] font-black">.</span>
+            <span className="font-syne text-xl sm:text-2xl font-bold tracking-tight text-neutral-900 dark:text-white transition-colors">
+              Luca Leone<span className="text-[#CCFF00] font-bold drop-shadow-[0_0_1px_rgba(0,0,0,0.5)]">.</span>
             </span>
           </button>
 

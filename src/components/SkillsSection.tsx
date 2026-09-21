@@ -16,8 +16,8 @@ export function SkillsSection() {
       title: lang === 'fr' ? 'Développement Web' : 'Web Development',
       description:
         lang === 'fr'
-          ? "Intégration d'applications web modernes et réactives avec TypeScript, React et Tailwind CSS, optimisées pour tous les écrans."
-          : 'Building modern and responsive web applications with TypeScript, React, and Tailwind CSS, optimized for every screen.',
+          ? "Intégration et développement d'applications web sur mesure, modernes, véloces et pensées pour répondre précisément aux besoins de chaque projet."
+          : 'Developing modern, fast, and tailored web applications crafted to match the specific requirements of each project.',
     },
     {
       title: lang === 'fr' ? 'Communication Digitale' : 'Digital Communication',

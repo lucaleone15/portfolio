@@ -1,10 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <!-- Fond sombre épuré #0A0A0C -->
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700&amp;display=swap');
+      .syne-logo {
+        font-family: 'Syne', system-ui, -apple-system, sans-serif;
+        font-weight: 700;
+        font-size: 45px;
+        letter-spacing: -1.5px;
+      }
+    </style>
+  </defs>
   <rect width="64" height="64" rx="14" fill="#0A0A0C"/>
-
-  <!-- Lettre L géométrique, audacieuse et épurée -->
-  <path d="M16 14 H26 V40 H41 V50 H16 Z" fill="#FFFFFF"/>
-
-  <!-- Point vert fluo signature (#CCFF00) -->
-  <circle cx="50" cy="45" r="4.5" fill="#CCFF00"/>
+  <text x="31" y="47" text-anchor="middle" class="syne-logo" fill="#FFFFFF">L<tspan fill="#CCFF00">.</tspan></text>
 </svg>
