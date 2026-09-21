@@ -1,0 +1,38 @@
+# Luca Leone — Portfolio & Profil Professionnel
+> Étudiant en ingénierie des médias à la HEIG-VD (Haute École d'Ingénierie et de Gestion du Canton de Vaud, Suisse). Spécialiste en communication numérique, marketing digital, UI/UX design, développement web et production photo/vidéo.
+
+## À propos
+Luca Leone est un étudiant en dernière année de Bachelor en Ingénierie des Médias à la HEIG-VD (Yverdon-les-Bains, Suisse). Son profil allie sensibilité graphique et compétences techniques dans le numérique. Il conçoit des projets digitaux de bout en bout : stratégie de communication, identité visuelle, interfaces UI/UX, développement de sites web interactifs et création de contenus audiovisuels.
+
+En parallèle de ses études, il exerce le rôle de Community Manager pour le Karting de Vuiteboeuf (Canton de Vaud, Suisse), où il pilote la création de contenus photo et vidéo, l'animation des réseaux sociaux et le développement de la notoriété numérique de la marque.
+
+## Domaines d'expertise
+- **Communication & Marketing Digital** : Stratégie de marque, Community Management, création de contenus engageants (Instagram, TikTok, LinkedIn), rédaction web et acquisition.
+- **UI/UX Design & Ergonomie** : Conception d'interfaces sur Figma, prototypage interactif, wireframes, recherche utilisateur, design systems, accessibilité web.
+- **Développement Web Front-End** : HTML5 sémantique, CSS3, Tailwind CSS, TypeScript, React, Vite, animations fluides (Motion), intégration web responsive.
+- **Production Média & Audiovisuelle** : Photographie, captation et montage vidéo (Premiere Pro, DaVinci Resolve), direction artistique et retouche (Lightroom, Photoshop).
+
+## Projets Clés
+1. **PULSE** : Application mobile de santé et bien-être (UI/UX Design, prototypage interactif, visualisations physiologiques en temps réel).
+2. **Karting de Vuiteboeuf** : Stratégie réseaux sociaux, production photo/vidéo sur circuit et community management.
+3. **Maison Éco** : Identité visuelle, branding et charte graphique éco-responsable.
+4. **Alpina Watch** : Campagne marketing digital et stratégie de contenu horloger.
+5. **Flow State** : Interface web interactive et ergonomie d'application SaaS.
+6. **Verveine Studio** : Conception et développement de site web vitrine pour studio créatif.
+
+## Formation
+- **Bachelor en Ingénierie des Médias** : HEIG-VD (Haute École d'Ingénierie et de Gestion du Canton de Vaud), Yverdon-les-Bains, Suisse.
+- Diplômes secondaires & certifications en technologies numériques et gestion de projet web.
+
+## Langues
+- Français (Langue maternelle)
+- Anglais (Niveau C1)
+- Italien (Niveau B2)
+
+## Localisation
+- Région : Canton de Vaud, Suisse Romande (Yverdon-les-Bains, Vuiteboeuf, Lausanne).
+
+## Contact & Réseaux
+- Email : lucaleone2004@gmail.com
+- Téléphone : +41 79 868 72 04
+- LinkedIn : https://linkedin.com/in/leone-luca
