@@ -27,314 +27,384 @@ export const USER_INFO = {
 
 export const PROJECTS_FR: Project[] = [
   {
-    id: 'pulse-app',
+    id: 'oceansight',
     number: '01',
-    title: 'PULSE',
-    subtitle: 'Application mobile de santé',
-    client: "Projet d'application mobile",
-    year: '2024',
+    title: 'OCEANSIGHT',
+    subtitle: 'Application mobile de signalement des déchets marins',
+    client: 'Projet académique · HEIG-VD',
+    year: '2026',
     category: 'UI/UX Design',
     role: 'UI/UX Design',
-    summary: "Application mobile de santé et bien-être : suivi d'activité, visualisations en temps réel et interface fluide.",
-    overview: "Conception ergonomique complète d'une application mobile facilitant le suivi quotidien des habitudes saines. L'accent a été mis sur la clarté des indicateurs visuels et la fluidité des micro-interactions.",
-    imageUrl: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=1200&auto=format&fit=crop',
+    summary: "Conception d'une application mobile collaborative simplifiant le signalement des déchets marins et encourageant l'action collective.",
+    overview: "Projet UI/UX réalisé dans le cadre d'un semestre à la HEIG-VD avec Sacha Loskov et Romain Blanchard. OceanSight propose une plateforme collaborative permettant de signaler des déchets marins, de rejoindre des missions de nettoyage, de découvrir les espèces menacées et de suivre son impact grâce à des statistiques et des achievements. Le projet s'est appuyé sur une démarche UX itérative intégrant prototypage, tests utilisateurs et amélioration continue de l'expérience.",
+    imageUrl: 'TON_IMAGE_OCEANSIGHT',
     images: [
-      'https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1616469829941-c7200edec809?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1200&auto=format&fit=crop'
+      'TON_IMAGE_OCEANSIGHT_1',
+      'TON_IMAGE_OCEANSIGHT_2',
+      'TON_IMAGE_OCEANSIGHT_3'
     ],
     challenges: [
-      "Visualiser des indicateurs physiologiques complexes sans surcharger l'écran.",
-      'Créer une routine utilisateur engageante et motivante au quotidien.',
-      'Garantir une hiérarchie visuelle contrastée adaptée aux écrans mobiles.'
+      'Simplifier le signalement des déchets marins pour des utilisateurs aux profils variés.',
+      "Concevoir une expérience suffisamment intuitive pour transformer l'identification d'un problème en action concrète.",
+      "Organiser de nombreuses fonctionnalités — carte, galerie, filtres, missions et suivi de l'impact — sans complexifier la navigation."
     ],
     solutions: [
-      'Tableaux de bord modulaires avec jauges circulaires et graphiques épurés.',
-      'Composants interactifs avec transitions fluides sur Figma.',
-      'Système de design cohérent fondé sur des tokens modulaires.'
+      'Conception d’une plateforme mobile collaborative permettant de signaler des filets fantômes et des accumulations de plastique.',
+      'Création d’un parcours utilisateur combinant carte interactive, galerie, filtres, missions de nettoyage et suivi de l’impact.',
+      'Prototypage, tests utilisateurs et itérations successives pour identifier et corriger les frictions de navigation et d’interaction.'
     ],
     metrics: [
-      { label: 'Plateforme', value: 'iOS & Android' },
-      { label: 'Design System', value: 'Figma Tokens' },
-      { label: 'Prototype', value: 'Interactif' },
-      { label: 'Thème', value: 'Santé & Routine' }
+      { label: 'Type', value: 'Application mobile' },
+      { label: 'Démarche', value: 'UX & Prototypage' },
+      { label: 'Évaluation UI', value: '5.4 / 6' },
+      { label: 'Évaluation UX', value: '6 / 6' }
     ],
-    stack: ['Figma', 'UI/UX Design', 'Design System', 'Mobile App'],
+    stack: [
+      'Figma',
+      'UI/UX Design',
+      'Prototypage',
+      'Tests utilisateurs',
+      'Design Thinking'
+    ],
     accentColor: '#CCFF00',
-    badgeBg: 'bg-white/10 text-white',
+    badgeBg: 'bg-cyan-950 text-cyan-200',
     featuredType: 'custom'
   },
+
   {
-    id: 'lumen-studio',
+    id: 'drivegear',
     number: '02',
-    title: 'LUMEN STUDIO',
-    subtitle: 'Boutique en ligne & E-Commerce',
-    client: 'Studio de luminaires & design',
-    year: '2024',
-    category: 'UI/UX Design',
-    role: 'UI/UX Design',
-    summary: "Boutique en ligne minimaliste et soignée : catalogue immersif, fiches produits sculpturales et tunnel d'achat fluide.",
-    overview: "Direction artistique et conception d'une expérience de shopping numérique contemporaine pour des pièces d'éclairage architectural. Travail poussé sur le rendu des textures et l'éclairage photographique.",
-    imageUrl: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?q=80&w=1200&auto=format&fit=crop',
+    title: 'DRIVEGEAR',
+    subtitle: 'Boutique e-commerce automobile',
+    client: 'Projet académique · HEIG-VD',
+    year: '2025',
+    category: 'E-Commerce',
+    role: 'Conception & UX/UI',
+    summary: "Conception d'une boutique e-commerce spécialisée dans l'univers automobile, développée sur WordPress et WooCommerce.",
+    overview: "Création de DriveGear, une boutique en ligne dédiée aux passionnés d'automobile. Le projet porte sur la conception de l'expérience utilisateur, la structuration du catalogue, l'identité visuelle et la mise en place de la boutique avec WordPress et WooCommerce. Une attention particulière a été portée à la clarté de la navigation, à la présentation des produits et à la cohérence de l'ensemble de l'expérience d'achat.",
+    imageUrl: 'TON_IMAGE_DRIVEGEAR',
     images: [
-      'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?q=80&w=1200&auto=format&fit=crop'
+      'TON_IMAGE_DRIVEGEAR_1',
+      'TON_IMAGE_DRIVEGEAR_2',
+      'TON_IMAGE_DRIVEGEAR_3'
     ],
     challenges: [
-      'Mettre en valeur le travail de la lumière et des matériaux nobles en ligne.',
-      "Proposer une navigation fluide sans friction vers le panier.",
-      'Harmoniser typographie élégante et réactivité mobile.'
+      'Structurer une boutique automobile avec une navigation claire et intuitive.',
+      "Créer une identité visuelle cohérente avec l'univers automobile.",
+      "Présenter efficacement les produits et leurs informations tout au long du parcours d'achat."
     ],
     solutions: [
-      "Mise en page éditoriale spacieuse avec grand format d'image.",
-      'Fiches produits interactives avec aperçu 360° et spécifications claires.',
-      'Intégration réactive optimisée pour un chargement rapide.'
+      "Conception de l'interface et de l'expérience utilisateur de la boutique.",
+      'Structuration du catalogue et des différentes catégories de produits.',
+      "Création d'une identité visuelle distinctive et intégration de la boutique avec WordPress et WooCommerce."
     ],
     metrics: [
       { label: 'Type', value: 'E-Commerce' },
-      { label: 'Univers', value: 'Design & Lumière' },
-      { label: 'Responsive', value: 'Mobile-First' },
-      { label: 'Tunnel', value: '3 étapes' }
+      { label: 'CMS', value: 'WordPress' },
+      { label: 'Plateforme', value: 'WooCommerce' },
+      { label: 'Évaluation', value: '5.9 / 6' }
     ],
-    stack: ['Vue.js', 'UI/UX Design', 'E-Commerce', 'Tailwind CSS'],
-    accentColor: '#CCFF00',
-    badgeBg: 'bg-neutral-900 text-white',
+    stack: [
+      'WordPress',
+      'WooCommerce',
+      'UI/UX Design',
+      'E-Commerce',
+      'Web Design'
+    ],
+    accentColor: '#F71735',
+    badgeBg: 'bg-blue-950 text-blue-200',
     featuredType: 'custom'
   },
+
   {
     id: 'karting-vuiteboeuf',
     number: '03',
     title: 'KARTING VUITEBOEUF',
-    subtitle: 'Création de contenus & Réseaux sociaux',
-    client: 'Karting Vuiteboeuf',
-    year: '2024',
+    subtitle: 'Communication digitale & création de contenus',
+    client: 'Karting de Vuiteboeuf',
+    year: '2026',
     category: 'Communication Digitale',
-    role: 'Communication Digitale',
-    summary: "Gestion des réseaux sociaux, création de contenus photo/vidéo sur circuit et promotion des événements.",
-    overview: "Développement de la stratégie de marque pour l'un des plus importants complexes de karting en Suisse romande. Coordination éditoriale, production de visuels dynamiques et animation de la communauté.",
-    imageUrl: 'https://images.unsplash.com/photo-1596727147705-61a532a659bd?q=80&w=1200&auto=format&fit=crop',
+    role: 'Responsable communication digitale',
+    summary: "Développement de la présence digitale du Karting de Vuiteboeuf à travers la création de contenus, la gestion des réseaux sociaux et la promotion des offres et événements.",
+    overview: "Accompagnement du Karting de Vuiteboeuf dans le développement de son image et de sa présence en ligne. De la conception à la publication, je prends en charge la création de contenus photo et vidéo, l'animation d'Instagram et TikTok ainsi que la communication autour des offres, événements, compétitions et activités du circuit.",
+    imageUrl: 'TON_IMAGE_KARTING',
     images: [
-      'https://images.unsplash.com/photo-1596727147705-61a532a659bd?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1200&auto=format&fit=crop'
+      'TON_IMAGE_KARTING_1',
+      'TON_IMAGE_KARTING_2',
+      'TON_IMAGE_KARTING_3'
     ],
     challenges: [
-      'Captation dynamique sur piste avec forte vitesse et conditions de lumière changeantes.',
-      'Fédérer deux audiences distinctes : le grand public loisirs et les pilotes de compétition.',
-      'Maintenir un calendrier éditorial régulier et réactif entre les événements et les courses.'
+      'Moderniser et dynamiser la présence du karting sur les réseaux sociaux.',
+      "Créer des contenus capables de transmettre les sensations et l'expérience vécue sur le circuit.",
+      'Communiquer efficacement sur les offres, événements, compétitions et activités auprès des publics loisirs et compétition.'
     ],
     solutions: [
-      "Production de formats courts verticaux (TikTok, Reels) axés sur l'immersion et l'adrénaline.",
-      "Conception de gabarits visuels harmonisés pour les annonces d'événements et résultats de course.",
-      "Coordination directe entre le site web officiel et les réseaux sociaux pour convertir l'engagement en réservations."
+      'Production de contenus photo et vidéo directement sur le circuit, de la captation à la publication.',
+      'Création de formats adaptés à Instagram et TikTok : Reels, vidéos courtes, stories, carrousels et visuels.',
+      'Mise en place de contenus récurrents autour des courses, résultats, meilleurs chronos, offres et activités du karting.'
     ],
     metrics: [
       { label: 'Plateformes', value: 'Instagram & TikTok' },
-      { label: 'Contenus', value: 'Photo, Vidéo, Print' },
-      { label: 'Canaux', value: 'Web & Réseaux' },
-      { label: 'Secteur', value: 'Sport Automobile' }
+      { label: 'Formats', value: 'Photo, Vidéo & Reels' },
+      { label: 'Communication', value: 'Web & Réseaux sociaux' },
+      { label: 'Secteur', value: 'Sport & Loisirs' }
     ],
-    stack: ['Instagram', 'TikTok', 'Premiere Pro', 'Photoshop', 'Canva'],
+    stack: [
+      'Instagram',
+      'TikTok',
+      'Premiere Pro',
+      'Photoshop',
+      'Canva',
+      'Photo & Vidéo'
+    ],
     accentColor: '#CCFF00',
     badgeBg: 'bg-red-950 text-red-200',
     featuredType: 'custom',
-    pdfUrl: 'https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf',
-    pdfTitle: 'Dossier de communication & Plan médias · Karting Vuiteboeuf'
+    pdfUrl: 'TON_PDF',
+    pdfTitle: 'Dossier de communication & contenus · Karting Vuiteboeuf'
   },
+
   {
-    id: 'nova-editorial',
+    id: 'hug-sang',
     number: '04',
-    title: 'NOVA MAGAZINE',
-    subtitle: 'Média interactif & Webzine',
-    client: 'Publication digitale indépendante',
-    year: '2025',
-    category: 'Développement Web',
-    role: 'Développement Web',
-    summary: "Webzine interactif explorant les cultures numériques, le design d'interaction et la création multimédia.",
-    overview: "Conception et développement d'une plateforme éditoriale moderne dotée d'un mode de lecture immersif, d'animations au défilement soignées et d'un système de typographie suisse rigoureux.",
-    imageUrl: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1200&auto=format&fit=crop',
+    title: 'SANGSATIONNEL',
+    subtitle: 'Campagne digitale & plateforme web',
+    client: 'Hôpitaux universitaires de Genève · Projet académique',
+    year: '2026',
+    category: 'Communication & Digital',
+    role: 'UX/UI Design, Communication & Développement Full-Stack',
+    summary: "Conception d'une campagne de communication et d'une plateforme digitale gamifiée pour dynamiser les collectes de sang au sein des entreprises partenaires des HUG.",
+    overview: "Projet 360° réalisé dans le cadre d'un projet académique pour les Hôpitaux universitaires de Genève. Sangsationnel transforme le don du sang en une enquête interactive afin de rendre la participation plus engageante. Le projet couvre l'ensemble de l'expérience : conception UX/UI, identité et direction artistique, plateforme web full-stack, contenus pour les réseaux sociaux, affiches, bannières intranet et supports promotionnels. La plateforme permet notamment aux collaborateurs de créer leur profil, de passer un quiz d'éligibilité, d'accéder aux informations de leur collecte et de suivre leur impact. Un dashboard administrateur permet aux entreprises de suivre les statistiques de leurs campagnes.",
+    imageUrl: 'TON_IMAGE_HUG',
     images: [
-      'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1481487196290-c152efe083f5?q=80&w=1200&auto=format&fit=crop'
+      'TON_IMAGE_HUG_1',
+      'TON_IMAGE_HUG_2',
+      'TON_IMAGE_HUG_3'
     ],
     challenges: [
-      "Proposer une expérience de lecture confortable sur tous formats d'écrans.",
-      "Intégrer du contenu multimédia (vidéos, galeries d'images, audio) sans ralentir l'affichage.",
-      'Composer une grille typographique flexible et expressive.'
+      'Dynamiser les collectes de sang au sein des entreprises partenaires et favoriser la participation.',
+      'Transformer un sujet institutionnel en une expérience de communication engageante et mémorable.',
+      'Décliner un même concept sur différents supports tout en conservant une identité visuelle cohérente.',
+      "Concevoir une expérience digitale complète, de l'interface utilisateur à l'administration des campagnes."
     ],
     solutions: [
-      'Architecture modulaire en composants TypeScript avec optimisation des images.',
-      'Barre de progression de lecture et indicateurs discrets de chapitres.',
-      'Navigation intuitive avec filtres thématiques instantanés.'
+      "Création d'un univers d'investigation dans lequel chaque participant devient un agent et doit établir son profil avant de rejoindre une mission.",
+      'Conception d’une plateforme web co-brandée adaptée à chaque entreprise partenaire, avec couleurs, logos et informations personnalisées.',
+      'Développement full-stack avec Laravel, Vue.js et MySQL, incluant le parcours utilisateur et le dashboard administrateur.',
+      'Création de contenus de communication pour les réseaux sociaux, affiches, bannières intranet et supports promotionnels.',
+      "Mise en place d'un système de reconnaissance avec un label automatique et un trophée annuel récompensant l'engagement des entreprises."
     ],
     metrics: [
-      { label: 'Type', value: 'Webzine Digital' },
-      { label: 'Stack', value: 'TypeScript & Vite' },
-      { label: 'Accessibilité', value: 'WCAG AA' },
-      { label: 'Performance', value: 'Score 98+' }
+      { label: 'Type', value: 'Projet 360°' },
+      { label: 'Digital', value: 'Web Full-Stack' },
+      { label: 'Communication', value: 'Print & Social Media' },
+      { label: 'Stack', value: 'Laravel & Vue.js' }
     ],
-    stack: ['TypeScript', 'Tailwind CSS', 'UI/UX Design', 'Design Éditorial'],
+    stack: [
+      'Laravel',
+      'Vue.js',
+      'PHP',
+      'MySQL',
+      'UI/UX Design',
+      'Figma',
+      'Communication Digitale',
+      'Social Media',
+      'Print Design'
+    ],
     accentColor: '#CCFF00',
-    badgeBg: 'bg-emerald-950 text-emerald-200',
+    badgeBg: 'bg-red-950 text-red-200',
     featuredType: 'custom'
   }
 ];
 
 export const PROJECTS_EN: Project[] = [
   {
-    id: 'pulse-app',
+    id: 'oceansight',
     number: '01',
-    title: 'PULSE',
-    subtitle: 'Health & Wellness Mobile App',
-    client: 'Mobile App Project',
-    year: '2024',
+    title: 'OCEANSIGHT',
+    subtitle: 'Mobile app for marine waste reporting',
+    client: 'Academic project · HEIG-VD',
+    year: '2026',
     category: 'UI/UX Design',
     role: 'UI/UX Design',
-    summary: 'Health and wellness mobile application: activity tracking, real-time data visualisations, and intuitive interactions.',
-    overview: 'Comprehensive ergonomic design of a mobile application supporting healthy daily habits. Emphasis was placed on clear visual indicators and seamless micro-interactions.',
-    imageUrl: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=1200&auto=format&fit=crop',
+    summary: "Design of a collaborative mobile application that simplifies marine waste reporting and encourages collective action.",
+    overview: "UI/UX project developed over a semester at HEIG-VD with Sacha Loskov and Romain Blanchard. OceanSight is a collaborative platform designed to report marine waste, join clean-up missions, discover endangered species and track personal impact through statistics and achievements. The project followed an iterative UX approach combining prototyping, user testing and continuous improvements to the experience.",
+    imageUrl: 'YOUR_IMAGE_OCEANSIGHT',
     images: [
-      'https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1616469829941-c7200edec809?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1200&auto=format&fit=crop'
+      'YOUR_IMAGE_OCEANSIGHT_1',
+      'YOUR_IMAGE_OCEANSIGHT_2',
+      'YOUR_IMAGE_OCEANSIGHT_3'
     ],
     challenges: [
-      'Visualizing complex physiological metrics without cluttering mobile screens.',
-      'Building an engaging and motivating daily user routine.',
-      'Ensuring strong visual hierarchy tailored for diverse mobile screens.'
+      'Simplify marine waste reporting for users with different profiles and levels of engagement.',
+      'Design an intuitive experience that turns identifying a problem into concrete action.',
+      'Organize multiple features — map, gallery, filters, missions and impact tracking — without making navigation more complex.'
     ],
     solutions: [
-      'Modular dashboards with circular progress rings and clean minimalist charts.',
-      'Interactive prototyping with fluid animated micro-interactions in Figma.',
-      'Consistent design system built on reusable tokens and components.'
+      'Design of a collaborative mobile platform for reporting ghost fishing nets and plastic waste accumulation.',
+      'Creation of a user journey combining an interactive map, gallery, filters, clean-up missions and impact tracking.',
+      'Prototyping, user testing and iterative improvements to identify and resolve navigation and interaction issues.'
     ],
     metrics: [
-      { label: 'Platform', value: 'iOS & Android' },
-      { label: 'Design System', value: 'Figma Tokens' },
-      { label: 'Prototype', value: 'Interactive' },
-      { label: 'Theme', value: 'Health & Wellness' }
+      { label: 'Type', value: 'Mobile Application' },
+      { label: 'Approach', value: 'UX & Prototyping' },
+      { label: 'UI Score', value: '5.4 / 6' },
+      { label: 'UX Score', value: '6 / 6' }
     ],
-    stack: ['Figma', 'UI/UX Design', 'Design System', 'Mobile App'],
+    stack: [
+      'Figma',
+      'UI/UX Design',
+      'Prototyping',
+      'User Testing',
+      'Design Thinking'
+    ],
     accentColor: '#CCFF00',
-    badgeBg: 'bg-white/10 text-white',
+    badgeBg: 'bg-cyan-950 text-cyan-200',
     featuredType: 'custom'
   },
+
   {
-    id: 'lumen-studio',
+    id: 'drivegear',
     number: '02',
-    title: 'LUMEN STUDIO',
-    subtitle: 'Online Shop & E-Commerce',
-    client: 'Lighting & Architectural Design Studio',
-    year: '2024',
-    category: 'UI/UX Design',
-    role: 'UI/UX Design',
-    summary: 'Refined minimalist online shop: immersive product catalog, sculptural detail pages, and seamless checkout flow.',
-    overview: 'Art direction and digital shopping experience design for architectural lighting pieces. Deep focus on texture rendering and photographic lighting.',
-    imageUrl: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?q=80&w=1200&auto=format&fit=crop',
+    title: 'DRIVEGEAR',
+    subtitle: 'Automotive e-commerce store',
+    client: 'Academic project · HEIG-VD',
+    year: '2025',
+    category: 'E-Commerce',
+    role: 'Design & UX/UI',
+    summary: "Design of an e-commerce store dedicated to the automotive world, built with WordPress and WooCommerce.",
+    overview: "Creation of DriveGear, an online store dedicated to automotive enthusiasts. The project focused on user experience, catalogue structure, visual identity and the implementation of the online store using WordPress and WooCommerce. Particular attention was given to clear navigation, product presentation and a consistent purchasing experience.",
+    imageUrl: 'YOUR_IMAGE_DRIVEGEAR',
     images: [
-      'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?q=80&w=1200&auto=format&fit=crop'
+      'YOUR_IMAGE_DRIVEGEAR_1',
+      'YOUR_IMAGE_DRIVEGEAR_2',
+      'YOUR_IMAGE_DRIVEGEAR_3'
     ],
     challenges: [
-      'Highlighting delicate lighting and noble materials in an online medium.',
-      'Delivering frictionless navigation and a seamless path to checkout.',
-      'Harmonizing elegant editorial typography with responsive mobile performance.'
+      'Structure an automotive store with clear and intuitive navigation.',
+      'Create a visual identity consistent with the automotive world.',
+      'Present products and their information effectively throughout the purchasing journey.'
     ],
     solutions: [
-      'Spacious editorial layout with high-resolution imagery and generous breathing room.',
-      'Interactive product sheets with 360° visual previews and clear technical specs.',
-      'Optimized responsive integration ensuring rapid page load times.'
+      'Design of the store interface and overall user experience.',
+      'Structuring of the product catalogue and its different categories.',
+      'Creation of a distinctive visual identity and implementation of the store with WordPress and WooCommerce.'
     ],
     metrics: [
       { label: 'Type', value: 'E-Commerce' },
-      { label: 'Industry', value: 'Design & Lighting' },
-      { label: 'Responsive', value: 'Mobile-First' },
-      { label: 'Checkout', value: '3 steps' }
+      { label: 'CMS', value: 'WordPress' },
+      { label: 'Platform', value: 'WooCommerce' },
+      { label: 'Evaluation', value: '5.9 / 6' }
     ],
-    stack: ['Vue.js', 'UI/UX Design', 'E-Commerce', 'Tailwind CSS'],
-    accentColor: '#CCFF00',
-    badgeBg: 'bg-neutral-900 text-white',
+    stack: [
+      'WordPress',
+      'WooCommerce',
+      'UI/UX Design',
+      'E-Commerce',
+      'Web Design'
+    ],
+    accentColor: '#F71735',
+    badgeBg: 'bg-blue-950 text-blue-200',
     featuredType: 'custom'
   },
+
   {
     id: 'karting-vuiteboeuf',
     number: '03',
     title: 'KARTING VUITEBOEUF',
-    subtitle: 'Social Media & Content Creation',
-    client: 'Karting Vuiteboeuf',
-    year: '2024',
-    category: 'Communication Digitale',
-    role: 'Communication Digitale',
-    summary: 'Social media administration, trackside photo/video creation, and promotion of events.',
-    overview: "Brand strategy development for one of French-speaking Switzerland's largest karting centers. Editorial alignment, high-energy visuals production, and community engagement.",
-    imageUrl: 'https://images.unsplash.com/photo-1596727147705-61a532a659bd?q=80&w=1200&auto=format&fit=crop',
+    subtitle: 'Digital communication & content creation',
+    client: 'Karting de Vuiteboeuf',
+    year: '2026',
+    category: 'Digital Communication',
+    role: 'Digital Communications Manager',
+    summary: "Developing Karting de Vuiteboeuf's digital presence through content creation, social media management and the promotion of offers and events.",
+    overview: "Supporting Karting de Vuiteboeuf in developing its digital image and online presence. From concept to publication, I manage photo and video content creation, Instagram and TikTok activity, as well as communication around offers, events, competitions and activities at the circuit.",
+    imageUrl: 'YOUR_IMAGE_KARTING',
     images: [
-      'https://images.unsplash.com/photo-1596727147705-61a532a659bd?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1200&auto=format&fit=crop'
+      'YOUR_IMAGE_KARTING_1',
+      'YOUR_IMAGE_KARTING_2',
+      'YOUR_IMAGE_KARTING_3'
     ],
     challenges: [
-      'Dynamic high-speed on-track shooting under rapidly shifting indoor/outdoor lighting.',
-      'Uniting two distinct target audiences: casual leisure visitors and competitive racers.',
-      'Maintaining a consistent, reactive content calendar synchronized with races and events.'
+      "Modernize and strengthen the karting center's presence on social media.",
+      'Create content that communicates the sensations and experience of being on the track.',
+      'Effectively communicate offers, events, competitions and activities to both leisure and competitive audiences.'
     ],
     solutions: [
-      'Production of immersive short-form vertical videos (TikTok, Reels) highlighting adrenaline.',
-      'Harmonized visual templates for event announcements and race results.',
-      'Direct coordination between official website and social media to convert engagement into bookings.'
+      'Production of photo and video content directly at the circuit, from shooting to publication.',
+      'Creation of formats adapted to Instagram and TikTok: Reels, short-form videos, stories, carousels and visuals.',
+      'Development of recurring content around races, results, fastest lap times, offers and karting activities.'
     ],
     metrics: [
       { label: 'Platforms', value: 'Instagram & TikTok' },
-      { label: 'Content', value: 'Photo, Video, Print' },
-      { label: 'Channels', value: 'Web & Social' },
-      { label: 'Industry', value: 'Motorsport' }
+      { label: 'Formats', value: 'Photo, Video & Reels' },
+      { label: 'Communication', value: 'Web & Social Media' },
+      { label: 'Industry', value: 'Motorsport & Leisure' }
     ],
-    stack: ['Instagram', 'TikTok', 'Premiere Pro', 'Photoshop', 'Canva'],
+    stack: [
+      'Instagram',
+      'TikTok',
+      'Premiere Pro',
+      'Photoshop',
+      'Canva',
+      'Photo & Video'
+    ],
     accentColor: '#CCFF00',
     badgeBg: 'bg-red-950 text-red-200',
     featuredType: 'custom',
-    pdfUrl: 'https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf',
-    pdfTitle: 'Communication Dossier & Media Plan · Karting Vuiteboeuf'
+    pdfUrl: 'YOUR_PDF',
+    pdfTitle: 'Communication & Content Strategy · Karting Vuiteboeuf'
   },
+
   {
-    id: 'nova-editorial',
+    id: 'hug-sang',
     number: '04',
-    title: 'NOVA MAGAZINE',
-    subtitle: 'Interactive Media & Webzine',
-    client: 'Independent digital publication',
-    year: '2025',
-    category: 'Développement Web',
-    role: 'Développement Web',
-    summary: 'Interactive webzine exploring digital cultures, interaction design, and multimedia creation.',
-    overview: 'Design and development of a modern editorial platform featuring immersive reading mode, smooth scroll animations, and a disciplined Swiss typography system.',
-    imageUrl: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1200&auto=format&fit=crop',
+    title: 'SANGSATIONNEL',
+    subtitle: 'Digital campaign & web platform',
+    client: 'Geneva University Hospitals · Academic project',
+    year: '2026',
+    category: 'Communication & Digital',
+    role: 'UX/UI Design, Communication & Full-Stack Development',
+    summary: "Design of a communication campaign and gamified digital platform to increase blood donation participation within partner companies of the Geneva University Hospitals.",
+    overview: "A 360° academic project developed for the Geneva University Hospitals. Sangsationnel transforms blood donation into an interactive investigation to make participation more engaging. The project covers the entire experience: UX/UI design, visual identity and art direction, a full-stack web platform, social media content, posters, intranet banners and promotional materials. The platform allows employees to create their profile, complete an eligibility quiz, access information about their company's blood drive and track their impact. An administrative dashboard allows companies to monitor campaign statistics.",
+    imageUrl: 'YOUR_IMAGE_HUG',
     images: [
-      'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1481487196290-c152efe083f5?q=80&w=1200&auto=format&fit=crop'
+      'YOUR_IMAGE_HUG_1',
+      'YOUR_IMAGE_HUG_2',
+      'YOUR_IMAGE_HUG_3'
     ],
     challenges: [
-      'Delivering a comfortable reading experience across all screen sizes.',
-      'Integrating rich multimedia (videos, image galleries, audio) without performance hitches.',
-      'Composing an expressive, flexible typographic grid.'
+      'Increase participation in blood drives within partner companies.',
+      'Transform an institutional topic into an engaging and memorable communication experience.',
+      'Adapt the same concept across multiple communication channels while maintaining a consistent visual identity.',
+      'Design a complete digital experience, from the user interface to campaign administration.'
     ],
     solutions: [
-      'Modular TypeScript component architecture with proactive image optimization.',
-      'Reading progress indicator and discrete chapter markers.',
-      'Intuitive navigation with instant thematic filters.'
+      'Creation of an investigation universe in which each participant becomes an agent and establishes their profile before joining a mission.',
+      'Design of a co-branded web experience adapted to each partner company, with personalized colors, logos and information.',
+      'Full-stack development using Laravel, Vue.js and MySQL, including the user journey and administrative dashboard.',
+      'Creation of communication content for social media, posters, intranet banners and promotional materials.',
+      'Implementation of a recognition system combining an automatic label and an annual trophy rewarding company engagement.'
     ],
     metrics: [
-      { label: 'Type', value: 'Digital Webzine' },
-      { label: 'Stack', value: 'TypeScript & Vite' },
-      { label: 'Accessibility', value: 'WCAG AA' },
-      { label: 'Performance', value: 'Score 98+' }
+      { label: 'Type', value: '360° Project' },
+      { label: 'Digital', value: 'Full-Stack Web' },
+      { label: 'Communication', value: 'Print & Social Media' },
+      { label: 'Stack', value: 'Laravel & Vue.js' }
     ],
-    stack: ['TypeScript', 'Tailwind CSS', 'UI/UX Design', 'Editorial Design'],
+    stack: [
+      'Laravel',
+      'Vue.js',
+      'PHP',
+      'MySQL',
+      'UI/UX Design',
+      'Figma',
+      'Digital Communication',
+      'Social Media',
+      'Print Design'
+    ],
     accentColor: '#CCFF00',
-    badgeBg: 'bg-emerald-950 text-emerald-200',
+    badgeBg: 'bg-red-950 text-red-200',
     featuredType: 'custom'
   }
 ];
