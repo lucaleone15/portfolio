@@ -484,7 +484,7 @@ export function AdminModal({ isOpen, onClose }: AdminModalProps) {
             </div>
 
             {filePersistedNotice && (
-              <div className="text-xs text-[#CCFF00] font-mono text-center sm:text-left truncate max-w-xs">
+              <div className="text-xs text-[#CCFF00] font-sans font-medium text-center sm:text-left truncate max-w-xs">
                 {filePersistedNotice}
               </div>
             )}

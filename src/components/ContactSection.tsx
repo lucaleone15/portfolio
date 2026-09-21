@@ -294,7 +294,7 @@ export function ContactSection({ onOpenAdmin }: ContactSectionProps) {
                 type="button"
                 onClick={onOpenAdmin}
                 title="Éditeur de projets (Ctrl+E ou clic)"
-                className="text-[#65A30D] dark:text-[#CCFF00] hover:opacity-75 transition-opacity cursor-pointer select-none inline-block p-0.5 font-black text-sm"
+                className="text-[#CCFF00] drop-shadow-[0_0_1px_rgba(0,0,0,0.5)] hover:opacity-75 transition-opacity cursor-pointer select-none inline-block p-0.5 font-black text-sm"
                 aria-label="Ouvrir l'éditeur de projets"
               >
                 .
@@ -339,7 +339,7 @@ export function ContactSection({ onOpenAdmin }: ContactSectionProps) {
               ) : (
                 <Moon className="w-3 h-3 text-neutral-600" />
               )}
-              <span className="font-mono text-[10px] tracking-tight">{theme === 'dark' ? 'Light' : 'Dark'}</span>
+              <span className="font-syne font-bold text-[10px] tracking-wide uppercase">{theme === 'dark' ? 'Light' : 'Dark'}</span>
             </button>
           </div>
         </footer>

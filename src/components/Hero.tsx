@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { useLanguage } from '../context/LanguageContext';
+import { HeroBandeau } from './HeroBandeau';
 
 export function Hero() {
   const { lang, t } = useLanguage();
@@ -10,7 +11,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-[90dvh] pt-24 sm:pt-32 pb-16 sm:pb-24 border-b border-black/[0.06] dark:border-white/[0.06] overflow-hidden flex flex-col justify-center bg-[#F9F9FB] dark:bg-[#0A0A0C] transition-colors duration-300">
+    <section className="relative min-h-[90dvh] pt-24 sm:pt-32 pb-10 sm:pb-14 border-b border-black/[0.06] dark:border-white/[0.06] overflow-hidden flex flex-col justify-between bg-[#F9F9FB] dark:bg-[#0A0A0C] transition-colors duration-300">
       {/* Main Content Area - Clean, airy, zero clutter */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 w-full py-8 sm:py-12">
         <motion.div
@@ -19,7 +20,7 @@ export function Hero() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-5xl space-y-6 sm:space-y-8"
         >
-          {/* Main Title with enhanced typography and subtle neon in dark mode */}
+          {/* Main Title with enhanced typography and neon in dark mode */}
           <h1 className="text-[2.1rem] leading-[1.2] sm:text-4xl md:text-5xl lg:text-[3.6rem] xl:text-[4.1rem] sm:leading-[1.16] lg:leading-[1.12] text-neutral-900 dark:text-white/95 tracking-tight font-normal">
             {lang === 'fr' ? (
               <>
@@ -75,6 +76,17 @@ export function Hero() {
           </div>
         </motion.div>
       </div>
+
+      {/* Scrolling competencies & tools logos marquee */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full mt-6"
+      >
+        <HeroBandeau />
+      </motion.div>
     </section>
   );
 }
+

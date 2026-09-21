@@ -1,5 +1,3 @@
-import { useLanguage } from '../context/LanguageContext';
-
 interface ToolLogo {
   id: string;
   name: string;
@@ -7,21 +5,7 @@ interface ToolLogo {
 }
 
 export function HeroBandeau() {
-  const { t } = useLanguage();
-
-  const competencies: string[] = (t('marquee.competencies') as unknown as string[]) || [
-    'UI / UX DESIGN',
-    'DÉVELOPPEMENT WEB',
-    'COMMUNICATION DIGITALE',
-    'STRATÉGIE DE MARQUE & BRANDING',
-    'CRÉATION DE CONTENUS & SOCIAL MEDIA',
-    'PRODUCTION VIDÉO & MONTAGE',
-    'PHOTOGRAPHIE & RETOUCHE',
-    'DESIGN SYSTEM & PROTOTYPAGE',
-    'COMMUNITY MANAGEMENT'
-  ];
-
-  // Comprehensive tool list mapped to all assets in /public/tools/
+  // Comprehensive list of software, tools & programming languages
   const tools: ToolLogo[] = [
     { id: 'figma', name: 'Figma', defaultSrc: '/tools/figma.webp' },
     { id: 'photoshop', name: 'Adobe Photoshop', defaultSrc: '/tools/photoshop.webp' },
@@ -43,29 +27,11 @@ export function HeroBandeau() {
   ];
 
   return (
-    <div className="w-full mt-6 sm:mt-10 select-none space-y-3 sm:space-y-4">
-      {/* 1. Dedicated, crystal-clear Competencies Marquee Tape */}
-      <div className="relative py-2.5 sm:py-3 bg-black/[0.02] dark:bg-white/[0.02] border-y border-black/[0.06] dark:border-white/[0.06] overflow-hidden">
+    <div className="w-full select-none">
+      {/* Software, Tools & Programming Languages Marquee */}
+      <div className="relative py-2 bg-transparent">
         <div className="mask-marquee-edges w-full overflow-hidden">
-          <div className="animate-marquee flex items-center gap-6 sm:gap-10 whitespace-nowrap">
-            {[...competencies, ...competencies, ...competencies].map((item, idx) => (
-              <div key={`comp-tape-${idx}`} className="inline-flex items-center gap-6 sm:gap-10">
-                <span className="font-syne font-bold text-xs sm:text-sm tracking-[0.14em] uppercase text-neutral-800 dark:text-neutral-200">
-                  {item}
-                </span>
-                <span className="text-neutral-400 dark:text-[#CCFF00] font-bold text-xs sm:text-sm select-none">
-                  ✦
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* 2. Tools Marquee with clean floating logos and name tag floating directly ABOVE the icon */}
-      <div className="relative py-1 bg-transparent">
-        <div className="mask-marquee-edges w-full overflow-hidden">
-          <div className="animate-marquee-reverse flex items-center gap-10 sm:gap-14 whitespace-nowrap pt-7 pb-3 sm:pt-8 sm:pb-4">
+          <div className="animate-marquee flex items-center gap-10 sm:gap-14 whitespace-nowrap pt-7 pb-2 sm:pt-8 sm:pb-3">
             {[...tools, ...tools, ...tools].map((tool, idx) => (
               <div
                 key={`tool-logo-${idx}`}
@@ -83,7 +49,7 @@ export function HeroBandeau() {
                 </div>
 
                 {/* Logo Image */}
-                <div className="opacity-80 group-hover:opacity-100 transition-all duration-200 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center group-hover:scale-110">
+                <div className="opacity-75 group-hover:opacity-100 transition-all duration-200 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center group-hover:scale-110">
                   {tool.id === 'capcut' ? (
                     <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white p-2 flex items-center justify-center shadow-xs">
                       <img
@@ -97,7 +63,7 @@ export function HeroBandeau() {
                     <img
                       src={tool.defaultSrc}
                       alt={tool.name}
-                      className="w-full h-full max-w-[42px] max-h-[42px] sm:max-w-[48px] sm:max-h-[48px] object-contain select-none drop-shadow-xs"
+                      className="w-full h-full max-w-[40px] max-h-[40px] sm:max-w-[46px] sm:max-h-[46px] object-contain select-none drop-shadow-xs"
                       loading="lazy"
                     />
                   )}

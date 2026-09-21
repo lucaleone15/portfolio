@@ -136,17 +136,14 @@ export function AboutSection() {
                 <div className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-500 dark:text-[#A1A1AA]">
                   <span>{t('about.languagesTitle')}</span>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 sm:gap-2.5">
                   {languages.map((item, idx) => (
                     <div
                       key={`lang-${idx}`}
-                      className="group/lang relative h-8 px-3.5 rounded-full bg-neutral-900 text-white hover:bg-black dark:bg-white dark:text-black dark:hover:bg-[#CCFF00] dark:hover:text-black text-xs font-syne font-bold inline-flex items-center gap-1.5 shadow-xs transition-all duration-200 cursor-default select-none border border-transparent hover:border-[#CCFF00]/40"
+                      className="h-8 px-3.5 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-black dark:hover:bg-[#CCFF00] dark:hover:text-black text-xs font-syne font-bold inline-flex items-center gap-1.5 shadow-xs transition-colors duration-150 cursor-default select-none"
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#CCFF00] shrink-0" />
-                      <span className="font-syne font-bold">{item.name}</span>
-                      <span className="max-w-0 opacity-0 group-hover/lang:max-w-xs group-hover/lang:opacity-100 transition-all duration-200 overflow-hidden whitespace-nowrap opacity-80 font-syne font-medium pl-0.5">
-                        · {item.level}
-                      </span>
+                      <span>{item.name}</span>
+                      <span className="text-white/60 dark:text-black/60 font-medium">· {item.level}</span>
                     </div>
                   ))}
                 </div>
@@ -212,7 +209,7 @@ export function AboutSection() {
                             <ul key={pIdx} className="space-y-2 my-2.5 pl-0.5">
                               {lines.map((line, bIdx) => (
                                 <li key={bIdx} className="flex items-start gap-2.5 text-neutral-800 dark:text-white/85">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-[#CCFF00] border border-black/20 dark:border-none shadow-[0_0_4px_rgba(204,255,0,0.5)] mt-1.5 shrink-0" />
+                                  <span className="w-1.5 h-1.5 rounded-full bg-neutral-800 dark:bg-neutral-300 mt-1.5 shrink-0" />
                                   <span>{line.replace(/^•\s*/, '')}</span>
                                 </li>
                               ))}
