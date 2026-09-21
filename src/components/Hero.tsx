@@ -22,6 +22,17 @@ export function Hero() {
         >
           {/* Main Title with enhanced typography and neon in dark mode */}
           <h1 className="text-[2.1rem] leading-[1.2] sm:text-4xl md:text-5xl lg:text-[3.6rem] xl:text-[4.1rem] sm:leading-[1.16] lg:leading-[1.12] text-neutral-900 dark:text-white/95 tracking-tight font-normal">
+            <span className="block font-sans font-light text-xl sm:text-2xl md:text-3xl text-neutral-600 dark:text-neutral-300 tracking-normal mb-3 sm:mb-4">
+              {lang === 'fr' ? (
+                <>
+                  Salut, je suis <span className="font-medium text-neutral-950 dark:text-white">Luca</span>,
+                </>
+              ) : (
+                <>
+                  Hi, I'm <span className="font-medium text-neutral-950 dark:text-white">Luca</span>,
+                </>
+              )}
+            </span>
             {lang === 'fr' ? (
               <>
                 Étudiant en{' '}
@@ -29,7 +40,7 @@ export function Hero() {
                   ingénierie des médias
                 </span>{' '}
                 à la <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">HEIG-VD,</span>{' '}
-                je conçois des projets numériques où{' '}
+                je conçois des projets où{' '}
                 <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">créativité,</span>{' '}
                 <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">design</span> et{' '}
                 <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">technologies web</span>{' '}
@@ -37,14 +48,12 @@ export function Hero() {
               </>
             ) : (
               <>
-                <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">
-                  Media Engineering
-                </span>{' '}
-                student at <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">HEIG-VD,</span>{' '}
-                I craft digital projects bridging{' '}
+                Media Engineering student at{' '}
+                <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">HEIG-VD,</span>{' '}
+                crafting digital projects where{' '}
                 <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">creativity,</span>{' '}
                 <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">design,</span> and{' '}
-                <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">web technologies.</span>
+                <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">web technologies</span> meet.
               </>
             )}
           </h1>

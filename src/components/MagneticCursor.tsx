@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'motion/react';
 
 export function MagneticCursor() {
@@ -14,9 +14,15 @@ export function MagneticCursor() {
   const cursorX = useSpring(mouseX, { stiffness: 950, damping: 48, mass: 0.2 });
   const cursorY = useSpring(mouseY, { stiffness: 950, damping: 48, mass: 0.2 });
 
+  const isVisibleRef = useRef(false);
+
   useEffect(() => {
-    // Disable completely on touch devices / tablets / mobile
-    if (window.matchMedia('(pointer: coarse)').matches) {
+    // Only disable if device ONLY has coarse pointer (pure touch phone/tablet)
+    // Check if any fine pointer exists (mouse/trackpad)
+    const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+    const isCoarseOnly = window.matchMedia('(pointer: coarse)').matches && !hasFinePointer;
+    
+    if (isCoarseOnly) {
       setIsTouchDevice(true);
       return;
     }
@@ -24,7 +30,10 @@ export function MagneticCursor() {
     document.documentElement.classList.add('custom-cursor-active');
 
     const onMouseMove = (e: MouseEvent) => {
-      if (!isVisible) setIsVisible(true);
+      if (!isVisibleRef.current) {
+        isVisibleRef.current = true;
+        setIsVisible(true);
+      }
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
     };
@@ -38,8 +47,14 @@ export function MagneticCursor() {
 
     const onMouseDown = () => setIsClicked(true);
     const onMouseUp = () => setIsClicked(false);
-    const onMouseLeave = () => setIsVisible(false);
-    const onMouseEnter = () => setIsVisible(true);
+    const onMouseLeave = () => {
+      isVisibleRef.current = false;
+      setIsVisible(false);
+    };
+    const onMouseEnter = () => {
+      isVisibleRef.current = true;
+      setIsVisible(true);
+    };
 
     window.addEventListener('mousemove', onMouseMove, { passive: true });
     window.addEventListener('mouseover', handleMouseOver);
@@ -57,7 +72,7 @@ export function MagneticCursor() {
       document.removeEventListener('mouseleave', onMouseLeave);
       document.removeEventListener('mouseenter', onMouseEnter);
     };
-  }, [isVisible, mouseX, mouseY, isTouchDevice]);
+  }, [mouseX, mouseY]);
 
   if (isTouchDevice || !isVisible) return null;
 
@@ -77,7 +92,7 @@ export function MagneticCursor() {
         scale: { type: 'spring', stiffness: 500, damping: 28 },
         opacity: { duration: 0.15 },
       }}
-      className="pointer-events-none fixed top-0 left-0 z-50 w-3 h-3 rounded-full bg-white mix-blend-difference"
+      className="pointer-events-none fixed top-0 left-0 z-[99999] w-3 h-3 rounded-full bg-white mix-blend-difference"
     />
   );
 }

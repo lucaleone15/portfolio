@@ -3,44 +3,15 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --font-display: "Plus Jakarta Sans", "Satoshi", sans-serif;
+  --font-display: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
   --display-tracking: -0.025em;
   --display-weight: 700;
-}
-
-[data-font-preset="creatif"] {
-  --font-display: "Plus Jakarta Sans", "Satoshi", sans-serif;
-  --font-body: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-  --display-tracking: -0.025em;
-  --display-weight: 700;
-}
-
-[data-font-preset="swiss"] {
-  --font-display: "Satoshi", "Plus Jakarta Sans", sans-serif;
-  --font-body: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-  --display-tracking: -0.035em;
-  --display-weight: 700;
-}
-
-[data-font-preset="tech"] {
-  --font-display: "Clash Display", "Manrope", sans-serif;
-  --font-body: "Manrope", -apple-system, BlinkMacSystemFont, sans-serif;
-  --display-tracking: -0.025em;
-  --display-weight: 600;
-}
-
-[data-font-preset="editorial"] {
-  --font-display: "Instrument Serif", "Fraunces", Georgia, serif;
-  --font-body: "Work Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-  --display-tracking: -0.015em;
-  --display-weight: 400;
 }
 
 @theme {
   --font-serif: var(--font-display);
   --font-sans: var(--font-body);
-  --font-clash: "Clash Display", sans-serif;
   --font-syne: "Syne", sans-serif;
 
   --color-paper: #F7F6F3;
