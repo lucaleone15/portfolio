@@ -11,7 +11,7 @@
       "role": "UI/UX Design",
       "summary": "Conception d'une application mobile collaborative simplifiant le signalement des déchets marins et encourageant l'action collective.",
       "overview": "Projet UI/UX réalisé dans le cadre d'un semestre à la HEIG-VD avec Sacha Loskov et Romain Blanchard. OceanSight propose une plateforme collaborative permettant de signaler des déchets marins, de rejoindre des missions de nettoyage, de découvrir les espèces menacées et de suivre son impact grâce à des statistiques et des achievements. Le projet s'est appuyé sur une démarche UX itérative intégrant prototypage, tests utilisateurs et amélioration continue de l'expérience.",
-      "imageUrl": "TON_IMAGE_OCEANSIGHT",
+      "imageUrl": "/images/OceanSight-01.png",
       "images": [
         "TON_IMAGE_OCEANSIGHT_1",
         "TON_IMAGE_OCEANSIGHT_2",
@@ -42,7 +42,9 @@
       ],
       "accentColor": "#CCFF00",
       "badgeBg": "bg-cyan-950 text-cyan-200",
-      "featuredType": "custom"
+      "featuredType": "custom",
+      "pdfUrl": "/pdf/OceanSight.pdf",
+      "pdfTitle": "Projet OceanSight · UI/UX Design"
     },
     {
       "id": "drivegear",
@@ -55,7 +57,7 @@
       "role": "Conception & UX/UI",
       "summary": "Conception d'une boutique e-commerce spécialisée dans l'univers automobile, développée sur WordPress et WooCommerce.",
       "overview": "Création de DriveGear, une boutique en ligne dédiée aux passionnés d'automobile. Le projet porte sur la conception de l'expérience utilisateur, la structuration du catalogue, l'identité visuelle et la mise en place de la boutique avec WordPress et WooCommerce. Une attention particulière a été portée à la clarté de la navigation, à la présentation des produits et à la cohérence de l'ensemble de l'expérience d'achat.",
-      "imageUrl": "TON_IMAGE_DRIVEGEAR",
+      "imageUrl": "/images/DriveGear-01.png",
       "images": [
         "TON_IMAGE_DRIVEGEAR_1",
         "TON_IMAGE_DRIVEGEAR_2",
@@ -99,7 +101,7 @@
       "role": "Responsable communication digitale",
       "summary": "Développement de la présence digitale du Karting de Vuiteboeuf à travers la création de contenus, la gestion des réseaux sociaux et la promotion des offres et événements.",
       "overview": "Accompagnement du Karting de Vuiteboeuf dans le développement de son image et de sa présence en ligne. De la conception à la publication, je prends en charge la création de contenus photo et vidéo, l'animation d'Instagram et TikTok ainsi que la communication autour des offres, événements, compétitions et activités du circuit.",
-      "imageUrl": "TON_IMAGE_KARTING",
+      "imageUrl": "/images/KV-01.png",
       "images": [
         "TON_IMAGE_KARTING_1",
         "TON_IMAGE_KARTING_2",
@@ -132,7 +134,7 @@
       "accentColor": "#CCFF00",
       "badgeBg": "bg-red-950 text-red-200",
       "featuredType": "custom",
-      "pdfUrl": "TON_PDF",
+      "pdfUrl": "/pdf/Repenser-la-communication-digitale-du-Karting-Vuiteboeuf.pdf",
       "pdfTitle": "Dossier de communication & contenus · Karting Vuiteboeuf"
     },
     {
@@ -146,7 +148,7 @@
       "role": "UX/UI Design, Communication & Développement Full-Stack",
       "summary": "Conception d'une campagne de communication et d'une plateforme digitale gamifiée pour dynamiser les collectes de sang au sein des entreprises partenaires des HUG.",
       "overview": "Projet 360° réalisé dans le cadre d'un projet académique pour les Hôpitaux universitaires de Genève. Sangsationnel transforme le don du sang en une enquête interactive afin de rendre la participation plus engageante. Le projet couvre l'ensemble de l'expérience : conception UX/UI, identité et direction artistique, plateforme web full-stack, contenus pour les réseaux sociaux, affiches, bannières intranet et supports promotionnels. La plateforme permet notamment aux collaborateurs de créer leur profil, de passer un quiz d'éligibilité, d'accéder aux informations de leur collecte et de suivre leur impact. Un dashboard administrateur permet aux entreprises de suivre les statistiques de leurs campagnes.",
-      "imageUrl": "TON_IMAGE_HUG",
+      "imageUrl": "/images/HUG-01.png",
       "images": [
         "TON_IMAGE_HUG_1",
         "TON_IMAGE_HUG_2",
@@ -184,7 +186,9 @@
       ],
       "accentColor": "#CCFF00",
       "badgeBg": "bg-red-950 text-red-200",
-      "featuredType": "custom"
+      "featuredType": "custom",
+      "pdfUrl": "/pdf/ProjInt1_HUG.pdf",
+      "pdfTitle": "Projet Sangsationnel · HUG"
     }
   ],
   "en": [
@@ -199,7 +203,7 @@
       "role": "UI/UX Design",
       "summary": "Design of a collaborative mobile application that simplifies marine waste reporting and encourages collective action.",
       "overview": "UI/UX project developed over a semester at HEIG-VD with Sacha Loskov and Romain Blanchard. OceanSight is a collaborative platform designed to report marine waste, join clean-up missions, discover endangered species and track personal impact through statistics and achievements. The project followed an iterative UX approach combining prototyping, user testing and continuous improvements to the experience.",
-      "imageUrl": "YOUR_IMAGE_OCEANSIGHT",
+      "imageUrl": "/images/OceanSight-01.png",
       "images": [
         "YOUR_IMAGE_OCEANSIGHT_1",
         "YOUR_IMAGE_OCEANSIGHT_2",
@@ -230,7 +234,9 @@
       ],
       "accentColor": "#CCFF00",
       "badgeBg": "bg-cyan-950 text-cyan-200",
-      "featuredType": "custom"
+      "featuredType": "custom",
+      "pdfUrl": "/pdf/OceanSight.pdf",
+      "pdfTitle": "Projet OceanSight · UI/UX Design"
     },
     {
       "id": "drivegear",
@@ -243,7 +249,7 @@
       "role": "Design & UX/UI",
       "summary": "Design of an e-commerce store dedicated to the automotive world, built with WordPress and WooCommerce.",
       "overview": "Creation of DriveGear, an online store dedicated to automotive enthusiasts. The project focused on user experience, catalogue structure, visual identity and the implementation of the online store using WordPress and WooCommerce. Particular attention was given to clear navigation, product presentation and a consistent purchasing experience.",
-      "imageUrl": "YOUR_IMAGE_DRIVEGEAR",
+      "imageUrl": "/images/DriveGear-01.png",
       "images": [
         "YOUR_IMAGE_DRIVEGEAR_1",
         "YOUR_IMAGE_DRIVEGEAR_2",
@@ -287,7 +293,7 @@
       "role": "Digital Communications Manager",
       "summary": "Developing Karting de Vuiteboeuf's digital presence through content creation, social media management and the promotion of offers and events.",
       "overview": "Supporting Karting de Vuiteboeuf in developing its digital image and online presence. From concept to publication, I manage photo and video content creation, Instagram and TikTok activity, as well as communication around offers, events, competitions and activities at the circuit.",
-      "imageUrl": "YOUR_IMAGE_KARTING",
+      "imageUrl": "/images/KV-01.png",
       "images": [
         "YOUR_IMAGE_KARTING_1",
         "YOUR_IMAGE_KARTING_2",
@@ -320,8 +326,8 @@
       "accentColor": "#CCFF00",
       "badgeBg": "bg-red-950 text-red-200",
       "featuredType": "custom",
-      "pdfUrl": "YOUR_PDF",
-      "pdfTitle": "Communication & Content Strategy · Karting Vuiteboeuf"
+      "pdfUrl": "/pdf/Repenser-la-communication-digitale-du-Karting-Vuiteboeuf.pdf",
+      "pdfTitle": "Dossier de communication & contenus · Karting Vuiteboeuf"
     },
     {
       "id": "hug-sang",
@@ -334,7 +340,7 @@
       "role": "UX/UI Design, Communication & Full-Stack Development",
       "summary": "Design of a communication campaign and gamified digital platform to increase blood donation participation within partner companies of the Geneva University Hospitals.",
       "overview": "A 360° academic project developed for the Geneva University Hospitals. Sangsationnel transforms blood donation into an interactive investigation to make participation more engaging. The project covers the entire experience: UX/UI design, visual identity and art direction, a full-stack web platform, social media content, posters, intranet banners and promotional materials. The platform allows employees to create their profile, complete an eligibility quiz, access information about their company's blood drive and track their impact. An administrative dashboard allows companies to monitor campaign statistics.",
-      "imageUrl": "YOUR_IMAGE_HUG",
+      "imageUrl": "/images/HUG-01.png",
       "images": [
         "YOUR_IMAGE_HUG_1",
         "YOUR_IMAGE_HUG_2",
@@ -372,7 +378,9 @@
       ],
       "accentColor": "#CCFF00",
       "badgeBg": "bg-red-950 text-red-200",
-      "featuredType": "custom"
+      "featuredType": "custom",
+      "pdfUrl": "/pdf/ProjInt1_HUG.pdf",
+      "pdfTitle": "Projet Sangsationnel · HUG"
     }
   ]
 }
