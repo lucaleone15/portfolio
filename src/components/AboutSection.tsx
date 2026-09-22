@@ -190,11 +190,11 @@ export function AboutSection() {
                     key={`exp-${idx}`}
                     className="pb-6 border-b border-black/[0.06] dark:border-white/[0.06] last:border-b-0 last:pb-0 transition-colors duration-200 group"
                   >
-                    <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+                    <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-2 mb-1.5">
                       <h4 className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white group-hover:text-black dark:group-hover:text-[#CCFF00] transition-colors">
                         {item.title}
                       </h4>
-                      <span className="text-xs font-bold text-neutral-900 dark:text-[#CCFF00] tracking-wide">
+                      <span className="text-xs font-bold text-neutral-900 dark:text-[#CCFF00] tracking-wide shrink-0">
                         {item.period}
                       </span>
                     </div>
@@ -242,11 +242,11 @@ export function AboutSection() {
                     key={`edu-${idx}`}
                     className="pb-6 border-b border-black/[0.06] dark:border-white/[0.06] last:border-b-0 last:pb-0 transition-colors duration-200 group"
                   >
-                    <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+                    <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-2 mb-1.5">
                       <h4 className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white group-hover:text-black dark:group-hover:text-[#CCFF00] transition-colors">
                         {item.title}
                       </h4>
-                      <span className="text-xs font-bold text-neutral-900 dark:text-[#CCFF00] tracking-wide">
+                      <span className="text-xs font-bold text-neutral-900 dark:text-[#CCFF00] tracking-wide shrink-0">
                         {item.period}
                       </span>
                     </div>

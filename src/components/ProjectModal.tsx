@@ -1,6 +1,6 @@
 import { useEffect, useState, MouseEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, ChevronLeft, ChevronRight, FileDown } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, FileDown, Users } from 'lucide-react';
 import { Project } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -71,7 +71,18 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           {/* Top Bar */}
           <div className="p-4 sm:p-5 border-b border-white/10 flex items-center justify-between bg-white/[0.02] shrink-0">
             <div className="flex items-center gap-3 text-xs font-semibold">
-              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/[0.06] text-white border border-white/10">
+              <span
+                className={`px-3 py-1 rounded-full text-xs font-syne font-bold ${
+                  activeProject.accentColor && activeProject.accentColor !== '#CCFF00'
+                    ? 'text-white'
+                    : 'bg-[#CCFF00] text-black'
+                }`}
+                style={
+                  activeProject.accentColor && activeProject.accentColor !== '#CCFF00'
+                    ? { backgroundColor: activeProject.accentColor }
+                    : undefined
+                }
+              >
                 {activeProject.category}
               </span>
               <span className="text-[#CCFF00] font-bold">{activeProject.year}</span>
@@ -180,6 +191,23 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 </p>
               </div>
             </div>
+
+            {/* Team / Collaborators Credits if available */}
+            {activeProject.team && (
+              <div className="flex items-start gap-3 p-4 rounded-2xl bg-white/[0.04] border border-white/10 text-xs sm:text-sm">
+                <div className="p-2 rounded-xl bg-[#CCFF00]/10 text-[#CCFF00] shrink-0 mt-0.5 border border-[#CCFF00]/20">
+                  <Users className="w-4 h-4" />
+                </div>
+                <div className="leading-relaxed">
+                  <span className="font-syne font-bold text-white tracking-wide">
+                    {lang === 'fr' ? 'Fait avec :' : 'Made with:'}{' '}
+                  </span>
+                  <span className="text-[#E4E4E7] font-medium">
+                    {activeProject.team.replace(/^Fait avec\s*:\s*/i, '').replace(/^Made with\s*:\s*/i, '')}
+                  </span>
+                </div>
+              </div>
+            )}
 
             {/* Description & Overview - Clean unboxed layout */}
             <div className="space-y-4 pt-1">
