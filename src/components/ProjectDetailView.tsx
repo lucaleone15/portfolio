@@ -7,7 +7,8 @@ import {
   FileDown, 
   Calendar, 
   User, 
-  Layers
+  Layers,
+  Users
 } from 'lucide-react';
 import { Project } from '../types';
 import { useLanguage } from '../context/LanguageContext';
@@ -130,7 +131,18 @@ export function ProjectDetailView({
         {/* Project Meta Info Header */}
         <div className="space-y-4 mb-8 sm:mb-10">
           <div className="flex flex-wrap items-center gap-3">
-            <span className="px-3.5 py-1 rounded-full text-xs font-syne font-bold bg-black/[0.05] text-neutral-800 border border-black/10 dark:bg-white/[0.07] dark:text-white dark:border-white/15">
+            <span
+              className={`font-syne font-bold px-4 py-1.5 rounded-full text-xs tracking-wide shadow-xs transition-colors ${
+                project.accentColor && project.accentColor !== '#CCFF00'
+                  ? 'text-white'
+                  : 'bg-neutral-900 text-white dark:bg-[#CCFF00] dark:text-black'
+              }`}
+              style={
+                project.accentColor && project.accentColor !== '#CCFF00'
+                  ? { backgroundColor: project.accentColor }
+                  : undefined
+              }
+            >
               {project.category}
             </span>
             <span className="flex items-center gap-1.5 text-xs font-bold text-neutral-900 dark:text-[#CCFF00]">
@@ -143,9 +155,6 @@ export function ProjectDetailView({
                 {project.client}
               </span>
             )}
-            <span className="ml-auto font-syne font-bold bg-neutral-900 text-white dark:bg-[#CCFF00] dark:text-black px-4 py-1.5 rounded-full text-xs tracking-wide shadow-xs">
-              {project.role}
-            </span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-neutral-900 dark:text-white tracking-tight leading-tight">
@@ -155,6 +164,21 @@ export function ProjectDetailView({
           <p className="text-lg sm:text-xl text-neutral-600 dark:text-[#A1A1AA] font-normal max-w-4xl">
             {project.subtitle}
           </p>
+
+          {/* Section à part entière : Fait avec / Collaborateurs */}
+          {project.team && (
+            <div className="pt-2">
+              <div className="inline-flex flex-wrap items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs sm:text-sm">
+                <span className="inline-flex items-center gap-1.5 font-syne font-bold text-neutral-900 dark:text-white shrink-0">
+                  <Users className="w-4 h-4 text-neutral-900 dark:text-[#CCFF00]" />
+                  {lang === 'fr' ? 'Fait avec :' : 'Made with:'}
+                </span>
+                <span className="text-neutral-700 dark:text-[#E4E4E7] font-medium">
+                  {project.team.replace(/^Fait avec\s*:\s*/i, '').replace(/^Made with\s*:\s*/i, '')}
+                </span>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Main Gallery Showcase (16/9 ratio, Carousel & Thumbnails) */}
@@ -318,6 +342,20 @@ export function ProjectDetailView({
                 </p>
                 <p className="text-sm font-bold text-neutral-900 dark:text-[#CCFF00]">{project.year}</p>
               </div>
+
+              {project.team && (
+                <>
+                  <div className="h-px bg-black/10 dark:bg-white/10" />
+                  <div className="space-y-1">
+                    <p className="text-neutral-500 dark:text-[#A1A1AA] uppercase tracking-wider font-semibold">
+                      {lang === 'fr' ? 'Fait avec' : 'Made with'}
+                    </p>
+                    <p className="text-xs sm:text-sm font-medium text-neutral-800 dark:text-[#E4E4E7] leading-relaxed">
+                      {project.team.replace(/^Fait avec\s*:\s*/i, '').replace(/^Made with\s*:\s*/i, '')}
+                    </p>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>

@@ -1,7 +1,22 @@
 import { Project } from '../types';
-import defaultProjectsJson from './projectsData.json';
+import { PROJECTS_FR, PROJECTS_EN } from './portfolioData';
 
-const STORAGE_KEY = 'custom_portfolio_projects';
+const STORAGE_KEY = 'custom_portfolio_projects_v8';
+
+// Remove legacy storage caches so files take precedence
+if (typeof window !== 'undefined') {
+  try {
+    localStorage.removeItem('custom_portfolio_projects');
+    localStorage.removeItem('custom_portfolio_projects_v2');
+    localStorage.removeItem('custom_portfolio_projects_v3');
+    localStorage.removeItem('custom_portfolio_projects_v4');
+    localStorage.removeItem('custom_portfolio_projects_v5');
+    localStorage.removeItem('custom_portfolio_projects_v6');
+    localStorage.removeItem('custom_portfolio_projects_v7');
+  } catch (err) {
+    // Ignore storage errors
+  }
+}
 
 export interface StoredProjectsData {
   fr: Project[];
@@ -9,8 +24,8 @@ export interface StoredProjectsData {
 }
 
 const defaultData: StoredProjectsData = {
-  fr: defaultProjectsJson.fr as Project[],
-  en: defaultProjectsJson.en as Project[],
+  fr: PROJECTS_FR,
+  en: PROJECTS_EN,
 };
 
 export function getCustomProjects(): StoredProjectsData {
@@ -21,6 +36,12 @@ export function getCustomProjects(): StoredProjectsData {
     }
     const parsed = JSON.parse(raw);
     if (parsed && Array.isArray(parsed.fr) && Array.isArray(parsed.en)) {
+      // Invalidate if old placeholder image strings remain from past iterations
+      const hasOldPlaceholders = parsed.fr.some((p: Project) => p.imageUrl && p.imageUrl.includes('TON_IMAGE_'));
+      if (hasOldPlaceholders) {
+        localStorage.removeItem(STORAGE_KEY);
+        return defaultData;
+      }
       return parsed;
     }
   } catch (err) {

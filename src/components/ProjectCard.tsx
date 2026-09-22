@@ -59,10 +59,21 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
             />
           </div>
 
-          {/* Role Badge pinned at top-left of image for clear visual hierarchy */}
-          <div className="absolute top-3.5 left-3.5 z-20">
-            <span className="h-7 px-3 rounded-full bg-neutral-900 text-white dark:bg-[#CCFF00] dark:text-black text-[11px] sm:text-xs font-syne font-extrabold inline-flex items-center shadow-md tracking-wide">
-              {project.role}
+          {/* Category Badge pinned at top-left of image */}
+          <div className="absolute top-3.5 left-3.5 z-20 max-w-[calc(100%-28px)]">
+            <span
+              className={`h-7 px-3 rounded-full text-[11px] sm:text-xs font-syne font-extrabold inline-flex items-center shadow-md tracking-wide transition-colors truncate max-w-full ${
+                project.accentColor && project.accentColor !== '#CCFF00'
+                  ? 'text-white'
+                  : 'bg-neutral-900 text-white dark:bg-[#CCFF00] dark:text-black'
+              }`}
+              style={
+                project.accentColor && project.accentColor !== '#CCFF00'
+                  ? { backgroundColor: project.accentColor }
+                  : undefined
+              }
+            >
+              {project.category}
             </span>
           </div>
 

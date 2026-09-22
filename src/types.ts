@@ -7,6 +7,7 @@ export interface Project {
   year: string;
   category: string;
   role: string;
+  team?: string;
   summary: string;
   overview: string;
   imageUrl: string;
@@ -18,9 +19,6 @@ export interface Project {
   metrics: { label: string; value: string }[];
   stack: string[];
   accentColor?: string;
-  badgeBg?: string;
-  badgeText?: string;
-  featuredType?: 'dataviz' | 'design-system' | 'media' | 'tool' | 'custom';
 }
 
 export interface SkillCategory {
