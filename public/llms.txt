@@ -6,31 +6,56 @@ Luca Leone est un étudiant en dernière année de Bachelor en Ingénierie des M
 
 En parallèle de ses études, il exerce le rôle de Community Manager pour le Karting de Vuiteboeuf (Canton de Vaud, Suisse), où il pilote la création de contenus photo et vidéo, l'animation des réseaux sociaux et le développement de la notoriété numérique de la marque.
 
-## Domaines d'expertise
-- **Communication & Marketing Digital** : Stratégie de marque, Community Management, création de contenus engageants (Instagram, TikTok, LinkedIn), rédaction web et acquisition.
-- **UI/UX Design & Ergonomie** : Conception d'interfaces sur Figma, prototypage interactif, wireframes, recherche utilisateur, design systems, accessibilité web.
-- **Développement Web Front-End** : HTML5 sémantique, CSS3, Tailwind CSS, TypeScript, React, Vite, animations fluides (Motion), intégration web responsive.
-- **Production Média & Audiovisuelle** : Photographie, captation et montage vidéo (Premiere Pro, DaVinci Resolve), direction artistique et retouche (Lightroom, Photoshop).
+## Domaines d'expertise & Compétences
+- **Communication & Marketing Digital** : Stratégie de marque, Community Management, création de formats courts et engageants (Instagram, TikTok, LinkedIn), rédaction web, acquisition et promotion d'événements.
+- **UI/UX Design & Prototypage** : Conception d'interfaces utilisateur (UI) sous Figma, prototypage interactif, recherche utilisateur (UX research), tests d'utilisabilité, design systems et architecture d'information.
+- **Développement Web Full-Stack & Front-End** : HTML5 sémantique, CSS3, Tailwind CSS, JavaScript, React, Vue.js, Laravel, PHP, MySQL, intégration web responsive et animations fluides.
+- **Production Média & Audiovisuelle** : Photographie numérique, captation sur le terrain, montage vidéo (Adobe Premiere Pro, Canva, Suite Adobe), retouche photo (Photoshop, Lightroom) et direction artistique.
 
-## Projets Clés
-1. **PULSE** : Application mobile de santé et bien-être (UI/UX Design, prototypage interactif, visualisations physiologiques en temps réel).
-2. **Karting de Vuiteboeuf** : Stratégie réseaux sociaux, production photo/vidéo sur circuit et community management.
-3. **Maison Éco** : Identité visuelle, branding et charte graphique éco-responsable.
-4. **Alpina Watch** : Campagne marketing digital et stratégie de contenu horloger.
-5. **Flow State** : Interface web interactive et ergonomie d'application SaaS.
-6. **Verveine Studio** : Conception et développement de site web vitrine pour studio créatif.
+## Projets Principaux & Réalisations
+1. **HUG – Sangsationnel** (2026) :
+   - *Type* : Projet académique 360° pour les Hôpitaux universitaires de Genève.
+   - *Description* : Campagne de communication digitale et plateforme web gamifiée pour dynamiser les collectes de sang auprès des entreprises partenaires des HUG. Enquête interactive transformant le don de sang en mission agent.
+   - *Rôle* : Conception 360° (UX/UI Design, Développement Web & Communication). Équipe : Marc Bridy, Romain Blanchard, Étienne Bergeon, Liliana Kolmakova, Christophe Cunha et Assya Mghirbi.
+   - *Technologies & Outils* : Laravel, Vue.js, PHP, MySQL, Figma, Print, Intranet & Réseaux sociaux.
+   - *Documentation* : Dossier complet PDF disponible.
 
-## Formation
-- **Bachelor en Ingénierie des Médias** : HEIG-VD (Haute École d'Ingénierie et de Gestion du Canton de Vaud), Yverdon-les-Bains, Suisse.
-- Diplômes secondaires & certifications en technologies numériques et gestion de projet web.
+2. **Karting de Vuiteboeuf** (2026) :
+   - *Type* : Expérience professionnelle & gestion de marque sur circuit.
+   - *Description* : Accompagnement dans le développement de l'image et de la présence en ligne du circuit. Captation photo et vidéo directement sur le circuit, animation des comptes Instagram et TikTok, communication autour des courses, chronos, offres et compétitions.
+   - *Rôle* : Responsable communication digitale & Community Manager.
+   - *Technologies & Outils* : Instagram, TikTok, Premiere Pro, Photoshop, Canva, Photo & Vidéo sportive.
+   - *Documentation* : Dossier de communication & contenus PDF disponible.
+
+3. **OceanSight** (2026) :
+   - *Type* : Application mobile & UI/UX Design (Projet académique HEIG-VD).
+   - *Description* : Application collaborative de signalement des déchets marins (filets fantômes, plastiques), valorisation des missions citoyennes de nettoyage et suivi d'impact environnemental.
+   - *Rôle* : UI/UX Design & Recherche utilisateur. Collaboration avec Romain Blanchard.
+   - *Technologies & Outils* : Figma, Prototypage mobile, Tests utilisateurs, Design Thinking. Évaluations : UI 5.4/6, UX 6/6.
+   - *Documentation* : Dossier PDF UI/UX complet disponible.
+
+4. **DriveGear** (2025) :
+   - *Type* : E-Commerce & Web Design (Projet académique HEIG-VD).
+   - *Description* : Boutique e-commerce complète dédiée à l'univers automobile. Structuration du catalogue produit, identité visuelle racée et expérience d'achat fluide.
+   - *Rôle* : Conception ergonomique & intégration UI/UX. Évaluation : 5.9/6.
+   - *Technologies & Outils* : WordPress, WooCommerce, UI/UX Design, Web Design responsive.
+
+## Formation & Diplômes
+- **Bachelor of Science HES-SO en Ingénierie des Médias** : HEIG-VD (Haute École d'Ingénierie et de Gestion du Canton de Vaud), Yverdon-les-Bains, Suisse. Spécialisation en ingénierie des médias, médias interactifs, gestion de projet et communication digitale.
 
 ## Langues
 - Français (Langue maternelle)
 - Anglais (Niveau C1)
 - Italien (Niveau B2)
 
-## Localisation
-- Région : Canton de Vaud, Suisse Romande (Yverdon-les-Bains, Vuiteboeuf, Lausanne).
+## Centres d'intérêt
+- Automobile & Sport automobile (Karting, circuit, mécanique)
+- Sport & Activité physique
+- Voyages & Découvertes culturelles
+- Nouvelles technologies & Outils digitaux
+
+## Localisation & Mobilité
+- Région : Canton de Vaud, Suisse Romande (Yverdon-les-Bains, Vuiteboeuf, Lausanne, Genève).
 
 ## Contact & Réseaux
 - Email : lucaleone2004@gmail.com

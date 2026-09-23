@@ -186,8 +186,12 @@ export function AboutSection() {
 
               <div className="space-y-6">
                 {experience.map((item, idx) => (
-                  <div
+                  <motion.div
                     key={`exp-${idx}`}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-30px' }}
+                    transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
                     className="pb-6 border-b border-black/[0.06] dark:border-white/[0.06] last:border-b-0 last:pb-0 transition-colors duration-200 group"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-2 mb-1.5">
@@ -219,7 +223,7 @@ export function AboutSection() {
                         return <p key={pIdx}>{paragraph}</p>;
                       })}
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
@@ -238,8 +242,12 @@ export function AboutSection() {
 
               <div className="space-y-6">
                 {education.map((item, idx) => (
-                  <div
+                  <motion.div
                     key={`edu-${idx}`}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-30px' }}
+                    transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
                     className="pb-6 border-b border-black/[0.06] dark:border-white/[0.06] last:border-b-0 last:pb-0 transition-colors duration-200 group"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-2 mb-1.5">
@@ -260,7 +268,7 @@ export function AboutSection() {
                         ))}
                       </div>
                     )}
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>

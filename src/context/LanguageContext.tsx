@@ -11,6 +11,7 @@ interface LanguageContextType {
 export const translations = {
   fr: {
     // Navigation
+    'nav.skills': 'Compétences',
     'nav.projects': 'Projets',
     'nav.about': 'À propos',
     'nav.contact': 'Contact',
@@ -74,6 +75,7 @@ export const translations = {
   },
   en: {
     // Navigation
+    'nav.skills': 'Skills',
     'nav.projects': 'Projects',
     'nav.about': 'About me',
     'nav.contact': 'Contact',

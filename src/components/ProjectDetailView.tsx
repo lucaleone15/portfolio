@@ -6,9 +6,7 @@ import {
   ChevronRight, 
   FileDown, 
   Calendar, 
-  User, 
-  Layers,
-  Users
+  User
 } from 'lucide-react';
 import { Project } from '../types';
 import { useLanguage } from '../context/LanguageContext';
@@ -145,6 +143,11 @@ export function ProjectDetailView({
             >
               {project.category}
             </span>
+            {project.role && (
+              <span className="font-syne font-semibold px-3 py-1 rounded-full text-xs tracking-wide bg-neutral-100 dark:bg-white/10 text-neutral-800 dark:text-[#E4E4E7]">
+                {project.role}
+              </span>
+            )}
             <span className="flex items-center gap-1.5 text-xs font-bold text-neutral-900 dark:text-[#CCFF00]">
               <Calendar className="w-3.5 h-3.5" />
               {project.year}
@@ -165,19 +168,16 @@ export function ProjectDetailView({
             {project.subtitle}
           </p>
 
-          {/* Section à part entière : Fait avec / Collaborateurs */}
+          {/* Fait avec / Collaborateurs - Sans cadre ni icône, sobre et aéré */}
           {project.team && (
-            <div className="pt-2">
-              <div className="inline-flex flex-wrap items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs sm:text-sm">
-                <span className="inline-flex items-center gap-1.5 font-syne font-bold text-neutral-900 dark:text-white shrink-0">
-                  <Users className="w-4 h-4 text-neutral-900 dark:text-[#CCFF00]" />
-                  {lang === 'fr' ? 'Fait avec :' : 'Made with:'}
-                </span>
-                <span className="text-neutral-700 dark:text-[#E4E4E7] font-medium">
-                  {project.team.replace(/^Fait avec\s*:\s*/i, '').replace(/^Made with\s*:\s*/i, '')}
-                </span>
-              </div>
-            </div>
+            <p className="text-sm sm:text-base text-neutral-600 dark:text-[#A1A1AA] pt-1">
+              <span className="font-bold text-neutral-900 dark:text-white">
+                {lang === 'fr' ? 'Fait avec :' : 'Made with:'}{' '}
+              </span>
+              <span className="font-medium text-neutral-700 dark:text-[#E4E4E7]">
+                {project.team.replace(/^Fait avec\s*:\s*/i, '').replace(/^Made with\s*:\s*/i, '')}
+              </span>
+            </p>
           )}
         </div>
 
@@ -193,6 +193,13 @@ export function ProjectDetailView({
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.25 }}
+                decoding="async"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (target.src.endsWith('.webp')) {
+                    target.src = target.src.replace(/\.webp$/, '.png');
+                  }
+                }}
                 className="w-full h-full object-cover object-center select-none"
               />
             </AnimatePresence>
@@ -252,7 +259,17 @@ export function ProjectDetailView({
                       : 'border border-black/15 dark:border-white/20 opacity-60 hover:opacity-100 hover:border-black/30 dark:hover:border-white/40'
                   }`}
                 >
-                  <img src={img} alt={`Miniature ${idx + 1}`} className="w-full h-full object-cover" />
+                  <img
+                    src={img}
+                    alt={`Miniature ${idx + 1}`}
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (target.src.endsWith('.webp')) {
+                        target.src = target.src.replace(/\.webp$/, '.png');
+                      }
+                    }}
+                    className="w-full h-full object-cover"
+                  />
                 </button>
               ))}
             </div>
@@ -296,13 +313,12 @@ export function ProjectDetailView({
             )}
           </div>
 
-          {/* Sidebar Info Column (4 cols) */}
-          <div className="lg:col-span-4 space-y-8">
-            {/* Tech Stack card */}
-            <div className="p-6 rounded-2xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 space-y-4">
-              <h3 className="text-sm font-syne font-bold text-neutral-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                <Layers className="w-4 h-4 text-neutral-900 dark:text-[#CCFF00]" />
-                {lang === 'fr' ? 'Technologies & Outils' : 'Tech Stack & Tools'}
+          {/* Sidebar Info Column (4 cols) - Clean, unboxed layout */}
+          <div className="lg:col-span-4 space-y-6">
+            {/* Technologies & Outils - Sans cadre ni icône */}
+            <div className="space-y-3">
+              <h3 className="text-xs font-syne font-bold text-neutral-500 dark:text-[#A1A1AA] uppercase tracking-wider">
+                {lang === 'fr' ? 'Technologies & Outils' : 'Technologies & Tools'}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {project.stack.map((tech) => (
@@ -314,48 +330,6 @@ export function ProjectDetailView({
                   </span>
                 ))}
               </div>
-            </div>
-
-            {/* Project Quick Overview info card */}
-            <div className="p-6 rounded-2xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 space-y-4 text-xs">
-              <div className="space-y-1">
-                <p className="text-neutral-500 dark:text-[#A1A1AA] uppercase tracking-wider font-semibold">
-                  {lang === 'fr' ? 'Client' : 'Client'}
-                </p>
-                <p className="text-sm font-bold text-neutral-900 dark:text-white">{project.client}</p>
-              </div>
-
-              <div className="h-px bg-black/10 dark:bg-white/10" />
-
-              <div className="space-y-1">
-                <p className="text-neutral-500 dark:text-[#A1A1AA] uppercase tracking-wider font-semibold">
-                  {lang === 'fr' ? 'Rôle' : 'Role'}
-                </p>
-                <p className="text-sm font-bold text-neutral-900 dark:text-white">{project.role}</p>
-              </div>
-
-              <div className="h-px bg-black/10 dark:bg-white/10" />
-
-              <div className="space-y-1">
-                <p className="text-neutral-500 dark:text-[#A1A1AA] uppercase tracking-wider font-semibold">
-                  {lang === 'fr' ? 'Année' : 'Year'}
-                </p>
-                <p className="text-sm font-bold text-neutral-900 dark:text-[#CCFF00]">{project.year}</p>
-              </div>
-
-              {project.team && (
-                <>
-                  <div className="h-px bg-black/10 dark:bg-white/10" />
-                  <div className="space-y-1">
-                    <p className="text-neutral-500 dark:text-[#A1A1AA] uppercase tracking-wider font-semibold">
-                      {lang === 'fr' ? 'Fait avec' : 'Made with'}
-                    </p>
-                    <p className="text-xs sm:text-sm font-medium text-neutral-800 dark:text-[#E4E4E7] leading-relaxed">
-                      {project.team.replace(/^Fait avec\s*:\s*/i, '').replace(/^Made with\s*:\s*/i, '')}
-                    </p>
-                  </div>
-                </>
-              )}
             </div>
           </div>
         </div>
