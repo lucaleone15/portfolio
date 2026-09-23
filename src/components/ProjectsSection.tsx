@@ -97,10 +97,14 @@ export function ProjectsSection({ onSelectProject }: ProjectsSectionProps) {
           {filteredProjects.map((project, idx) => (
             <motion.div
               key={project.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.6, delay: (idx % 2) * 0.12, ease: [0.16, 1, 0.3, 1] }}
+              initial={{ opacity: 0, y: 35, scale: 0.98 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{
+                duration: 0.7,
+                delay: (idx % 2) * 0.12,
+                ease: [0.16, 1, 0.3, 1]
+              }}
             >
               <ProjectCard
                 project={project}

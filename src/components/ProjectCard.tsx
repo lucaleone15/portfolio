@@ -54,7 +54,14 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
               src={project.imageUrl}
               alt={project.title}
               loading="lazy"
+              decoding="async"
               referrerPolicy="no-referrer"
+              onError={(e) => {
+                const target = e.currentTarget;
+                if (target.src.endsWith('.webp')) {
+                  target.src = target.src.replace(/\.webp$/, '.png');
+                }
+              }}
               className="w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.03]"
             />
           </div>

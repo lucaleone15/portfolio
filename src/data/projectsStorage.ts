@@ -1,7 +1,7 @@
 import { Project } from '../types';
 import { PROJECTS_FR, PROJECTS_EN } from './portfolioData';
 
-const STORAGE_KEY = 'custom_portfolio_projects_v8';
+const STORAGE_KEY = 'custom_portfolio_projects_v11';
 
 // Remove legacy storage caches so files take precedence
 if (typeof window !== 'undefined') {
@@ -13,6 +13,9 @@ if (typeof window !== 'undefined') {
     localStorage.removeItem('custom_portfolio_projects_v5');
     localStorage.removeItem('custom_portfolio_projects_v6');
     localStorage.removeItem('custom_portfolio_projects_v7');
+    localStorage.removeItem('custom_portfolio_projects_v8');
+    localStorage.removeItem('custom_portfolio_projects_v9');
+    localStorage.removeItem('custom_portfolio_projects_v10');
   } catch (err) {
     // Ignore storage errors
   }

@@ -73,8 +73,16 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     id: 'hug-sang',
     number: '01',
     year: '2026',
-    imageUrl: '/images/HUG-01.png',
-    images: ['/images/HUG-01.png'],
+    imageUrl: '/images/HUG-01.webp',
+    images: [
+      '/images/HUG-01.webp',
+      '/images/HUG-02.webp',
+      '/images/HUG-03.webp',
+      '/images/HUG-04.webp',
+      '/images/HUG-05.webp',
+      '/images/HUG-06.webp',
+      '/images/HUG-07.webp'
+    ],
     pdfUrl: '/pdf/ProjInt1_HUG.pdf',
     pdfTitle: 'Projet Sangsationnel · HUG',
     stack: [
@@ -152,8 +160,15 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     id: 'karting-vuiteboeuf',
     number: '02',
     year: '2026',
-    imageUrl: '/images/KV-01.png',
-    images: ['/images/KV-01.png'],
+    imageUrl: '/images/KV-01.webp',
+    images: [
+      '/images/KV-01.webp',
+      '/images/KV-03.webp',
+      '/images/KV-04.webp',
+      '/images/KV-05.webp',
+      '/images/KV-06.webp',
+      '/images/KV-07.webp'
+    ],
     pdfUrl: '/pdf/Repenser-la-communication-digitale-du-Karting-Vuiteboeuf.pdf',
     pdfTitle: 'Dossier de communication & contenus · Karting Vuiteboeuf',
     pdfTitleEn: 'Communication & Content Strategy · Karting Vuiteboeuf',
@@ -221,8 +236,12 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     id: 'oceansight',
     number: '03',
     year: '2026',
-    imageUrl: '/images/OceanSight-01.png',
-    images: ['/images/OceanSight-01.png'],
+    imageUrl: '/images/OceanSight-01.webp',
+    images: [
+      '/images/OceanSight-01.webp',
+      '/images/OceanSight-02.webp',
+      '/images/OceanSight-03.webp'
+    ],
     pdfUrl: '/pdf/OceanSight.pdf',
     pdfTitle: 'OceanSight · UI/UX Design',
     stack: [
@@ -239,7 +258,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       client: 'Projet académique · HEIG-VD',
       category: 'UI/UX Design',
       role: 'UI/UX Design',
-      team: 'Sacha Lescot et Romain Blanchard.',
+      team: 'Sacha Loskov et Romain Blanchard.',
       summary: "Conception d'une application mobile collaborative simplifiant le signalement des déchets marins et encourageant l'action collective.",
       overview: "Projet UI/UX réalisé dans le cadre d'un semestre à la HEIG-VD avec Sacha Loskov et Romain Blanchard. OceanSight propose une plateforme collaborative permettant de signaler des déchets marins, de rejoindre des missions de nettoyage, de découvrir les espèces menacées et de suivre son impact grâce à des statistiques et des achievements. Le projet s'est appuyé sur une démarche UX itérative intégrant prototypage, tests utilisateurs et amélioration continue de l'expérience.",
       challenges: [
@@ -265,7 +284,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       client: 'Academic project · HEIG-VD',
       category: 'UI/UX Design',
       role: 'UI/UX Design',
-      team: 'Sacha Lescot and Romain Blanchard.',
+      team: 'Sacha Loskov and Romain Blanchard.',
       summary: 'Design of a collaborative mobile application that simplifies marine waste reporting and encourages collective action.',
       overview: 'UI/UX project developed over a semester at HEIG-VD with Sacha Loskov and Romain Blanchard. OceanSight is a collaborative platform designed to report marine waste, join clean-up missions, discover endangered species and track personal impact through statistics and achievements. The project followed an iterative UX approach combining prototyping, user testing and continuous improvements to the experience.',
       challenges: [
@@ -275,7 +294,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       ],
       solutions: [
         'Design of a collaborative mobile platform for reporting ghost fishing nets and plastic waste accumulation.',
-        'Creation of a user journey combining an interactive map, gallery, filters, clean-up missions and impact tracking.',
+        'Creation of a user journey combinant l’application d’une carte interactive, gallery, filtres, missions et suivi.',
         'Prototyping, user testing and iterative improvements to identify and resolve navigation and interaction issues.'
       ],
       metrics: [
@@ -290,8 +309,12 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     id: 'drivegear',
     number: '04',
     year: '2025',
-    imageUrl: '/images/DriveGear-01.png',
-    images: ['/images/DriveGear-01.png'],
+    imageUrl: '/images/DriveGear-01.webp',
+    images: [
+      '/images/DriveGear-01.webp',
+      '/images/DriveGear-03.webp',
+      '/images/DriveGear-04.webp'
+    ],
     stack: [
       'WordPress',
       'WooCommerce',

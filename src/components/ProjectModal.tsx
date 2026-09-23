@@ -1,6 +1,6 @@
 import { useEffect, useState, MouseEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, ChevronLeft, ChevronRight, FileDown, Users } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, FileDown } from 'lucide-react';
 import { Project } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -105,6 +105,12 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 key={projectImages[currentImageIndex]}
                 src={projectImages[currentImageIndex]}
                 alt={`${activeProject.title} ${currentImageIndex + 1}`}
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (target.src.endsWith('.webp')) {
+                    target.src = target.src.replace(/\.webp$/, '.png');
+                  }
+                }}
                 className="w-full h-full object-cover object-center transition-opacity duration-300"
               />
 
@@ -166,7 +172,17 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                         : 'border border-white/20 opacity-60 hover:opacity-100 hover:border-white/40'
                     }`}
                   >
-                    <img src={img} alt={`Miniature ${idx + 1}`} className="w-full h-full object-cover" />
+                    <img
+                      src={img}
+                      alt={`Miniature ${idx + 1}`}
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        if (target.src.endsWith('.webp')) {
+                          target.src = target.src.replace(/\.webp$/, '.png');
+                        }
+                      }}
+                      className="w-full h-full object-cover"
+                    />
                   </button>
                 ))}
               </div>
@@ -192,21 +208,16 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               </div>
             </div>
 
-            {/* Team / Collaborators Credits if available */}
+            {/* Team / Collaborators Credits if available - Simple text without box or icon */}
             {activeProject.team && (
-              <div className="flex items-start gap-3 p-4 rounded-2xl bg-white/[0.04] border border-white/10 text-xs sm:text-sm">
-                <div className="p-2 rounded-xl bg-[#CCFF00]/10 text-[#CCFF00] shrink-0 mt-0.5 border border-[#CCFF00]/20">
-                  <Users className="w-4 h-4" />
-                </div>
-                <div className="leading-relaxed">
-                  <span className="font-syne font-bold text-white tracking-wide">
-                    {lang === 'fr' ? 'Fait avec :' : 'Made with:'}{' '}
-                  </span>
-                  <span className="text-[#E4E4E7] font-medium">
-                    {activeProject.team.replace(/^Fait avec\s*:\s*/i, '').replace(/^Made with\s*:\s*/i, '')}
-                  </span>
-                </div>
-              </div>
+              <p className="text-sm text-[#A1A1AA] leading-relaxed">
+                <span className="font-semibold text-white">
+                  {lang === 'fr' ? 'Fait avec :' : 'Made with:'}{' '}
+                </span>
+                <span>
+                  {activeProject.team.replace(/^Fait avec\s*:\s*/i, '').replace(/^Made with\s*:\s*/i, '')}
+                </span>
+              </p>
             )}
 
             {/* Description & Overview - Clean unboxed layout */}
