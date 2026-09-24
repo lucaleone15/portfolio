@@ -6,47 +6,37 @@ import { ProjectsSection } from './components/ProjectsSection';
 import { AboutSection } from './components/AboutSection';
 import { ContactSection } from './components/ContactSection';
 import { ProjectDetailView } from './components/ProjectDetailView';
-import { AdminModal } from './components/AdminModal';
 import { MagneticCursor } from './components/MagneticCursor';
 import { IntroCurtain } from './components/IntroCurtain';
 import { Project } from './types';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { ThemeProvider } from './context/ThemeContext';
+import { AccentProvider } from './context/AccentContext';
 import { getCustomProjects } from './data/projectsStorage';
 
 function PortfolioApp() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('hero');
-  const [projectsData, setProjectsData] = useState(() => getCustomProjects());
+  const projectsData = getCustomProjects();
   const { lang } = useLanguage();
 
   const allProjects = lang === 'fr' ? projectsData.fr : projectsData.en;
 
+  // Block any Ctrl+E or Meta+E shortcut to ensure on-site editing is disabled
   useEffect(() => {
-    const handleUpdate = () => {
-      setProjectsData(getCustomProjects());
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'e' || e.key === 'E')) {
+        e.preventDefault();
+      }
     };
-    window.addEventListener('portfolio_projects_updated', handleUpdate);
-    return () => window.removeEventListener('portfolio_projects_updated', handleUpdate);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   // Ensure clean default font preset is applied
   useEffect(() => {
     document.documentElement.removeAttribute('data-font-preset');
     localStorage.removeItem('portfolio-font-preset');
-  }, []);
-
-  // Keyboard shortcut: Ctrl+E or Cmd+E to toggle hidden admin editor
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'e') {
-        e.preventDefault();
-        setIsAdminOpen((prev) => !prev);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   // Intersection Observer for scroll spy (when not viewing a project detail page)
@@ -99,7 +89,7 @@ function PortfolioApp() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F9F9FB] text-neutral-900 dark:bg-[#0A0A0C] dark:text-white font-sans antialiased selection:bg-neutral-900 selection:text-white dark:selection:bg-[#CCFF00] dark:selection:text-black relative overflow-hidden transition-colors duration-300">
+    <div className="min-h-screen bg-[#F9F9FB] text-neutral-900 dark:bg-[#0A0A0C] dark:text-white font-sans antialiased selection:bg-neutral-900 selection:text-white dark:selection:bg-[var(--accent-primary)] dark:selection:text-[var(--accent-text)] relative overflow-hidden transition-colors duration-300">
       {/* Pattern #4: Typographic Intro Curtain */}
       <IntroCurtain />
 
@@ -132,15 +122,9 @@ function PortfolioApp() {
           <SkillsSection />
           <ProjectsSection onSelectProject={(project) => setSelectedProject(project)} />
           <AboutSection />
-          <ContactSection onOpenAdmin={() => setIsAdminOpen(true)} />
+          <ContactSection />
         </main>
       )}
-
-      {/* Hidden In-Browser Content & Project Editor (Ctrl+E or footer trigger) */}
-      <AdminModal
-        isOpen={isAdminOpen}
-        onClose={() => setIsAdminOpen(false)}
-      />
     </div>
   );
 }
@@ -148,9 +132,11 @@ function PortfolioApp() {
 export default function App() {
   return (
     <ThemeProvider>
-      <LanguageProvider>
-        <PortfolioApp />
-      </LanguageProvider>
+      <AccentProvider>
+        <LanguageProvider>
+          <PortfolioApp />
+        </LanguageProvider>
+      </AccentProvider>
     </ThemeProvider>
   );
 }

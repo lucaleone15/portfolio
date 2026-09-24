@@ -7,6 +7,35 @@
   --font-body: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
   --display-tracking: -0.025em;
   --display-weight: 700;
+
+  /* Dynamic Accent Color system - defaults */
+  --accent-primary: #2979FF;
+  --accent-text: #FFFFFF;
+  --accent-rgb-dark: 41, 121, 255;
+  --accent-glow-dark: rgba(41, 121, 255, 0.4);
+
+  --accent-light: #004fe6;
+  --accent-light-text: #FFFFFF;
+  --accent-rgb-light: 0, 79, 230;
+  --accent-glow-light: rgba(0, 79, 230, 0.25);
+
+  /* Unified dynamic accent tokens: in Light mode (high contrast on white) */
+  --accent: var(--accent-light);
+  --accent-contrast-text: var(--accent-light-text);
+  --accent-rgb: var(--accent-rgb-light);
+  --accent-glow: var(--accent-glow-light);
+  --accent-current: var(--accent-light);
+  --accent-current-text: var(--accent-light-text);
+}
+
+.dark {
+  /* Unified dynamic accent tokens: in Dark mode (electric and luminous) */
+  --accent: var(--accent-primary);
+  --accent-contrast-text: var(--accent-text);
+  --accent-rgb: var(--accent-rgb-dark);
+  --accent-glow: var(--accent-glow-dark);
+  --accent-current: var(--accent-primary);
+  --accent-current-text: var(--accent-text);
 }
 
 @theme {
@@ -22,9 +51,37 @@
   --color-subtle: #9E9E9C;
   --color-border: #E2E1DC;
   
-  /* Two-tone accent system */
-  --color-lime: #CCFF00;
-  --color-forest: #1F5C2E;
+  /* Dynamic accent system mapped into Tailwind */
+  --color-accent: var(--accent);
+  --color-accent-text: var(--accent-contrast-text);
+  --color-accent-light: var(--accent-light);
+  --color-accent-dark: var(--accent-primary);
+  --color-lime: var(--accent);
+  --color-forest: var(--accent-light);
+}
+
+/* Explicit high-contrast themed utility classes */
+.text-accent-themed {
+  color: var(--accent-light) !important;
+}
+:where(.dark, .dark *) .text-accent-themed {
+  color: var(--accent-primary) !important;
+}
+
+.bg-accent-themed {
+  background-color: var(--accent-light) !important;
+  color: var(--accent-light-text) !important;
+}
+:where(.dark, .dark *) .bg-accent-themed {
+  background-color: var(--accent-primary) !important;
+  color: var(--accent-text) !important;
+}
+
+.border-accent-themed {
+  border-color: var(--accent-light) !important;
+}
+:where(.dark, .dark *) .border-accent-themed {
+  border-color: var(--accent-primary) !important;
 }
 
 @layer base {
@@ -67,16 +124,16 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Highlighter: keyword with #CCFF00 background and #1A1A1A text */
+/* Highlighter: keyword with dynamic accent background */
 .highlight-lime {
-  background-color: #CCFF00;
-  color: #1A1A1A;
+  background-color: var(--accent);
+  color: var(--accent-contrast-text);
   padding: 0.05em 0.25em;
   display: inline-block;
   line-height: 1.05;
 }
 
-/* Editorial subtle animations using deep forest green for line on light background */
+/* Editorial subtle animations using dynamic accent line */
 .editorial-link {
   position: relative;
   display: inline-block;
@@ -91,7 +148,7 @@
   height: 1.5px;
   bottom: -2px;
   left: 0;
-  background-color: #1F5C2E;
+  background-color: var(--accent);
   transform-origin: bottom right;
   transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -145,10 +202,10 @@
 /* Glowing Ambient Gradients */
 .gradient-mesh {
   background: 
-    radial-gradient(at 0% 0%, rgba(204, 255, 0, 0.12) 0px, transparent 50%),
+    radial-gradient(at 0% 0%, rgba(var(--accent-rgb), 0.12) 0px, transparent 50%),
     radial-gradient(at 100% 0%, rgba(255, 120, 60, 0.08) 0px, transparent 50%),
     radial-gradient(at 100% 100%, rgba(90, 80, 255, 0.08) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(204, 255, 0, 0.08) 0px, transparent 50%);
+    radial-gradient(at 0% 100%, rgba(var(--accent-rgb), 0.08) 0px, transparent 50%);
 }
 
 .gradient-card-glow {
@@ -160,7 +217,7 @@
   inset: -1px;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(135deg, rgba(204, 255, 0, 0.6), rgba(255, 255, 255, 0.8), rgba(26, 26, 26, 0.15));
+  background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.6), rgba(255, 255, 255, 0.8), rgba(26, 26, 26, 0.15));
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -228,7 +285,7 @@
 }
 
 .animate-text-shimmer {
-  background: linear-gradient(90deg, #FFFFFF 0%, #CCFF00 25%, #FFFFFF 50%, #CCFF00 75%, #FFFFFF 100%);
+  background: linear-gradient(90deg, currentColor 0%, var(--accent) 50%, currentColor 100%);
   background-size: 200% auto;
   color: transparent;
   -webkit-background-clip: text;
@@ -239,10 +296,10 @@
 /* Glowing Aura Pulse for Cards & Badges */
 @keyframes neon-pulse {
   0%, 100% {
-    box-shadow: 0 0 15px rgba(204, 255, 0, 0.15), inset 0 0 15px rgba(204, 255, 0, 0.05);
+    box-shadow: 0 0 15px var(--accent-glow), inset 0 0 15px rgba(var(--accent-rgb), 0.05);
   }
   50% {
-    box-shadow: 0 0 30px rgba(204, 255, 0, 0.35), inset 0 0 25px rgba(204, 255, 0, 0.12);
+    box-shadow: 0 0 30px var(--accent-glow), inset 0 0 25px rgba(var(--accent-rgb), 0.12);
   }
 }
 
@@ -281,7 +338,7 @@
     60deg,
     transparent 30%,
     rgba(255, 255, 255, 0.06) 45%,
-    rgba(204, 255, 0, 0.12) 50%,
+    rgba(var(--accent-rgb), 0.15) 50%,
     rgba(255, 255, 255, 0.06) 55%,
     transparent 70%
   );

@@ -10,6 +10,6 @@
       }
     </style>
   </defs>
-  <rect width="64" height="64" rx="14" fill="#0A0A0C"/>
-  <text x="31" y="47" text-anchor="middle" class="syne-logo" fill="#FFFFFF">L<tspan fill="#CCFF00">.</tspan></text>
+  <rect width="64" height="64" rx="14" fill="#0A0A0C" />
+  <text x="31" y="47" text-anchor="middle" class="syne-logo" fill="#FFFFFF">L<tspan fill="#FF2E55">.</tspan></text>
 </svg>

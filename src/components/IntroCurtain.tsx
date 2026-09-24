@@ -40,7 +40,7 @@ export function IntroCurtain({ onDone }: IntroCurtainProps) {
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             >
               <h1 className="text-6xl sm:text-8xl md:text-9xl text-white font-black tracking-tight inline-block">
-                Luca Leone<span className="text-[#CCFF00]">.</span>
+                Luca Leone<span className="text-[var(--accent)]">.</span>
               </h1>
             </motion.div>
           </div>

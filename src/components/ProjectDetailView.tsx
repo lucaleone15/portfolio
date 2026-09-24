@@ -92,7 +92,7 @@ export function ProjectDetailView({
           {/* Back button */}
           <button
             onClick={onBack}
-            className="group inline-flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-full bg-black/[0.04] hover:bg-neutral-900 hover:text-white dark:bg-white/[0.06] dark:hover:bg-[#CCFF00] dark:hover:text-black border border-black/15 dark:border-white/15 text-neutral-900 dark:text-white text-xs sm:text-sm font-syne font-bold transition-all duration-200 cursor-pointer active:scale-95 shadow-xs"
+            className="group inline-flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-full bg-black/[0.04] hover:bg-neutral-900 hover:text-white dark:bg-white/[0.06] dark:hover:bg-[var(--accent-primary)] dark:hover:text-[var(--accent-text)] border border-black/15 dark:border-white/15 text-neutral-900 dark:text-white text-xs sm:text-sm font-syne font-bold transition-all duration-200 cursor-pointer active:scale-95 shadow-xs"
           >
             <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
             <span>{lang === 'fr' ? 'Retour aux projets' : 'Back to projects'}</span>
@@ -130,16 +130,8 @@ export function ProjectDetailView({
         <div className="space-y-4 mb-8 sm:mb-10">
           <div className="flex flex-wrap items-center gap-3">
             <span
-              className={`font-syne font-bold px-4 py-1.5 rounded-full text-xs tracking-wide shadow-xs transition-colors ${
-                project.accentColor && project.accentColor !== '#CCFF00'
-                  ? 'text-white'
-                  : 'bg-neutral-900 text-white dark:bg-[#CCFF00] dark:text-black'
-              }`}
-              style={
-                project.accentColor && project.accentColor !== '#CCFF00'
-                  ? { backgroundColor: project.accentColor }
-                  : undefined
-              }
+              className="font-syne font-bold px-4 py-1.5 rounded-full text-xs tracking-wide shadow-xs transition-colors text-white"
+              style={{ backgroundColor: project.accentColor || 'var(--accent)' }}
             >
               {project.category}
             </span>
@@ -148,7 +140,10 @@ export function ProjectDetailView({
                 {project.role}
               </span>
             )}
-            <span className="flex items-center gap-1.5 text-xs font-bold text-neutral-900 dark:text-[#CCFF00]">
+            <span
+              className="flex items-center gap-1.5 text-xs font-bold"
+              style={{ color: project.accentColor || 'var(--accent)' }}
+            >
               <Calendar className="w-3.5 h-3.5" />
               {project.year}
             </span>
@@ -231,9 +226,10 @@ export function ProjectDetailView({
                       onClick={() => setCurrentImageIndex(idx)}
                       className={`transition-all rounded-full cursor-pointer ${
                         currentImageIndex === idx
-                          ? 'w-6 h-1.5 bg-[#CCFF00]'
+                          ? 'w-6 h-1.5'
                           : 'w-1.5 h-1.5 bg-white/40 hover:bg-white/80'
                       }`}
+                      style={currentImageIndex === idx ? { backgroundColor: project.accentColor || 'var(--accent)' } : undefined}
                       aria-label={`Aller à l'image ${idx + 1}`}
                     />
                   ))}
@@ -255,9 +251,13 @@ export function ProjectDetailView({
                   onClick={() => setCurrentImageIndex(idx)}
                   className={`relative w-24 sm:w-32 h-16 sm:h-20 rounded-xl overflow-hidden shrink-0 transition-all duration-200 cursor-pointer ${
                     currentImageIndex === idx
-                      ? 'ring-2 ring-[#CCFF00] opacity-100 shadow-[0_0_14px_rgba(204,255,0,0.35)]'
+                      ? 'ring-2 opacity-100'
                       : 'border border-black/15 dark:border-white/20 opacity-60 hover:opacity-100 hover:border-black/30 dark:hover:border-white/40'
                   }`}
+                  style={currentImageIndex === idx ? {
+                    borderColor: project.accentColor || 'var(--accent)',
+                    boxShadow: `0 0 14px ${project.accentColor ? `${project.accentColor}66` : 'var(--accent-glow)'}`
+                  } : undefined}
                 >
                   <img
                     src={img}
@@ -302,9 +302,12 @@ export function ProjectDetailView({
                   download
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-black/[0.04] hover:bg-black/[0.08] dark:bg-white/[0.08] dark:hover:bg-white/[0.18] text-neutral-900 dark:text-white border border-black/15 dark:border-white/20 hover:border-black dark:hover:border-[#CCFF00] transition-all duration-200 shadow-xs cursor-pointer group"
+                  className="inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-black/[0.04] hover:bg-black/[0.08] dark:bg-white/[0.08] dark:hover:bg-white/[0.18] text-neutral-900 dark:text-white border border-black/15 dark:border-white/20 transition-all duration-200 shadow-xs cursor-pointer group"
                 >
-                  <FileDown className="w-5 h-5 text-neutral-900 dark:text-[#CCFF00] group-hover:scale-110 transition-transform" />
+                  <FileDown
+                    className="w-5 h-5 group-hover:scale-110 transition-transform"
+                    style={{ color: project.accentColor || 'var(--accent)' }}
+                  />
                   <span className="text-sm sm:text-base font-syne font-semibold tracking-wide">
                     {lang === 'fr' ? 'Télécharger le document PDF' : 'Download PDF Document'}
                   </span>
@@ -340,7 +343,10 @@ export function ProjectDetailView({
             onClick={goToPrevProject}
             className="w-full sm:w-auto inline-flex items-center justify-center sm:justify-start gap-3 px-6 py-4 rounded-2xl bg-black/[0.03] hover:bg-black/[0.08] dark:bg-white/[0.04] dark:hover:bg-white/[0.1] border border-black/10 dark:border-white/15 transition-all cursor-pointer group text-left"
           >
-            <ChevronLeft className="w-5 h-5 text-neutral-900 dark:text-[#CCFF00] group-hover:-translate-x-1 transition-transform" />
+            <ChevronLeft
+              className="w-5 h-5 group-hover:-translate-x-1 transition-transform"
+              style={{ color: prevProject.accentColor || 'var(--accent)' }}
+            />
             <div>
               <p className="text-xs text-neutral-500 dark:text-[#A1A1AA] uppercase font-syne font-semibold">
                 {lang === 'fr' ? 'Projet précédent' : 'Previous'}
@@ -353,7 +359,7 @@ export function ProjectDetailView({
 
           <button
             onClick={onBack}
-            className="px-6 py-3 rounded-full bg-neutral-900 text-white hover:bg-black dark:bg-white dark:text-black dark:hover:bg-[#CCFF00] dark:hover:text-black text-xs sm:text-sm font-syne font-bold transition-colors cursor-pointer"
+            className="px-6 py-3 rounded-full bg-neutral-900 text-white hover:bg-[var(--accent)] hover:text-[var(--accent-contrast-text)] dark:bg-white dark:text-black dark:hover:bg-[var(--accent)] dark:hover:text-[var(--accent-contrast-text)] text-xs sm:text-sm font-syne font-bold transition-colors cursor-pointer shadow-xs"
           >
             {lang === 'fr' ? 'Retourner à l’accueil' : 'Return to home'}
           </button>
@@ -370,7 +376,10 @@ export function ProjectDetailView({
                 {nextProject.title}
               </p>
             </div>
-            <ChevronRight className="w-5 h-5 text-neutral-900 dark:text-[#CCFF00] group-hover:translate-x-1 transition-transform" />
+            <ChevronRight
+              className="w-5 h-5 group-hover:translate-x-1 transition-transform"
+              style={{ color: nextProject.accentColor || 'var(--accent)' }}
+            />
           </button>
         </div>
       </div>
