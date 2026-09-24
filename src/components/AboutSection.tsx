@@ -140,7 +140,7 @@ export function AboutSection() {
                   {languages.map((item, idx) => (
                     <div
                       key={`lang-${idx}`}
-                      className="h-8 px-3.5 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-black dark:hover:bg-[#CCFF00] dark:hover:text-black text-xs font-syne font-bold inline-flex items-center gap-1.5 shadow-xs transition-colors duration-150 cursor-default select-none"
+                      className="h-8 px-3.5 rounded-full bg-neutral-900 text-white hover:bg-[var(--accent)] hover:text-[var(--accent-contrast-text)] dark:bg-white dark:text-black dark:hover:bg-[var(--accent)] dark:hover:text-[var(--accent-contrast-text)] text-xs font-syne font-bold inline-flex items-center gap-1.5 shadow-xs transition-colors duration-150 cursor-default select-none"
                     >
                       <span>{item.name}</span>
                       <span className="text-white/60 dark:text-black/60 font-medium">· {item.level}</span>
@@ -158,7 +158,7 @@ export function AboutSection() {
                   {passions.map((item, idx) => (
                     <span
                       key={`passion-${idx}`}
-                      className="h-8 px-3.5 rounded-full bg-neutral-900 text-white hover:bg-black dark:bg-white dark:text-black dark:hover:bg-[#CCFF00] dark:hover:text-black text-xs font-syne font-bold inline-flex items-center shadow-xs transition-colors duration-150 select-none cursor-default"
+                      className="h-8 px-3.5 rounded-full bg-neutral-900 text-white hover:bg-[var(--accent)] hover:text-[var(--accent-contrast-text)] dark:bg-white dark:text-black dark:hover:bg-[var(--accent)] dark:hover:text-[var(--accent-contrast-text)] text-xs font-syne font-bold inline-flex items-center shadow-xs transition-colors duration-150 select-none cursor-default"
                     >
                       {item}
                     </span>
@@ -195,10 +195,10 @@ export function AboutSection() {
                     className="pb-6 border-b border-black/[0.06] dark:border-white/[0.06] last:border-b-0 last:pb-0 transition-colors duration-200 group"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-2 mb-1.5">
-                      <h4 className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white group-hover:text-black dark:group-hover:text-[#CCFF00] transition-colors">
+                      <h4 className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white group-hover:text-[var(--accent)] transition-colors">
                         {item.title}
                       </h4>
-                      <span className="text-xs font-bold text-neutral-900 dark:text-[#CCFF00] tracking-wide shrink-0">
+                      <span className="text-xs font-bold text-[var(--accent)] tracking-wide shrink-0">
                         {item.period}
                       </span>
                     </div>
@@ -251,10 +251,10 @@ export function AboutSection() {
                     className="pb-6 border-b border-black/[0.06] dark:border-white/[0.06] last:border-b-0 last:pb-0 transition-colors duration-200 group"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-2 mb-1.5">
-                      <h4 className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white group-hover:text-black dark:group-hover:text-[#CCFF00] transition-colors">
+                      <h4 className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white group-hover:text-[var(--accent)] transition-colors">
                         {item.title}
                       </h4>
-                      <span className="text-xs font-bold text-neutral-900 dark:text-[#CCFF00] tracking-wide shrink-0">
+                      <span className="text-xs font-bold text-[var(--accent)] tracking-wide shrink-0">
                         {item.period}
                       </span>
                     </div>

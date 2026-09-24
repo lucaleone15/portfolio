@@ -56,7 +56,7 @@ export function Header({ activeSection, onNavigateHome }: HeaderProps) {
       <header className="fixed top-0 left-0 right-0 z-40 bg-white/90 dark:bg-[#0A0A0C]/85 backdrop-blur-xl border-b border-black/[0.08] dark:border-white/[0.08] shadow-[0_4px_20px_rgba(0,0,0,0.04)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.6)] transition-colors duration-300">
         {/* Sleek scroll line */}
         <div 
-          className="h-[2px] bg-neutral-900 dark:bg-[#CCFF00] transition-all duration-75 origin-left"
+          className="h-[2px] bg-[var(--accent)] transition-all duration-75 origin-left"
           style={{ width: `${scrollProgress}%` }}
         />
 
@@ -73,12 +73,12 @@ export function Header({ activeSection, onNavigateHome }: HeaderProps) {
             className="text-left group cursor-pointer inline-flex items-baseline"
           >
             <span className="font-syne text-xl sm:text-2xl font-bold tracking-tight text-neutral-900 dark:text-white transition-colors">
-              Luca Leone<span className="text-[#CCFF00] font-bold drop-shadow-[0_0_1px_rgba(0,0,0,0.5)]">.</span>
+              Luca Leone<span className="text-[var(--accent)] font-bold drop-shadow-[0_0_1px_rgba(0,0,0,0.5)]">.</span>
             </span>
           </button>
 
           {/* Right Navigation */}
-          <div className="flex items-center gap-2.5 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-2.5">
             {/* Language Switcher (FR / EN) */}
             <div className="flex items-center p-1 bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.08] rounded-full text-xs font-semibold backdrop-blur-md">
               <button
@@ -113,7 +113,7 @@ export function Header({ activeSection, onNavigateHome }: HeaderProps) {
                   onClick={() => scrollTo(item.id)}
                   className={`cursor-pointer transition-all px-4 py-2 rounded-full font-syne text-xs ${
                     activeSection === item.id
-                      ? 'bg-neutral-900 text-white dark:bg-[#CCFF00] dark:text-black font-bold shadow-xs'
+                      ? 'bg-[var(--accent)] text-[var(--accent-contrast-text)] font-bold shadow-xs'
                       : 'text-neutral-600 dark:text-[#A1A1AA] hover:text-black dark:hover:text-white hover:bg-black/[0.05] dark:hover:bg-white/[0.06] font-semibold'
                   }`}
                 >
@@ -192,10 +192,10 @@ export function Header({ activeSection, onNavigateHome }: HeaderProps) {
                   onClick={() => scrollTo(item.id)}
                   className="w-full text-left group flex items-baseline gap-4 cursor-pointer p-4 rounded-2xl hover:bg-black/5 dark:hover:bg-white/5 border border-transparent hover:border-black/5 dark:hover:border-white/10 transition-all"
                 >
-                  <span className="font-serif italic text-2xl sm:text-3xl text-neutral-400 dark:text-white/40 group-hover:text-black dark:group-hover:text-[#CCFF00] font-normal select-none transition-colors shrink-0">
+                  <span className="font-serif italic text-2xl sm:text-3xl text-neutral-400 dark:text-white/40 group-hover:text-[var(--accent)] font-normal select-none transition-colors shrink-0">
                     {item.index}
                   </span>
-                  <span className="text-3xl sm:text-4xl font-extrabold text-neutral-900 dark:text-white group-hover:text-black dark:group-hover:text-[#CCFF00] transition-colors">
+                  <span className="text-3xl sm:text-4xl font-extrabold text-neutral-900 dark:text-white group-hover:text-[var(--accent)] transition-colors">
                     {item.label}
                   </span>
                 </button>
@@ -222,7 +222,7 @@ export function Header({ activeSection, onNavigateHome }: HeaderProps) {
 
                 <a
                   href={`mailto:${USER_INFO.email}`}
-                  className="flex-1 py-2.5 rounded-full bg-neutral-900 text-white hover:bg-black dark:bg-white dark:text-black dark:hover:bg-[#CCFF00] font-bold inline-flex items-center justify-center gap-1 shadow-xs transition-colors text-xs cursor-pointer"
+                  className="flex-1 py-2.5 rounded-full bg-neutral-900 text-white hover:bg-[var(--accent)] hover:text-[var(--accent-contrast-text)] dark:bg-white dark:text-black dark:hover:bg-[var(--accent)] dark:hover:text-[var(--accent-contrast-text)] font-bold inline-flex items-center justify-center gap-1 shadow-xs transition-colors text-xs cursor-pointer"
                 >
                   <span>Email</span>
                   <ArrowUpRight className="w-3 h-3" />

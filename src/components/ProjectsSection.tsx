@@ -13,16 +13,8 @@ interface ProjectsSectionProps {
 export function ProjectsSection({ onSelectProject }: ProjectsSectionProps) {
   const [selectedFilter, setSelectedFilter] = useState<string>('all');
   const [showAllFilterPills, setShowAllFilterPills] = useState<boolean>(false);
-  const [projectsData, setProjectsData] = useState(() => getCustomProjects());
+  const projectsData = getCustomProjects();
   const { lang, t } = useLanguage();
-
-  useEffect(() => {
-    const handleUpdate = () => {
-      setProjectsData(getCustomProjects());
-    };
-    window.addEventListener('portfolio_projects_updated', handleUpdate);
-    return () => window.removeEventListener('portfolio_projects_updated', handleUpdate);
-  }, []);
 
   const currentProjects = lang === 'fr' ? projectsData.fr : projectsData.en;
 

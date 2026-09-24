@@ -86,15 +86,10 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     pdfUrl: '/pdf/ProjInt1_HUG.pdf',
     pdfTitle: 'Projet Sangsationnel · HUG',
     stack: [
-      'Laravel',
-      'Vue.js',
-      'PHP',
-      'MySQL',
+      'Laravel & Vue.js',
       'UI/UX Design',
-      'Figma',
       'Communication Digitale',
-      'Social Media',
-      'Print Design'
+      'Print & Social Media'
     ],
     accentColor: '#BE123C',
     fr: {
@@ -173,12 +168,10 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     pdfTitle: 'Dossier de communication & contenus · Karting Vuiteboeuf',
     pdfTitleEn: 'Communication & Content Strategy · Karting Vuiteboeuf',
     stack: [
-      'Instagram',
-      'TikTok',
-      'Premiere Pro',
-      'Photoshop',
-      'Canva',
-      'Photo & Vidéo'
+      'Stratégie Social Media',
+      'Instagram & TikTok',
+      'Photo & Vidéo',
+      'Premiere Pro'
     ],
     accentColor: '#DC2626',
     fr: {
@@ -245,11 +238,10 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     pdfUrl: '/pdf/OceanSight.pdf',
     pdfTitle: 'OceanSight · UI/UX Design',
     stack: [
-      'Figma',
       'UI/UX Design',
-      'Prototypage',
+      'Figma & Prototypage',
       'Tests utilisateurs',
-      'Design Thinking'
+      'Design Mobile'
     ],
     accentColor: '#166534',
     fr: {
@@ -316,11 +308,9 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       '/images/DriveGear-04.webp'
     ],
     stack: [
-      'WordPress',
-      'WooCommerce',
-      'UI/UX Design',
       'E-Commerce',
-      'Web Design'
+      'WordPress & WooCommerce',
+      'UI/UX Design'
     ],
     accentColor: '#38BDF8',
     fr: {

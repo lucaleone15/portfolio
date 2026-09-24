@@ -21,7 +21,7 @@ const SKILLS_DATA: SkillItem[] = [
     titleEn: 'UI/UX Design',
     descFr: "Conception d'interfaces intuitives et ergonomiques, wireframes, prototypes interactifs haute fidélité et design systems modulaires.",
     descEn: 'Designing intuitive and ergonomic interfaces, wireframes, high-fidelity interactive prototypes, and modular design systems.',
-    tools: ['Figma', 'Prototypage', 'Design Systems', 'Tests utilisateurs', 'Design Thinking', 'Auto-Layout']
+    tools: ['Figma', 'Prototypage', 'Design Systems', 'Tests utilisateurs']
   },
   {
     id: 'web-dev',
@@ -30,7 +30,7 @@ const SKILLS_DATA: SkillItem[] = [
     titleEn: 'Web Development',
     descFr: "Intégration et développement d'applications web sur mesure, modernes, véloces et pensées pour répondre précisément aux besoins de chaque projet.",
     descEn: 'Developing modern, fast, and tailored web applications crafted to match the specific requirements of each project.',
-    tools: ['Vue.js', 'Laravel', 'JavaScript', 'PHP', 'Tailwind CSS', 'WordPress', 'MySQL']
+    tools: ['JavaScript', 'Vue.js', 'Laravel', 'Tailwind CSS', 'PHP']
   },
   {
     id: 'comm-digitale',
@@ -39,7 +39,7 @@ const SKILLS_DATA: SkillItem[] = [
     titleEn: 'Digital Communication',
     descFr: 'Élaboration de stratégies de contenu numérique, gestion de communautés et déploiement de campagnes multicanales engageantes.',
     descEn: 'Developing digital content strategies, managing social channels, and launching engaging multi-platform campaigns.',
-    tools: ['Instagram', 'TikTok', 'Social Media', 'Stratégie de marque', 'Storytelling', 'Community Management']
+    tools: ['Stratégie Social Media', 'Instagram & TikTok', 'Community Management', 'Storytelling']
   },
   {
     id: 'dir-art',
@@ -48,7 +48,7 @@ const SKILLS_DATA: SkillItem[] = [
     titleEn: 'Art Direction',
     descFr: "Création d'identités visuelles singulières, déclinaison de chartes graphiques, typographie soignée et cohérence de marque.",
     descEn: 'Crafting distinctive brand identities, editorial visual guidelines, refined typography, and overall brand coherence.',
-    tools: ['Illustrator', 'Photoshop', 'InDesign', 'Typographie', 'Identité visuelle', 'Grilles & Layouts']
+    tools: ['Identité visuelle', 'Illustrator & Photoshop', 'Typographie']
   },
   {
     id: 'prod-video',
@@ -57,7 +57,7 @@ const SKILLS_DATA: SkillItem[] = [
     titleEn: 'Audiovisual Production',
     descFr: 'Captation photo, tournage et montage vidéo dynamique sur le terrain, étalonnage et formats courts optimisés pour le web et les réseaux.',
     descEn: 'Photography, dynamic on-site video filming and editing, color grading, and short-form storytelling tailored for social platforms.',
-    tools: ['Premiere Pro', 'CapCut', 'Photo & Vidéo', 'Étalonnage', 'Reels', 'Prise de son']
+    tools: ['Captation Photo & Vidéo', 'Premiere Pro', 'Formats courts (Reels)', 'Étalonnage']
   },
   {
     id: 'gest-projet',
@@ -66,7 +66,7 @@ const SKILLS_DATA: SkillItem[] = [
     titleEn: 'Media Project Management',
     descFr: "Coordination d'initiatives pluridisciplinaires, méthodologies agiles, cadrage des besoins et pilotage rigoureux du brief à la livraison.",
     descEn: 'Coordinating cross-functional media initiatives with agile workflows, scoping requirements from brief to final delivery.',
-    tools: ['Notion', 'Jira', 'Agile / Scrum', 'Cahier des charges', 'Coordination', 'Planning']
+    tools: ['Gestion de projet Agile', 'Notion & Jira', 'Cahier des charges']
   }
 ];
 
@@ -93,7 +93,7 @@ export function SkillsSection() {
           className="max-w-3xl mb-12 sm:mb-16"
         >
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-xs font-syne font-bold uppercase tracking-widest text-neutral-500 dark:text-[#CCFF00]">
+            <span className="text-xs font-syne font-bold uppercase tracking-widest text-[var(--accent)]">
               {lang === 'fr' ? 'Compétences' : 'Skills & Capabilities'}
             </span>
           </div>
@@ -101,14 +101,14 @@ export function SkillsSection() {
             {lang === 'fr' ? (
               <>
                 Savoir-faire alliant{' '}
-                <span className="text-neutral-950 dark:text-[#CCFF00]">créativité</span> et{' '}
-                <span className="text-neutral-950 dark:text-[#CCFF00]">technique</span>.
+                <span className="text-[var(--accent)]">créativité</span> et{' '}
+                <span className="text-[var(--accent)]">technique</span>.
               </>
             ) : (
               <>
                 Expertise bridging{' '}
-                <span className="text-neutral-950 dark:text-[#CCFF00]">design</span> and{' '}
-                <span className="text-neutral-950 dark:text-[#CCFF00]">technology</span>.
+                <span className="text-[var(--accent)]">design</span> and{' '}
+                <span className="text-[var(--accent)]">technology</span>.
               </>
             )}
           </h2>
@@ -155,8 +155,8 @@ export function SkillsSection() {
                       <span
                         className={`font-syne font-bold text-xs sm:text-sm transition-colors duration-200 select-none ${
                           isHoveredOrActive
-                            ? 'text-neutral-900 dark:text-[#CCFF00]'
-                            : 'text-neutral-400 dark:text-white/40 group-hover:text-neutral-900 dark:group-hover:text-[#CCFF00]'
+                            ? 'text-[var(--accent)]'
+                            : 'text-neutral-400 dark:text-white/40 group-hover:text-[var(--accent)]'
                         }`}
                       >
                         {skill.number}
@@ -164,8 +164,8 @@ export function SkillsSection() {
                       <h3
                         className={`text-xl sm:text-2xl lg:text-3xl font-extrabold font-syne tracking-tight transition-colors duration-200 ${
                           isHoveredOrActive
-                            ? 'text-neutral-900 dark:text-[#CCFF00]'
-                            : 'text-neutral-900 dark:text-white group-hover:text-black dark:group-hover:text-[#CCFF00]'
+                            ? 'text-[var(--accent)]'
+                            : 'text-neutral-900 dark:text-white group-hover:text-[var(--accent)]'
                         }`}
                       >
                         {lang === 'fr' ? skill.titleFr : skill.titleEn}

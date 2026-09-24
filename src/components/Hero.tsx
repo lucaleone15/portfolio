@@ -20,40 +20,29 @@ export function Hero() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-5xl space-y-6 sm:space-y-8"
         >
-          {/* Main Title with enhanced typography and neon in dark mode */}
+          {/* Main Title with enhanced typography and dynamic accent in both modes */}
           <h1 className="text-[2.1rem] leading-[1.2] sm:text-4xl md:text-5xl lg:text-[3.6rem] xl:text-[4.1rem] sm:leading-[1.16] lg:leading-[1.12] text-neutral-900 dark:text-white/95 tracking-tight font-normal">
-            <span className="block font-sans font-light text-xl sm:text-2xl md:text-3xl text-neutral-600 dark:text-neutral-300 tracking-normal mb-3 sm:mb-4">
-              {lang === 'fr' ? (
-                <>
-                  Salut, je suis <span className="font-medium text-neutral-950 dark:text-white">Luca</span>,
-                </>
-              ) : (
-                <>
-                  Hi, I'm <span className="font-medium text-neutral-950 dark:text-white">Luca</span>,
-                </>
-              )}
-            </span>
             {lang === 'fr' ? (
               <>
                 Étudiant en{' '}
-                <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">
+                <span className="font-extrabold text-[var(--accent)] inline-block cursor-default whitespace-nowrap">
                   ingénierie des médias
                 </span>{' '}
-                à la <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">HEIG-VD,</span>{' '}
+                à la <span className="font-extrabold text-[var(--accent)] inline-block cursor-default whitespace-nowrap">HEIG-VD,</span>{' '}
                 je conçois des projets où{' '}
-                <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">créativité,</span>{' '}
-                <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">design</span> et{' '}
-                <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">technologies web</span>{' '}
+                <span className="font-extrabold text-[var(--accent)] inline-block cursor-default whitespace-nowrap">créativité,</span>{' '}
+                <span className="font-extrabold text-[var(--accent)] inline-block cursor-default whitespace-nowrap">design</span> et{' '}
+                <span className="font-extrabold text-[var(--accent)] inline-block cursor-default whitespace-nowrap">technologies web</span>{' '}
                 se rencontrent.
               </>
             ) : (
               <>
                 Media Engineering student at{' '}
-                <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">HEIG-VD,</span>{' '}
+                <span className="font-extrabold text-[var(--accent)] inline-block cursor-default whitespace-nowrap">HEIG-VD,</span>{' '}
                 crafting digital projects where{' '}
-                <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">creativity,</span>{' '}
-                <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">design,</span> and{' '}
-                <span className="font-extrabold text-neutral-950 dark:text-[#CCFF00] inline-block cursor-default whitespace-nowrap">web technologies</span> meet.
+                <span className="font-extrabold text-[var(--accent)] inline-block cursor-default whitespace-nowrap">creativity,</span>{' '}
+                <span className="font-extrabold text-[var(--accent)] inline-block cursor-default whitespace-nowrap">design,</span> and{' '}
+                <span className="font-extrabold text-[var(--accent)] inline-block cursor-default whitespace-nowrap">web technologies</span> meet.
               </>
             )}
           </h1>
@@ -71,7 +60,7 @@ export function Hero() {
           <div className="pt-2 sm:pt-4 flex flex-wrap items-center gap-3.5 sm:gap-4">
             <button
               onClick={scrollToProjects}
-              className="py-4 px-8 sm:px-9 rounded-full bg-neutral-900 text-white hover:bg-black dark:bg-white dark:text-black dark:hover:bg-[#CCFF00] dark:hover:text-black text-sm sm:text-base font-syne font-bold transition-all duration-200 inline-flex items-center justify-center cursor-pointer shadow-xs active:scale-98"
+              className="py-4 px-8 sm:px-9 rounded-full bg-[var(--accent)] text-[var(--accent-contrast-text)] hover:opacity-90 dark:bg-white dark:text-black dark:hover:bg-[var(--accent)] dark:hover:text-[var(--accent-contrast-text)] text-sm sm:text-base font-syne font-bold transition-all duration-200 inline-flex items-center justify-center cursor-pointer shadow-xs active:scale-98"
             >
               <span>{t('hero.ctaProjects')}</span>
             </button>

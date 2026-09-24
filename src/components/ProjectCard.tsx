@@ -69,16 +69,8 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
           {/* Category Badge pinned at top-left of image */}
           <div className="absolute top-3.5 left-3.5 z-20 max-w-[calc(100%-28px)]">
             <span
-              className={`h-7 px-3 rounded-full text-[11px] sm:text-xs font-syne font-extrabold inline-flex items-center shadow-md tracking-wide transition-colors truncate max-w-full ${
-                project.accentColor && project.accentColor !== '#CCFF00'
-                  ? 'text-white'
-                  : 'bg-neutral-900 text-white dark:bg-[#CCFF00] dark:text-black'
-              }`}
-              style={
-                project.accentColor && project.accentColor !== '#CCFF00'
-                  ? { backgroundColor: project.accentColor }
-                  : undefined
-              }
+              className="h-7 px-3.5 rounded-full text-[11px] sm:text-xs font-syne font-extrabold inline-flex items-center shadow-md tracking-wide transition-colors truncate max-w-full text-white"
+              style={{ backgroundColor: project.accentColor || 'var(--accent)' }}
             >
               {project.category}
             </span>
@@ -98,7 +90,10 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
               <span className="font-syne font-bold text-xs sm:text-sm tracking-wide text-white drop-shadow-sm select-none">
                 {t('projects.viewProject') || 'Voir le projet'}
               </span>
-              <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white dark:text-[#CCFF00]" />
+              <ArrowUpRight
+                className="w-3.5 h-3.5 sm:w-4 sm:h-4"
+                style={{ color: project.accentColor || 'var(--accent)' }}
+              />
             </div>
           </div>
         </div>
@@ -108,19 +103,32 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
           {/* Header Row: Title & Subtitle on Left, Circle Arrow Button on Right */}
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0 flex-1">
-              <h3 className="font-sans text-xl sm:text-2xl font-bold text-neutral-900 dark:text-white tracking-tight group-hover:text-black dark:group-hover:text-[#CCFF00] transition-colors truncate leading-snug">
+              <h3
+                className="font-sans text-xl sm:text-2xl font-bold text-neutral-900 dark:text-white tracking-tight transition-colors truncate leading-snug"
+                style={isHovered ? { color: project.accentColor || 'var(--accent)' } : undefined}
+              >
                 {project.title}
               </h3>
-              {/* Date directly below title with sleek accent */}
+              {/* Date directly below title with project's own accent */}
               <div className="mt-1.5 flex items-baseline gap-2.5">
-                <span className="text-xs font-bold text-neutral-900 dark:text-[#CCFF00] tracking-wider shrink-0">{project.year}</span>
+                <span
+                  className="text-xs font-bold tracking-wider shrink-0"
+                  style={{ color: project.accentColor || 'var(--accent)' }}
+                >
+                  {project.year}
+                </span>
                 <span className="text-xs font-medium text-neutral-500 dark:text-[#A1A1AA] truncate">{project.subtitle}</span>
               </div>
             </div>
 
-            {/* Circular Arrow Button with sleek theme hover */}
+            {/* Circular Arrow Button with project-specific theme hover */}
             <div
-              className="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-black/10 dark:border-white/20 bg-black/[0.04] dark:bg-white/[0.05] text-neutral-800 dark:text-white group-hover:bg-neutral-900 group-hover:text-white group-hover:border-neutral-900 dark:group-hover:bg-[#CCFF00] dark:group-hover:text-black dark:group-hover:border-[#CCFF00] flex items-center justify-center transition-colors duration-200 shrink-0 shadow-xs"
+              className="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-black/10 dark:border-white/20 bg-black/[0.04] dark:bg-white/[0.05] text-neutral-800 dark:text-white flex items-center justify-center transition-all duration-200 shrink-0 shadow-xs"
+              style={isHovered ? {
+                backgroundColor: project.accentColor || 'var(--accent)',
+                borderColor: project.accentColor || 'var(--accent)',
+                color: '#FFFFFF'
+              } : undefined}
               aria-label={`Ouvrir le projet ${project.title}`}
             >
               <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
