@@ -1,0 +1,17 @@
+{
+  "entries": [
+    {
+      "identifier": "urn:air:luca-leone.ch:portfolio:profile",
+      "displayName": "Luca Leone - Profil & Réalisations",
+      "description": "Profil professionnel et réalisations de Luca Leone : communication numérique, design UI/UX, développement web et stratégie réseaux sociaux.",
+      "type": "text/markdown",
+      "url": "https://luca-leone.ch/llms.txt",
+      "representativeQueries": [
+        "Luca Leone portfolio",
+        "ingénieur des médias HEIG-VD",
+        "UI UX designer Suisse",
+        "projets HUG OceanSight Karting Vuiteboeuf"
+      ]
+    }
+  ]
+}
