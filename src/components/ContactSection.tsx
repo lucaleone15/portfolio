@@ -224,7 +224,7 @@ export function ContactSection() {
           >
             {/* EMAIL DIRECT */}
             <div>
-              <span className="block text-xs uppercase font-bold tracking-[0.2em] text-neutral-400 dark:text-white/40 mb-3">
+              <span className="block text-xs uppercase font-bold tracking-[0.2em] text-neutral-600 dark:text-neutral-300 mb-3">
                 {t('contact.directEmailLabel')}
               </span>
               <a
@@ -248,7 +248,7 @@ export function ContactSection() {
 
             {/* NUMÉRO DIRECT */}
             <div>
-              <span className="block text-xs uppercase font-bold tracking-[0.2em] text-neutral-400 dark:text-white/40 mb-3">
+              <span className="block text-xs uppercase font-bold tracking-[0.2em] text-neutral-600 dark:text-neutral-300 mb-3">
                 {t('contact.directPhoneLabel')}
               </span>
               <a
@@ -261,7 +261,7 @@ export function ContactSection() {
 
             {/* RÉSEAUX SOCIAUX - LinkedIn Only */}
             <div>
-              <span className="block text-xs uppercase font-bold tracking-[0.2em] text-neutral-400 dark:text-white/40 mb-4">
+              <span className="block text-xs uppercase font-bold tracking-[0.2em] text-neutral-600 dark:text-neutral-300 mb-4">
                 {t('contact.socialLabel')}
               </span>
 
@@ -274,7 +274,7 @@ export function ContactSection() {
                   className="group flex items-center justify-between py-4 text-base sm:text-lg font-semibold text-neutral-900 dark:text-white hover:text-[var(--accent)] transition-colors"
                 >
                   <span>LinkedIn</span>
-                  <span className="text-neutral-400 dark:text-white/60 group-hover:text-[var(--accent)] group-hover:translate-x-1 transition-all">
+                  <span className="text-neutral-600 dark:text-neutral-300 group-hover:text-[var(--accent)] group-hover:translate-x-1 transition-all">
                     →
                   </span>
                 </a>
@@ -285,26 +285,26 @@ export function ContactSection() {
 
         </div>
 
-        {/* Minimal Clean Footer */}
-        <footer className="mt-20 pt-8 border-t border-black/[0.08] dark:border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500 dark:text-[#71717A]">
+        {/* Minimal Clean Footer with WCAG AAA Compliant High Contrast */}
+        <footer className="mt-20 pt-8 border-t border-black/[0.08] dark:border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-700 dark:text-neutral-300">
           <div className="flex items-center gap-2">
             <span className="font-bold text-neutral-900 dark:text-white inline-flex items-baseline">
               Luca Leone<span className="text-[var(--accent)] font-bold">.</span>
             </span>
-            <span>© {new Date().getFullYear()}</span>
-            <span>·</span>
-            <span>HEIG-VD</span>
+            <span className="font-medium text-neutral-700 dark:text-neutral-300">© {new Date().getFullYear()}</span>
+            <span className="text-neutral-400 dark:text-neutral-500">·</span>
+            <span className="font-medium text-neutral-700 dark:text-neutral-300">HEIG-VD</span>
           </div>
           <div className="flex items-center gap-4 sm:gap-5">
             <a
               href="#projets"
-              className="hover:text-neutral-900 dark:hover:text-white transition-colors"
+              className="text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white transition-colors font-medium"
             >
               {t('nav.projects')}
             </a>
             <a
               href="#a-propos"
-              className="hover:text-neutral-900 dark:hover:text-white transition-colors"
+              className="text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white transition-colors font-medium"
             >
               {t('nav.about')}
             </a>
@@ -312,7 +312,7 @@ export function ContactSection() {
               href={USER_INFO.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-neutral-900 dark:hover:text-white transition-colors"
+              className="text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white transition-colors font-medium"
             >
               LinkedIn
             </a>
@@ -321,14 +321,14 @@ export function ContactSection() {
             <button
               type="button"
               onClick={toggleTheme}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.08] hover:border-black/20 dark:hover:border-white/20 transition-all cursor-pointer opacity-75 hover:opacity-100"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] text-neutral-700 hover:text-black dark:text-neutral-300 dark:hover:text-white bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.08] hover:border-black/20 dark:hover:border-white/20 transition-all cursor-pointer opacity-90 hover:opacity-100"
               title={theme === 'dark' ? 'Passer en mode clair' : 'Passer en mode sombre'}
               aria-label="Basculer le thème"
             >
               {theme === 'dark' ? (
                 <Sun className="w-3 h-3 text-[var(--accent)]" />
               ) : (
-                <Moon className="w-3 h-3 text-neutral-600" />
+                <Moon className="w-3 h-3 text-neutral-700" />
               )}
               <span className="font-syne font-bold text-[10px] tracking-wide uppercase">{theme === 'dark' ? 'Light' : 'Dark'}</span>
             </button>

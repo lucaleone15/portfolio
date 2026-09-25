@@ -1,30 +1,35 @@
 {
-  "$schema": "https://agentcatalog.org/schema/v1/ai-catalog.json",
-  "name": "Luca Leone Portfolio",
-  "description": "Portfolio professionnel de Luca Leone, étudiant en ingénierie des médias à la HEIG-VD.",
-  "url": "https://luca-leone.ch",
-  "version": "1.0.0",
-  "provider": {
+  "specVersion": "1.0",
+  "host": {
     "name": "Luca Leone",
+    "domain": "luca-leone.ch",
+    "description": "Portfolio professionnel de Luca Leone, étudiant en ingénierie des médias à la HEIG-VD (Suisse).",
     "url": "https://luca-leone.ch"
   },
-  "capabilities": [
-    "portfolio",
-    "ui-ux-design",
-    "web-development",
-    "digital-communication",
-    "media-engineering"
-  ],
-  "resources": [
+  "entries": [
     {
-      "name": "llms.txt",
-      "type": "documentation",
-      "url": "https://luca-leone.ch/llms.txt"
+      "id": "urn:ard:luca-leone:profile",
+      "displayName": "Luca Leone - Profil & Réalisations",
+      "description": "Profil professionnel et réalisations de Luca Leone : communication numérique, design UI/UX, développement web et stratégie réseaux sociaux.",
+      "mediaType": "text/markdown",
+      "url": "https://luca-leone.ch/llms.txt",
+      "representativeQueries": [
+        "Luca Leone portfolio",
+        "ingénieur des médias HEIG-VD",
+        "UI UX designer Suisse",
+        "projets HUG OceanSight Karting Vuiteboeuf"
+      ]
     },
     {
-      "name": "sitemap.xml",
-      "type": "sitemap",
-      "url": "https://luca-leone.ch/sitemap.xml"
+      "id": "urn:ard:luca-leone:sitemap",
+      "displayName": "Sitemap des ressources et projets",
+      "description": "Plan complet du site et indexation des dossiers de projets PDF.",
+      "mediaType": "application/xml",
+      "url": "https://luca-leone.ch/sitemap.xml",
+      "representativeQueries": [
+        "sitemap luca leone",
+        "dossiers PDF projets Luca Leone"
+      ]
     }
   ]
 }
