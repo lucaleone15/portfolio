@@ -20,7 +20,7 @@ export function ContactSection() {
     message: ''
   });
 
-  const PRIMARY_EMAIL = 'lucaleone2004@gmail.com';
+  const PRIMARY_EMAIL = 'luca@luca-leone.ch';
 
   const copyEmailToClipboard = () => {
     navigator.clipboard.writeText(PRIMARY_EMAIL);
@@ -123,6 +123,7 @@ export function ContactSection() {
                   type="text"
                   required
                   placeholder={t('contact.namePlaceholder')}
+                  aria-label={t('contact.namePlaceholder') || 'Votre nom'}
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full pb-3 bg-transparent border-b border-black/20 dark:border-white/20 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-white/35 text-base sm:text-lg focus:outline-none focus:border-[var(--accent)] transition-colors"
@@ -135,6 +136,7 @@ export function ContactSection() {
                   type="email"
                   required
                   placeholder={t('contact.emailPlaceholder')}
+                  aria-label={t('contact.emailPlaceholder') || 'Votre adresse email'}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full pb-3 bg-transparent border-b border-black/20 dark:border-white/20 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-white/35 text-base sm:text-lg focus:outline-none focus:border-[var(--accent)] transition-colors"
@@ -146,6 +148,7 @@ export function ContactSection() {
                 <input
                   type="text"
                   placeholder={t('contact.subjectPlaceholder')}
+                  aria-label={t('contact.subjectPlaceholder') || 'Sujet'}
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   className="w-full pb-3 bg-transparent border-b border-black/20 dark:border-white/20 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-white/35 text-base sm:text-lg focus:outline-none focus:border-[var(--accent)] transition-colors"
@@ -158,6 +161,7 @@ export function ContactSection() {
                   required
                   rows={4}
                   placeholder={t('contact.messagePlaceholder')}
+                  aria-label={t('contact.messagePlaceholder') || 'Votre message'}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   className="w-full pb-3 bg-transparent border-b border-black/20 dark:border-white/20 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-white/35 text-base sm:text-lg focus:outline-none focus:border-[var(--accent)] transition-colors resize-none"

@@ -1,63 +1,66 @@
 # Luca Leone — Portfolio & Profil Professionnel
+
 > Étudiant en ingénierie des médias à la HEIG-VD (Haute École d'Ingénierie et de Gestion du Canton de Vaud, Suisse). Spécialiste en communication numérique, marketing digital, UI/UX design, développement web et production photo/vidéo.
 
-## À propos
-Luca Leone est un étudiant en dernière année de Bachelor en Ingénierie des Médias à la HEIG-VD (Yverdon-les-Bains, Suisse). Son profil allie sensibilité graphique et compétences techniques dans le numérique. Il conçoit des projets digitaux de bout en bout : stratégie de communication, identité visuelle, interfaces UI/UX, développement de sites web interactifs et création de contenus audiovisuels.
+## Liens Rapides & Ressources
+- [Site Officiel & Portfolio](https://luca-leone.ch/)
+- [Section Projets](https://luca-leone.ch/#projets)
+- [À Propos de Luca Leone](https://luca-leone.ch/#a-propos)
+- [Contact Direct](https://luca-leone.ch/#contact)
+- [Profil Professionnel LinkedIn](https://linkedin.com/in/leone-luca)
+- [Document PDF Sangsationnel HUG](https://luca-leone.ch/pdf/ProjInt1_HUG.pdf)
+- [Dossier PDF Karting Vuiteboeuf](https://luca-leone.ch/pdf/Repenser-la-communication-digitale-du-Karting-Vuiteboeuf.pdf)
+- [Dossier PDF OceanSight UI/UX](https://luca-leone.ch/pdf/OceanSight.pdf)
 
-En parallèle de ses études, il exerce le rôle de Community Manager pour le Karting de Vuiteboeuf (Canton de Vaud, Suisse), où il pilote la création de contenus photo et vidéo, l'animation des réseaux sociaux et le développement de la notoriété numérique de la marque.
+## À propos
+Luca Leone est un étudiant en dernière année de Bachelor en Ingénierie des Médias à la [HEIG-VD](https://heig-vd.ch) (Yverdon-les-Bains, Suisse). Son profil allie sensibilité graphique et compétences techniques dans le numérique. Il conçoit des projets digitaux de bout en bout : stratégie de communication, identité visuelle, interfaces UI/UX, développement de sites web interactifs et création de contenus audiovisuels.
+
+En parallèle de ses études, il exerce le rôle de Community Manager pour le [Karting de Vuiteboeuf](https://karting-vuiteboeuf.ch) (Canton de Vaud, Suisse), où il pilote la création de contenus photo et vidéo, l'animation des réseaux sociaux et le développement de la notoriété numérique de la marque.
 
 ## Domaines d'expertise & Compétences
 - **Communication & Marketing Digital** : Stratégie de marque, Community Management, création de formats courts et engageants (Instagram, TikTok, LinkedIn), rédaction web, acquisition et promotion d'événements.
 - **UI/UX Design & Prototypage** : Conception d'interfaces utilisateur (UI) sous Figma, prototypage interactif, recherche utilisateur (UX research), tests d'utilisabilité, design systems et architecture d'information.
 - **Développement Web Full-Stack & Front-End** : HTML5 sémantique, CSS3, Tailwind CSS, JavaScript, React, Vue.js, Laravel, PHP, MySQL, intégration web responsive et animations fluides.
-- **Production Média & Audiovisuelle** : Photographie numérique, captation sur le terrain, montage vidéo (Adobe Premiere Pro, Canva, Suite Adobe), retouche photo (Photoshop, Lightroom) et direction artistique.
+- **Production Média & Audiovisuelle** : Photographie numérique, captation sur le terrain, montage vidéo (Adobe Premiere Pro, Suite Adobe), retouche photo (Photoshop, Lightroom) et direction artistique.
 
 ## Projets Principaux & Réalisations
-1. **HUG – Sangsationnel** (2026) :
+1. **[HUG – Sangsationnel](https://luca-leone.ch/#projets)** (2026) :
    - *Type* : Projet académique 360° pour les Hôpitaux universitaires de Genève.
-   - *Description* : Campagne de communication digitale et plateforme web gamifiée pour dynamiser les collectes de sang auprès des entreprises partenaires des HUG. Enquête interactive transformant le don de sang en mission agent.
+   - *Description* : Campagne de communication digitale et plateforme web gamifiée pour dynamiser les collectes de sang auprès des entreprises partenaires des HUG.
    - *Rôle* : Conception 360° (UX/UI Design, Développement Web & Communication). Équipe : Marc Bridy, Romain Blanchard, Étienne Bergeon, Liliana Kolmakova, Christophe Cunha et Assya Mghirbi.
-   - *Technologies & Outils* : Laravel, Vue.js, PHP, MySQL, Figma, Print, Intranet & Réseaux sociaux.
-   - *Documentation* : Dossier complet PDF disponible.
+   - *Technologies* : Laravel, Vue.js, PHP, MySQL, Figma, Print, Intranet & Réseaux sociaux.
+   - *Documentation* : [Télécharger le PDF Sangsationnel](https://luca-leone.ch/pdf/ProjInt1_HUG.pdf).
 
-2. **Karting de Vuiteboeuf** (2026) :
+2. **[Karting de Vuiteboeuf](https://luca-leone.ch/#projets)** (2026) :
    - *Type* : Expérience professionnelle & gestion de marque sur circuit.
-   - *Description* : Accompagnement dans le développement de l'image et de la présence en ligne du circuit. Captation photo et vidéo directement sur le circuit, animation des comptes Instagram et TikTok, communication autour des courses, chronos, offres et compétitions.
+   - *Description* : Accompagnement dans le développement de l'image et de la présence en ligne du circuit. Captation photo et vidéo directement sur le circuit, animation des comptes Instagram et TikTok.
    - *Rôle* : Responsable communication digitale & Community Manager.
-   - *Technologies & Outils* : Instagram, TikTok, Premiere Pro, Photoshop, Canva, Photo & Vidéo sportive.
-   - *Documentation* : Dossier de communication & contenus PDF disponible.
+   - *Technologies* : Instagram, TikTok, Premiere Pro, Photoshop, Photo & Vidéo sportive.
+   - *Documentation* : [Télécharger le dossier Karting](https://luca-leone.ch/pdf/Repenser-la-communication-digitale-du-Karting-Vuiteboeuf.pdf).
 
-3. **OceanSight** (2026) :
+3. **[OceanSight](https://luca-leone.ch/#projets)** (2026) :
    - *Type* : Application mobile & UI/UX Design (Projet académique HEIG-VD).
-   - *Description* : Application collaborative de signalement des déchets marins (filets fantômes, plastiques), valorisation des missions citoyennes de nettoyage et suivi d'impact environnemental.
-   - *Rôle* : UI/UX Design & Recherche utilisateur. Collaboration avec Romain Blanchard.
-   - *Technologies & Outils* : Figma, Prototypage mobile, Tests utilisateurs, Design Thinking. Évaluations : UI 5.4/6, UX 6/6.
-   - *Documentation* : Dossier PDF UI/UX complet disponible.
+   - *Description* : Application collaborative de signalement des déchets marins, valorisation des missions citoyennes de nettoyage et suivi d'impact environnemental.
+   - *Rôle* : UI/UX Design & Recherche utilisateur. Collaboration avec Sacha Loskov et Romain Blanchard.
+   - *Technologies* : Figma, Prototypage mobile, Tests utilisateurs, Design Thinking. Évaluations : UI 5.8/6, UX 6/6.
+   - *Documentation* : [Télécharger le dossier OceanSight](https://luca-leone.ch/pdf/OceanSight.pdf).
 
-4. **DriveGear** (2025) :
+4. **[DriveGear](https://luca-leone.ch/#projets)** (2025) :
    - *Type* : E-Commerce & Web Design (Projet académique HEIG-VD).
-   - *Description* : Boutique e-commerce complète dédiée à l'univers automobile. Structuration du catalogue produit, identité visuelle racée et expérience d'achat fluide.
+   - *Description* : Boutique e-commerce complète dédiée à l'univers automobile.
    - *Rôle* : Conception ergonomique & intégration UI/UX. Évaluation : 5.9/6.
-   - *Technologies & Outils* : WordPress, WooCommerce, UI/UX Design, Web Design responsive.
+   - *Technologies* : WordPress, WooCommerce, UI/UX Design, Web Design responsive.
 
 ## Formation & Diplômes
-- **Bachelor of Science HES-SO en Ingénierie des Médias** : HEIG-VD (Haute École d'Ingénierie et de Gestion du Canton de Vaud), Yverdon-les-Bains, Suisse. Spécialisation en ingénierie des médias, médias interactifs, gestion de projet et communication digitale.
+- **Bachelor of Science HES-SO en Ingénierie des Médias** : [HEIG-VD](https://heig-vd.ch), Yverdon-les-Bains, Suisse. Spécialisation en médias interactifs, gestion de projet et communication digitale.
 
 ## Langues
 - Français (Langue maternelle)
 - Anglais (Niveau C1)
 - Italien (Niveau B2)
 
-## Centres d'intérêt
-- Automobile & Sport automobile (Karting, circuit, mécanique)
-- Sport & Activité physique
-- Voyages & Découvertes culturelles
-- Nouvelles technologies & Outils digitaux
-
-## Localisation & Mobilité
-- Région : Canton de Vaud, Suisse Romande (Yverdon-les-Bains, Vuiteboeuf, Lausanne, Genève).
-
 ## Contact & Réseaux
-- Email : lucaleone2004@gmail.com
-- Téléphone : +41 79 868 72 04
-- LinkedIn : https://linkedin.com/in/leone-luca
+- Email : [luca@luca-leone.ch](mailto:luca@luca-leone.ch)
+- Téléphone : [+41 79 868 72 04](tel:+41798687204)
+- LinkedIn : [Luca Leone sur LinkedIn](https://linkedin.com/in/leone-luca)
+- Localisation : Yverdon-les-Bains / Canton de Vaud, Suisse Romande

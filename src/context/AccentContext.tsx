@@ -21,7 +21,7 @@ export function AccentProvider({ children }: { children: React.ReactNode }) {
       ACCENT_PALETTES.find((p) => p.id === ACTIVE_ACCENT_ID) ||
       ACCENT_PALETTES[0]
     );
-  }, []);
+  }, [ACTIVE_ACCENT_ID]);
 
   useEffect(() => {
     const root = document.documentElement;

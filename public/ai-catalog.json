@@ -1,0 +1,30 @@
+{
+  "$schema": "https://agentcatalog.org/schema/v1/ai-catalog.json",
+  "name": "Luca Leone Portfolio",
+  "description": "Portfolio professionnel de Luca Leone, étudiant en ingénierie des médias à la HEIG-VD.",
+  "url": "https://luca-leone.ch",
+  "version": "1.0.0",
+  "provider": {
+    "name": "Luca Leone",
+    "url": "https://luca-leone.ch"
+  },
+  "capabilities": [
+    "portfolio",
+    "ui-ux-design",
+    "web-development",
+    "digital-communication",
+    "media-engineering"
+  ],
+  "resources": [
+    {
+      "name": "llms.txt",
+      "type": "documentation",
+      "url": "https://luca-leone.ch/llms.txt"
+    },
+    {
+      "name": "sitemap.xml",
+      "type": "sitemap",
+      "url": "https://luca-leone.ch/sitemap.xml"
+    }
+  ]
+}

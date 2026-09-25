@@ -53,6 +53,8 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
             <img
               src={project.imageUrl}
               alt={project.title}
+              width="600"
+              height="375"
               loading="lazy"
               decoding="async"
               referrerPolicy="no-referrer"
@@ -129,7 +131,7 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
                 borderColor: project.accentColor || 'var(--accent)',
                 color: '#FFFFFF'
               } : undefined}
-              aria-label={`Ouvrir le projet ${project.title}`}
+              aria-hidden="true"
             >
               <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </div>
