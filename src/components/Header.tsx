@@ -89,6 +89,7 @@ export function Header({ activeSection, onNavigateHome }: HeaderProps) {
                     : 'text-neutral-500 dark:text-[#A1A1AA] hover:text-black dark:hover:text-white font-medium'
                 }`}
                 title="Passer en français"
+                aria-label="Passer en français"
               >
                 FR
               </button>
@@ -100,6 +101,7 @@ export function Header({ activeSection, onNavigateHome }: HeaderProps) {
                     : 'text-neutral-500 dark:text-[#A1A1AA] hover:text-black dark:hover:text-white font-medium'
                 }`}
                 title="Switch to English"
+                aria-label="Switch to English"
               >
                 EN
               </button>

@@ -4,7 +4,7 @@ export const USER_INFO = {
   name: 'Luca Leone',
   title: 'Étudiant en ingénierie des médias',
   subtitle: 'Communication · Marketing digital · Design · Web · UI/UX',
-  email: 'lucaleone2004@gmail.com',
+  email: 'luca@luca-leone.ch',
   phone: '+41 79 868 72 04',
   linkedin: 'https://linkedin.com/in/leone-luca',
   linkedinLabel: 'linkedin.com/in/leone-luca',
@@ -91,7 +91,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       'Communication Digitale',
       'Print & Social Media'
     ],
-    accentColor: '#BE123C',
+    accentColor: '#991B1B',
     fr: {
       title: 'HUG',
       subtitle: 'Campagne digitale & plateforme web',
@@ -266,7 +266,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       metrics: [
         { label: 'Type', value: 'Application mobile' },
         { label: 'Démarche', value: 'UX & Prototypage' },
-        { label: 'Évaluation UI', value: '5.4 / 6' },
+        { label: 'Évaluation UI', value: '5.8 / 6' },
         { label: 'Évaluation UX', value: '6 / 6' }
       ]
     },
@@ -292,7 +292,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       metrics: [
         { label: 'Type', value: 'Mobile Application' },
         { label: 'Approach', value: 'UX & Prototyping' },
-        { label: 'UI Score', value: '5.4 / 6' },
+        { label: 'UI Score', value: '5.8 / 6' },
         { label: 'UX Score', value: '6 / 6' }
       ]
     }

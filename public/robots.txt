@@ -31,4 +31,4 @@ User-agent: Bytespider
 Allow: /
 
 # Sitemap & LLM context
-Sitemap: /sitemap.xml
+Sitemap: https://luca-leone.ch/sitemap.xml
