@@ -1,4 +1,4 @@
-import { useEffect, useState, FormEvent, MouseEvent } from 'react';
+import { useState, FormEvent, MouseEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { USER_INFO } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
@@ -7,13 +7,10 @@ import { Check, Copy, Linkedin, Loader2, Mail, Phone } from 'lucide-react';
 import { ContactRow, FloatingField, RevealHeading, RevealWords, Signature } from './ContactExtras';
 
 const TOPICS = {
-  fr: ['Projet', 'Collaboration', 'Travail de Bachelor', 'Autre'],
-  en: ['Project', 'Collaboration', 'Bachelor thesis', 'Other'],
+  fr: ['Projet', 'Collaboration', 'Travail de Bachelor', 'Stage / emploi', 'Autre'],
+  en: ['Project', 'Collaboration', 'Bachelor thesis', 'Internship / job', 'Other'],
 };
 
-/** Fired by the hero's "looking for a Bachelor thesis" pill: preselects that topic. */
-export const PRESELECT_TOPIC_EVENT = 'contact-preselect-topic';
-export const BACHELOR_TOPIC_INDEX = 2;
 
 export function ContactSection() {
   const { lang, t } = useLanguage();
@@ -34,14 +31,6 @@ export function ContactSection() {
   const PRIMARY_EMAIL = 'luca@luca-leone.ch';
   const [emailInvalid, setEmailInvalid] = useState(false);
 
-  useEffect(() => {
-    const onPreselect = (e: Event) => {
-      const index = (e as CustomEvent<number>).detail;
-      setFormData((prev) => ({ ...prev, subject: TOPICS[lang][index] ?? prev.subject }));
-    };
-    window.addEventListener(PRESELECT_TOPIC_EVENT, onPreselect);
-    return () => window.removeEventListener(PRESELECT_TOPIC_EVENT, onPreselect);
-  }, [lang]);
 
   // Clicking the address copies it; if the clipboard is unavailable, fall back to the mail app
   const copyEmailToClipboard = async (e: MouseEvent<HTMLAnchorElement>) => {
@@ -128,7 +117,7 @@ export function ContactSection() {
       <div className="relative max-w-7xl mx-auto px-6 sm:px-10">
         
         {/* Headline: words rise out of their masks */}
-        <RevealHeading className="mb-14 sm:mb-20 text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.05] font-normal text-white/75">
+        <RevealHeading className="mb-6 sm:mb-8 text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.05] font-normal text-white/75">
           <span className="block">
             <RevealWords text={t('contact.talkPrefix')} />
           </span>
@@ -136,6 +125,28 @@ export function ContactSection() {
             <RevealWords text={t('contact.talkHighlight')} delay={0.2} className="font-extrabold text-white" />
           </span>
         </RevealHeading>
+
+        {/* What I'm looking for, right where people decide to write */}
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-14 sm:mb-20 max-w-3xl text-lg sm:text-2xl leading-relaxed text-white/85"
+        >
+          {lang === 'fr' ? (
+            <>
+              Je recherche actuellement une entreprise pour mon{' '}
+              <strong className="font-bold text-white">travail de Bachelor</strong>. Votre équipe a un sujet à proposer ?
+              Écrivez-moi.
+            </>
+          ) : (
+            <>
+              I'm currently looking for a company to host my <strong className="font-bold text-white">Bachelor thesis</strong>.
+              Does your team have a topic in mind? Get in touch.
+            </>
+          )}
+        </motion.p>
 
         {/* One shared grid of rows: each form row sits on the same row as a direct-contact row,
             so their lines meet (labels / chips ↔ email / name+email ↔ phone / message ↔ LinkedIn).
