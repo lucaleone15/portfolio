@@ -143,16 +143,36 @@
   }
 }
 
-/* NeonBackdrop: dot grid, fading toward the edges */
-.dot-grid {
-  background-image: radial-gradient(rgba(26, 26, 26, 0.16) 1px, transparent 1.2px);
-  background-size: 22px 22px;
-  background-position: center;
-  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 55% 40%, black 30%, transparent 100%);
-  mask-image: radial-gradient(ellipse 75% 65% at 55% 40%, black 30%, transparent 100%);
+/* NeonBackdrop: aurora — large blurred accent-family fields drifting slowly */
+.aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  will-change: transform;
 }
-.dark .dot-grid {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.11) 1px, transparent 1.2px);
+.aurora-a {
+  width: 55vw; height: 55vw; max-width: 900px; max-height: 900px;
+  top: -25%; right: -10%;
+  background: rgba(var(--accent-rgb), 0.28);
+  animation: aurora-a 26s ease-in-out infinite alternate;
+}
+.aurora-b {
+  width: 45vw; height: 45vw; max-width: 760px; max-height: 760px;
+  top: 10%; left: -15%;
+  background: rgba(120, 20, 60, 0.22);
+  animation: aurora-b 32s ease-in-out infinite alternate;
+}
+.aurora-c {
+  width: 35vw; height: 35vw; max-width: 600px; max-height: 600px;
+  bottom: -20%; left: 35%;
+  background: rgba(255, 110, 140, 0.14);
+  animation: aurora-c 38s ease-in-out infinite alternate;
+}
+@keyframes aurora-a { to { transform: translate3d(-12vw, 10vh, 0) scale(1.15); } }
+@keyframes aurora-b { to { transform: translate3d(14vw, -6vh, 0) scale(0.9); } }
+@keyframes aurora-c { to { transform: translate3d(-10vw, -14vh, 0) scale(1.2); } }
+@media (prefers-reduced-motion: reduce) {
+  .aurora-blob { animation: none; }
 }
 /* Fade the whole backdrop out at the bottom: the hero melts into the next section */
 .backdrop-fade-bottom {

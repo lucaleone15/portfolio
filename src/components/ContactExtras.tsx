@@ -54,8 +54,9 @@ export function FloatingField({
   error?: string;
   onBlur?: (el: HTMLInputElement | HTMLTextAreaElement) => void;
 }) {
-  const fieldClass = `peer w-full bg-transparent border-b pt-6 pb-2.5 text-base sm:text-lg text-neutral-900 dark:text-white outline-none placeholder-transparent transition-colors ${
-    error ? 'border-red-500/70' : 'border-black/20 dark:border-white/20'
+  // Styled for the accent contact sheet (white on accent); autofill keeps the sheet's colours
+  const fieldClass = `peer w-full bg-transparent border-b pt-6 pb-2.5 text-base sm:text-lg text-white caret-white outline-none placeholder-transparent transition-colors [&:-webkit-autofill]:[-webkit-text-fill-color:white] [&:-webkit-autofill]:[transition:background-color_99999s] ${
+    error ? 'border-white' : 'border-white/35'
   }`;
   const common = {
     id,
@@ -83,17 +84,17 @@ export function FloatingField({
       )}
       <label
         htmlFor={id}
-        className="pointer-events-none absolute left-0 top-6 origin-left text-base sm:text-lg text-neutral-500 dark:text-[#A1A1AA] transition-transform duration-200 ease-out peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[var(--accent)] peer-[:not(:placeholder-shown)]:-translate-y-6 peer-[:not(:placeholder-shown)]:scale-75"
+        className="pointer-events-none absolute left-0 top-6 origin-left text-base sm:text-lg text-white/70 transition-transform duration-200 ease-out peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-white peer-[:not(:placeholder-shown)]:-translate-y-6 peer-[:not(:placeholder-shown)]:scale-75"
       >
         {label}
         {required && <span aria-hidden="true"> *</span>}
       </label>
       <span
-        className="pointer-events-none absolute left-0 bottom-0 h-[2px] w-full origin-left scale-x-0 bg-[var(--accent)] transition-transform duration-300 ease-out peer-focus:scale-x-100"
+        className="pointer-events-none absolute left-0 bottom-0 h-[2px] w-full origin-left scale-x-0 bg-white transition-transform duration-300 ease-out peer-focus:scale-x-100"
         aria-hidden="true"
       />
       {error && (
-        <p id={`${id}-error`} className="absolute -bottom-6 left-0 text-xs text-red-600 dark:text-red-400">
+        <p id={`${id}-error`} className="absolute -bottom-6 left-0 text-xs font-semibold text-white">
           {error}
         </p>
       )}
@@ -102,8 +103,8 @@ export function FloatingField({
 }
 
 /**
- * Big direct-contact row (icon, small label, large value, trailing icon). On hover an accent
- * band sweeps across from the left and the content flips to the accent's contrast colour.
+ * Big direct-contact row (icon, small label, large value, trailing icon), on the accent sheet.
+ * On hover a white band sweeps across from the left and the content turns accent.
  */
 export function ContactRow({
   icon,
@@ -125,30 +126,30 @@ export function ContactRow({
   trailing?: ReactNode;
 }) {
   return (
-    <li className="border-b border-black/10 dark:border-white/10">
+    <li className="border-b border-white/25">
       <a
         href={href}
         onClick={onClick}
         aria-label={ariaLabel}
         {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-        className="group relative flex items-center gap-4 px-3 sm:px-4 py-5 sm:py-6 overflow-hidden text-neutral-900 dark:text-white active:scale-[0.99] transition-transform"
+        className="group relative flex items-center gap-4 px-3 sm:px-4 py-5 sm:py-6 overflow-hidden text-white active:scale-[0.99] transition-transform"
       >
         <span
-          className="absolute inset-0 bg-[var(--accent)] [clip-path:inset(0_100%_0_0)] group-hover:[clip-path:inset(0_0_0_0)] transition-[clip-path] duration-500 ease-[cubic-bezier(0.77,0,0.175,1)]"
+          className="absolute inset-0 bg-white [clip-path:inset(0_100%_0_0)] group-hover:[clip-path:inset(0_0_0_0)] transition-[clip-path] duration-500 ease-[cubic-bezier(0.77,0,0.175,1)]"
           aria-hidden="true"
         />
-        <span className="relative w-11 h-11 shrink-0 rounded-full border border-black/15 dark:border-white/15 flex items-center justify-center transition-colors duration-300 group-hover:border-[var(--accent-contrast-text)]/40 group-hover:text-[var(--accent-contrast-text)]">
+        <span className="relative w-11 h-11 shrink-0 rounded-full border border-white/35 flex items-center justify-center transition-colors duration-300 group-hover:border-[var(--accent-light)]/30 group-hover:text-[var(--accent-light)]">
           {icon}
         </span>
         <span className="relative min-w-0 flex-1">
-          <span className="block text-xs text-neutral-500 dark:text-[#A1A1AA] transition-colors duration-300 group-hover:text-[var(--accent-contrast-text)]/80">
+          <span className="block text-xs text-white/70 transition-colors duration-300 group-hover:text-[var(--accent-light)]/80">
             {label}
           </span>
-          <span className="block text-lg sm:text-2xl font-bold tracking-tight truncate transition-colors duration-300 group-hover:text-[var(--accent-contrast-text)]">
+          <span className="block text-lg sm:text-2xl font-bold tracking-tight truncate transition-colors duration-300 group-hover:text-[var(--accent-light)]">
             {value}
           </span>
         </span>
-        <span className="relative shrink-0 transition-[color,transform] duration-300 group-hover:text-[var(--accent-contrast-text)] group-hover:translate-x-1" aria-hidden="true">
+        <span className="relative shrink-0 transition-[color,transform] duration-300 group-hover:text-[var(--accent-light)] group-hover:translate-x-1" aria-hidden="true">
           {trailing ?? <ArrowUpRight className="w-5 h-5" />}
         </span>
       </a>
@@ -165,9 +166,9 @@ export function Signature() {
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true, margin: '-20px' }}
         transition={{ duration: 0.9, ease: [0.23, 1, 0.32, 1] }}
-        className="font-serif whitespace-nowrap font-black leading-[0.95] tracking-[-0.05em] text-[min(18vw,15.5rem)] bg-gradient-to-b from-neutral-900 to-neutral-900/15 dark:from-white dark:to-white/15 bg-clip-text text-transparent"
+        className="font-serif whitespace-nowrap font-black leading-[0.95] tracking-[-0.05em] text-[min(18vw,15.5rem)] bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent"
       >
-        Luca Leone<span className="text-[var(--accent)]">.</span>
+        Luca Leone<span className="text-[#0A0A0C]">.</span>
       </motion.p>
     </div>
   );
