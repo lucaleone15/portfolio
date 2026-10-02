@@ -1,6 +1,6 @@
 import { Language } from './types';
 import { PROJECTS_EN, PROJECTS_FR, UNIFIED_PROJECTS, USER_INFO } from './data/portfolioData';
-import { homePath, pathFor, projectPath, Route } from './router';
+import { homePath, pathFor, privacyPath, projectPath, Route } from './router';
 
 /**
  * Per-page <head> metadata and structured data. Used by the build-time
@@ -37,6 +37,7 @@ export function getAllRoutes(): Route[] {
   return langs.flatMap((lang) => [
     { name: 'home', lang } as Route,
     ...UNIFIED_PROJECTS.map((p) => ({ name: 'project', lang, slug: p.id }) as Route),
+    { name: 'privacy', lang } as Route,
   ]);
 }
 
@@ -253,6 +254,35 @@ function projectHead(lang: Language, slug: string): HeadData | null {
   };
 }
 
+function privacyHead(lang: Language): HeadData {
+  const url = abs(privacyPath(lang));
+  const title = lang === 'fr' ? 'Politique de confidentialité | Luca Leone' : 'Privacy policy | Luca Leone';
+  const description =
+    lang === 'fr'
+      ? 'Quelles données le portfolio de Luca Leone traite, pourquoi, et vos droits : aucun cookie, aucun suivi tiers, hébergement en Suisse.'
+      : 'What data Luca Leone’s portfolio processes, why, and your rights: no cookies, no third-party tracking, hosted in Switzerland.';
+  return {
+    lang,
+    title,
+    description,
+    canonical: url,
+    alternates: alternatesFor({ name: 'privacy', lang }),
+    ogType: 'profile',
+    image: OG_IMAGE_URL,
+    imageAlt: 'Luca Leone',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      '@id': `${url}#webpage`,
+      url,
+      name: title,
+      description,
+      inLanguage: IN_LANGUAGE[lang],
+      isPartOf: { '@id': WEBSITE_ID },
+    },
+  };
+}
+
 function notFoundHead(lang: Language): HeadData {
   return {
     lang,
@@ -273,6 +303,7 @@ export function getHeadData(route: Route): HeadData {
     return projectHead(route.lang, route.slug) ?? notFoundHead(route.lang);
   }
   if (route.name === 'notFound') return notFoundHead(route.lang);
+  if (route.name === 'privacy') return privacyHead(route.lang);
   return homeHead(route.lang);
 }
 
@@ -328,7 +359,7 @@ export function renderSitemap(lastmod: string): string {
     const links = head.alternates
       .map((a) => `    <xhtml:link rel="alternate" hreflang="${a.hreflang}" href="${a.href}" />`)
       .join('\n');
-    const priority = route.name === 'home' ? '1.0' : '0.8';
+    const priority = route.name === 'home' ? '1.0' : route.name === 'privacy' ? '0.3' : '0.8';
     return `  <url>\n    <loc>${head.canonical}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <priority>${priority}</priority>\n${links}\n  </url>`;
   });
 
