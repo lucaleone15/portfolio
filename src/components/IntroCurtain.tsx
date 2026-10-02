@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { useLanguage } from '../context/LanguageContext';
+import { NeonBackdrop } from './NeonBackdrop';
 
 /** How long the curtain stays down before lifting (seconds) */
 export const INTRO_HOLD = 1.7;
@@ -82,12 +83,16 @@ export function IntroCurtain({ onDone }: IntroCurtainProps) {
           className="intro-curtain fixed inset-0 z-[100] flex flex-col justify-between p-8 sm:p-14 bg-[#F9F9FB] text-neutral-900 dark:bg-[#0A0A0C] dark:text-white pointer-events-none select-none"
           aria-hidden="true"
         >
+          {/* Grain + accent lines drawing themselves in; the hero carries the same texture,
+              so it continues seamlessly when the curtain lifts */}
+          <NeonBackdrop draw />
+
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.2 } }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex justify-between items-center text-xs text-neutral-500 dark:text-[#71717A] tracking-wider uppercase font-semibold"
+            className="relative z-10 flex justify-between items-center text-xs text-neutral-500 dark:text-[#71717A] tracking-wider uppercase font-semibold"
           >
             <span>Portfolio</span>
             <span>{new Date().getFullYear()}</span>
@@ -97,7 +102,7 @@ export function IntroCurtain({ onDone }: IntroCurtainProps) {
               of the curtain edge, which reads as depth */}
           <motion.div
             exit={reduceMotion ? undefined : { y: '-40%', opacity: 0, transition: { duration: 0.65, ease: EASE_IN_OUT } }}
-            className="text-center"
+            className="relative z-10 text-center"
           >
             <p className="font-serif inline-flex flex-wrap justify-center gap-x-[0.25em] text-6xl sm:text-8xl md:text-9xl font-black tracking-[-0.04em] leading-none">
               {WORDS.map((word, wordIdx) => (
@@ -136,7 +141,7 @@ export function IntroCurtain({ onDone }: IntroCurtainProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.2 } }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="space-y-4"
+            className="relative z-10 space-y-4"
           >
             {/* Time indicator: draws across while the curtain holds */}
             <div className="h-px w-full bg-black/10 dark:bg-white/10 overflow-hidden">

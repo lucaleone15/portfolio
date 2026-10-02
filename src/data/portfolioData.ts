@@ -270,7 +270,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       metrics: [
         { label: 'Type', value: 'Application mobile' },
         { label: 'Démarche', value: 'UX & Prototypage' },
-        { label: 'Évaluation UI', value: '5.8 / 6' },
+        { label: 'Évaluation UI', value: '5.4 / 6' },
         { label: 'Évaluation UX', value: '6 / 6' }
       ]
     },
@@ -296,7 +296,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       metrics: [
         { label: 'Type', value: 'Mobile Application' },
         { label: 'Approach', value: 'UX & Prototyping' },
-        { label: 'UI Score', value: '5.8 / 6' },
+        { label: 'UI Score', value: '5.4 / 6' },
         { label: 'UX Score', value: '6 / 6' }
       ]
     }
