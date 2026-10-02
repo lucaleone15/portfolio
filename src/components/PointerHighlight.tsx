@@ -132,7 +132,7 @@ export function PointerHighlight() {
         opacity,
         scale,
       }}
-      className="pointer-events-none fixed left-0 top-0 z-[9999] border-[1.5px] border-[var(--accent)] shadow-[0_0_0_4px_rgba(var(--accent-rgb),0.08)]"
+      className="[view-transition-name:pointer-outline] pointer-events-none fixed left-0 top-0 z-[9999] border-[1.5px] border-[var(--accent)] shadow-[0_0_0_4px_rgba(var(--accent-rgb),0.08)]"
     />
   );
 }

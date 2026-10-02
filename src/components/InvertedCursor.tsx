@@ -92,7 +92,7 @@ export function InvertedCursor() {
     <motion.div
       aria-hidden="true"
       style={{ x, y }}
-      className="pointer-events-none fixed left-0 top-0 z-[99999] mix-blend-difference will-change-transform"
+      className="[view-transition-name:cursor] pointer-events-none fixed left-0 top-0 z-[99999] mix-blend-difference will-change-transform"
     >
       <motion.div
         initial={false}

@@ -1,17 +1,12 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  ArrowLeft, 
-  ChevronLeft, 
-  ChevronRight, 
-  FileDown, 
-  Calendar, 
-  User
-} from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, Calendar, User } from 'lucide-react';
 import { Project } from '../types';
 import { projectAccentVars } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
 import { homePath, Link, projectPath, useRouter } from '../router';
+import { projectMediaTransition } from '../viewTransitions';
+import { ProjectStory } from './ProjectStory';
 
 interface ProjectDetailViewProps {
   project: Project | null;
@@ -25,7 +20,7 @@ export function ProjectDetailView({
   projects,
   backHref
 }: ProjectDetailViewProps) {
-  const { lang, t } = useLanguage();
+  const { lang } = useLanguage();
   const { navigate } = useRouter();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -79,11 +74,7 @@ export function ProjectDetailView({
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -16 }}
-      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+    <div
       style={projectAccentVars(project)}
       className="project-accent min-h-screen bg-[#F9F9FB] text-neutral-900 dark:bg-[#0A0A0C] dark:text-white pt-24 sm:pt-28 pb-20 sm:pb-32 transition-colors duration-300"
     >
@@ -184,7 +175,11 @@ export function ProjectDetailView({
 
         {/* Main Gallery Showcase (16/9 ratio, Carousel & Thumbnails) */}
         <div className="space-y-4 mb-12 sm:mb-16">
-          <div className="relative aspect-[16/9] w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-neutral-200 dark:bg-[#141418] border border-black/10 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.8)] group">
+          {/* Shares its view-transition name with this project's card: the card image morphs into it */}
+          <div
+            style={projectMediaTransition(project.id)}
+            className="relative aspect-[16/9] w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-neutral-200 dark:bg-[#141418] border border-black/10 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.8)] group"
+          >
             {/* Crossfade: old and new image overlap (no blank gap between them) */}
             <AnimatePresence initial={false}>
               <motion.img
@@ -276,105 +271,8 @@ export function ProjectDetailView({
           )}
         </div>
 
-        {/* Content Details: Overview, Context & Stack */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 pt-4">
-          {/* Main textual column (8 cols) */}
-          <div className="lg:col-span-8 space-y-8">
-            <div className="space-y-4">
-              <h2 className="text-xl sm:text-2xl font-bold text-neutral-900 dark:text-white flex items-center gap-3">
-                <span>{t('modal.overview')}</span>
-              </h2>
-              <p className="text-lg sm:text-xl text-neutral-800 dark:text-[#E4E4E7] leading-relaxed font-medium">
-                {project.summary}
-              </p>
-              <div className="text-base sm:text-lg text-neutral-600 dark:text-[#A1A1AA] leading-relaxed space-y-4">
-                {project.overview.split('\n\n').map((paragraph, pIdx) => (
-                  <p key={pIdx}>{paragraph}</p>
-                ))}
-              </div>
-            </div>
-
-            {/* Challenges → what was done: the reasoning behind the work */}
-            {[
-              { key: 'challenges', title: lang === 'fr' ? 'Enjeux' : 'Challenges', items: project.challenges },
-              { key: 'solutions', title: lang === 'fr' ? 'Réponses apportées' : 'Approach', items: project.solutions },
-            ]
-              .filter((block) => block.items && block.items.length > 0)
-              .map((block) => (
-                <div key={block.key} className="space-y-4 pt-2">
-                  <h2 className="text-xl sm:text-2xl font-bold text-neutral-900 dark:text-white">{block.title}</h2>
-                  <ul className="space-y-3">
-                    {block.items!.map((item) => (
-                      <li key={item} className="flex gap-3.5 text-base sm:text-lg text-neutral-600 dark:text-[#A1A1AA] leading-relaxed">
-                        <span
-                          className="mt-[0.7em] w-1.5 h-1.5 rounded-full shrink-0"
-                          style={{ backgroundColor: 'var(--pa-text)' }}
-                          aria-hidden="true"
-                        />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-
-            {/* PDF download button */}
-            {project.pdfUrl && (
-              <div className="pt-4">
-                <a
-                  href={project.pdfUrl}
-                  download
-                  className="inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-black/[0.04] hover:bg-black/[0.08] dark:bg-white/[0.08] dark:hover:bg-white/[0.18] text-neutral-900 dark:text-white border border-black/15 dark:border-white/20 transition duration-200 shadow-xs cursor-pointer group"
-                >
-                  <FileDown
-                    className="w-5 h-5 group-hover:scale-110 transition-transform"
-                    style={{ color: 'var(--pa-text)' }}
-                  />
-                  <span className="text-sm sm:text-base font-semibold tracking-wide">
-                    {lang === 'fr' ? 'Télécharger le document PDF' : 'Download PDF Document'}
-                  </span>
-                </a>
-              </div>
-            )}
-          </div>
-
-          {/* Sidebar Info Column (4 cols) - stays in view while reading on desktop */}
-          <div className="lg:col-span-4 space-y-10 lg:sticky lg:top-28 lg:self-start">
-            {/* Key facts */}
-            {project.metrics.length > 0 && (
-              <div className="space-y-3">
-                <h3 className="text-xs font-bold text-neutral-500 dark:text-[#A1A1AA] uppercase tracking-wider">
-                  {lang === 'fr' ? 'En bref' : 'At a glance'}
-                </h3>
-                <dl className="divide-y divide-black/10 dark:divide-white/10 border-y border-black/10 dark:border-white/10">
-                  {project.metrics.map((metric) => (
-                    <div key={metric.label} className="flex items-baseline justify-between gap-4 py-3">
-                      <dt className="text-sm text-neutral-500 dark:text-[#A1A1AA]">{metric.label}</dt>
-                      <dd className="text-sm font-semibold text-neutral-900 dark:text-white text-right">{metric.value}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-            )}
-
-            {/* Technologies & Outils - Sans cadre ni icône */}
-            <div className="space-y-3">
-              <h3 className="text-xs font-bold text-neutral-500 dark:text-[#A1A1AA] uppercase tracking-wider">
-                {lang === 'fr' ? 'Technologies & Outils' : 'Technologies & Tools'}
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {project.stack.map((tech) => (
-                  <span
-                    key={tech}
-                    className="h-8 px-3.5 rounded-full bg-black/[0.05] hover:bg-neutral-900 hover:text-white dark:bg-white/[0.08] dark:hover:bg-white text-neutral-800 dark:text-[#E4E4E7] dark:hover:text-black border border-black/10 dark:border-white/15 text-xs font-medium inline-flex items-center shadow-xs transition-colors duration-150 select-none cursor-default"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Case study told while scrolling */}
+        <ProjectStory key={`${project.id}-${lang}`} project={project} />
 
         {/* Bottom Carousel Project Bar (Loop through projects) */}
         <div className="mt-16 sm:mt-24 pt-8 border-t border-black/10 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6">
@@ -424,6 +322,6 @@ export function ProjectDetailView({
           </Link>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

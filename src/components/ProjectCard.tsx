@@ -5,6 +5,8 @@ import { Project } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { Link, projectPath } from '../router';
 import { projectAccentVars } from '../data/portfolioData';
+import { LiquidImage } from './LiquidImage';
+import { projectMediaTransition } from '../viewTransitions';
 
 interface ProjectCardProps {
   key?: string | number;
@@ -46,17 +48,17 @@ export function ProjectCard({ project }: ProjectCardProps) {
           onMouseMove={trackPointer}
           className="relative aspect-[16/10] w-full rounded-2xl bg-neutral-200 dark:bg-[#121215] shrink-0 border border-black/5 dark:border-white/5"
         >
-          {/* Clipped image wrapper so image zoom stays contained */}
-          <div className="w-full h-full overflow-hidden rounded-2xl">
-            <img
+          {/* Clipped image wrapper. Its view-transition name matches the project page's main
+              visual, so opening the project morphs this image into it (and back). */}
+          <div
+            className="w-full h-full overflow-hidden rounded-2xl"
+            style={projectMediaTransition(project.id)}
+          >
+            <LiquidImage
               src={project.imageUrl}
               alt={`${project.name} – ${project.subtitle}`}
-              width="600"
-              height="375"
-              loading="lazy"
-              decoding="async"
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+              width={600}
+              height={375}
             />
           </div>
 
