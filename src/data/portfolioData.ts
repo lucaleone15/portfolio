@@ -27,6 +27,8 @@ export interface UnifiedProjectDefinition {
   pdfTitle?: string;
   pdfTitleEn?: string;
   stack: string[];
+  /** English labels of `stack` (same order) */
+  stackEn: string[];
   /** Fill colour behind white text, and text colour on light backgrounds (≥ 4.5:1 both ways) */
   accentColor?: string;
   /** Text colour on the dark theme background (≥ 4.5:1 on #0A0A0C) */
@@ -91,6 +93,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       'Communication Digitale',
       'Print & Social Media'
     ],
+    stackEn: ['Laravel & Vue.js', 'UI/UX Design', 'Digital Communication', 'Print & Social Media'],
     accentColor: '#991B1B',
     accentColorDark: '#F87171',
     fr: {
@@ -175,6 +178,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       'Photo & Vidéo',
       'Premiere Pro'
     ],
+    stackEn: ['Social Media Strategy', 'Instagram & TikTok', 'Photo & Video', 'Premiere Pro'],
     accentColor: '#DC2626',
     accentColorDark: '#F87171',
     fr: {
@@ -247,6 +251,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       'Tests utilisateurs',
       'Design Mobile'
     ],
+    stackEn: ['UI/UX Design', 'Figma & Prototyping', 'User Testing', 'Mobile Design'],
     accentColor: '#166534',
     accentColorDark: '#4ADE80',
     fr: {
@@ -318,6 +323,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       'WordPress & WooCommerce',
       'UI/UX Design'
     ],
+    stackEn: ['E-Commerce', 'WordPress & WooCommerce', 'UI/UX Design'],
     accentColor: '#0369A1',
     accentColorDark: '#38BDF8',
     fr: {
@@ -397,7 +403,7 @@ export const PROJECTS_EN: Project[] = UNIFIED_PROJECTS.map((item) => ({
   images: item.images,
   pdfUrl: item.pdfUrl,
   pdfTitle: item.pdfTitleEn || item.pdfTitle || item.en.title,
-  stack: item.stack,
+  stack: item.stackEn,
   accentColor: item.accentColor,
   accentColorDark: item.accentColorDark,
   ...item.en

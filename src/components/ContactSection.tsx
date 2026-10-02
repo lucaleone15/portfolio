@@ -350,52 +350,48 @@ export function ContactSection() {
         </div>
 
         {/* Minimal Clean Footer with WCAG AAA Compliant High Contrast */}
-        <footer className="mt-20 pt-8 border-t border-white/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/80">
-          <div className="flex items-center gap-2">
+        {/* Footer. Phones: brand, then links (each kept on one line, wrapping as whole items),
+            then "back to top" on its own line. Wider screens: one row. */}
+        <footer className="mt-20 pt-8 border-t border-white/20 flex flex-col items-center gap-5 text-xs text-white/80 sm:flex-row sm:flex-wrap sm:justify-between">
+          <div className="flex items-center gap-2 whitespace-nowrap">
             <span className="font-bold text-white inline-flex items-baseline">
               Luca Leone<span className="text-[#0A0A0C] font-bold">.</span>
             </span>
-            <span className="font-medium text-white/80">© {new Date().getFullYear()}</span>
+            <span className="font-medium">© {new Date().getFullYear()}</span>
             <span className="text-white/50">·</span>
-            <span className="font-medium text-white/80">HEIG-VD</span>
+            <span className="font-medium">HEIG-VD</span>
           </div>
-          <div className="flex items-center gap-4 sm:gap-5">
-            <Link
-              href={sectionPath(lang, 'projets')}
-              className="text-white/80 hover:text-white transition-colors font-medium"
-            >
+          <nav aria-label={lang === 'fr' ? 'Pied de page' : 'Footer'} className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+            <Link href={sectionPath(lang, 'projets')} className="whitespace-nowrap font-medium hover:text-white transition-colors">
               {t('nav.projects')}
             </Link>
-            <Link
-              href={sectionPath(lang, 'a-propos')}
-              className="text-white/80 hover:text-white transition-colors font-medium"
-            >
+            <Link href={sectionPath(lang, 'a-propos')} className="whitespace-nowrap font-medium hover:text-white transition-colors">
               {t('nav.about')}
             </Link>
             <a
               href={USER_INFO.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white/80 hover:text-white transition-colors font-medium"
+              className="whitespace-nowrap font-medium hover:text-white transition-colors"
             >
               LinkedIn
             </a>
-            <Link href={privacyPath(lang)} className="text-white/80 hover:text-white transition-colors font-medium">
+            <Link href={privacyPath(lang)} className="whitespace-nowrap font-medium hover:text-white transition-colors">
               {lang === 'fr' ? 'Confidentialité' : 'Privacy'}
             </Link>
-            <button
-              type="button"
-              onClick={() =>
-                window.scrollTo({
-                  top: 0,
-                  behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-                })
-              }
-              className="font-syne inline-flex items-center gap-1.5 font-bold text-white hover:text-white/70 transition-colors cursor-pointer"
-            >
-              {lang === 'fr' ? 'Retour en haut' : 'Back to top'} ↑
-            </button>
-          </div>
+          </nav>
+          <button
+            type="button"
+            onClick={() =>
+              window.scrollTo({
+                top: 0,
+                behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+              })
+            }
+            className="font-syne whitespace-nowrap inline-flex items-center gap-1.5 font-bold text-white hover:text-white/70 transition-colors cursor-pointer"
+          >
+            {lang === 'fr' ? 'Retour en haut' : 'Back to top'} ↑
+          </button>
         </footer>
 
         {/* Signature */}
