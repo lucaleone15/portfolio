@@ -14,6 +14,8 @@
 - [Dossier PDF OceanSight UI/UX](https://luca-leone.ch/pdf/OceanSight.pdf)
 
 ## À propos
+**Disponibilité : recherche actuellement une entreprise pour son travail de Bachelor (HEIG-VD, ingénierie des médias).**
+
 Luca Leone est un étudiant en dernière année de Bachelor en Ingénierie des Médias à la [HEIG-VD](https://heig-vd.ch) (Yverdon-les-Bains, Suisse). Son profil allie sensibilité graphique et compétences techniques dans le numérique. Il conçoit des projets digitaux de bout en bout : stratégie de communication, identité visuelle, interfaces UI/UX, développement de sites web interactifs et création de contenus audiovisuels.
 
 En parallèle de ses études, il exerce le rôle de Community Manager pour le [Karting de Vuiteboeuf](https://karting-vuiteboeuf.ch) (Canton de Vaud, Suisse), où il pilote la création de contenus photo et vidéo, l'animation des réseaux sociaux et le développement de la notoriété numérique de la marque.
