@@ -168,21 +168,6 @@ export function AboutSection() {
               <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-neutral-900 dark:text-white tracking-tight">
                 Luca Leone
               </h3>
-
-              {/* What I'm doing right now */}
-              <div className="mt-5 inline-flex items-start gap-3 px-4 py-3 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/[0.04]">
-                <span className="relative flex w-2.5 h-2.5 mt-1.5 shrink-0" aria-hidden="true">
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--accent)] opacity-60 animate-ping motion-reduce:animate-none" />
-                  <span className="relative inline-flex w-2.5 h-2.5 rounded-full bg-[var(--accent)]" />
-                </span>
-                <span className="text-sm text-neutral-600 dark:text-[#A1A1AA] leading-relaxed">
-                  <span className="font-bold text-neutral-900 dark:text-white">{lang === 'fr' ? 'En ce moment' : 'Right now'}</span>
-                  {' · '}
-                  {lang === 'fr' ? 'Community manager au Karting de Vuiteboeuf' : 'Community manager at Karting de Vuiteboeuf'}
-                  <br />
-                  {lang === 'fr' ? 'Dernière année de Bachelor à la HEIG-VD (2024–2027)' : 'Final year of my Bachelor at HEIG-VD (2024–2027)'}
-                </span>
-              </div>
             </div>
 
             {/* Bio: each word sharpens from faint to full as it scrolls through the reading zone */}

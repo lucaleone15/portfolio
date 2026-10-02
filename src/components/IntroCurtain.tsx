@@ -83,9 +83,9 @@ export function IntroCurtain({ onDone }: IntroCurtainProps) {
           className="intro-curtain fixed inset-0 z-[100] flex flex-col justify-between p-8 sm:p-14 bg-[#F9F9FB] text-neutral-900 dark:bg-[#0A0A0C] dark:text-white pointer-events-none select-none"
           aria-hidden="true"
         >
-          {/* Grain + accent lines drawing themselves in; the hero carries the same texture,
-              so it continues seamlessly when the curtain lifts */}
-          <NeonBackdrop draw />
+          {/* Gradient + grain; the hero carries the same texture, so it continues seamlessly
+              when the curtain lifts */}
+          <NeonBackdrop />
 
           <motion.div
             initial={{ opacity: 0 }}
