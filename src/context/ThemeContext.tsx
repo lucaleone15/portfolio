@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useLayoutEffect, useState } from 'react';
+
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 export type Theme = 'dark' | 'light';
 
@@ -28,30 +30,40 @@ function readSavedTheme(): Theme | null {
  * (followed live). The inline script in index.html applies the same rule before first paint.
  */
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>(() => {
-    if (typeof window === 'undefined') return 'dark';
-    return readSavedTheme() ?? (systemQuery().matches ? 'dark' : 'light');
-  });
+  // First render must match the prerendered HTML (hydration), which assumes 'dark'. The real
+  // theme was already applied to <html> by the inline script in index.html; it's read here
+  // before the first paint, so the toggle icon is right from the start.
+  const [theme, setThemeState] = useState<Theme>('dark');
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
+    setThemeState(document.documentElement.classList.contains('light') ? 'light' : 'dark');
+  }, []);
+
+  // <html> is only touched when the theme actually changes (toggle or system switch); on load
+  // the inline script has already set it
+  const applyToDocument = (next: Theme) => {
     const root = document.documentElement;
-    root.classList.toggle('dark', theme === 'dark');
-    root.classList.toggle('light', theme === 'light');
-    root.setAttribute('data-theme', theme);
-    root.style.colorScheme = theme;
-  }, [theme]);
+    root.classList.toggle('dark', next === 'dark');
+    root.classList.toggle('light', next === 'light');
+    root.setAttribute('data-theme', next);
+    root.style.colorScheme = next;
+  };
 
   // No explicit choice yet: follow the system when it switches (e.g. automatic dark mode at night)
   useEffect(() => {
     const query = systemQuery();
     const onChange = (e: MediaQueryListEvent) => {
-      if (!readSavedTheme()) setThemeState(e.matches ? 'dark' : 'light');
+      if (readSavedTheme()) return;
+      const next: Theme = e.matches ? 'dark' : 'light';
+      applyToDocument(next);
+      setThemeState(next);
     };
     query.addEventListener('change', onChange);
     return () => query.removeEventListener('change', onChange);
   }, []);
 
   const setTheme = (newTheme: Theme) => {
+    applyToDocument(newTheme);
     setThemeState(newTheme);
     try {
       localStorage.setItem(STORAGE_KEY, newTheme);

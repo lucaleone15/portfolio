@@ -94,6 +94,14 @@ function PortfolioApp() {
 
   return (
     <div className="min-h-screen bg-[#F9F9FB] text-neutral-900 dark:bg-[#0A0A0C] dark:text-white font-sans antialiased selection:bg-neutral-900 selection:text-white dark:selection:bg-[var(--accent-primary)] dark:selection:text-[var(--accent-text)] relative overflow-x-clip transition-colors duration-300">
+      {/* Skip link: first Tab stop, jumps over the header (keyboard / screen-reader users) */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[300] focus:px-4 focus:py-2.5 focus:rounded-full focus:bg-[var(--accent)] focus:text-[var(--accent-contrast-text)] focus:font-bold focus:text-sm"
+      >
+        {lang === 'fr' ? 'Aller au contenu' : 'Skip to content'}
+      </a>
+
       {/* Typographic intro curtain (home page landings only) */}
       {playIntro && <IntroCurtain />}
 

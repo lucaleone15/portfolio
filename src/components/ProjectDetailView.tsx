@@ -4,7 +4,7 @@ import { ArrowLeft, ChevronLeft, ChevronRight, Calendar, User } from 'lucide-rea
 import { Project } from '../types';
 import { projectAccentVars } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
-import { homePath, Link, projectPath, useRouter } from '../router';
+import { Link, projectPath, useRouter } from '../router';
 import { projectMediaTransition } from '../viewTransitions';
 import { ProjectStory } from './ProjectStory';
 import { imageSrcSet, smallImage } from '../data/images';
@@ -76,6 +76,7 @@ export function ProjectDetailView({
 
   return (
     <div
+      id="main-content"
       style={projectAccentVars(project)}
       className="project-accent min-h-screen bg-[#F9F9FB] text-neutral-900 dark:bg-[#0A0A0C] dark:text-white pt-24 sm:pt-28 pb-20 sm:pb-32 transition-colors duration-300"
     >
@@ -188,6 +189,7 @@ export function ProjectDetailView({
                 src={projectImages[currentImageIndex]}
                 srcSet={imageSrcSet(projectImages[currentImageIndex])}
                 sizes="(min-width: 1152px) 1088px, 100vw"
+                fetchPriority={currentImageIndex === 0 ? 'high' : 'auto'}
                 alt={`${project.name} – ${lang === 'fr' ? 'visuel' : 'image'} ${currentImageIndex + 1}`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -218,20 +220,23 @@ export function ProjectDetailView({
                 </button>
 
                 {/* Counter Pill */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/70 border border-white/20 backdrop-blur-md">
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-0.5 pl-2 pr-3.5 py-0.5 rounded-full bg-black/70 border border-white/20 backdrop-blur-md">
                   {projectImages.map((_, idx) => (
+                    // 24px touch target (buttons side by side, no overlap); the dot is the inner span
                     <button
                       key={idx}
                       onClick={() => setCurrentImageIndex(idx)}
-                      className={`transition rounded-full cursor-pointer ${
-                        currentImageIndex === idx
-                          ? 'w-6 h-1.5'
-                          : 'w-1.5 h-1.5 bg-white/40 hover:bg-white/80'
-                      }`}
-                      style={currentImageIndex === idx ? { backgroundColor: 'var(--pa-dark)' } : undefined}
+                      className="group/dot w-6 h-6 shrink-0 cursor-pointer inline-flex items-center justify-center"
                       aria-label={lang === 'fr' ? `Aller à l'image ${idx + 1}` : `Go to image ${idx + 1}`}
                       aria-current={currentImageIndex === idx ? 'true' : undefined}
-                    />
+                    >
+                      <span
+                        className={`block transition-all rounded-full ${
+                          currentImageIndex === idx ? 'w-6 h-1.5' : 'w-1.5 h-1.5 bg-white/40 group-hover/dot:bg-white/80'
+                        }`}
+                        style={currentImageIndex === idx ? { backgroundColor: 'var(--pa-dark)' } : undefined}
+                      />
+                    </button>
                   ))}
                   <span className="text-xs font-sans font-medium text-white/80 ml-1.5">
                     {currentImageIndex + 1}/{projectImages.length}
@@ -298,11 +303,13 @@ export function ProjectDetailView({
             </div>
           </Link>
 
+          {/* End of a case study: back to the list of projects (the card morphs back) */}
           <Link
-            href={homePath(lang)}
-            className="font-syne px-6 py-3 rounded-full bg-neutral-900 text-white hover:bg-[var(--accent)] hover:text-[var(--accent-contrast-text)] dark:bg-white dark:text-black dark:hover:bg-[var(--accent)] dark:hover:text-[var(--accent-contrast-text)] text-xs sm:text-sm font-bold transition-colors cursor-pointer shadow-xs"
+            href={backHref}
+            className="font-syne group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-neutral-900 text-white hover:bg-[var(--accent)] hover:text-[var(--accent-contrast-text)] dark:bg-white dark:text-black dark:hover:bg-[var(--accent)] dark:hover:text-[var(--accent-contrast-text)] text-xs sm:text-sm font-bold transition active:scale-[0.97] cursor-pointer shadow-xs"
           >
-            {lang === 'fr' ? 'Retourner à l’accueil' : 'Return to home'}
+            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" aria-hidden="true" />
+            {lang === 'fr' ? 'Retour aux projets' : 'Back to projects'}
           </Link>
 
           <Link

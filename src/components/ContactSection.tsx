@@ -326,7 +326,6 @@ export function ContactSection() {
               value={PRIMARY_EMAIL}
               href={`mailto:${PRIMARY_EMAIL}`}
               onClick={copyEmailToClipboard}
-              ariaLabel={lang === 'fr' ? `Copier l'adresse ${PRIMARY_EMAIL}` : `Copy the address ${PRIMARY_EMAIL}`}
               trailing={<Copy className="w-4 h-4" />}
             />
             <ContactRow
@@ -357,7 +356,8 @@ export function ContactSection() {
             <span className="font-bold text-white inline-flex items-baseline">
               Luca Leone<span className="text-[#0A0A0C] font-bold">.</span>
             </span>
-            <span className="font-medium">© {new Date().getFullYear()}</span>
+            {/* Year may differ between build time and visit: not a real mismatch */}
+            <span className="font-medium" suppressHydrationWarning>© {new Date().getFullYear()}</span>
             <span className="text-white/50">·</span>
             <span className="font-medium">HEIG-VD</span>
           </div>

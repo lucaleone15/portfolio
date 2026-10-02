@@ -13,7 +13,7 @@ import { createAnalyticsHandler } from './analytics';
  * - Serves the prerendered pages: /x → dist/x.html or dist/x/index.html; unknown pages get
  *   dist/404.html with a real 404 status
  * - brotli / gzip for text files (cached in memory)
- * - Cache: hashed build assets 1 year (immutable), HTML always revalidated, the rest 7 days
+ * - Cache: hashed build assets 1 year (immutable), HTML always revalidated, the rest 30 days
  * - Security headers incl. a strict CSP (only own scripts + the inline theme script, by hash)
  * - POST /api/contact (server/contact.ts) and first-party analytics (server/analytics.ts)
  *
@@ -111,7 +111,7 @@ function cacheControl(file: string): string {
   const rel = path.relative(DIST, file);
   if (rel.startsWith(`assets${path.sep}`)) return 'public, max-age=31536000, immutable';
   if (file.endsWith('.html')) return 'no-cache';
-  return 'public, max-age=604800';
+  return 'public, max-age=2592000'; // 30 days
 }
 
 function send(req: http.IncomingMessage, res: http.ServerResponse, file: string, status = 200) {
