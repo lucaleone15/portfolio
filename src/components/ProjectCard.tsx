@@ -6,6 +6,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { Link, projectPath } from '../router';
 import { projectAccentVars } from '../data/portfolioData';
 import { LiquidImage } from './LiquidImage';
+import { imageSrcSet } from '../data/images';
 import { projectMediaTransition } from '../viewTransitions';
 
 interface ProjectCardProps {
@@ -56,6 +57,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
           >
             <LiquidImage
               src={project.imageUrl}
+              srcSet={imageSrcSet(project.imageUrl)}
+              sizes="(min-width: 768px) 46vw, 100vw"
               alt={`${project.name} – ${project.subtitle}`}
               width={600}
               height={375}

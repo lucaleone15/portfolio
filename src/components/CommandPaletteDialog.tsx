@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Command } from 'cmdk';
-import { ArrowUpRight, Copy, FolderOpen, Hash, Languages, Linkedin, Moon, Sun } from 'lucide-react';
+import { ArrowUpRight, Copy, FileDown, FolderOpen, Hash, Languages, Linkedin, Moon, Sun } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { getCustomProjects } from '../data/projectsStorage';
@@ -123,6 +123,22 @@ export default function CommandPaletteDialog({ open, onOpenChange }: { open: boo
           >
             <Languages className="w-4 h-4 shrink-0 opacity-60" aria-hidden="true" />
             {lang === 'fr' ? 'Switch to English' : 'Passer en français'}
+          </Command.Item>
+          <Command.Item
+            value="cv curriculum resume télécharger download"
+            onSelect={() =>
+              run(() => {
+                const a = document.createElement('a');
+                a.href = USER_INFO.cv;
+                a.download = '';
+                a.click();
+              })
+            }
+            className={item}
+          >
+            <FileDown className="w-4 h-4 shrink-0 opacity-60" aria-hidden="true" />
+            {lang === 'fr' ? 'Télécharger le CV' : 'Download CV'}
+            <span className="ml-auto text-xs text-neutral-400 dark:text-[#71717A]">PDF</span>
           </Command.Item>
           <Command.Item value="linkedin" onSelect={() => run(() => window.open(USER_INFO.linkedin, '_blank', 'noopener'))} className={item}>
             <Linkedin className="w-4 h-4 shrink-0 opacity-60" aria-hidden="true" />

@@ -70,6 +70,8 @@ const FRAGMENT = /* glsl */ `
 
 interface LiquidImageProps {
   src: string;
+  srcSet?: string;
+  sizes?: string;
   alt: string;
   width?: number;
   height?: number;
@@ -77,7 +79,7 @@ interface LiquidImageProps {
   style?: CSSProperties;
 }
 
-export function LiquidImage({ src, alt, width, height, className = '', style }: LiquidImageProps) {
+export function LiquidImage({ src, srcSet, sizes, alt, width, height, className = '', style }: LiquidImageProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const hostRef = useRef<HTMLDivElement>(null);
 
@@ -239,6 +241,8 @@ export function LiquidImage({ src, alt, width, height, className = '', style }: 
     <div ref={rootRef} className={`relative w-full h-full ${className}`} style={style}>
       <img
         src={src}
+        srcSet={srcSet}
+        sizes={sizes}
         alt={alt}
         width={width}
         height={height}

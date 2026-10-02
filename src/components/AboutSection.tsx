@@ -1,5 +1,6 @@
+import { Download } from 'lucide-react';
 import { motion } from 'motion/react';
-import { EDUCATION_TIMELINE, EXPERIENCE_TIMELINE } from '../data/portfolioData';
+import { EDUCATION_TIMELINE, EXPERIENCE_TIMELINE, USER_INFO } from '../data/portfolioData';
 import { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -200,6 +201,16 @@ export function AboutSection() {
                 </p>
               ))}
             </div>
+
+            {/* CV */}
+            <a
+              href={USER_INFO.cv}
+              download
+              className="font-syne group inline-flex items-center gap-2.5 h-12 px-6 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-black hover:bg-[var(--accent)] hover:text-[var(--accent-contrast-text)] dark:hover:bg-[var(--accent)] dark:hover:text-[var(--accent-contrast-text)] text-sm font-bold transition active:scale-[0.97]"
+            >
+              <Download className="w-4 h-4 transition-transform group-hover:translate-y-0.5" aria-hidden="true" />
+              {lang === 'fr' ? 'Télécharger mon CV (PDF)' : 'Download my CV (PDF)'}
+            </a>
 
             {/* Langues & Centres d'intérêt */}
             <div className="pt-4 border-t border-black/[0.08] dark:border-white/[0.08] grid grid-cols-1 sm:grid-cols-2 gap-6">

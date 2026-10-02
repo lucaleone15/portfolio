@@ -7,6 +7,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { homePath, Link, projectPath, useRouter } from '../router';
 import { projectMediaTransition } from '../viewTransitions';
 import { ProjectStory } from './ProjectStory';
+import { imageSrcSet, smallImage } from '../data/images';
 
 interface ProjectDetailViewProps {
   project: Project | null;
@@ -185,6 +186,8 @@ export function ProjectDetailView({
               <motion.img
                 key={projectImages[currentImageIndex]}
                 src={projectImages[currentImageIndex]}
+                srcSet={imageSrcSet(projectImages[currentImageIndex])}
+                sizes="(min-width: 1152px) 1088px, 100vw"
                 alt={`${project.name} – ${lang === 'fr' ? 'visuel' : 'image'} ${currentImageIndex + 1}`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -257,7 +260,7 @@ export function ProjectDetailView({
                   } : undefined}
                 >
                   <img
-                    src={img}
+                    src={smallImage(img)}
                     alt={`${project.name} – ${lang === 'fr' ? 'miniature' : 'thumbnail'} ${idx + 1}`}
                     width="128"
                     height="80"

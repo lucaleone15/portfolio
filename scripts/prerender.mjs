@@ -40,6 +40,18 @@ for (const route of getAllRoutes()) {
   console.log(`prerendered ${url}`);
 }
 
+// 404 page (served with a real 404 status by the production server): noindex instead of
+// the template's generic robots tag
+{
+  const head = getHeadData({ name: 'notFound', lang: 'fr' });
+  const html = template
+    .replace(/\s*<meta name="robots"[^>]*>/, '')
+    .replace(SEO_BLOCK, `<!--seo:start-->\n${renderHeadTags(head)}\n    <!--seo:end-->`)
+    .replace('<div id="root"></div>', `<div id="root">${render('/404')}</div>`);
+  fs.writeFileSync(path.join(dist, '404.html'), html);
+  console.log('prerendered 404.html');
+}
+
 const today = new Date().toISOString().slice(0, 10);
 fs.writeFileSync(path.join(dist, 'sitemap.xml'), renderSitemap(today));
 console.log('wrote sitemap.xml');

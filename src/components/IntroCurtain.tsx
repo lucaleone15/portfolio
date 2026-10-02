@@ -26,6 +26,11 @@ export function onIntroLifted(cb: () => void): () => void {
   return () => liftListeners.delete(cb);
 }
 
+/** The curtain won't play on this visit (e.g. landing on a project page): release waiters. */
+export function skipIntro() {
+  markLifted();
+}
+
 function markLifted() {
   if (lifted) return;
   lifted = true;

@@ -6,6 +6,7 @@ export const USER_INFO = {
   email: 'luca@luca-leone.ch',
   phone: '+41 79 868 72 04',
   linkedin: 'https://linkedin.com/in/leone-luca',
+  cv: '/pdf/CV-LucaLeone2026.pdf',
 };
 
 /**

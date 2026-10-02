@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { FileDown } from 'lucide-react';
 import { Project } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { imageSrcSet } from '../data/images';
 
 /**
  * Project case study told while scrolling (desktop):
@@ -195,6 +196,8 @@ export function ProjectStory({ project }: { project: Project; key?: string }) {
                   <img
                     key={step.key}
                     src={imageForStep(i)}
+                    srcSet={imageSrcSet(imageForStep(i))}
+                    sizes="(min-width: 1024px) 55vw, 100vw"
                     alt=""
                     loading="lazy"
                     decoding="async"
@@ -231,7 +234,9 @@ export function ProjectStory({ project }: { project: Project; key?: string }) {
               className="lg:hidden mb-6 aspect-[4/3] rounded-2xl overflow-hidden bg-neutral-200 dark:bg-[#141418] ring-1 ring-black/10 dark:ring-white/10"
               aria-hidden="true"
             >
-              <img src={imageForStep(i)} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover" />
+              <img src={imageForStep(i)}
+                    srcSet={imageSrcSet(imageForStep(i))}
+                    sizes="(min-width: 1024px) 55vw, 100vw" alt="" loading="lazy" decoding="async" className="w-full h-full object-cover" />
             </div>
             <div data-mobile-copy>
             <p className="font-syne text-xs font-bold tracking-widest uppercase mb-3" style={{ color: 'var(--pa-text)' }}>

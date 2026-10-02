@@ -10,12 +10,13 @@ import { ProjectDetailView } from './components/ProjectDetailView';
 import { PointerHighlight } from './components/PointerHighlight';
 import { InvertedCursor } from './components/InvertedCursor';
 import { CommandPalette } from './components/CommandPalette';
-import { IntroCurtain } from './components/IntroCurtain';
+import { IntroCurtain, skipIntro } from './components/IntroCurtain';
+import { NotFound } from './components/NotFound';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { AccentProvider } from './context/AccentContext';
 import { getCustomProjects } from './data/projectsStorage';
-import { homePath, RouterProvider, sectionPath, useRouter } from './router';
+import { RouterProvider, sectionPath, useRouter } from './router';
 import { getHeadData } from './seo';
 
 /** Keeps <title>, description, canonical and <html lang> in sync on client-side navigation. */
@@ -35,7 +36,7 @@ function PortfolioApp() {
   const [activeSection, setActiveSection] = useState<string>('hero');
   const projectsData = getCustomProjects();
   const { lang } = useLanguage();
-  const { route, navigate } = useRouter();
+  const { route } = useRouter();
 
   const allProjects = lang === 'fr' ? projectsData.fr : projectsData.en;
   const selectedProject =
@@ -43,12 +44,23 @@ function PortfolioApp() {
 
   useDocumentHead();
 
-  // Unknown URLs (or a removed project slug) fall back to the home page
+  // First-party page view (server/analytics.ts): path + referrer only, no cookie, no IP.
+  // Skipped for visitors with Do Not Track.
   useEffect(() => {
-    if (route.name === 'notFound' || (route.name === 'project' && !selectedProject)) {
-      navigate(homePath(route.lang), { replace: true });
-    }
-  }, [route, selectedProject, navigate]);
+    if (navigator.doNotTrack === '1' || !navigator.sendBeacon) return;
+    navigator.sendBeacon('/api/hit', JSON.stringify({ p: window.location.pathname, r: document.referrer }));
+  }, [route]);
+
+  // Unknown URLs (or a removed project slug) get a real 404 page
+  const notFound = route.name === 'notFound' || (route.name === 'project' && !selectedProject);
+
+  // The intro curtain only plays when the visit starts on the home page: someone opening a
+  // shared project link shouldn't wait for it. Decided once, on first render.
+  const [playIntro] = useState(() => {
+    const isHome = route.name === 'home';
+    if (!isHome) skipIntro();
+    return isHome;
+  });
 
   // Intersection Observer for scroll spy (when not viewing a project detail page)
   useEffect(() => {
@@ -81,8 +93,8 @@ function PortfolioApp() {
 
   return (
     <div className="min-h-screen bg-[#F9F9FB] text-neutral-900 dark:bg-[#0A0A0C] dark:text-white font-sans antialiased selection:bg-neutral-900 selection:text-white dark:selection:bg-[var(--accent-primary)] dark:selection:text-[var(--accent-text)] relative overflow-x-clip transition-colors duration-300">
-      {/* Pattern #4: Typographic Intro Curtain */}
-      <IntroCurtain />
+      {/* Typographic intro curtain (home page landings only) */}
+      {playIntro && <IntroCurtain />}
 
       {/* Inverted round cursor + accent outline that glides onto links and buttons */}
       <InvertedCursor />
@@ -94,8 +106,10 @@ function PortfolioApp() {
       {/* Editorial Navigation Masthead */}
       <Header activeSection={selectedProject ? 'projets' : activeSection} />
 
-      {/* Main Content Area: switches seamlessly between Home and Full Project Page */}
-      {selectedProject ? (
+      {/* Main Content Area: home, project page, or 404 */}
+      {notFound ? (
+        <NotFound />
+      ) : selectedProject ? (
         <ProjectDetailView
           project={selectedProject}
           projects={allProjects}

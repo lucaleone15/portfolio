@@ -1,62 +1,32 @@
-import React, { createContext, useContext, useEffect, useMemo } from 'react';
-import {
-  ACCENT_PALETTES,
-  ACTIVE_ACCENT_ID,
-  AccentColorDefinition
-} from '../theme/colors';
+import React, { useEffect } from 'react';
 
-export type AccentColorOption = AccentColorDefinition;
-
-interface AccentContextType {
-  currentAccent: AccentColorDefinition;
-  presets: AccentColorDefinition[];
-}
-
-const AccentContext = createContext<AccentContextType | undefined>(undefined);
-
+/**
+ * Applies the accent palette chosen in src/theme/colors.ts (ACTIVE_ACCENT_ID) as CSS variables.
+ * The active palette's values are also the defaults in index.css, so the first paint is
+ * already right; the 40-palette catalogue is loaded afterwards in its own chunk (it isn't
+ * needed to render the page) and only matters if ACTIVE_ACCENT_ID is changed.
+ */
 export function AccentProvider({ children }: { children: React.ReactNode }) {
-  // Always use the configured ACTIVE_ACCENT_ID from src/theme/colors.ts directly
-  const currentAccent = useMemo(() => {
-    return (
-      ACCENT_PALETTES.find((p) => p.id === ACTIVE_ACCENT_ID) ||
-      ACCENT_PALETTES[0]
-    );
-  }, [ACTIVE_ACCENT_ID]);
-
   useEffect(() => {
-    const root = document.documentElement;
+    let cancelled = false;
+    import('../theme/colors').then(({ ACCENT_PALETTES, ACTIVE_ACCENT_ID }) => {
+      if (cancelled) return;
+      const accent = ACCENT_PALETTES.find((p) => p.id === ACTIVE_ACCENT_ID) || ACCENT_PALETTES[0];
+      const root = document.documentElement;
+      root.style.setProperty('--accent-primary', accent.hexDark);
+      root.style.setProperty('--accent-text', accent.contrastTextDark);
+      root.style.setProperty('--accent-rgb-dark', accent.rgbDark);
+      root.style.setProperty('--accent-glow-dark', accent.glowDark);
+      root.style.setProperty('--accent-light', accent.hexLight);
+      root.style.setProperty('--accent-light-text', accent.contrastTextLight);
+      root.style.setProperty('--accent-rgb-light', accent.rgbLight);
+      root.style.setProperty('--accent-glow-light', accent.glowLight);
+      root.setAttribute('data-accent', accent.id);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
-    // Dark mode variables (electric, vibrant)
-    root.style.setProperty('--accent-primary', currentAccent.hexDark);
-    root.style.setProperty('--accent-text', currentAccent.contrastTextDark);
-    root.style.setProperty('--accent-rgb-dark', currentAccent.rgbDark);
-    root.style.setProperty('--accent-glow-dark', currentAccent.glowDark);
-
-    // Light mode variables (high contrast on white / light paper backgrounds)
-    root.style.setProperty('--accent-light', currentAccent.hexLight);
-    root.style.setProperty('--accent-light-text', currentAccent.contrastTextLight);
-    root.style.setProperty('--accent-rgb-light', currentAccent.rgbLight);
-    root.style.setProperty('--accent-glow-light', currentAccent.glowLight);
-
-    root.setAttribute('data-accent', currentAccent.id);
-  }, [currentAccent]);
-
-  return (
-    <AccentContext.Provider
-      value={{
-        currentAccent,
-        presets: ACCENT_PALETTES,
-      }}
-    >
-      {children}
-    </AccentContext.Provider>
-  );
-}
-
-export function useAccent() {
-  const context = useContext(AccentContext);
-  if (!context) {
-    throw new Error('useAccent must be used within an AccentProvider');
-  }
-  return context;
+  return <>{children}</>;
 }

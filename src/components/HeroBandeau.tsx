@@ -1,3 +1,6 @@
+import { useRef } from 'react';
+import { usePauseOffscreen } from '../hooks/usePauseOffscreen';
+
 interface ToolLogo {
   id: string;
   name: string;
@@ -69,11 +72,13 @@ function ToolItem({ tool }: { tool: ToolLogo; key?: string | number }) {
 }
 
 export function HeroBandeau() {
+  const ref = useRef<HTMLDivElement>(null);
+  usePauseOffscreen(ref);
   // Duplicating the list inside each track guarantees ample items on any screen width
   const trackItems = [...TOOLS, ...TOOLS];
 
   return (
-    <div className="w-full select-none">
+    <div ref={ref} className="w-full select-none">
       {/* Software, Tools & Programming Languages Infinite Continuous Marquee */}
       <div className="relative py-2 bg-transparent">
         <div className="mask-marquee-edges w-full overflow-hidden">
