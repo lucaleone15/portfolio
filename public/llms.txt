@@ -30,6 +30,7 @@ En parallèle de ses études, il exerce le rôle de Community Manager pour le [K
    - *Description* : Campagne de communication digitale et plateforme web gamifiée pour dynamiser les collectes de sang auprès des entreprises partenaires des HUG.
    - *Rôle* : Conception 360° (UX/UI Design, Développement Web & Communication). Équipe : Marc Bridy, Romain Blanchard, Étienne Bergeon, Liliana Kolmakova, Christophe Cunha et Assya Mghirbi.
    - *Technologies* : Laravel, Vue.js, PHP, MySQL, Figma, Print, Intranet & Réseaux sociaux.
+   - *Évaluation* : 6/6.
    - *Documentation* : [Télécharger le PDF Sangsationnel](https://luca-leone.ch/pdf/ProjInt1_HUG.pdf).
 
 2. **[Karting de Vuiteboeuf](https://luca-leone.ch/projets/karting-vuiteboeuf)** (2026) :

@@ -5,9 +5,31 @@ import { useLanguage } from '../context/LanguageContext';
 /** How long the curtain stays down before lifting (seconds) */
 export const INTRO_HOLD = 1.7;
 
-/** The curtain plays on every page load (client side). */
-export function introWillPlay(): boolean {
-  return typeof document !== 'undefined';
+// The curtain plays once per page load. Components that mount later (e.g. the Hero when
+// coming back from a project page) must not wait for it: they ask introPending().
+let lifted = false;
+const liftListeners = new Set<() => void>();
+
+/** True while the intro curtain still covers the page (client side). */
+export function introPending(): boolean {
+  return typeof document !== 'undefined' && !lifted;
+}
+
+/** Calls `cb` when the curtain lifts (at once if it already has). Returns an unsubscribe. */
+export function onIntroLifted(cb: () => void): () => void {
+  if (lifted) {
+    cb();
+    return () => {};
+  }
+  liftListeners.add(cb);
+  return () => liftListeners.delete(cb);
+}
+
+function markLifted() {
+  if (lifted) return;
+  lifted = true;
+  liftListeners.forEach((cb) => cb());
+  liftListeners.clear();
 }
 
 const EASE_OUT = [0.23, 1, 0.32, 1] as const;
@@ -28,7 +50,10 @@ export function IntroCurtain({ onDone }: IntroCurtainProps) {
 
   useEffect(() => {
     if (!visible) return;
-    const lift = () => setVisible(false);
+    const lift = () => {
+      setVisible(false);
+      markLifted();
+    };
     const t = setTimeout(lift, INTRO_HOLD * 1000);
     // Never hold people hostage: any intent to interact lifts the curtain right away
     const events = ['pointerdown', 'keydown', 'wheel', 'touchmove'] as const;

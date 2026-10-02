@@ -102,6 +102,36 @@ export function ProjectStory({ project }: { project: Project; key?: string }) {
           return () => setStoryMode(false);
         });
 
+        // Mobile: each step's visual opens from an inset frame while the photo settles
+        // (scrubbed to the scroll), then the copy rises in
+        mm.add('(max-width: 1023px) and (prefers-reduced-motion: no-preference)', () => {
+          gsap.utils.toArray<HTMLElement>('[data-mobile-visual]', root).forEach((visual) => {
+            gsap.fromTo(
+              visual,
+              { clipPath: 'inset(14% 10% 14% 10% round 28px)' },
+              {
+                clipPath: 'inset(0% 0% 0% 0% round 16px)',
+                ease: 'none',
+                scrollTrigger: { trigger: visual, start: 'top 95%', end: 'top 45%', scrub: true },
+              },
+            );
+            gsap.fromTo(
+              visual.querySelector('img'),
+              { scale: 1.3 },
+              { scale: 1, ease: 'none', scrollTrigger: { trigger: visual, start: 'top 95%', end: 'bottom 30%', scrub: true } },
+            );
+          });
+          gsap.utils.toArray<HTMLElement>('[data-mobile-copy]', root).forEach((copy) => {
+            gsap.from(copy, {
+              y: 28,
+              opacity: 0,
+              duration: 0.7,
+              ease: 'power3.out',
+              scrollTrigger: { trigger: copy, start: 'top 88%', once: true },
+            });
+          });
+        });
+
         // Scores count up once, on every screen size (no motion involved)
         gsap.utils.toArray<HTMLElement>('[data-count-to]', root).forEach((el) => {
           const to = parseFloat(el.dataset.countTo || '0');
@@ -195,6 +225,15 @@ export function ProjectStory({ project }: { project: Project; key?: string }) {
             data-story-step
             className={`py-8 lg:py-0 lg:min-h-[75vh] lg:flex lg:flex-col lg:justify-center ${stepClass(i)}`}
           >
+            {/* Mobile: each step carries its own visual, revealed as it scrolls in */}
+            <div
+              data-mobile-visual
+              className="lg:hidden mb-6 aspect-[4/3] rounded-2xl overflow-hidden bg-neutral-200 dark:bg-[#141418] ring-1 ring-black/10 dark:ring-white/10"
+              aria-hidden="true"
+            >
+              <img src={imageForStep(i)} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover" />
+            </div>
+            <div data-mobile-copy>
             <p className="font-syne text-xs font-bold tracking-widest uppercase mb-3" style={{ color: 'var(--pa-text)' }}>
               {String(i + 1).padStart(2, '0')} / {String(steps.length).padStart(2, '0')}
             </p>
@@ -284,6 +323,7 @@ export function ProjectStory({ project }: { project: Project; key?: string }) {
                 )}
               </div>
             )}
+            </div>
           </div>
         ))}
       </div>

@@ -40,7 +40,6 @@ export default function CommandPaletteDialog({ open, onOpenChange }: { open: boo
 
   const sections = [
     { id: 'projets', fr: 'Projets', en: 'Projects' },
-    { id: 'en-images', fr: 'En images', en: 'In pictures' },
     { id: 'a-propos', fr: 'À propos', en: 'About' },
     { id: 'contact', fr: 'Contact', en: 'Contact' },
   ];
