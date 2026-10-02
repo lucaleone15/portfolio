@@ -8,6 +8,8 @@ import type { IncomingMessage, ServerResponse } from 'node:http';
  *   GET  /stats?key=…     small HTML dashboard (last 30 days)    ← STATS_KEY env
  *   GET  /api/stats?key=… the same numbers as JSON
  * Bots are ignored; the client skips visitors with Do Not Track (src/App.tsx).
+ * Retention: hits older than 13 months are deleted (checked once a day) — stated in the
+ * privacy policy (src/components/PrivacyPolicy.tsx).
  */
 
 type Env = Record<string, string | undefined>;
@@ -19,6 +21,7 @@ interface Hit {
 
 const BOT_RE = /bot|crawl|spider|slurp|preview|facebookexternalhit|headless|lighthouse|monitor/i;
 const MAX_BODY = 2_000;
+const RETENTION_MS = 395 * 86_400_000; // ~13 months
 
 const readBody = (req: IncomingMessage) =>
   new Promise<string>((resolve, reject) => {
@@ -35,6 +38,25 @@ const escapeHtml = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '
 
 export function createAnalyticsHandler(env: Env, dataDir = path.resolve(process.cwd(), '.data')) {
   const file = path.join(dataDir, 'hits.ndjson');
+  let lastPrune = 0;
+
+  // Drop hits past the retention period (at most once a day)
+  const pruneIfDue = () => {
+    if (Date.now() - lastPrune < 86_400_000 || !fs.existsSync(file)) return;
+    lastPrune = Date.now();
+    const cutoff = Date.now() - RETENTION_MS;
+    const kept = fs
+      .readFileSync(file, 'utf8')
+      .split('\n')
+      .filter((line) => {
+        try {
+          return line && Date.parse(JSON.parse(line).t) >= cutoff;
+        } catch {
+          return false;
+        }
+      });
+    fs.writeFileSync(file, kept.length ? kept.join('\n') + '\n' : '');
+  };
 
   const readHits = (days: number): Hit[] => {
     if (!fs.existsSync(file)) return [];
@@ -87,6 +109,7 @@ export function createAnalyticsHandler(env: Env, dataDir = path.resolve(process.
         }
         const hit: Hit = { t: new Date().toISOString(), p: p.split('?')[0], r: ref };
         fs.mkdirSync(dataDir, { recursive: true });
+        pruneIfDue();
         fs.appendFile(file, JSON.stringify(hit) + '\n', () => {});
       } catch {
         // malformed beacon: ignore

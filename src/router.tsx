@@ -19,12 +19,14 @@ import { Language } from './types';
  * would be overkill:
  *   /                    FR home        /en/                   EN home
  *   /projets/:slug       FR project     /en/projects/:slug     EN project
+ *   /confidentialite     FR privacy     /en/privacy            EN privacy
  * Sections of the home page (#projets, #a-propos, #contact) stay hash anchors.
  */
 
 export type Route =
   | { name: 'home'; lang: Language }
   | { name: 'project'; lang: Language; slug: string }
+  | { name: 'privacy'; lang: Language }
   | { name: 'notFound'; lang: Language };
 
 export function homePath(lang: Language): string {
@@ -35,6 +37,10 @@ export function projectPath(lang: Language, slug: string): string {
   return lang === 'fr' ? `/projets/${slug}` : `/en/projects/${slug}`;
 }
 
+export function privacyPath(lang: Language): string {
+  return lang === 'fr' ? '/confidentialite' : '/en/privacy';
+}
+
 /** Link to a section of the home page, e.g. sectionPath('en', 'contact') -> /en/#contact */
 export function sectionPath(lang: Language, sectionId: string): string {
   return `${homePath(lang)}#${sectionId}`;
@@ -42,6 +48,7 @@ export function sectionPath(lang: Language, sectionId: string): string {
 
 export function pathFor(route: Route): string {
   if (route.name === 'project') return projectPath(route.lang, route.slug);
+  if (route.name === 'privacy') return privacyPath(route.lang);
   return homePath(route.lang);
 }
 
@@ -57,6 +64,7 @@ export function parsePath(pathname: string): Route {
   const rest = isEn ? clean.slice(3) || '/' : clean;
 
   if (rest === '/') return { name: 'home', lang };
+  if (rest === (isEn ? '/privacy' : '/confidentialite')) return { name: 'privacy', lang };
 
   const match = rest.match(isEn ? /^\/projects\/([a-z0-9-]+)$/ : /^\/projets\/([a-z0-9-]+)$/);
   if (match) return { name: 'project', lang, slug: match[1] };

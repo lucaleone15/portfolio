@@ -3,8 +3,8 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --font-display: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-body: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: "Plus Jakarta Sans Variable", "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: "Plus Jakarta Sans Variable", "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
   --display-tracking: -0.025em;
   --display-weight: 700;
 
@@ -43,7 +43,7 @@
 @theme {
   --font-serif: var(--font-display);
   --font-sans: var(--font-body);
-  --font-syne: "Syne", sans-serif;
+  --font-syne: "Syne Variable", "Syne", sans-serif;
 
   --color-paper: #F7F6F3;
   --color-surface: #EDECE8;
