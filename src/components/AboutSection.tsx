@@ -160,7 +160,7 @@ export function AboutSection() {
           >
             <div className="relative rounded-2xl overflow-hidden bg-neutral-200 dark:bg-[#141416] aspect-[4/5] max-w-sm sm:max-w-md w-full shadow-2xl border border-black/5 dark:border-white/5">
               <img
-                src="/photo.jpeg"
+                src="/photo.webp"
                 alt="Portrait de Luca Leone - Étudiant en ingénierie des médias"
                 width="448"
                 height="560"

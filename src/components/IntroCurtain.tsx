@@ -13,7 +13,10 @@ const liftListeners = new Set<() => void>();
 
 /** True while the intro curtain still covers the page (client side). */
 export function introPending(): boolean {
-  return typeof document !== 'undefined' && !lifted;
+  // Server (prerender): the hero is only rendered on the home page, which always opens with
+  // the curtain — rendering it "pending" keeps the HTML identical to the first client render
+  if (typeof document === 'undefined') return true;
+  return !lifted;
 }
 
 /** Calls `cb` when the curtain lifts (at once if it already has). Returns an unsubscribe. */
@@ -100,7 +103,7 @@ export function IntroCurtain({ onDone }: IntroCurtainProps) {
             className="relative z-10 flex justify-between items-center text-xs text-neutral-500 dark:text-[#71717A] tracking-wider uppercase font-semibold"
           >
             <span>Portfolio</span>
-            <span>{new Date().getFullYear()}</span>
+            <span suppressHydrationWarning>{new Date().getFullYear()}</span>
           </motion.div>
 
           {/* Name: each letter rises out of a mask; on exit the name leaves slightly ahead
