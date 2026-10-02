@@ -1,27 +1,11 @@
+import type React from 'react';
 import { Project } from '../types';
 
 export const USER_INFO = {
   name: 'Luca Leone',
-  title: 'Étudiant en ingénierie des médias',
-  subtitle: 'Communication · Marketing digital · Design · Web · UI/UX',
   email: 'luca@luca-leone.ch',
   phone: '+41 79 868 72 04',
   linkedin: 'https://linkedin.com/in/leone-luca',
-  linkedinLabel: 'linkedin.com/in/leone-luca',
-  bio: "Étudiant en dernière année de Bachelor en ingénierie des médias à la HEIG-VD, je me forme à la communication digitale, au design et aux technologies web, avec une approche qui combine créativité et technique.\n\nJ’aime concevoir des projets numériques de A à Z, de l’idée à sa réalisation : création de contenus, communication sur les réseaux sociaux, identité visuelle, UI/UX, conception de sites web et développement de projets digitaux.\n\nEn parallèle de mes études, je travaille comme community manager pour le Karting de Vuiteboeuf, où je mets en pratique ces compétences à travers la création de contenus photo et vidéo, la gestion des réseaux sociaux et le développement de la présence digitale de la marque.\n\nCurieux et polyvalent, j’aime apprendre, expérimenter avec de nouveaux outils et transformer des idées en projets concrets. Toujours intéressé par de nouvelles collaborations et opportunités dans le digital.",
-  bioEn: "As a final-year Bachelor student in Media Engineering at HEIG-VD, I specialize in digital communication, design, and web technologies, with an approach that bridges creativity and technical execution.\n\nI love crafting digital projects from A to Z, from initial concept to deployment: content creation, social media strategy, visual identity, UI/UX, website design, and interactive media.\n\nAlongside my studies, I work as a community manager for Karting de Vuiteboeuf, applying these skills through photo and video production, social media management, and expanding the brand's digital presence.\n\nCurious and versatile, I thrive on learning, experimenting with new tools, and turning ideas into tangible digital realities. Always open to new collaborations and digital opportunities.",
-  languagesFr: [
-    { name: 'Français', level: 'Langue maternelle' },
-    { name: 'Anglais', level: 'Niveau C1' },
-    { name: 'Italien', level: 'Niveau B2' }
-  ],
-  languagesEn: [
-    { name: 'French', level: 'Native language' },
-    { name: 'English', level: 'C1 Level' },
-    { name: 'Italian', level: 'B2 Level' }
-  ],
-  passionsFr: ['Automobile & Circuit', 'Sport', 'Voyages & Découvertes', 'Nouvelles Technologies'],
-  passionsEn: ['Automotive & Racing', 'Sports & Fitness', 'Travel & Culture', 'New Technologies']
 };
 
 /**
@@ -30,7 +14,10 @@ export const USER_INFO = {
  * Language-specific text is localized into `fr` and `en` sub-objects.
  */
 export interface UnifiedProjectDefinition {
+  /** Also the URL slug: /projets/:id and /en/projects/:id */
   id: string;
+  /** Proper-case project name used in page titles and structured data */
+  name: string;
   number: string;
   year: string;
   imageUrl: string;
@@ -39,7 +26,10 @@ export interface UnifiedProjectDefinition {
   pdfTitle?: string;
   pdfTitleEn?: string;
   stack: string[];
+  /** Fill colour behind white text, and text colour on light backgrounds (≥ 4.5:1 both ways) */
   accentColor?: string;
+  /** Text colour on the dark theme background (≥ 4.5:1 on #0A0A0C) */
+  accentColorDark?: string;
   fr: {
     title: string;
     subtitle: string;
@@ -68,9 +58,18 @@ export interface UnifiedProjectDefinition {
   };
 }
 
+/** CSS variables for a project's accent; pair with the `project-accent` class (see index.css). */
+export function projectAccentVars(project: Pick<Project, 'accentColor' | 'accentColorDark'>) {
+  return {
+    '--pa': project.accentColor || 'var(--accent)',
+    '--pa-dark': project.accentColorDark || project.accentColor || 'var(--accent)',
+  } as React.CSSProperties;
+}
+
 export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
   {
-    id: 'hug-sang',
+    id: 'hug-sangsationnel',
+    name: 'HUG Sangsationnel',
     number: '01',
     year: '2026',
     imageUrl: '/images/HUG-01.webp',
@@ -92,6 +91,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       'Print & Social Media'
     ],
     accentColor: '#991B1B',
+    accentColorDark: '#F87171',
     fr: {
       title: 'HUG',
       subtitle: 'Campagne digitale & plateforme web',
@@ -153,6 +153,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
   },
   {
     id: 'karting-vuiteboeuf',
+    name: 'Karting de Vuiteboeuf',
     number: '02',
     year: '2026',
     imageUrl: '/images/KV-01.webp',
@@ -174,6 +175,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       'Premiere Pro'
     ],
     accentColor: '#DC2626',
+    accentColorDark: '#F87171',
     fr: {
       title: 'KARTING VUITEBOEUF',
       subtitle: 'Communication digitale & création de contenus',
@@ -227,6 +229,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
   },
   {
     id: 'oceansight',
+    name: 'OceanSight',
     number: '03',
     year: '2026',
     imageUrl: '/images/OceanSight-01.webp',
@@ -244,6 +247,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       'Design Mobile'
     ],
     accentColor: '#166534',
+    accentColorDark: '#4ADE80',
     fr: {
       title: 'OCEANSIGHT',
       subtitle: 'Application mobile de signalement des déchets marins',
@@ -286,7 +290,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       ],
       solutions: [
         'Design of a collaborative mobile platform for reporting ghost fishing nets and plastic waste accumulation.',
-        'Creation of a user journey combinant l’application d’une carte interactive, gallery, filtres, missions et suivi.',
+        'Creation of a user journey combining an interactive map, gallery, filters, clean-up missions and impact tracking.',
         'Prototyping, user testing and iterative improvements to identify and resolve navigation and interaction issues.'
       ],
       metrics: [
@@ -299,6 +303,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
   },
   {
     id: 'drivegear',
+    name: 'DriveGear',
     number: '04',
     year: '2025',
     imageUrl: '/images/DriveGear-01.webp',
@@ -312,7 +317,8 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       'WordPress & WooCommerce',
       'UI/UX Design'
     ],
-    accentColor: '#38BDF8',
+    accentColor: '#0369A1',
+    accentColorDark: '#38BDF8',
     fr: {
       title: 'DRIVEGEAR',
       subtitle: 'Boutique e-commerce automobile',
@@ -368,6 +374,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
 
 export const PROJECTS_FR: Project[] = UNIFIED_PROJECTS.map((item) => ({
   id: item.id,
+  name: item.name,
   number: item.number,
   year: item.year,
   imageUrl: item.imageUrl,
@@ -376,11 +383,13 @@ export const PROJECTS_FR: Project[] = UNIFIED_PROJECTS.map((item) => ({
   pdfTitle: item.pdfTitle || item.fr.title,
   stack: item.stack,
   accentColor: item.accentColor,
+  accentColorDark: item.accentColorDark,
   ...item.fr
 }));
 
 export const PROJECTS_EN: Project[] = UNIFIED_PROJECTS.map((item) => ({
   id: item.id,
+  name: item.name,
   number: item.number,
   year: item.year,
   imageUrl: item.imageUrl,
@@ -389,6 +398,7 @@ export const PROJECTS_EN: Project[] = UNIFIED_PROJECTS.map((item) => ({
   pdfTitle: item.pdfTitleEn || item.pdfTitle || item.en.title,
   stack: item.stack,
   accentColor: item.accentColor,
+  accentColorDark: item.accentColorDark,
   ...item.en
 }));
 

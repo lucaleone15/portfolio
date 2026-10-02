@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { MotionConfig } from 'motion/react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { SkillsSection } from './components/SkillsSection';
@@ -6,38 +7,47 @@ import { ProjectsSection } from './components/ProjectsSection';
 import { AboutSection } from './components/AboutSection';
 import { ContactSection } from './components/ContactSection';
 import { ProjectDetailView } from './components/ProjectDetailView';
-import { MagneticCursor } from './components/MagneticCursor';
+import { PointerHighlight } from './components/PointerHighlight';
+import { InvertedCursor } from './components/InvertedCursor';
 import { IntroCurtain } from './components/IntroCurtain';
-import { Project } from './types';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { AccentProvider } from './context/AccentContext';
 import { getCustomProjects } from './data/projectsStorage';
+import { homePath, RouterProvider, sectionPath, useRouter } from './router';
+import { getHeadData } from './seo';
+
+/** Keeps <title>, description, canonical and <html lang> in sync on client-side navigation. */
+function useDocumentHead() {
+  const { route } = useRouter();
+
+  useEffect(() => {
+    const head = getHeadData(route);
+    document.title = head.title;
+    document.documentElement.lang = head.lang;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', head.description);
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', head.canonical);
+  }, [route]);
+}
 
 function PortfolioApp() {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeSection, setActiveSection] = useState<string>('hero');
   const projectsData = getCustomProjects();
   const { lang } = useLanguage();
+  const { route, navigate } = useRouter();
 
   const allProjects = lang === 'fr' ? projectsData.fr : projectsData.en;
+  const selectedProject =
+    route.name === 'project' ? allProjects.find((p) => p.id === route.slug) ?? null : null;
 
-  // Block any Ctrl+E or Meta+E shortcut to ensure on-site editing is disabled
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && (e.key === 'e' || e.key === 'E')) {
-        e.preventDefault();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  useDocumentHead();
 
-  // Ensure clean default font preset is applied
+  // Unknown URLs (or a removed project slug) fall back to the home page
   useEffect(() => {
-    document.documentElement.removeAttribute('data-font-preset');
-    localStorage.removeItem('portfolio-font-preset');
-  }, []);
+    if (route.name === 'notFound' || (route.name === 'project' && !selectedProject)) {
+      navigate(homePath(route.lang), { replace: true });
+    }
+  }, [route, selectedProject, navigate]);
 
   // Intersection Observer for scroll spy (when not viewing a project detail page)
   useEffect(() => {
@@ -68,59 +78,30 @@ function PortfolioApp() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [selectedProject]);
 
-  const handleNavigateHome = (targetSectionId?: string) => {
-    setSelectedProject(null);
-    if (targetSectionId) {
-      setTimeout(() => {
-        const el = document.getElementById(targetSectionId);
-        if (el) {
-          const headerOffset = 80;
-          const elementPosition = el.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
-        }
-      }, 60);
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-[#F9F9FB] text-neutral-900 dark:bg-[#0A0A0C] dark:text-white font-sans antialiased selection:bg-neutral-900 selection:text-white dark:selection:bg-[var(--accent-primary)] dark:selection:text-[var(--accent-text)] relative overflow-hidden transition-colors duration-300">
+    <div className="min-h-screen bg-[#F9F9FB] text-neutral-900 dark:bg-[#0A0A0C] dark:text-white font-sans antialiased selection:bg-neutral-900 selection:text-white dark:selection:bg-[var(--accent-primary)] dark:selection:text-[var(--accent-text)] relative overflow-x-clip transition-colors duration-300">
       {/* Pattern #4: Typographic Intro Curtain */}
       <IntroCurtain />
 
-      {/* Pattern #1: Magnetic Custom Cursor */}
-      <MagneticCursor />
+      {/* Inverted round cursor + accent outline that glides onto links and buttons */}
+      <InvertedCursor />
+      <PointerHighlight />
 
       {/* Editorial Navigation Masthead */}
-      <Header 
-        activeSection={selectedProject ? 'projets' : activeSection} 
-        onNavigateHome={handleNavigateHome}
-      />
+      <Header activeSection={selectedProject ? 'projets' : activeSection} />
 
       {/* Main Content Area: switches seamlessly between Home and Full Project Page */}
       {selectedProject ? (
         <ProjectDetailView
           project={selectedProject}
           projects={allProjects}
-          onBack={() => {
-            setSelectedProject(null);
-            setTimeout(() => {
-              const el = document.getElementById('projets');
-              if (el) el.scrollIntoView({ behavior: 'smooth' });
-            }, 50);
-          }}
-          onNavigateProject={(proj) => setSelectedProject(proj)}
+          backHref={sectionPath(lang, 'projets')}
         />
       ) : (
         <main id="main-content" className="relative z-10">
           <Hero />
           <SkillsSection />
-          <ProjectsSection onSelectProject={(project) => setSelectedProject(project)} />
+          <ProjectsSection />
           <AboutSection />
           <ContactSection />
         </main>
@@ -129,14 +110,20 @@ function PortfolioApp() {
   );
 }
 
-export default function App() {
+/** `initialUrl` is only passed by the build-time prerender; the browser reads window.location. */
+export default function App({ initialUrl }: { initialUrl?: string }) {
   return (
-    <ThemeProvider>
-      <AccentProvider>
-        <LanguageProvider>
-          <PortfolioApp />
-        </LanguageProvider>
-      </AccentProvider>
-    </ThemeProvider>
+    <RouterProvider initialUrl={initialUrl}>
+      {/* "user": honours prefers-reduced-motion (transforms are skipped, opacity kept) */}
+      <MotionConfig reducedMotion="user">
+        <ThemeProvider>
+          <AccentProvider>
+            <LanguageProvider>
+              <PortfolioApp />
+            </LanguageProvider>
+          </AccentProvider>
+        </ThemeProvider>
+      </MotionConfig>
+    </RouterProvider>
   );
 }

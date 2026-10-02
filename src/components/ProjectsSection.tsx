@@ -1,16 +1,11 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { ArrowUpRight, Filter } from 'lucide-react';
-import { Project } from '../types';
 import { getCustomProjects } from '../data/projectsStorage';
 import { ProjectCard } from './ProjectCard';
 import { useLanguage } from '../context/LanguageContext';
 
-interface ProjectsSectionProps {
-  onSelectProject: (project: Project) => void;
-}
-
-export function ProjectsSection({ onSelectProject }: ProjectsSectionProps) {
+export function ProjectsSection() {
   const [selectedFilter, setSelectedFilter] = useState<string>('all');
   const [showAllFilterPills, setShowAllFilterPills] = useState<boolean>(false);
   const projectsData = getCustomProjects();
@@ -41,7 +36,7 @@ export function ProjectsSection({ onSelectProject }: ProjectsSectionProps) {
           className="flex flex-wrap items-center justify-between gap-4 border-b border-black/[0.08] dark:border-white/[0.08] pb-6 mb-12"
         >
           <div className="flex items-baseline gap-3.5">
-            <span className="font-serif italic text-2xl sm:text-3xl text-neutral-400 dark:text-white/40 font-normal select-none">
+            <span className="font-serif italic text-2xl sm:text-3xl text-neutral-500 dark:text-white/40 font-normal select-none">
               {t('projects.index')}
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl text-neutral-900 dark:text-white tracking-tight font-extrabold">
@@ -52,7 +47,7 @@ export function ProjectsSection({ onSelectProject }: ProjectsSectionProps) {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowAllFilterPills(!showAllFilterPills)}
-              className={`px-5 py-2.5 rounded-full border text-xs sm:text-sm font-syne font-bold transition-all duration-200 backdrop-blur-md inline-flex items-center gap-2 cursor-pointer ${
+              className={`font-syne px-5 py-2.5 rounded-full border text-xs sm:text-sm font-bold transition duration-200 backdrop-blur-md inline-flex items-center gap-2 cursor-pointer active:scale-[0.97] ${
                 showAllFilterPills
                   ? 'bg-neutral-900 text-white dark:bg-white dark:text-black border-neutral-900 dark:border-white shadow-xs'
                   : 'bg-black/[0.04] hover:bg-black text-neutral-900 hover:text-white border-black/15 dark:bg-white/[0.05] dark:hover:bg-white dark:text-white dark:hover:text-black dark:border-white/20'
@@ -67,12 +62,12 @@ export function ProjectsSection({ onSelectProject }: ProjectsSectionProps) {
 
         {/* Optional Filter Pills */}
         {showAllFilterPills && (
-          <div className="flex flex-wrap gap-2 mb-10 py-2 animate-in fade-in duration-200">
+          <div className="flex flex-wrap gap-2 mb-10 py-2">
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setSelectedFilter(cat.id)}
-                className={`text-xs px-4 py-2 rounded-full transition-all cursor-pointer font-syne font-bold ${
+                className={`font-syne text-xs px-4 py-2 rounded-full transition cursor-pointer font-bold active:scale-[0.97] ${
                   selectedFilter === cat.id
                     ? 'bg-neutral-900 text-white dark:bg-white dark:text-black shadow-xs'
                     : 'bg-black/[0.05] hover:bg-black text-neutral-600 hover:text-white dark:bg-white/[0.06] dark:hover:bg-white dark:text-[#A1A1AA] dark:hover:text-black'
@@ -93,15 +88,12 @@ export function ProjectsSection({ onSelectProject }: ProjectsSectionProps) {
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{
-                duration: 0.7,
+                duration: 0.5,
                 delay: (idx % 2) * 0.12,
                 ease: [0.16, 1, 0.3, 1]
               }}
             >
-              <ProjectCard
-                project={project}
-                onSelect={onSelectProject}
-              />
+              <ProjectCard project={project} />
             </motion.div>
           ))}
         </div>

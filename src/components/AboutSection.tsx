@@ -31,16 +31,16 @@ export function AboutSection() {
 
   const experience = lang === 'fr' ? EXPERIENCE_TIMELINE : [
     {
-      period: 'May 2026 - Present · 5 mos',
-      title: 'Digital Communication Manager',
-      company: 'Karting - Indépendant',
+      period: 'May 2026 - Present',
+      title: 'Digital Communication & Content Creation Manager',
+      company: 'Karting de Vuiteboeuf',
       location: 'Vuitebœuf, Vaud, Switzerland · Hybrid',
       description: 'Brand strategy & social media (Instagram, TikTok), on-track photo/video production, and event campaigns.'
     },
     {
-      period: 'Jul 2022 · 1 mo',
+      period: 'July 2022 (1 month)',
       title: 'Intern',
-      company: 'Groupe AFH Automobile - Stage',
+      company: 'Groupe AFH Automobile',
       location: 'Yverdon-les-Bains, Switzerland · On-site',
       description: 'Customer relations, administrative support, and commercial digital communication management.'
     }
@@ -71,7 +71,7 @@ export function AboutSection() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="border-b border-black/[0.08] dark:border-white/[0.08] pb-6 mb-12 flex items-baseline gap-3.5"
         >
-          <span className="font-serif italic text-2xl sm:text-3xl text-neutral-400 dark:text-white/40 font-normal select-none">
+          <span className="font-serif italic text-2xl sm:text-3xl text-neutral-500 dark:text-white/40 font-normal select-none">
             {t('about.index')}
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl text-neutral-900 dark:text-white tracking-tight font-extrabold">
@@ -86,7 +86,7 @@ export function AboutSection() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 flex justify-center lg:justify-start"
           >
             <div className="relative rounded-2xl overflow-hidden bg-neutral-200 dark:bg-[#141416] aspect-[4/5] max-w-sm sm:max-w-md w-full shadow-2xl border border-black/5 dark:border-white/5">
@@ -98,11 +98,7 @@ export function AboutSection() {
                 loading="lazy"
                 decoding="async"
                 referrerPolicy="no-referrer"
-                className="w-full h-full object-cover object-[center_14%] scale-[1.28] transition-transform duration-700 ease-out hover:scale-[1.32]"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.src = '/Photo.jpg';
-                }}
+                className="w-full h-full object-cover object-[center_14%] scale-[1.6] transition-transform duration-700 ease-out hover:scale-[1.64]"
               />
             </div>
           </motion.div>
@@ -112,14 +108,14 @@ export function AboutSection() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-7 space-y-6"
           >
             <div>
               <div className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-500 dark:text-[#A1A1AA] pb-2 border-b border-black/[0.08] dark:border-white/[0.08] mb-3">
                 <span>{lang === 'fr' ? 'Profil & Vision' : 'Profile & Vision'}</span>
               </div>
-              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-syne font-black text-neutral-900 dark:text-white tracking-tight">
+              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-neutral-900 dark:text-white tracking-tight">
                 Luca Leone
               </h3>
             </div>
@@ -144,7 +140,7 @@ export function AboutSection() {
                   {languages.map((item, idx) => (
                     <div
                       key={`lang-${idx}`}
-                      className="h-8 px-3.5 rounded-full bg-neutral-900 text-white hover:bg-[var(--accent)] hover:text-[var(--accent-contrast-text)] dark:bg-white dark:text-black dark:hover:bg-[var(--accent)] dark:hover:text-[var(--accent-contrast-text)] text-xs font-syne font-bold inline-flex items-center gap-1.5 shadow-xs transition-colors duration-150 cursor-default select-none"
+                      className="h-8 px-3.5 rounded-full bg-neutral-900 text-white hover:bg-[var(--accent)] hover:text-[var(--accent-contrast-text)] dark:bg-white dark:text-black dark:hover:bg-[var(--accent)] dark:hover:text-[var(--accent-contrast-text)] text-xs font-bold inline-flex items-center gap-1.5 shadow-xs transition-colors duration-150 cursor-default select-none"
                     >
                       <span>{item.name}</span>
                       <span className="text-white/60 dark:text-black/60 font-medium">· {item.level}</span>
@@ -162,7 +158,7 @@ export function AboutSection() {
                   {passions.map((item, idx) => (
                     <span
                       key={`passion-${idx}`}
-                      className="h-8 px-3.5 rounded-full bg-neutral-900 text-white hover:bg-[var(--accent)] hover:text-[var(--accent-contrast-text)] dark:bg-white dark:text-black dark:hover:bg-[var(--accent)] dark:hover:text-[var(--accent-contrast-text)] text-xs font-syne font-bold inline-flex items-center shadow-xs transition-colors duration-150 select-none cursor-default"
+                      className="h-8 px-3.5 rounded-full bg-neutral-900 text-white hover:bg-[var(--accent)] hover:text-[var(--accent-contrast-text)] dark:bg-white dark:text-black dark:hover:bg-[var(--accent)] dark:hover:text-[var(--accent-contrast-text)] text-xs font-bold inline-flex items-center shadow-xs transition-colors duration-150 select-none cursor-default"
                     >
                       {item}
                     </span>
@@ -181,7 +177,7 @@ export function AboutSection() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className="lg:col-span-6 space-y-6"
             >
               <div className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-500 dark:text-[#A1A1AA] pb-3 border-b border-black/[0.08] dark:border-white/[0.08]">
@@ -237,7 +233,7 @@ export function AboutSection() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               className="lg:col-span-6 space-y-6"
             >
               <div className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-500 dark:text-[#A1A1AA] pb-3 border-b border-black/[0.08] dark:border-white/[0.08]">

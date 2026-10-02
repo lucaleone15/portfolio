@@ -1,188 +1,44 @@
 <!doctype html>
-<html lang="fr" class="scroll-smooth">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfolio personnel de Luca Leone</title>
-    <meta name="description" content="Portfolio de Luca Leone, étudiant en ingénierie des médias à la HEIG-VD : communication numérique, marketing digital, UI/UX design, développement web et production média." />
+    <!-- Apply the saved theme before first paint (avoids a dark/light flash) -->
+    <script>
+      (function () {
+        // Saved choice first, otherwise the system preference
+        var t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        try { var s = localStorage.getItem('portfolio_theme'); if (s === 'light' || s === 'dark') t = s; } catch (e) {}
+        var r = document.documentElement;
+        r.classList.add(t);
+        r.setAttribute('data-theme', t);
+        r.style.colorScheme = t;
+      })();
+    </script>
+
+    <!-- Per-page title, description, canonical, hreflang, Open Graph and JSON-LD.
+         Filled at build time by scripts/prerender.mjs from src/seo.ts. -->
+    <!--seo:start-->
+    <title>Luca Leone – Portfolio · Ingénierie des médias HEIG-VD</title>
+    <!--seo:end-->
+
     <meta name="author" content="Luca Leone" />
     <meta name="keywords" content="Luca Leone, ingénierie des médias, HEIG-VD, communication numérique, marketing digital, UI/UX design, développement web, graphisme, community manager, Yverdon-les-Bains, Vaud, Suisse Romande" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-
-    <!-- Canonical & Alternate Links -->
-    <link rel="canonical" href="https://luca-leone.ch/" />
-    <link rel="alternate" hreflang="fr" href="https://luca-leone.ch/" />
-    <link rel="alternate" hreflang="en" href="https://luca-leone.ch/?lang=en" />
-    <link rel="alternate" hreflang="x-default" href="https://luca-leone.ch/" />
     <link rel="help" type="text/markdown" href="/llms.txt" title="LLMs.txt context" />
-
-    <!-- Geo & Local SEO Tags (Yverdon-les-Bains / Canton de Vaud, Suisse) -->
     <meta name="geo.region" content="CH-VD" />
     <meta name="geo.placename" content="Yverdon-les-Bains, Canton de Vaud, Suisse" />
     <meta name="geo.position" content="46.7785;6.6412" />
     <meta name="ICBM" content="46.7785, 6.6412" />
-
-    <!-- OpenGraph Social Metadata -->
-    <meta property="og:type" content="profile" />
-    <meta property="og:url" content="https://luca-leone.ch/" />
-    <meta property="og:site_name" content="Luca Leone Portfolio" />
-    <meta property="og:title" content="Portfolio personnel de Luca Leone" />
-    <meta property="og:description" content="Portfolio de Luca Leone, étudiant en ingénierie des médias à la HEIG-VD : communication numérique, marketing digital, UI/UX design, développement web et production média." />
-    <meta property="og:locale" content="fr_CH" />
-    <meta property="og:locale:alternate" content="en_US" />
-    <meta property="og:image" content="/photo.jpeg" />
-    <meta property="og:image:alt" content="Portrait de Luca Leone - Ingénierie des médias HEIG-VD" />
-
-    <!-- Twitter / X Cards -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Portfolio personnel de Luca Leone" />
-    <meta name="twitter:description" content="Portfolio de Luca Leone, étudiant en ingénierie des médias à la HEIG-VD : communication numérique, marketing digital, UI/UX design, développement web et production média." />
-    <meta name="twitter:image" content="/photo.jpeg" />
-
-    <!-- Favicon & Icons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate icon" href="/favicon.svg" />
     <meta name="theme-color" content="#0A0A0C" />
-
-    <!-- Typography (Only Plus Jakarta Sans & Syne) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
-
-    <!-- Schema.org JSON-LD Structured Data for Search & Generative AI Engines (GEO) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "Person",
-          "@id": "#luca-leone",
-          "name": "Luca Leone",
-          "jobTitle": "Étudiant en ingénierie des médias & Community Manager",
-          "description": "Étudiant en dernière année de Bachelor en ingénierie des médias à la HEIG-VD, spécialisé en communication numérique, design UI/UX, développement web et production photo/vidéo.",
-          "email": "luca@luca-leone.ch",
-          "telephone": "+41 79 868 72 04",
-          "image": "/photo.jpeg",
-          "url": "/",
-          "sameAs": [
-            "https://linkedin.com/in/leone-luca"
-          ],
-          "alumniOf": {
-            "@type": "EducationalOrganization",
-            "name": "HEIG-VD - Haute École d'Ingénierie et de Gestion du Canton de Vaud",
-            "url": "https://heig-vd.ch",
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": "Yverdon-les-Bains",
-              "addressRegion": "Vaud",
-              "addressCountry": "CH"
-            }
-          },
-          "worksFor": {
-            "@type": "Organization",
-            "name": "Karting de Vuiteboeuf",
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": "Vuiteboeuf",
-              "addressRegion": "Vaud",
-              "addressCountry": "CH"
-            }
-          },
-          "homeLocation": {
-            "@type": "Place",
-            "name": "Canton de Vaud, Suisse",
-            "geo": {
-              "@type": "GeoCoordinates",
-              "latitude": 46.7785,
-              "longitude": 6.6412
-            }
-          },
-          "knowsAbout": [
-            "Ingénierie des médias",
-            "Communication numérique",
-            "Marketing digital",
-            "UI/UX Design",
-            "Développement web",
-            "Gestion des réseaux sociaux",
-            "Production photo et vidéo",
-            "Stratégie de contenu"
-          ],
-          "knowsLanguage": ["fr", "en", "it"]
-        },
-        {
-          "@type": "ItemList",
-          "@id": "#portfolio-projects",
-          "name": "Projets phares de Luca Leone",
-          "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "item": {
-                "@type": "CreativeWork",
-                "name": "HUG - Sangsationnel",
-                "headline": "Campagne digitale & plateforme web pour les HUG",
-                "description": "Projet 360° pour dynamiser le don de sang auprès des entreprises partenaires des HUG (Laravel, Vue.js, UX/UI, Print & Social Media)."
-              }
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "item": {
-                "@type": "CreativeWork",
-                "name": "Karting de Vuiteboeuf",
-                "headline": "Communication digitale & création de contenus",
-                "description": "Stratégie sur les réseaux sociaux, production photo/vidéo sur circuit et animation Instagram/TikTok."
-              }
-            },
-            {
-              "@type": "ListItem",
-              "position": 3,
-              "item": {
-                "@type": "CreativeWork",
-                "name": "OceanSight",
-                "headline": "Application mobile de signalement des déchets marins",
-                "description": "Conception UX/UI d'une application collaborative environnementale avec carte interactive, communauté et suivi d'impact."
-              }
-            },
-            {
-              "@type": "ListItem",
-              "position": 4,
-              "item": {
-                "@type": "CreativeWork",
-                "name": "DriveGear",
-                "headline": "Boutique e-commerce automobile",
-                "description": "Conception ergonomique et boutique en ligne spécialisée dans l'univers automobile sur WordPress et WooCommerce."
-              }
-            }
-          ]
-        },
-        {
-          "@type": "WebSite",
-          "@id": "#website",
-          "url": "/",
-          "name": "Portfolio personnel de Luca Leone",
-          "description": "Portfolio de Luca Leone, étudiant en ingénierie des médias à la HEIG-VD : communication numérique, marketing digital, UI/UX design, développement web et production média.",
-          "inLanguage": ["fr-CH", "en-US"],
-          "author": {
-            "@id": "#luca-leone"
-          }
-        },
-        {
-          "@type": "ProfilePage",
-          "@id": "#profile-page",
-          "url": "/",
-          "name": "Profil & Portfolio de Luca Leone",
-          "mainEntity": {
-            "@id": "#luca-leone"
-          }
-        }
-      ]
-    }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
   </head>
-  <body class="bg-[#0A0A0C] text-white antialiased selection:bg-[var(--accent)] selection:text-[var(--accent-contrast-text)] grain">
+  <body class="bg-[#F9F9FB] text-neutral-900 dark:bg-[#0A0A0C] dark:text-white antialiased selection:bg-[var(--accent)] selection:text-[var(--accent-contrast-text)] grain">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-
