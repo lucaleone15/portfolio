@@ -109,8 +109,9 @@ function personNode() {
     },
     homeLocation: {
       '@type': 'Place',
-      name: 'Canton de Vaud, Suisse',
-      geo: { '@type': 'GeoCoordinates', latitude: 46.7785, longitude: 6.6412 },
+      name: 'Orbe, Canton de Vaud, Suisse',
+      address: { '@type': 'PostalAddress', addressLocality: 'Orbe', addressRegion: 'Vaud', addressCountry: 'CH' },
+      geo: { '@type': 'GeoCoordinates', latitude: 46.7247, longitude: 6.5325 },
     },
     knowsAbout: [
       'Ingénierie des médias',
