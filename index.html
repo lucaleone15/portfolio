@@ -1,44 +1,46 @@
 <!doctype html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Apply the saved theme before first paint (avoids a dark/light flash) -->
-    <script>
-      (function () {
-        // Saved choice first, otherwise the system preference
-        var t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        try { var s = localStorage.getItem('portfolio_theme'); if (s === 'light' || s === 'dark') t = s; } catch (e) {}
-        var r = document.documentElement;
-        r.classList.add(t);
-        r.setAttribute('data-theme', t);
-        r.style.colorScheme = t;
-      })();
-    </script>
 
-    <!-- Per-page title, description, canonical, hreflang, Open Graph and JSON-LD.
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Apply the saved theme before first paint (avoids a dark/light flash) -->
+  <script>
+    (function () {
+      // Saved choice first, otherwise the system preference
+      var t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      try { var s = localStorage.getItem('portfolio_theme'); if (s === 'light' || s === 'dark') t = s; } catch (e) { }
+      var r = document.documentElement;
+      r.classList.add(t);
+      r.setAttribute('data-theme', t);
+      r.style.colorScheme = t;
+    })();
+  </script>
+
+  <!-- Per-page title, description, canonical, hreflang, Open Graph and JSON-LD.
          Filled at build time by scripts/prerender.mjs from src/seo.ts. -->
-    <!--seo:start-->
-    <title>Luca Leone – Portfolio · Ingénierie des médias HEIG-VD</title>
-    <!--seo:end-->
+  <!--seo:start-->
+  <title>Luca Leone – Portfolio · Ingénierie des médias HEIG-VD</title>
+  <!--seo:end-->
 
-    <meta name="author" content="Luca Leone" />
-    <meta name="keywords" content="Luca Leone, ingénierie des médias, HEIG-VD, communication numérique, marketing digital, UI/UX design, développement web, graphisme, community manager, Yverdon-les-Bains, Vaud, Suisse Romande" />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <link rel="help" type="text/markdown" href="/llms.txt" title="LLMs.txt context" />
-    <meta name="geo.region" content="CH-VD" />
-    <meta name="geo.placename" content="Yverdon-les-Bains, Canton de Vaud, Suisse" />
-    <meta name="geo.position" content="46.7785;6.6412" />
-    <meta name="ICBM" content="46.7785, 6.6412" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="alternate icon" href="/favicon.svg" />
-    <meta name="theme-color" content="#0A0A0C" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
-  </head>
-  <body class="bg-[#F9F9FB] text-neutral-900 dark:bg-[#0A0A0C] dark:text-white antialiased selection:bg-[var(--accent)] selection:text-[var(--accent-contrast-text)] grain">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+  <meta name="author" content="Luca Leone" />
+  <meta name="keywords"
+    content="Luca Leone, ingénierie des médias, HEIG-VD, communication numérique, marketing digital, UI/UX design, développement web, graphisme, community manager, Orbe, Vaud, Suisse Romande" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="help" type="text/markdown" href="/llms.txt" title="LLMs.txt context" />
+  <meta name="geo.region" content="CH-VD" />
+  <meta name="geo.placename" content="Orbe, Canton de Vaud, Suisse" />
+  <meta name="geo.position" content="46.7785;6.6412" />
+  <meta name="ICBM" content="46.7785, 6.6412" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate icon" href="/favicon.svg" />
+  <meta name="theme-color" content="#0A0A0C" />
+</head>
+
+<body
+  class="bg-[#F9F9FB] text-neutral-900 dark:bg-[#0A0A0C] dark:text-white antialiased selection:bg-[var(--accent)] selection:text-[var(--accent-contrast-text)] grain">
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>

@@ -66,8 +66,8 @@ const SECURITY_HEADERS: Record<string, string> = {
   'Content-Security-Policy': [
     "default-src 'self'",
     `script-src 'self' ${inlineScriptHashes.join(' ')}`.trim(),
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com", // React style attributes
-    "font-src 'self' https://fonts.gstatic.com",
+    "style-src 'self' 'unsafe-inline'", // React style attributes
+    "font-src 'self'",
     "img-src 'self' data: blob:",
     "connect-src 'self'",
     "frame-ancestors 'none'",

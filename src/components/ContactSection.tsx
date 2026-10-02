@@ -2,7 +2,7 @@ import { useEffect, useState, FormEvent, MouseEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { USER_INFO } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
-import { Link, sectionPath } from '../router';
+import { Link, privacyPath, sectionPath } from '../router';
 import { Check, Copy, Linkedin, Loader2, Mail, Phone } from 'lucide-react';
 import { ContactRow, FloatingField, RevealHeading, RevealWords, Signature } from './ContactExtras';
 
@@ -304,7 +304,12 @@ export function ContactSection() {
                       </motion.span>
                     </AnimatePresence>
                   </button>
-
+                <p className="mt-4 text-xs text-white/70 leading-relaxed max-w-md">
+                  {lang === 'fr' ? 'Vos données servent uniquement à vous répondre. ' : 'Your data is only used to reply to you. '}
+                  <Link href={privacyPath(lang)} className="underline underline-offset-2 decoration-white/40 hover:decoration-white">
+                    {lang === 'fr' ? 'Politique de confidentialité' : 'Privacy policy'}
+                  </Link>
+                </p>
               </div>
             </div>
           </form>
@@ -375,6 +380,9 @@ export function ContactSection() {
             >
               LinkedIn
             </a>
+            <Link href={privacyPath(lang)} className="text-white/80 hover:text-white transition-colors font-medium">
+              {lang === 'fr' ? 'Confidentialité' : 'Privacy'}
+            </Link>
             <button
               type="button"
               onClick={() =>
