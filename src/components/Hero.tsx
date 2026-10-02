@@ -7,9 +7,8 @@ import { NeonBackdrop } from './NeonBackdrop';
 import { Link, sectionPath } from '../router';
 import { BACHELOR_TOPIC_INDEX, PRESELECT_TOPIC_EVENT } from './ContactSection';
 import { introPending, onIntroLifted } from './IntroCurtain';
-import { UNIFIED_PROJECTS, USER_INFO } from '../data/portfolioData';
+import { UNIFIED_PROJECTS } from '../data/portfolioData';
 import { smallImage } from '../data/images';
-import { Download } from 'lucide-react';
 
 // What the ideas become. The longest line ("en contenus engageants.") is 11.6× the font size
 // (measured in the page), so the headline size is derived from the available width ÷ 11.8:
@@ -151,15 +150,6 @@ export function Hero() {
             >
               <span>{t('hero.ctaContact')}</span>
             </Link>
-            {/* CV: a quiet text link, not a third button competing with the two above */}
-            <a
-              href={USER_INFO.cv}
-              download
-              className="font-syne group inline-flex items-center gap-2 px-2 py-3 text-sm sm:text-base font-bold text-neutral-900 dark:text-white hover:text-[var(--accent)] transition-colors"
-            >
-              <Download className="w-4 h-4 transition-transform group-hover:translate-y-0.5" aria-hidden="true" />
-              {lang === 'fr' ? 'Télécharger mon CV' : 'Download my CV'}
-            </a>
           </div>
 
         </motion.div>
