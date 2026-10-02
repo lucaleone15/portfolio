@@ -192,10 +192,13 @@ Après une modification de contenu : `npm run build` (le pré-rendu, les métado
 ### Routage, pré-rendu et SEO
 
 - **URLs réelles** : `/`, `/en/`, `/projets/<slug>`, `/en/projects/<slug>` — un petit routeur maison (`src/router.tsx`) basé sur l'History API. La langue vient de l'URL.
+- **Sections avec leur propre URL** : `/projets`, `/a-propos`, `/contact` (`/en/projects`, `/en/about`, `/en/contact`). L'accueil reste une seule page qui défile : un lien partagé ouvre directement la section, les liens du menu défilent en douceur sans recharger, et l'URL (ainsi que le titre de l'onglet) suit la section lue. Ces URLs ont leur titre et leur description, mais leur URL canonique est l'accueil (même contenu) : elles ne figurent pas dans le sitemap.
 - **Pré-rendu** : au build, chaque page est rendue en HTML statique (`scripts/prerender.mjs`). Les moteurs de recherche et les réseaux sociaux voient le contenu complet sans exécuter de JavaScript.
 - **Métadonnées par page** (`src/seo.ts`) : titre, description, URL canonique, `hreflang` FR/EN, Open Graph, Twitter Card et données structurées JSON-LD (`Person`, `WebSite`, `ProfilePage`, `CreativeWork`, `BreadcrumbList`).
 - **Sitemap** généré automatiquement (pages + PDF).
 - **404** : page dédiée, servie avec un vrai statut 404 et exclue de l'indexation.
+- **Suggestion de langue** (`src/components/LanguageHint.tsx`) : si le navigateur ne demande pas la langue de la page (par ex. un recruteur anglophone sur la version française), une petite pastille propose l'autre version. Jamais de redirection ; une fois fermée ou suivie, elle ne revient plus.
+- **Icônes** : `favicon.svg` (le « L. » en Syne, vectorisé : aucune police à charger), `apple-touch-icon.png`, `icon-192/512.png` et `site.webmanifest`.
 
 ### Formulaire de contact
 

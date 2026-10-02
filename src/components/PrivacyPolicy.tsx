@@ -8,6 +8,7 @@ import { USER_INFO } from '../data/portfolioData';
  *   server/contact.ts    (contact form: fields, IP used in memory for rate limiting only)
  *   server/analytics.ts  (page views: path, referrer host, date; no IP, no cookie; 13 months)
  *   ThemeContext / index.html (theme preference in localStorage)
+ *   LanguageHint (dismissed language suggestion in localStorage)
  */
 
 const LAST_UPDATED = { fr: '2 octobre 2026', en: 'October 2, 2026' };
@@ -64,7 +65,7 @@ const CONTENT: Record<'fr' | 'en', { label: string; title: string; intro: string
       {
         title: 'Stockage dans votre navigateur',
         body: [
-          'Si vous choisissez un thème (clair ou sombre), ce choix est mémorisé dans le stockage local de votre navigateur (localStorage) pour être réappliqué à votre prochaine visite. Cette information reste sur votre appareil et n’est jamais transmise. Vous pouvez la supprimer en effaçant les données du site dans votre navigateur.',
+          'Si vous choisissez un thème (clair ou sombre), ce choix est mémorisé dans le stockage local de votre navigateur (localStorage) pour être réappliqué à votre prochaine visite. De même, si le site vous suggère l’autre langue et que vous fermez ou suivez cette suggestion, ce choix est mémorisé pour ne plus vous la proposer. Ces informations restent sur votre appareil et ne sont jamais transmises. Vous pouvez les supprimer en effaçant les données du site dans votre navigateur.',
           'Le site n’utilise aucun cookie.',
         ],
       },
@@ -148,7 +149,7 @@ const CONTENT: Record<'fr' | 'en', { label: string; title: string; intro: string
       {
         title: 'Storage in your browser',
         body: [
-          'If you choose a theme (light or dark), your choice is remembered in your browser’s local storage (localStorage) so it applies on your next visit. It stays on your device and is never sent anywhere. You can remove it by clearing the site’s data in your browser.',
+          'If you choose a theme (light or dark), your choice is remembered in your browser’s local storage (localStorage) so it applies on your next visit. Likewise, if the site suggests the other language and you close or follow that suggestion, this is remembered so it isn’t shown again. This information stays on your device and is never sent anywhere. You can remove it by clearing the site’s data in your browser.',
           'The site uses no cookies.',
         ],
       },

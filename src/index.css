@@ -79,7 +79,7 @@
     outline-offset: 3px;
   }
 
-  /* Anchored sections (#projets, #a-propos, #contact) land below the fixed header */
+  /* Sections reached by URL (/projets, /a-propos, /contact) land below the fixed header */
   section[id] {
     scroll-margin-top: 5rem;
   }

@@ -15,16 +15,29 @@ import { flushSync } from 'react-dom';
 import { Language } from './types';
 
 /**
- * Tiny history-API router. The site only has two kinds of pages, so a library
+ * Tiny history-API router. The site only has a few kinds of pages, so a library
  * would be overkill:
  *   /                    FR home        /en/                   EN home
  *   /projets/:slug       FR project     /en/projects/:slug     EN project
  *   /confidentialite     FR privacy     /en/privacy            EN privacy
- * Sections of the home page (#projets, #a-propos, #contact) stay hash anchors.
+ *
+ * The home page is one long scrolling page, but each of its sections has its own URL:
+ *   /projets  /a-propos  /contact        /en/projects  /en/about  /en/contact
+ * They all render the home page and land on that section. Moving between them never
+ * reloads: menu links scroll smoothly, and the URL follows the scroll (see syncPath).
  */
 
+/** DOM ids of the home page sections */
+export type SectionId = 'projets' | 'a-propos' | 'contact';
+export const SECTION_IDS: SectionId[] = ['projets', 'a-propos', 'contact'];
+
+const SECTION_SLUGS: Record<Language, Record<SectionId, string>> = {
+  fr: { projets: 'projets', 'a-propos': 'a-propos', contact: 'contact' },
+  en: { projets: 'projects', 'a-propos': 'about', contact: 'contact' },
+};
+
 export type Route =
-  | { name: 'home'; lang: Language }
+  | { name: 'home'; lang: Language; section?: SectionId }
   | { name: 'project'; lang: Language; slug: string }
   | { name: 'privacy'; lang: Language }
   | { name: 'notFound'; lang: Language };
@@ -41,14 +54,15 @@ export function privacyPath(lang: Language): string {
   return lang === 'fr' ? '/confidentialite' : '/en/privacy';
 }
 
-/** Link to a section of the home page, e.g. sectionPath('en', 'contact') -> /en/#contact */
-export function sectionPath(lang: Language, sectionId: string): string {
-  return `${homePath(lang)}#${sectionId}`;
+/** A section of the home page, e.g. sectionPath('en', 'a-propos') -> /en/about */
+export function sectionPath(lang: Language, section: SectionId): string {
+  return `${lang === 'fr' ? '' : '/en'}/${SECTION_SLUGS[lang][section]}`;
 }
 
 export function pathFor(route: Route): string {
   if (route.name === 'project') return projectPath(route.lang, route.slug);
   if (route.name === 'privacy') return privacyPath(route.lang);
+  if (route.name === 'home' && route.section) return sectionPath(route.lang, route.section);
   return homePath(route.lang);
 }
 
@@ -64,12 +78,24 @@ export function parsePath(pathname: string): Route {
   const rest = isEn ? clean.slice(3) || '/' : clean;
 
   if (rest === '/') return { name: 'home', lang };
+  const section = SECTION_IDS.find((id) => rest === `/${SECTION_SLUGS[lang][id]}`);
+  if (section) return { name: 'home', lang, section };
   if (rest === (isEn ? '/privacy' : '/confidentialite')) return { name: 'privacy', lang };
 
   const match = rest.match(isEn ? /^\/projects\/([a-z0-9-]+)$/ : /^\/projets\/([a-z0-9-]+)$/);
   if (match) return { name: 'project', lang, slug: match[1] };
 
   return { name: 'notFound', lang };
+}
+
+/**
+ * What's on screen for a path: every section URL of the same home page is one view, so
+ * moving between them scrolls instead of swapping the page.
+ */
+function viewOf(pathname: string): string {
+  const route = parsePath(pathname);
+  if (route.name === 'home') return `home:${route.lang}`;
+  return pathname.replace(/\/+$/, '') || '/';
 }
 
 const prefersReducedMotion = () =>
@@ -101,6 +127,8 @@ interface Location {
   smooth: boolean;
   /** Bumps on every navigation so re-clicking the same anchor scrolls again */
   key: number;
+  /** false when only the URL followed the scroll (syncPath): nothing to scroll */
+  scroll: boolean;
 }
 
 interface NavigateOptions {
@@ -112,6 +140,8 @@ interface RouterContextValue {
   route: Route;
   hash: string;
   navigate: (to: string, options?: NavigateOptions) => void;
+  /** Swap the URL for another one of the same view (no history entry, no scroll) */
+  syncPath: (to: string) => void;
 }
 
 const RouterContext = createContext<RouterContextValue | null>(null);
@@ -120,7 +150,7 @@ const RouterContext = createContext<RouterContextValue | null>(null);
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 function initialLocation(initialUrl?: string): Location {
-  const base = { restoreY: null, keepScroll: false, smooth: false, key: 0 };
+  const base = { restoreY: null, keepScroll: false, smooth: false, key: 0, scroll: true };
   if (initialUrl !== undefined) {
     const url = new URL(initialUrl, 'https://luca-leone.ch');
     return { ...base, pathname: url.pathname, hash: url.hash };
@@ -130,6 +160,12 @@ function initialLocation(initialUrl?: string): Location {
   const params = new URLSearchParams(window.location.search);
   if (params.get('lang') === 'en' && window.location.pathname === '/') {
     window.history.replaceState(null, '', '/en/' + window.location.hash);
+  }
+  // Old section anchors (/#contact, /en/#a-propos) now have their own URL
+  const route = parsePath(window.location.pathname);
+  const legacySection = SECTION_IDS.find((id) => window.location.hash === `#${id}`);
+  if (route.name === 'home' && !route.section && legacySection) {
+    window.history.replaceState(null, '', sectionPath(route.lang, legacySection));
   }
   return { ...base, pathname: window.location.pathname, hash: window.location.hash };
 }
@@ -146,7 +182,7 @@ export function RouterProvider({ initialUrl, children }: { initialUrl?: string; 
 
     const onPopState = (e: PopStateEvent) => {
       const restoreY = typeof e.state?.scrollY === 'number' ? e.state.scrollY : null;
-      const pageChanged = window.location.pathname !== currentPathRef.current;
+      const pageChanged = viewOf(window.location.pathname) !== viewOf(currentPathRef.current);
       const apply = () => setLocation({
         pathname: window.location.pathname,
         hash: window.location.hash,
@@ -154,6 +190,7 @@ export function RouterProvider({ initialUrl, children }: { initialUrl?: string; 
         keepScroll: false,
         smooth: false,
         key: ++keyRef.current,
+        scroll: true,
       });
       if (pageChanged) withViewTransition(apply);
       else apply();
@@ -164,15 +201,17 @@ export function RouterProvider({ initialUrl, children }: { initialUrl?: string; 
 
   const navigate = useCallback((to: string, options: NavigateOptions = {}) => {
     const url = new URL(to, window.location.href);
-    const samePage = url.pathname === window.location.pathname;
+    const samePage = viewOf(url.pathname) === viewOf(window.location.pathname);
+    // Moving within the home page (a section, or back to the top) is a scroll, not a page
+    const inPage = samePage && (!!url.hash || parsePath(url.pathname).name === 'home');
 
     // Remember where we were, so Back lands on the same spot
     window.history.replaceState({ ...window.history.state, scrollY: window.scrollY }, '');
 
     const state = { scrollY: options.keepScroll ? window.scrollY : 0 };
     const href = url.pathname + url.search + url.hash;
-    // In-page anchor jumps don't deserve their own history entry
-    if (options.replace || (samePage && url.hash)) {
+    // In-page jumps don't deserve their own history entry
+    if (options.replace || inPage) {
       window.history.replaceState(state, '', href);
     } else {
       window.history.pushState(state, '', href);
@@ -184,33 +223,46 @@ export function RouterProvider({ initialUrl, children }: { initialUrl?: string; 
         hash: url.hash,
         restoreY: null,
         keepScroll: !!options.keepScroll,
-        smooth: samePage && !!url.hash,
+        smooth: inPage,
         key: ++keyRef.current,
+        scroll: true,
       });
-    // Only real page changes morph; in-page anchor jumps just scroll
+    // Only real page changes morph; in-page jumps just scroll
     if (samePage) apply();
     else withViewTransition(apply);
   }, []);
 
+  const syncPath = useCallback((to: string) => {
+    if (to === window.location.pathname) return;
+    window.history.replaceState(window.history.state, '', to + window.location.search);
+    setLocation((current) => ({ ...current, pathname: to, hash: '', scroll: false }));
+  }, []);
+
   useIsomorphicLayoutEffect(() => {
-    if (location.keepScroll) return;
+    if (!location.scroll || location.keepScroll) return;
     if (location.restoreY !== null) {
       window.scrollTo({ top: location.restoreY, behavior: 'instant' });
       return;
     }
-    if (location.hash) {
-      const el = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    const target = parsePath(location.pathname);
+    const anchor =
+      target.name === 'home' && target.section ? target.section : decodeURIComponent(location.hash.slice(1));
+    if (anchor) {
+      const el = document.getElementById(anchor);
       if (el) {
         el.scrollIntoView({ behavior: location.smooth && !prefersReducedMotion() ? 'smooth' : 'instant' });
         return;
       }
     }
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    window.scrollTo({ top: 0, behavior: location.smooth && !prefersReducedMotion() ? 'smooth' : 'instant' });
   }, [location.key, location.pathname]);
 
   const route = useMemo(() => parsePath(location.pathname), [location.pathname]);
 
-  const value = useMemo(() => ({ route, hash: location.hash, navigate }), [route, location.hash, navigate]);
+  const value = useMemo(
+    () => ({ route, hash: location.hash, navigate, syncPath }),
+    [route, location.hash, navigate, syncPath],
+  );
 
   return <RouterContext.Provider value={value}>{children}</RouterContext.Provider>;
 }

@@ -5,7 +5,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { getCustomProjects } from '../data/projectsStorage';
 import { USER_INFO } from '../data/portfolioData';
-import { alternatePath, projectPath, sectionPath, useRouter } from '../router';
+import { alternatePath, projectPath, SectionId, sectionPath, useRouter } from '../router';
 
 /**
  * The ⌘K dialog itself (cmdk). Loaded on first open by CommandPalette, so cmdk and its
@@ -38,7 +38,7 @@ export default function CommandPaletteDialog({ open, onOpenChange }: { open: boo
     }
   };
 
-  const sections = [
+  const sections: { id: SectionId; fr: string; en: string }[] = [
     { id: 'projets', fr: 'Projets', en: 'Projects' },
     { id: 'a-propos', fr: 'À propos', en: 'About' },
     { id: 'contact', fr: 'Contact', en: 'Contact' },

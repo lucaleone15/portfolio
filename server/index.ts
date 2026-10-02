@@ -37,6 +37,7 @@ const MIME: Record<string, string> = {
   '.mjs': 'text/javascript; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
+  '.webmanifest': 'application/manifest+json; charset=utf-8',
   '.xml': 'application/xml; charset=utf-8',
   '.txt': 'text/plain; charset=utf-8',
   '.svg': 'image/svg+xml',
@@ -49,7 +50,7 @@ const MIME: Record<string, string> = {
   '.pdf': 'application/pdf',
   '.woff2': 'font/woff2',
 };
-const COMPRESSIBLE = new Set(['.html', '.js', '.mjs', '.css', '.json', '.xml', '.txt', '.svg']);
+const COMPRESSIBLE = new Set(['.html', '.js', '.mjs', '.css', '.json', '.webmanifest', '.xml', '.txt', '.svg']);
 
 // CSP: allow the inline theme script in index.html by its hash (computed from the build)
 const inlineScriptHashes = (() => {
