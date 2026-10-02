@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { EDUCATION_TIMELINE, EXPERIENCE_TIMELINE } from '../data/portfolioData';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
 export function AboutSection() {
@@ -64,6 +64,16 @@ export function AboutSection() {
   // Scroll-linked details (GSAP loaded on demand): bio words sharpen while read,
   // timeline rails draw and their dots light up as each step is passed
   const sectionRef = useRef<HTMLElement>(null);
+  // Timeline dots light up (accent) once their step has come into view, and stay lit
+  const [litSteps, setLitSteps] = useState<Set<string>>(() => new Set());
+  const lightUp = (key: string) =>
+    setLitSteps((prev) => (prev.has(key) ? prev : new Set(prev).add(key)));
+  const dotClass = (key: string) =>
+    `absolute -left-8 top-1.5 w-[15px] h-[15px] rounded-full border-2 transition-[background-color,border-color,box-shadow] duration-300 group-hover:bg-[var(--accent)] group-hover:border-[var(--accent)] ${
+      litSteps.has(key)
+        ? 'bg-[var(--accent)] border-[var(--accent)] shadow-[0_0_0_4px_rgba(var(--accent-rgb),0.18),0_0_14px_rgba(var(--accent-rgb),0.5)]'
+        : 'bg-[#F9F9FB] dark:bg-[#0A0A0C] border-black/20 dark:border-white/25'
+    }`;
   useEffect(() => {
     let cleanup: (() => void) | undefined;
     let cancelled = false;
@@ -89,15 +99,6 @@ export function AboutSection() {
               { scaleY: 0 },
               { scaleY: 1, ease: 'none', scrollTrigger: { trigger: timeline, start: 'top 70%', end: 'bottom 60%', scrub: true } },
             );
-          });
-        });
-        // Dots light up (also with reduced motion: it's a state change, not movement)
-        gsap.utils.toArray<HTMLElement>('[data-timeline-item]').forEach((item) => {
-          ScrollTrigger.create({
-            trigger: item,
-            start: 'top 70%',
-            onEnter: () => item.classList.add('timeline-lit'),
-            onLeaveBack: () => item.classList.remove('timeline-lit'),
           });
         });
         return () => mm.revert();
@@ -247,13 +248,14 @@ export function AboutSection() {
                   <motion.div
                     key={`exp-${idx}`}
                     data-timeline-item
+                    onViewportEnter={() => lightUp(`exp-${idx}`)}
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-30px' }}
                     transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
                     className="relative transition-colors duration-200 group"
                   >
-                    <span data-dot className="timeline-dot absolute -left-8 top-1.5 w-[15px] h-[15px] rounded-full border-2 border-black/20 dark:border-white/25 bg-[#F9F9FB] dark:bg-[#0A0A0C]" aria-hidden="true" />
+                    <span className={dotClass(`exp-${idx}`)} aria-hidden="true" />
                     <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-2 mb-1.5">
                       <h4 className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white group-hover:text-[var(--accent)] transition-colors">
                         {item.title}
@@ -309,13 +311,14 @@ export function AboutSection() {
                   <motion.div
                     key={`edu-${idx}`}
                     data-timeline-item
+                    onViewportEnter={() => lightUp(`edu-${idx}`)}
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-30px' }}
                     transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
                     className="relative transition-colors duration-200 group"
                   >
-                    <span data-dot className="timeline-dot absolute -left-8 top-1.5 w-[15px] h-[15px] rounded-full border-2 border-black/20 dark:border-white/25 bg-[#F9F9FB] dark:bg-[#0A0A0C]" aria-hidden="true" />
+                    <span className={dotClass(`edu-${idx}`)} aria-hidden="true" />
                     <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-2 mb-1.5">
                       <h4 className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white group-hover:text-[var(--accent)] transition-colors">
                         {item.title}

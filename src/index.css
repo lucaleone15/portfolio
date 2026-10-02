@@ -143,6 +143,23 @@
   }
 }
 
+/* NeonBackdrop: dot grid, fading toward the edges */
+.dot-grid {
+  background-image: radial-gradient(rgba(26, 26, 26, 0.16) 1px, transparent 1.2px);
+  background-size: 22px 22px;
+  background-position: center;
+  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 55% 40%, black 30%, transparent 100%);
+  mask-image: radial-gradient(ellipse 75% 65% at 55% 40%, black 30%, transparent 100%);
+}
+.dark .dot-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.11) 1px, transparent 1.2px);
+}
+/* Fade the whole backdrop out at the bottom: the hero melts into the next section */
+.backdrop-fade-bottom {
+  -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+}
+
 /* NeonBackdrop: still, fine grain over the accent gradient */
 .paper-grain {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");

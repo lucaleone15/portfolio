@@ -125,7 +125,7 @@ export function ContactSection() {
         </h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* Form card */}
+          {/* Form (open layout, like the rest of the site) */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -136,7 +136,7 @@ export function ContactSection() {
             <form
               onSubmit={handleFormSubmit}
               noValidate={false}
-              className="relative rounded-3xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/[0.03] backdrop-blur-xl p-6 sm:p-10 space-y-9 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.35)]"
+              className="relative space-y-10"
             >
               {/* Topic: one tap instead of typing a subject */}
               <fieldset>
@@ -356,7 +356,7 @@ export function ContactSection() {
         </footer>
 
         {/* Signature */}
-        <div className="mt-12 sm:mt-16 -mb-10 sm:-mb-14">
+        <div className="mt-12 sm:mt-16 -mb-20 sm:-mb-28">
           <Signature />
         </div>
       </div>

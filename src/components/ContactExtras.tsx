@@ -156,16 +156,16 @@ export function ContactRow({
   );
 }
 
-/** Oversized signature closing the page; rises into place as it scrolls in. */
+/** Oversized signature closing the page: the very last element, fully visible, flush with the bottom. */
 export function Signature() {
   return (
-    <div className="overflow-hidden select-none" aria-hidden="true">
+    <div className="select-none pb-3 sm:pb-5" aria-hidden="true">
       <motion.p
-        initial={{ y: '45%', opacity: 0 }}
-        whileInView={{ y: '12%', opacity: 1 }}
-        viewport={{ once: true, margin: '-40px' }}
-        transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] }}
-        className="font-serif whitespace-nowrap font-black leading-[0.8] tracking-[-0.05em] text-[min(15.5vw,12.5rem)] bg-gradient-to-b from-neutral-900 to-neutral-900/0 dark:from-white dark:to-white/0 bg-clip-text text-transparent"
+        initial={{ y: 40, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        viewport={{ once: true, margin: '-20px' }}
+        transition={{ duration: 0.9, ease: [0.23, 1, 0.32, 1] }}
+        className="font-serif whitespace-nowrap font-black leading-[0.95] tracking-[-0.05em] text-[min(18vw,15.5rem)] bg-gradient-to-b from-neutral-900 to-neutral-900/15 dark:from-white dark:to-white/15 bg-clip-text text-transparent"
       >
         Luca Leone<span className="text-[var(--accent)]">.</span>
       </motion.p>
