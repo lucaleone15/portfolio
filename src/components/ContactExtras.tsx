@@ -1,5 +1,5 @@
-import type { MouseEvent, ReactNode } from 'react';
-import { motion } from 'motion/react';
+import { useRef, type MouseEvent, type ReactNode } from 'react';
+import { motion, useInView } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 
 /**
@@ -28,10 +28,18 @@ export function RevealWords({ text, className = '', delay = 0 }: { text: string;
   );
 }
 
-/** Heading that reveals its RevealWords children when it enters the viewport. */
+/**
+ * Heading that reveals its RevealWords children once it has been seen.
+ * The seen state lives here (not in a one-shot whileInView gesture): words that mount later —
+ * e.g. after switching language — inherit the "shown" target and rise in too, instead of
+ * staying hidden forever. Any visible part counts (amount: "some"), which matters on phones
+ * where a tall heading rarely shows 40% of itself at once.
+ */
 export function RevealHeading({ className = '', children }: { className?: string; children: ReactNode }) {
+  const ref = useRef<HTMLHeadingElement>(null);
+  const seen = useInView(ref, { once: true, amount: 'some', margin: '0px 0px -10% 0px' });
   return (
-    <motion.h2 initial="hidden" whileInView="shown" viewport={{ once: true, amount: 0.4 }} className={className}>
+    <motion.h2 ref={ref} initial="hidden" animate={seen ? 'shown' : 'hidden'} className={className}>
       {children}
     </motion.h2>
   );

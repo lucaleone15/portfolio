@@ -11,6 +11,7 @@ interface SkillItem {
   descFr: string;
   descEn: string;
   tools: string[];
+  toolsEn: string[];
 }
 
 const SKILLS_DATA: SkillItem[] = [
@@ -21,7 +22,8 @@ const SKILLS_DATA: SkillItem[] = [
     titleEn: 'UI/UX Design',
     descFr: "Conception d'interfaces intuitives et ergonomiques, wireframes, prototypes interactifs haute fidélité et design systems modulaires.",
     descEn: 'Designing intuitive and ergonomic interfaces, wireframes, high-fidelity interactive prototypes, and modular design systems.',
-    tools: ['Figma', 'Prototypage', 'Design Systems', 'Tests utilisateurs']
+    tools: ['Figma', 'Prototypage', 'Design Systems', 'Tests utilisateurs'],
+    toolsEn: ['Figma', 'Prototyping', 'Design Systems', 'User testing']
   },
   {
     id: 'web-dev',
@@ -30,7 +32,8 @@ const SKILLS_DATA: SkillItem[] = [
     titleEn: 'Web Development',
     descFr: "Intégration et développement d'applications web sur mesure, modernes, véloces et pensées pour répondre précisément aux besoins de chaque projet.",
     descEn: 'Developing modern, fast, and tailored web applications crafted to match the specific requirements of each project.',
-    tools: ['JavaScript', 'Vue.js', 'Laravel', 'Tailwind CSS', 'PHP']
+    tools: ['JavaScript', 'Vue.js', 'Laravel', 'Tailwind CSS', 'PHP'],
+    toolsEn: ['JavaScript', 'Vue.js', 'Laravel', 'Tailwind CSS', 'PHP']
   },
   {
     id: 'comm-digitale',
@@ -39,7 +42,8 @@ const SKILLS_DATA: SkillItem[] = [
     titleEn: 'Digital Communication',
     descFr: 'Élaboration de stratégies de contenu numérique, gestion de communautés et déploiement de campagnes multicanales engageantes.',
     descEn: 'Developing digital content strategies, managing social channels, and launching engaging multi-platform campaigns.',
-    tools: ['Stratégie Social Media', 'Instagram & TikTok', 'Community Management', 'Storytelling']
+    tools: ['Stratégie Social Media', 'Instagram & TikTok', 'Community Management', 'Storytelling'],
+    toolsEn: ['Social media strategy', 'Instagram & TikTok', 'Community management', 'Storytelling']
   },
   {
     id: 'dir-art',
@@ -48,7 +52,8 @@ const SKILLS_DATA: SkillItem[] = [
     titleEn: 'Art Direction',
     descFr: "Création d'identités visuelles singulières, déclinaison de chartes graphiques, typographie soignée et cohérence de marque.",
     descEn: 'Crafting distinctive brand identities, editorial visual guidelines, refined typography, and overall brand coherence.',
-    tools: ['Identité visuelle', 'Illustrator & Photoshop', 'Typographie']
+    tools: ['Identité visuelle', 'Illustrator & Photoshop', 'Typographie'],
+    toolsEn: ['Visual identity', 'Illustrator & Photoshop', 'Typography']
   },
   {
     id: 'prod-video',
@@ -57,7 +62,8 @@ const SKILLS_DATA: SkillItem[] = [
     titleEn: 'Audiovisual Production',
     descFr: 'Captation photo, tournage et montage vidéo dynamique sur le terrain, étalonnage et formats courts optimisés pour le web et les réseaux.',
     descEn: 'Photography, dynamic on-site video filming and editing, color grading, and short-form storytelling tailored for social platforms.',
-    tools: ['Captation Photo & Vidéo', 'Premiere Pro', 'Formats courts (Reels)', 'Étalonnage']
+    tools: ['Captation Photo & Vidéo', 'Premiere Pro', 'Formats courts (Reels)', 'Étalonnage'],
+    toolsEn: ['Photo & video shooting', 'Premiere Pro', 'Short-form video (Reels)', 'Colour grading']
   },
   {
     id: 'gest-projet',
@@ -66,7 +72,8 @@ const SKILLS_DATA: SkillItem[] = [
     titleEn: 'Media Project Management',
     descFr: "Coordination d'initiatives pluridisciplinaires, méthodologies agiles, cadrage des besoins et pilotage rigoureux du brief à la livraison.",
     descEn: 'Coordinating cross-functional media initiatives with agile workflows, scoping requirements from brief to final delivery.',
-    tools: ['Gestion de projet Agile', 'Notion & Jira', 'Cahier des charges']
+    tools: ['Gestion de projet Agile', 'Notion & Jira', 'Cahier des charges'],
+    toolsEn: ['Agile project management', 'Notion & Jira', 'Project specifications']
   }
 ];
 
@@ -229,7 +236,7 @@ export function SkillsSection() {
 
                             {/* Tags des outils */}
                             <div className="flex flex-wrap gap-2 pt-1 pb-1">
-                              {skill.tools.map((tool) => (
+                              {(lang === 'fr' ? skill.tools : skill.toolsEn).map((tool) => (
                                 <span
                                   key={tool}
                                   className="h-7 px-3 rounded-full text-xs font-medium inline-flex items-center bg-black/[0.05] text-neutral-800 dark:bg-white/[0.08] dark:text-neutral-200"
