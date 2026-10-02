@@ -11,6 +11,8 @@ export const SITE_URL = 'https://luca-leone.ch';
 const PERSON_ID = `${SITE_URL}/#person`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 const PORTRAIT_URL = `${SITE_URL}/photo.jpeg`;
+/** Social preview (1200×630): wordmark on the site's gradient background */
+const OG_IMAGE_URL = `${SITE_URL}/og-image.jpg`;
 
 const abs = (path: string) => `${SITE_URL}${path}`;
 
@@ -25,7 +27,9 @@ export interface HeadData {
   ogType: 'profile' | 'article';
   image: string;
   imageAlt: string;
-  jsonLd: object;
+  jsonLd: object | null;
+  /** 404 page: keep it out of search results */
+  noindex?: boolean;
 }
 
 export function getAllRoutes(): Route[] {
@@ -52,6 +56,7 @@ const HOME_COPY = {
     description:
       'Portfolio de Luca Leone, étudiant en ingénierie des médias à la HEIG-VD (Yverdon-les-Bains) : communication numérique, UI/UX design, développement web et production média.',
     imageAlt: 'Portrait de Luca Leone, étudiant en ingénierie des médias à la HEIG-VD',
+    ogAlt: 'Luca Leone. — Portfolio, ingénierie des médias, HEIG-VD',
     projectsList: 'Projets de Luca Leone',
     home: 'Accueil',
     projects: 'Projets',
@@ -61,6 +66,7 @@ const HOME_COPY = {
     description:
       'Portfolio of Luca Leone, Media Engineering student at HEIG-VD (Yverdon-les-Bains, Switzerland): digital communication, UI/UX design, web development and media production.',
     imageAlt: 'Portrait of Luca Leone, Media Engineering student at HEIG-VD',
+    ogAlt: 'Luca Leone. — Portfolio, Media Engineering, HEIG-VD',
     projectsList: 'Projects by Luca Leone',
     home: 'Home',
     projects: 'Projects',
@@ -144,8 +150,8 @@ function homeHead(lang: Language): HeadData {
     canonical: url,
     alternates: alternatesFor({ name: 'home', lang }),
     ogType: 'profile',
-    image: PORTRAIT_URL,
-    imageAlt: copy.imageAlt,
+    image: OG_IMAGE_URL,
+    imageAlt: copy.ogAlt,
     jsonLd: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -247,11 +253,26 @@ function projectHead(lang: Language, slug: string): HeadData | null {
   };
 }
 
+function notFoundHead(lang: Language): HeadData {
+  return {
+    lang,
+    title: lang === 'fr' ? 'Page introuvable | Luca Leone' : 'Page not found | Luca Leone',
+    description: lang === 'fr' ? 'Cette page n’existe pas ou plus.' : 'This page doesn’t exist anymore.',
+    canonical: abs(homePath(lang)),
+    alternates: [],
+    ogType: 'profile',
+    image: OG_IMAGE_URL,
+    imageAlt: 'Luca Leone',
+    jsonLd: null,
+    noindex: true,
+  };
+}
+
 export function getHeadData(route: Route): HeadData {
   if (route.name === 'project') {
-    const head = projectHead(route.lang, route.slug);
-    if (head) return head;
+    return projectHead(route.lang, route.slug) ?? notFoundHead(route.lang);
   }
+  if (route.name === 'notFound') return notFoundHead(route.lang);
   return homeHead(route.lang);
 }
 
@@ -263,6 +284,16 @@ export function renderHeadTags(head: HeadData): string {
   const ogLocaleAlt = head.lang === 'fr' ? 'en_US' : 'fr_CH';
   // "</script>" inside JSON would close the tag early
   const jsonLd = JSON.stringify(head.jsonLd, null, 2).replace(/</g, '\\u003c');
+
+  if (head.noindex) {
+    return [
+      `<title>${escapeAttr(head.title)}</title>`,
+      `<meta name="description" content="${escapeAttr(head.description)}" />`,
+      `<meta name="robots" content="noindex, follow" />`,
+    ]
+      .map((line) => `    ${line}`)
+      .join('\n');
+  }
 
   return [
     `<title>${escapeAttr(head.title)}</title>`,
@@ -277,6 +308,9 @@ export function renderHeadTags(head: HeadData): string {
     `<meta property="og:locale" content="${ogLocale}" />`,
     `<meta property="og:locale:alternate" content="${ogLocaleAlt}" />`,
     `<meta property="og:image" content="${head.image}" />`,
+    ...(head.image === OG_IMAGE_URL
+      ? [`<meta property="og:image:width" content="1200" />`, `<meta property="og:image:height" content="630" />`]
+      : []),
     `<meta property="og:image:alt" content="${escapeAttr(head.imageAlt)}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
     `<meta name="twitter:title" content="${escapeAttr(head.title)}" />`,
@@ -298,7 +332,7 @@ export function renderSitemap(lastmod: string): string {
     return `  <url>\n    <loc>${head.canonical}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <priority>${priority}</priority>\n${links}\n  </url>`;
   });
 
-  const pdfs = UNIFIED_PROJECTS.filter((p) => p.pdfUrl).map(
+  const pdfs = [{ pdfUrl: USER_INFO.cv }, ...UNIFIED_PROJECTS].filter((p) => p.pdfUrl).map(
     (p) => `  <url>\n    <loc>${abs(p.pdfUrl!)}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <priority>0.5</priority>\n  </url>`,
   );
 

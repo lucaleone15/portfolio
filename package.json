@@ -5,11 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
-    "start": "vite preview --host 0.0.0.0 --port 3000",
+    "build": "vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs && npm run build:server",
+    "start": "node dist-server/index.mjs",
     "preview": "vite preview",
-    "clean": "rm -rf dist dist-ssr",
-    "lint": "tsc --noEmit"
+    "clean": "rm -rf dist dist-ssr dist-server",
+    "lint": "tsc --noEmit",
+    "build:server": "esbuild server/index.ts --bundle --platform=node --format=esm --target=node20 --packages=external --outfile=dist-server/index.mjs",
+    "images": "python3 scripts/make-image-variants.py"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.14",

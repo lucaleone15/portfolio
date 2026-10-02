@@ -1,3 +1,6 @@
+import { useRef } from 'react';
+import { usePauseOffscreen } from '../hooks/usePauseOffscreen';
+
 /**
  * Background shared by the intro curtain and the hero: a soft "aurora" — a few large,
  * heavily blurred colour fields in the accent family drifting very slowly — under a fine,
@@ -5,8 +8,11 @@
  * Static under reduced motion. Decorative only.
  */
 export function NeonBackdrop({ className = '', fadeBottom = true }: { className?: string; fadeBottom?: boolean }) {
+  const ref = useRef<HTMLDivElement>(null);
+  usePauseOffscreen(ref);
   return (
     <div
+      ref={ref}
       className={`pointer-events-none absolute inset-0 overflow-hidden ${fadeBottom ? 'backdrop-fade-bottom' : ''} ${className}`}
       aria-hidden="true"
     >

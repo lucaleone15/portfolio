@@ -186,6 +186,13 @@
   background-size: 240px 240px;
 }
 
+/* Infinite background animations stop while off-screen (usePauseOffscreen) */
+[data-offscreen] .aurora-blob,
+[data-offscreen] .animate-marquee,
+[data-offscreen].animate-marquee {
+  animation-play-state: paused;
+}
+
 /* Per-project accent (set with projectAccentVars):
    --pa      fill behind white text, text on light backgrounds
    --pa-text text colour that stays readable in both themes */

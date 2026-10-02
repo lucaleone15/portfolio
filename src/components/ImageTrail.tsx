@@ -32,11 +32,19 @@ export function ImageTrail({ images, areaRef, active }: ImageTrailProps) {
     if (!active || !area || !layer || images.length === 0) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    // Warm the cache so no tile pops in empty
-    images.forEach((src) => {
-      const preload = new Image();
-      preload.src = src;
-    });
+    // Load progressively: the first tiles now, then always the next two ahead of the trail
+    // (not every image up front: that was ~2 MB on arrival, painful on mobile data)
+    const warmed = new Set<string>();
+    const warm = (from: number, count: number) => {
+      for (let k = 0; k < count; k++) {
+        const src = images[(from + k) % images.length];
+        if (warmed.has(src)) continue;
+        warmed.add(src);
+        const preload = new Image();
+        preload.src = src;
+      }
+    };
+    warm(0, 3);
 
     const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     const nodes = Array.from(layer.children) as HTMLDivElement[];
@@ -55,6 +63,7 @@ export function ImageTrail({ images, areaRef, active }: ImageTrailProps) {
       const node = nodes[nodeIndex++ % nodes.length];
       const img = node.firstElementChild as HTMLImageElement;
       img.src = images[imageIndex++ % images.length];
+      warm(imageIndex, 2);
       node.style.zIndex = String(zIndex++);
       node.getAnimations().forEach((a) => a.cancel());
 

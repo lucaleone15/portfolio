@@ -2,6 +2,9 @@ node_modules/
 build/
 dist/
 dist-ssr/
+dist-server/
+.data/
+design-originals/
 coverage/
 .DS_Store
 *.log

@@ -3,26 +3,27 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import {defineConfig, loadEnv, type Plugin} from 'vite';
 import {createContactHandler} from './server/contact';
+import {createAnalyticsHandler} from './server/analytics';
 
-/** POST /api/contact on the dev and preview (production) servers — see server/contact.ts */
-function contactApi(env: Record<string, string>): Plugin {
-  const handler = createContactHandler(env);
-  return {
-    name: 'contact-api',
-    configureServer(server) {
-      server.middlewares.use(handler);
-    },
-    configurePreviewServer(server) {
-      server.middlewares.use(handler);
-    },
+/**
+ * The site's own endpoints during `npm run dev` / `vite preview` (production uses
+ * server/index.ts): POST /api/contact and the first-party analytics.
+ */
+function siteApi(env: Record<string, string>): Plugin {
+  const contact = createContactHandler(env);
+  const analytics = createAnalyticsHandler(env);
+  const mount = (server: { middlewares: { use: (fn: never) => void } }) => {
+    server.middlewares.use(contact as never);
+    server.middlewares.use(analytics as never);
   };
+  return { name: 'site-api', configureServer: mount, configurePreviewServer: mount };
 }
 
 export default defineConfig(({ isSsrBuild, mode }) => {
   // All variables from .env (not only VITE_*): SMTP settings stay server-side
   const env = { ...loadEnv(mode, process.cwd(), ''), ...process.env } as Record<string, string>;
   return {
-    plugins: [react(), tailwindcss(), contactApi(env)],
+    plugins: [react(), tailwindcss(), siteApi(env)],
     build: {
       // The SSR bundle (dist-ssr) is only used by scripts/prerender.mjs: no need to copy public/
       copyPublicDir: !isSsrBuild,
