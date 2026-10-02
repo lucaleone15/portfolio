@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import { ArrowUpRight, Filter } from 'lucide-react';
 import { getCustomProjects } from '../data/projectsStorage';
@@ -19,6 +19,38 @@ export function ProjectsSection() {
     { id: 'all', label: lang === 'fr' ? 'Tous les projets' : 'All projects' },
     ...uniqueCategories.map((cat) => ({ id: cat, label: cat }))
   ];
+
+  // Mobile stack: as the next card slides over, the covered one recedes (scale + dim).
+  // GSAP is loaded on demand; desktop and reduced motion keep the plain grid.
+  const gridRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    let cleanup: (() => void) | undefined;
+    let cancelled = false;
+    Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([{ default: gsap }, { ScrollTrigger }]) => {
+      if (cancelled || !gridRef.current) return;
+      gsap.registerPlugin(ScrollTrigger);
+      const ctx = gsap.context(() => {
+        const mm = gsap.matchMedia();
+        mm.add('(max-width: 767px) and (prefers-reduced-motion: no-preference)', () => {
+          const cards = gsap.utils.toArray<HTMLElement>('[data-stack-card]');
+          cards.slice(0, -1).forEach((card, i) => {
+            gsap.to(card.querySelector('[data-stack-inner]'), {
+              scale: 0.9,
+              opacity: 0.35,
+              ease: 'none',
+              scrollTrigger: { trigger: cards[i + 1], start: 'top bottom', end: 'top 76px', scrub: true },
+            });
+          });
+        });
+        return () => mm.revert();
+      }, gridRef);
+      cleanup = () => ctx.revert();
+    });
+    return () => {
+      cancelled = true;
+      cleanup?.();
+    };
+  }, [selectedFilter, lang]);
 
   const filteredProjects = selectedFilter === 'all'
     ? currentProjects
@@ -80,7 +112,7 @@ export function ProjectsSection() {
         )}
 
         {/* Project Cards Grid with staggered scroll reveal */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
           {filteredProjects.map((project, idx) => (
             <motion.div
               key={project.id}
@@ -92,8 +124,13 @@ export function ProjectsSection() {
                 delay: (idx % 2) * 0.12,
                 ease: [0.16, 1, 0.3, 1]
               }}
+              // Mobile: cards stick under the header and the next one slides over (stack)
+              data-stack-card
+              className="sticky top-[76px] md:static"
             >
-              <ProjectCard project={project} />
+              <div data-stack-inner className="origin-top bg-[#F9F9FB] dark:bg-[#0A0A0C] pb-2">
+                <ProjectCard project={project} />
+              </div>
             </motion.div>
           ))}
         </div>

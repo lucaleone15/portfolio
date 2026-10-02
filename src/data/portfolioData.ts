@@ -118,7 +118,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
         { label: 'Type', value: 'Projet 360°' },
         { label: 'Digital', value: 'Web Full-Stack' },
         { label: 'Communication', value: 'Print & Social Media' },
-        { label: 'Stack', value: 'Laravel & Vue.js' }
+        { label: 'Évaluation', value: '6 / 6' }
       ]
     },
     en: {
@@ -147,7 +147,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
         { label: 'Type', value: '360° Project' },
         { label: 'Digital', value: 'Full-Stack Web' },
         { label: 'Communication', value: 'Print & Social Media' },
-        { label: 'Stack', value: 'Laravel & Vue.js' }
+        { label: 'Evaluation', value: '6 / 6' }
       ]
     }
   },

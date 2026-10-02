@@ -4,7 +4,6 @@ import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { SkillsSection } from './components/SkillsSection';
 import { ProjectsSection } from './components/ProjectsSection';
-import { PhotoReel } from './components/PhotoReel';
 import { AboutSection } from './components/AboutSection';
 import { ContactSection } from './components/ContactSection';
 import { ProjectDetailView } from './components/ProjectDetailView';
@@ -107,7 +106,6 @@ function PortfolioApp() {
           <Hero />
           <SkillsSection />
           <ProjectsSection />
-          <PhotoReel />
           <AboutSection />
           <ContactSection />
         </main>
