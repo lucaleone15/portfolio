@@ -4,11 +4,13 @@ import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { SkillsSection } from './components/SkillsSection';
 import { ProjectsSection } from './components/ProjectsSection';
+import { PhotoReel } from './components/PhotoReel';
 import { AboutSection } from './components/AboutSection';
 import { ContactSection } from './components/ContactSection';
 import { ProjectDetailView } from './components/ProjectDetailView';
 import { PointerHighlight } from './components/PointerHighlight';
 import { InvertedCursor } from './components/InvertedCursor';
+import { CommandPalette } from './components/CommandPalette';
 import { IntroCurtain } from './components/IntroCurtain';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { ThemeProvider } from './context/ThemeContext';
@@ -87,6 +89,9 @@ function PortfolioApp() {
       <InvertedCursor />
       <PointerHighlight />
 
+      {/* ⌘K / Ctrl+K */}
+      <CommandPalette />
+
       {/* Editorial Navigation Masthead */}
       <Header activeSection={selectedProject ? 'projets' : activeSection} />
 
@@ -102,6 +107,7 @@ function PortfolioApp() {
           <Hero />
           <SkillsSection />
           <ProjectsSection />
+          <PhotoReel />
           <AboutSection />
           <ContactSection />
         </main>

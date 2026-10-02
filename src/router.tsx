@@ -11,6 +11,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import { flushSync } from 'react-dom';
 import { Language } from './types';
 
 /**
@@ -66,6 +67,21 @@ export function parsePath(pathname: string): Route {
 const prefersReducedMotion = () =>
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+/**
+ * Page changes run inside a View Transition: elements sharing a `view-transition-name`
+ * (a project card's image and the project page's main visual) morph into each other.
+ * flushSync makes React commit (and the router restore scroll) inside the callback, so the
+ * browser snapshots the finished new page. Unsupported browsers / reduced motion: instant.
+ */
+function withViewTransition(update: () => void) {
+  const doc = document as Document & { startViewTransition?: (cb: () => void) => unknown };
+  if (!doc.startViewTransition || prefersReducedMotion()) {
+    update();
+    return;
+  }
+  doc.startViewTransition(() => flushSync(update));
+}
+
 interface Location {
   pathname: string;
   hash: string;
@@ -113,6 +129,8 @@ function initialLocation(initialUrl?: string): Location {
 export function RouterProvider({ initialUrl, children }: { initialUrl?: string; children: ReactNode }) {
   const [location, setLocation] = useState<Location>(() => initialLocation(initialUrl));
   const keyRef = useRef(0);
+  const currentPathRef = useRef(location.pathname);
+  currentPathRef.current = location.pathname;
 
   useEffect(() => {
     // We restore scroll ourselves: the browser would restore it before React swaps the page
@@ -120,7 +138,8 @@ export function RouterProvider({ initialUrl, children }: { initialUrl?: string; 
 
     const onPopState = (e: PopStateEvent) => {
       const restoreY = typeof e.state?.scrollY === 'number' ? e.state.scrollY : null;
-      setLocation({
+      const pageChanged = window.location.pathname !== currentPathRef.current;
+      const apply = () => setLocation({
         pathname: window.location.pathname,
         hash: window.location.hash,
         restoreY,
@@ -128,6 +147,8 @@ export function RouterProvider({ initialUrl, children }: { initialUrl?: string; 
         smooth: false,
         key: ++keyRef.current,
       });
+      if (pageChanged) withViewTransition(apply);
+      else apply();
     };
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
@@ -149,14 +170,18 @@ export function RouterProvider({ initialUrl, children }: { initialUrl?: string; 
       window.history.pushState(state, '', href);
     }
 
-    setLocation({
-      pathname: url.pathname,
-      hash: url.hash,
-      restoreY: null,
-      keepScroll: !!options.keepScroll,
-      smooth: samePage && !!url.hash,
-      key: ++keyRef.current,
-    });
+    const apply = () =>
+      setLocation({
+        pathname: url.pathname,
+        hash: url.hash,
+        restoreY: null,
+        keepScroll: !!options.keepScroll,
+        smooth: samePage && !!url.hash,
+        key: ++keyRef.current,
+      });
+    // Only real page changes morph; in-page anchor jumps just scroll
+    if (samePage) apply();
+    else withViewTransition(apply);
   }, []);
 
   useIsomorphicLayoutEffect(() => {

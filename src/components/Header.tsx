@@ -4,6 +4,7 @@ import { motion, AnimatePresence, useScroll } from 'motion/react';
 import { USER_INFO } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
+import { CommandPaletteHint } from './CommandPalette';
 import { alternatePath, homePath, Link, sectionPath, useRouter } from '../router';
 
 interface HeaderProps {
@@ -67,7 +68,7 @@ export function Header({ activeSection }: HeaderProps) {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-40 bg-white/90 dark:bg-[#0A0A0C]/85 backdrop-blur-xl border-b border-black/[0.08] dark:border-white/[0.08] shadow-[0_4px_20px_rgba(0,0,0,0.04)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.6)] transition-colors duration-300">
+      <header className="[view-transition-name:site-header] fixed top-0 left-0 right-0 z-40 bg-white/90 dark:bg-[#0A0A0C]/85 backdrop-blur-xl border-b border-black/[0.08] dark:border-white/[0.08] shadow-[0_4px_20px_rgba(0,0,0,0.04)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.6)] transition-colors duration-300">
         {/* Sleek scroll line */}
         <motion.div
           className="h-[2px] bg-[var(--accent)] origin-left"
@@ -141,6 +142,7 @@ export function Header({ activeSection }: HeaderProps) {
                 </Link>
                 <span className="w-px h-4 mx-1 bg-black/10 dark:bg-white/15" aria-hidden="true" />
                 <ThemeToggle />
+                <CommandPaletteHint />
             </div>
 
             {/* Menu button ONLY shown on mobile/small screens (hidden on md+) */}
