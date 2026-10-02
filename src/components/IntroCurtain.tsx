@@ -85,7 +85,7 @@ export function IntroCurtain({ onDone }: IntroCurtainProps) {
         >
           {/* Gradient + grain; the hero carries the same texture, so it continues seamlessly
               when the curtain lifts */}
-          <NeonBackdrop />
+          <NeonBackdrop fadeBottom={false} />
 
           <motion.div
             initial={{ opacity: 0 }}
