@@ -26,11 +26,11 @@ const TOOLS: ToolLogo[] = [
 
 function ToolItem({ tool }: { tool: ToolLogo; key?: string | number }) {
   return (
-    <div className="relative group shrink-0 flex flex-col items-center justify-center cursor-pointer">
+    <div className="relative group shrink-0 flex flex-col items-center justify-center">
       {/* Floating Name Badge right ABOVE the icon */}
-      <div className="absolute -top-7 left-1/2 -translate-x-1/2 opacity-0 translate-y-1.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 pointer-events-none z-30">
+      <div className="absolute -top-7 left-1/2 -translate-x-1/2 opacity-0 translate-y-1.5 group-hover:opacity-100 group-hover:translate-y-0 transition duration-200 pointer-events-none z-30">
         <div className="relative px-2.5 py-1 rounded-md bg-neutral-900/95 dark:bg-[#18181B]/95 backdrop-blur-md border border-black/10 dark:border-white/20 shadow-[0_8px_20px_rgba(0,0,0,0.4)] dark:shadow-[0_8px_20px_rgba(0,0,0,0.8)] flex items-center justify-center whitespace-nowrap">
-          <span className="text-[11px] sm:text-xs font-syne font-bold tracking-wide text-white select-none">
+          <span className="text-[11px] sm:text-xs font-bold tracking-wide text-white select-none">
             {tool.name}
           </span>
           {/* Small downward indicator triangle */}
@@ -39,7 +39,7 @@ function ToolItem({ tool }: { tool: ToolLogo; key?: string | number }) {
       </div>
 
       {/* Logo Image */}
-      <div className="opacity-75 group-hover:opacity-100 transition-all duration-200 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center group-hover:scale-110">
+      <div className="opacity-75 group-hover:opacity-100 transition duration-200 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
         {tool.id === 'capcut' ? (
           <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white p-2 flex items-center justify-center shadow-xs">
             <img

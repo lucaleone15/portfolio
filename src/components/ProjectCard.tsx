@@ -1,69 +1,61 @@
 import { useState, useRef, MouseEvent } from 'react';
+import { motion, useMotionValue } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 import { Project } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { Link, projectPath } from '../router';
+import { projectAccentVars } from '../data/portfolioData';
 
 interface ProjectCardProps {
   key?: string | number;
   project: Project;
-  onSelect: (project: Project) => void;
 }
 
-export function ProjectCard({ project, onSelect }: ProjectCardProps) {
-  const { t } = useLanguage();
-  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+export function ProjectCard({ project }: ProjectCardProps) {
+  const { lang, t } = useLanguage();
   const [isHovered, setIsHovered] = useState(false);
   const imageContainerRef = useRef<HTMLDivElement>(null);
+  // Pointer position inside the image: motion values update the transform directly (no re-render per mousemove)
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
 
-  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+  const trackPointer = (e: MouseEvent<HTMLDivElement>) => {
     if (!imageContainerRef.current) return;
     const rect = imageContainerRef.current.getBoundingClientRect();
-    setCursorPos({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
+    pointerX.set(e.clientX - rect.left);
+    pointerY.set(e.clientY - rect.top);
   };
 
   return (
-    <article
-      onClick={() => onSelect(project)}
-      className="group relative cursor-pointer flex flex-col transition-all duration-300 hover:-translate-y-1"
+    <Link
+      href={projectPath(lang, project.id)}
+      style={projectAccentVars(project)}
+      className="project-accent group relative cursor-pointer flex flex-col transition duration-300 hover:-translate-y-1 rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
     >
+      <article className="flex flex-col h-full">
       {/* Frameless Showcase Container */}
       <div className="relative w-full flex flex-col h-full">
         {/* Full-width Image Container - strictly uniform 16/10 aspect ratio on every screen */}
         <div
           ref={imageContainerRef}
           onMouseEnter={(e) => {
-            if (imageContainerRef.current) {
-              const rect = imageContainerRef.current.getBoundingClientRect();
-              setCursorPos({
-                x: e.clientX - rect.left,
-                y: e.clientY - rect.top,
-              });
-            }
+            trackPointer(e);
             setIsHovered(true);
           }}
           onMouseLeave={() => setIsHovered(false)}
-          onMouseMove={handleMouseMove}
-          className="relative aspect-[16/10] w-full h-[220px] sm:h-[260px] md:h-[280px] lg:h-[300px] rounded-2xl bg-neutral-200 dark:bg-[#121215] shrink-0 border border-black/5 dark:border-white/5"
+          onMouseMove={trackPointer}
+          className="relative aspect-[16/10] w-full rounded-2xl bg-neutral-200 dark:bg-[#121215] shrink-0 border border-black/5 dark:border-white/5"
         >
           {/* Clipped image wrapper so image zoom stays contained */}
           <div className="w-full h-full overflow-hidden rounded-2xl">
             <img
               src={project.imageUrl}
-              alt={project.title}
+              alt={`${project.name} – ${project.subtitle}`}
               width="600"
               height="375"
               loading="lazy"
               decoding="async"
               referrerPolicy="no-referrer"
-              onError={(e) => {
-                const target = e.currentTarget;
-                if (target.src.endsWith('.webp')) {
-                  target.src = target.src.replace(/\.webp$/, '.png');
-                }
-              }}
               className="w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.03]"
             />
           </div>
@@ -71,33 +63,29 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
           {/* Category Badge pinned at top-left of image */}
           <div className="absolute top-3.5 left-3.5 z-20 max-w-[calc(100%-28px)]">
             <span
-              className="h-7 px-3.5 rounded-full text-[11px] sm:text-xs font-syne font-extrabold inline-flex items-center shadow-md tracking-wide transition-colors truncate max-w-full text-white"
-              style={{ backgroundColor: project.accentColor || 'var(--accent)' }}
+              className="font-syne h-7 px-3.5 rounded-full text-[11px] sm:text-xs font-extrabold inline-flex items-center shadow-md tracking-wide transition-colors truncate max-w-full text-white"
+              style={{ backgroundColor: 'var(--pa)' }}
             >
               {project.category}
             </span>
           </div>
 
           {/* Liquid Glass Capsule following mouse position - OUTSIDE overflow-hidden with z-50 to never be cut off */}
-          <div
-            className="pointer-events-none absolute z-50 transition-opacity duration-200 hidden sm:block"
-            style={{
-              opacity: isHovered ? 1 : 0,
-              left: `${cursorPos.x}px`,
-              top: `${cursorPos.y}px`,
-              transform: 'translate(-50%, -50%)',
-            }}
+          <motion.div
+            className="pointer-events-none absolute left-0 top-0 z-50 transition-opacity duration-200 hidden sm:block"
+            style={{ x: pointerX, y: pointerY, opacity: isHovered ? 1 : 0 }}
+            aria-hidden="true"
           >
-            <div className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-neutral-950/90 dark:bg-black/85 backdrop-blur-xl border border-white/20 shadow-[0_16px_36px_rgba(0,0,0,0.5)] flex items-center gap-2 whitespace-nowrap">
+            <div className="-translate-x-1/2 -translate-y-1/2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-neutral-950/90 dark:bg-black/85 backdrop-blur-xl border border-white/20 shadow-[0_16px_36px_rgba(0,0,0,0.5)] flex items-center gap-2 whitespace-nowrap">
               <span className="font-syne font-bold text-xs sm:text-sm tracking-wide text-white drop-shadow-sm select-none">
                 {t('projects.viewProject') || 'Voir le projet'}
               </span>
               <ArrowUpRight
                 className="w-3.5 h-3.5 sm:w-4 sm:h-4"
-                style={{ color: project.accentColor || 'var(--accent)' }}
+                style={{ color: 'var(--pa-dark)' }}
               />
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Card Content Section */}
@@ -107,7 +95,7 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
             <div className="min-w-0 flex-1">
               <h3
                 className="font-sans text-xl sm:text-2xl font-bold text-neutral-900 dark:text-white tracking-tight transition-colors truncate leading-snug"
-                style={isHovered ? { color: project.accentColor || 'var(--accent)' } : undefined}
+                style={isHovered ? { color: 'var(--pa-text)' } : undefined}
               >
                 {project.title}
               </h3>
@@ -115,7 +103,7 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
               <div className="mt-1.5 flex items-baseline gap-2.5">
                 <span
                   className="text-xs font-bold tracking-wider shrink-0"
-                  style={{ color: project.accentColor || 'var(--accent)' }}
+                  style={{ color: 'var(--pa-text)' }}
                 >
                   {project.year}
                 </span>
@@ -125,10 +113,10 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
 
             {/* Circular Arrow Button with project-specific theme hover */}
             <div
-              className="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-black/10 dark:border-white/20 bg-black/[0.04] dark:bg-white/[0.05] text-neutral-800 dark:text-white flex items-center justify-center transition-all duration-200 shrink-0 shadow-xs"
+              className="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-black/10 dark:border-white/20 bg-black/[0.04] dark:bg-white/[0.05] text-neutral-800 dark:text-white flex items-center justify-center transition duration-200 shrink-0 shadow-xs"
               style={isHovered ? {
-                backgroundColor: project.accentColor || 'var(--accent)',
-                borderColor: project.accentColor || 'var(--accent)',
+                backgroundColor: 'var(--pa)',
+                borderColor: 'var(--pa)',
                 color: '#FFFFFF'
               } : undefined}
               aria-hidden="true"
@@ -143,6 +131,7 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
           </p>
         </div>
       </div>
-    </article>
+      </article>
+    </Link>
   );
 }

@@ -1,6 +1,8 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext } from 'react';
+import { Language } from '../types';
+import { alternatePath, useRouter } from '../router';
 
-export type Language = 'fr' | 'en';
+export type { Language };
 
 interface LanguageContextType {
   lang: Language;
@@ -145,15 +147,13 @@ const LanguageContext = createContext<LanguageContextType>({
   t: (key: string) => key
 });
 
+/** The language comes from the URL (/ vs /en/); switching language navigates to the other URL. */
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [lang, setLangState] = useState<Language>(() => {
-    const saved = localStorage.getItem('portfolio_lang');
-    return (saved === 'en' || saved === 'fr') ? saved : 'fr';
-  });
+  const { route, navigate } = useRouter();
+  const lang = route.lang;
 
   const setLang = (newLang: Language) => {
-    setLangState(newLang);
-    localStorage.setItem('portfolio_lang', newLang);
+    if (newLang !== lang) navigate(alternatePath(route, newLang), { keepScroll: true });
   };
 
   const t = (key: string): string => {

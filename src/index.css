@@ -8,16 +8,18 @@
   --display-tracking: -0.025em;
   --display-weight: 700;
 
-  /* Dynamic Accent Color system - defaults */
-  --accent-primary: #2979FF;
-  --accent-text: #FFFFFF;
-  --accent-rgb-dark: 41, 121, 255;
-  --accent-glow-dark: rgba(41, 121, 255, 0.4);
+  /* Dynamic Accent Color system - defaults.
+     Keep in sync with ACTIVE_ACCENT_ID in src/theme/colors.ts ('hot-crimson'):
+     these values paint the prerendered HTML before AccentProvider runs. */
+  --accent-primary: #FF2E55;
+  --accent-text: #000000;
+  --accent-rgb-dark: 255, 46, 85;
+  --accent-glow-dark: rgba(255, 46, 85, 0.4);
 
-  --accent-light: #004fe6;
+  --accent-light: #C50E36;
   --accent-light-text: #FFFFFF;
-  --accent-rgb-light: 0, 79, 230;
-  --accent-glow-light: rgba(0, 79, 230, 0.25);
+  --accent-rgb-light: 197, 14, 54;
+  --accent-glow-light: rgba(197, 14, 54, 0.25);
 
   /* Unified dynamic accent tokens: in Light mode (high contrast on white) */
   --accent: var(--accent-light);
@@ -60,57 +62,68 @@
   --color-forest: var(--accent-light);
 }
 
-/* Explicit high-contrast themed utility classes */
-.text-accent-themed {
-  color: var(--accent-light) !important;
-}
-:where(.dark, .dark *) .text-accent-themed {
-  color: var(--accent-primary) !important;
-}
-
-.bg-accent-themed {
-  background-color: var(--accent-light) !important;
-  color: var(--accent-light-text) !important;
-}
-:where(.dark, .dark *) .bg-accent-themed {
-  background-color: var(--accent-primary) !important;
-  color: var(--accent-text) !important;
-}
-
-.border-accent-themed {
-  border-color: var(--accent-light) !important;
-}
-:where(.dark, .dark *) .border-accent-themed {
-  border-color: var(--accent-primary) !important;
-}
-
 @layer base {
   html {
     scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  /* One consistent keyboard focus ring (mouse clicks don't show it) */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* Anchored sections (#projets, #a-propos, #contact) land below the fixed header */
+  section[id] {
+    scroll-margin-top: 5rem;
   }
 
   body {
     background-color: var(--color-paper);
     color: var(--color-graphite);
     font-family: var(--font-body);
-    letter-spacing: -0.01em;
     overflow-x: hidden;
   }
 
   h1, h2, h3, h4, .font-serif {
-    font-family: var(--font-display) !important;
+    font-family: var(--font-display);
     letter-spacing: var(--display-tracking);
     font-weight: var(--display-weight, 700);
   }
 }
 
-@media (pointer: fine) {
-  html.custom-cursor-active,
-  html.custom-cursor-active a,
-  html.custom-cursor-active button,
-  html.custom-cursor-active [role="button"] {
-    cursor: none !important;
+/* Inverted round cursor (InvertedCursor.tsx). The native cursor is hidden by ONE inherited
+   declaration on <html>; elements that set their own cursor (links via the UA stylesheet,
+   Tailwind cursor-* utilities) are told to inherit instead. Per-element cursor rules made
+   the native cursor flash back at every element boundary. Only active once the component
+   has mounted (has-custom-cursor), so without JS the native cursor stays. */
+@media (hover: hover) and (pointer: fine) {
+  html.has-custom-cursor {
+    cursor: none;
   }
+  html.has-custom-cursor :is(a, button, [role="button"], summary, label[for], .cursor-pointer, .cursor-default) {
+    cursor: inherit;
+  }
+  /* Text fields keep the I-beam (the round cursor hides itself there) */
+  html.has-custom-cursor :is(input, textarea, select) {
+    cursor: auto;
+  }
+}
+
+/* Per-project accent (set with projectAccentVars):
+   --pa      fill behind white text, text on light backgrounds
+   --pa-text text colour that stays readable in both themes */
+.project-accent {
+  --pa-text: var(--pa);
+}
+.dark .project-accent {
+  --pa-text: var(--pa-dark);
 }
 
 /* Subtle grain overlay */
@@ -124,111 +137,6 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Highlighter: keyword with dynamic accent background */
-.highlight-lime {
-  background-color: var(--accent);
-  color: var(--accent-contrast-text);
-  padding: 0.05em 0.25em;
-  display: inline-block;
-  line-height: 1.05;
-}
-
-/* Editorial subtle animations using dynamic accent line */
-.editorial-link {
-  position: relative;
-  display: inline-block;
-  text-decoration: none;
-}
-
-.editorial-link::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  transform: scaleX(0);
-  height: 1.5px;
-  bottom: -2px;
-  left: 0;
-  background-color: var(--accent);
-  transform-origin: bottom right;
-  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.editorial-link:hover::after {
-  transform: scaleX(1);
-  transform-origin: bottom left;
-}
-
-/* Subtle hairline borders */
-.border-editorial {
-  border-color: #E2E1DC;
-}
-
-/* Modern Liquid Glass Utilities */
-.liquid-glass {
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.02);
-}
-
-.liquid-glass-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.72) 100%);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 12px 36px -12px rgba(0, 0, 0, 0.06), 0 2px 8px -2px rgba(0, 0, 0, 0.02);
-}
-
-.liquid-glass-card:hover {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.85) 100%);
-  border-color: rgba(255, 255, 255, 1);
-  box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.1), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
-}
-
-.liquid-glass-pill {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.06);
-}
-
-/* Luxury Grain & Ambient Noise */
-.bg-noise {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
-}
-
-/* Glowing Ambient Gradients */
-.gradient-mesh {
-  background: 
-    radial-gradient(at 0% 0%, rgba(var(--accent-rgb), 0.12) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(255, 120, 60, 0.08) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(90, 80, 255, 0.08) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(var(--accent-rgb), 0.08) 0px, transparent 50%);
-}
-
-.gradient-card-glow {
-  position: relative;
-}
-.gradient-card-glow::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.6), rgba(255, 255, 255, 0.8), rgba(26, 26, 26, 0.15));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  opacity: 0.6;
-  transition: opacity 0.3s ease;
-}
-.gradient-card-glow:hover::before {
-  opacity: 1;
-}
-
 /* Infinite Marquee Keyframe Animations (Pixel-perfect seamless loop) */
 @keyframes marquee {
   0% {
@@ -239,15 +147,6 @@
   }
 }
 
-@keyframes marquee-reverse {
-  0% {
-    transform: translate3d(-50%, 0, 0);
-  }
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
 .animate-marquee {
   display: flex;
   width: max-content;
@@ -255,16 +154,14 @@
   animation: marquee 45s linear infinite;
 }
 
-.animate-marquee-reverse {
-  display: flex;
-  width: max-content;
-  will-change: transform;
-  animation: marquee-reverse 45s linear infinite;
+.animate-marquee:hover {
+  animation-play-state: paused;
 }
 
-.animate-marquee:hover,
-.animate-marquee-reverse:hover {
-  animation-play-state: paused;
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
 }
 
 /* Edge Fade Mask for Seamless Tickers */
@@ -272,86 +169,3 @@
   mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
 }
-
-/* Creative Gradient Text Shimmer Animation */
-@keyframes text-shimmer {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.animate-text-shimmer {
-  background: linear-gradient(90deg, currentColor 0%, var(--accent) 50%, currentColor 100%);
-  background-size: 200% auto;
-  color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
-  animation: text-shimmer 6s linear infinite;
-}
-
-/* Glowing Aura Pulse for Cards & Badges */
-@keyframes neon-pulse {
-  0%, 100% {
-    box-shadow: 0 0 15px var(--accent-glow), inset 0 0 15px rgba(var(--accent-rgb), 0.05);
-  }
-  50% {
-    box-shadow: 0 0 30px var(--accent-glow), inset 0 0 25px rgba(var(--accent-rgb), 0.12);
-  }
-}
-
-.glow-neon-pulse {
-  animation: neon-pulse 3.5s ease-in-out infinite;
-}
-
-/* Floating Ambient Motion */
-@keyframes ambient-float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-7px);
-  }
-}
-
-.animate-float {
-  animation: ambient-float 5s ease-in-out infinite;
-}
-
-/* Interactive Shimmer Light Sweep on Glass Cards */
-.glass-shine-hover {
-  position: relative;
-  overflow: hidden;
-}
-
-.glass-shine-hover::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -150%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    60deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.06) 45%,
-    rgba(var(--accent-rgb), 0.15) 50%,
-    rgba(255, 255, 255, 0.06) 55%,
-    transparent 70%
-  );
-  transform: rotate(25deg);
-  transition: all 0.75s ease-in-out;
-  pointer-events: none;
-}
-
-.glass-shine-hover:hover::after {
-  left: 100%;
-}
-
-
-

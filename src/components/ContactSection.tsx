@@ -1,13 +1,11 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, MouseEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Sun, Moon } from 'lucide-react';
 import { USER_INFO } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
-import { useTheme } from '../context/ThemeContext';
+import { Link, sectionPath } from '../router';
 
 export function ContactSection() {
   const { lang, t } = useLanguage();
-  const { theme, toggleTheme } = useTheme();
   const [copied, setCopied] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
@@ -17,20 +15,38 @@ export function ContactSection() {
     name: '',
     email: '',
     subject: '',
-    message: ''
+    message: '',
+    // Honeypot: hidden from people, filled in by bots
+    honey: ''
   });
 
   const PRIMARY_EMAIL = 'luca@luca-leone.ch';
 
-  const copyEmailToClipboard = () => {
-    navigator.clipboard.writeText(PRIMARY_EMAIL);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2200);
+  // Clicking the address copies it; if the clipboard is unavailable, fall back to the mail app
+  const copyEmailToClipboard = async (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    try {
+      await navigator.clipboard.writeText(PRIMARY_EMAIL);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2200);
+    } catch {
+      window.location.href = `mailto:${PRIMARY_EMAIL}`;
+    }
   };
 
   const handleFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
+
+    const successMessage =
+      lang === 'fr' ? 'Votre message a bien été envoyé directement à Luca Leone !' : 'Your message has been sent directly to Luca Leone!';
+
+    // A bot filled the hidden field: pretend it worked, send nothing
+    if (formData.honey) {
+      setSubmitStatus('success');
+      setStatusMessage(successMessage);
+      return;
+    }
 
     setIsSubmitting(true);
     setSubmitStatus('idle');
@@ -51,14 +67,19 @@ export function ContactSection() {
           _subject: formData.subject || `Nouveau message - Portfolio Luca Leone (${formData.name})`,
           _replyto: formData.email,
           _captcha: 'false',
+          _honey: formData.honey,
           _template: 'table'
         })
       });
 
       const data = await response.json().catch(() => ({}));
+      // FormSubmit answers { success: "false" } (sometimes with HTTP 200) when it rejects a message
+      if (!response.ok || String(data?.success) === 'false') {
+        throw new Error(`FormSubmit rejected the message (${response.status}): ${data?.message ?? ''}`);
+      }
       setIsSubmitting(false);
       setSubmitStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
+      setFormData({ name: '', email: '', subject: '', message: '', honey: '' });
 
       if (data?.message && typeof data.message === 'string' && data.message.toLowerCase().includes('activation')) {
         setStatusMessage(
@@ -67,11 +88,7 @@ export function ContactSection() {
             : "Message transmitted! An activation email has been sent to confirm receipt."
         );
       } else {
-        setStatusMessage(
-          lang === 'fr'
-            ? "Votre message a bien été envoyé directement à Luca Leone !"
-            : "Your message has been sent directly to Luca Leone!"
-        );
+        setStatusMessage(successMessage);
       }
     } catch (err) {
       console.error('Contact submission error:', err);
@@ -94,7 +111,7 @@ export function ContactSection() {
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="mb-14 sm:mb-20"
         >
           <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.05] font-normal text-neutral-900 dark:text-white">
@@ -113,17 +130,22 @@ export function ContactSection() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-7"
           >
-            <form onSubmit={handleFormSubmit} className="space-y-8 sm:space-y-10">
+            <form onSubmit={handleFormSubmit} className="relative space-y-8 sm:space-y-10">
               {/* Nom */}
               <div className="relative group">
+                <label htmlFor="contact-name" className="sr-only">
+                  {lang === 'fr' ? 'Votre nom' : 'Your name'}
+                </label>
                 <input
+                  id="contact-name"
+                  name="name"
+                  autoComplete="name"
                   type="text"
                   required
                   placeholder={t('contact.namePlaceholder')}
-                  aria-label={t('contact.namePlaceholder') || 'Votre nom'}
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full pb-3 bg-transparent border-b border-black/20 dark:border-white/20 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-white/35 text-base sm:text-lg focus:outline-none focus:border-[var(--accent)] transition-colors"
@@ -132,11 +154,16 @@ export function ContactSection() {
 
               {/* Email */}
               <div className="relative group">
+                <label htmlFor="contact-email" className="sr-only">
+                  {lang === 'fr' ? 'Votre adresse email' : 'Your email address'}
+                </label>
                 <input
+                  id="contact-email"
+                  name="email"
+                  autoComplete="email"
                   type="email"
                   required
                   placeholder={t('contact.emailPlaceholder')}
-                  aria-label={t('contact.emailPlaceholder') || 'Votre adresse email'}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full pb-3 bg-transparent border-b border-black/20 dark:border-white/20 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-white/35 text-base sm:text-lg focus:outline-none focus:border-[var(--accent)] transition-colors"
@@ -145,10 +172,15 @@ export function ContactSection() {
 
               {/* Sujet */}
               <div className="relative group">
+                <label htmlFor="contact-subject" className="sr-only">
+                  {lang === 'fr' ? 'Sujet' : 'Subject'}
+                </label>
                 <input
+                  id="contact-subject"
+                  name="subject"
+                  autoComplete="off"
                   type="text"
                   placeholder={t('contact.subjectPlaceholder')}
-                  aria-label={t('contact.subjectPlaceholder') || 'Sujet'}
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   className="w-full pb-3 bg-transparent border-b border-black/20 dark:border-white/20 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-white/35 text-base sm:text-lg focus:outline-none focus:border-[var(--accent)] transition-colors"
@@ -157,18 +189,38 @@ export function ContactSection() {
 
               {/* Message */}
               <div className="relative group">
+                <label htmlFor="contact-message" className="sr-only">
+                  {lang === 'fr' ? 'Votre message' : 'Your message'}
+                </label>
                 <textarea
+                  id="contact-message"
+                  name="message"
+                  autoComplete="off"
                   required
                   rows={4}
                   placeholder={t('contact.messagePlaceholder')}
-                  aria-label={t('contact.messagePlaceholder') || 'Votre message'}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   className="w-full pb-3 bg-transparent border-b border-black/20 dark:border-white/20 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-white/35 text-base sm:text-lg focus:outline-none focus:border-[var(--accent)] transition-colors resize-none"
                 />
               </div>
 
-              {/* Submit Status Feedback */}
+              {/* Honeypot: off-screen, skipped by keyboard and screen readers */}
+              <div className="absolute -left-[9999px] w-px h-px overflow-hidden" aria-hidden="true">
+                <label htmlFor="contact-honey">Ne pas remplir</label>
+                <input
+                  id="contact-honey"
+                  name="_honey"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={formData.honey}
+                  onChange={(e) => setFormData({ ...formData, honey: e.target.value })}
+                />
+              </div>
+
+              {/* Submit Status Feedback (announced by screen readers) */}
+              <div role="status" aria-live="polite">
               <AnimatePresence>
                 {submitStatus === 'success' && (
                   <motion.div
@@ -196,13 +248,14 @@ export function ContactSection() {
                   </motion.div>
                 )}
               </AnimatePresence>
+              </div>
 
               {/* Submit button: Pill Button with Loading State */}
               <div>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="py-4 px-10 rounded-full bg-[var(--accent)] text-[var(--accent-contrast-text)] hover:opacity-90 disabled:opacity-50 font-syne font-bold text-sm tracking-wide transition-all duration-200 cursor-pointer disabled:cursor-not-allowed shadow-xs active:scale-98 inline-flex items-center justify-center"
+                  className="font-syne py-4 px-10 rounded-full bg-[var(--accent)] text-[var(--accent-contrast-text)] hover:opacity-90 disabled:opacity-50 font-bold text-sm tracking-wide transition duration-200 cursor-pointer disabled:cursor-not-allowed shadow-xs active:scale-[0.97] inline-flex items-center justify-center"
                 >
                   {isSubmitting ? (
                     <span>{lang === 'fr' ? 'Envoi du message...' : 'Sending message...'}</span>
@@ -219,31 +272,29 @@ export function ContactSection() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 space-y-12 lg:pl-6"
           >
             {/* EMAIL DIRECT */}
             <div>
-              <span className="block text-xs uppercase font-bold tracking-[0.2em] text-neutral-600 dark:text-neutral-300 mb-3">
-                {t('contact.directEmailLabel')}
-              </span>
+              <div className="flex items-baseline gap-3 mb-3">
+                <span className="text-xs uppercase font-bold tracking-[0.2em] text-neutral-600 dark:text-neutral-300">
+                  {t('contact.directEmailLabel')}
+                </span>
+                {/* Copy confirmation, announced to screen readers */}
+                <span role="status" aria-live="polite" className="text-xs font-bold text-[var(--accent)]">
+                  {copied ? (lang === 'fr' ? 'Copié !' : 'Copied!') : ''}
+                </span>
+              </div>
               <a
                 href={`mailto:${PRIMARY_EMAIL}`}
-                className="text-xl sm:text-2xl md:text-3xl font-bold text-neutral-900 dark:text-white hover:text-[var(--accent)] transition-colors block break-all font-sans"
+                onClick={copyEmailToClipboard}
+                title={lang === 'fr' ? "Cliquer pour copier l'adresse" : 'Click to copy the address'}
+                aria-label={lang === 'fr' ? `Copier l'adresse ${PRIMARY_EMAIL}` : `Copy the address ${PRIMARY_EMAIL}`}
+                className="text-xl sm:text-2xl md:text-3xl font-bold text-neutral-900 dark:text-white hover:text-[var(--accent)] transition inline-block break-all font-sans active:scale-[0.99] origin-left"
               >
                 {PRIMARY_EMAIL}
               </a>
-              <button
-                type="button"
-                onClick={copyEmailToClipboard}
-                className="mt-3 inline-flex items-center px-4 py-1.5 rounded-full bg-black/[0.04] hover:bg-black/[0.08] text-neutral-800 border border-black/10 dark:bg-white/[0.05] dark:hover:bg-white/[0.1] text-xs font-syne font-bold dark:text-white/80 transition-colors cursor-pointer dark:border-white/10"
-              >
-                {copied ? (
-                  <span className="text-[var(--accent)] font-bold">{lang === 'fr' ? 'Email copié !' : 'Email copied!'}</span>
-                ) : (
-                  <span>{lang === 'fr' ? "Copier l'email" : 'Copy email'}</span>
-                )}
-              </button>
             </div>
 
             {/* NUMÉRO DIRECT */}
@@ -274,7 +325,7 @@ export function ContactSection() {
                   className="group flex items-center justify-between py-4 text-base sm:text-lg font-semibold text-neutral-900 dark:text-white hover:text-[var(--accent)] transition-colors"
                 >
                   <span>LinkedIn</span>
-                  <span className="text-neutral-600 dark:text-neutral-300 group-hover:text-[var(--accent)] group-hover:translate-x-1 transition-all">
+                  <span className="text-neutral-600 dark:text-neutral-300 group-hover:text-[var(--accent)] group-hover:translate-x-1 transition">
                     →
                   </span>
                 </a>
@@ -296,18 +347,18 @@ export function ContactSection() {
             <span className="font-medium text-neutral-700 dark:text-neutral-300">HEIG-VD</span>
           </div>
           <div className="flex items-center gap-4 sm:gap-5">
-            <a
-              href="#projets"
+            <Link
+              href={sectionPath(lang, 'projets')}
               className="text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white transition-colors font-medium"
             >
               {t('nav.projects')}
-            </a>
-            <a
-              href="#a-propos"
+            </Link>
+            <Link
+              href={sectionPath(lang, 'a-propos')}
               className="text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white transition-colors font-medium"
             >
               {t('nav.about')}
-            </a>
+            </Link>
             <a
               href={USER_INFO.linkedin}
               target="_blank"
@@ -316,22 +367,6 @@ export function ContactSection() {
             >
               LinkedIn
             </a>
-
-            {/* Discrete Theme Toggle in Footer */}
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] text-neutral-700 hover:text-black dark:text-neutral-300 dark:hover:text-white bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.08] hover:border-black/20 dark:hover:border-white/20 transition-all cursor-pointer opacity-90 hover:opacity-100"
-              title={theme === 'dark' ? 'Passer en mode clair' : 'Passer en mode sombre'}
-              aria-label="Basculer le thème"
-            >
-              {theme === 'dark' ? (
-                <Sun className="w-3 h-3 text-[var(--accent)]" />
-              ) : (
-                <Moon className="w-3 h-3 text-neutral-700" />
-              )}
-              <span className="font-syne font-bold text-[10px] tracking-wide uppercase">{theme === 'dark' ? 'Light' : 'Dark'}</span>
-            </button>
           </div>
         </footer>
       </div>

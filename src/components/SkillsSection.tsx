@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
@@ -78,6 +78,33 @@ export function SkillsSection() {
     setActiveSkillId((prev) => (prev === id ? null : id));
   };
 
+  // Mouse/trackpad: open on hover. Touch: open on tap (emulated mouseenter is ignored there,
+  // otherwise a tap would open then immediately close the row).
+  const [canHover, setCanHover] = useState(false);
+  useEffect(() => {
+    const query = window.matchMedia('(hover: hover) and (pointer: fine)');
+    setCanHover(query.matches);
+    const onChange = (e: MediaQueryListEvent) => setCanHover(e.matches);
+    query.addEventListener('change', onChange);
+    return () => query.removeEventListener('change', onChange);
+  }, []);
+
+  // Hover intent: a short delay so sweeping the pointer across rows doesn't open each one
+  // (opening one row shifts the others under the pointer).
+  const hoverTimer = useRef<number | undefined>(undefined);
+  const openOnHover = (id: string) => {
+    if (!canHover) return;
+    window.clearTimeout(hoverTimer.current);
+    hoverTimer.current = window.setTimeout(() => setActiveSkillId(id), 120);
+  };
+  const cancelHover = () => window.clearTimeout(hoverTimer.current);
+  const closeOnLeave = () => {
+    if (!canHover) return;
+    cancelHover();
+    setActiveSkillId(null);
+  };
+  useEffect(() => cancelHover, []);
+
   return (
     <section
       id="competences"
@@ -89,11 +116,11 @@ export function SkillsSection() {
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-3xl mb-12 sm:mb-16"
         >
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-xs font-syne font-bold uppercase tracking-widest text-[var(--accent)]">
+            <span className="text-xs font-bold uppercase tracking-widest text-[var(--accent)]">
               {lang === 'fr' ? 'Compétences' : 'Skills & Capabilities'}
             </span>
           </div>
@@ -114,10 +141,15 @@ export function SkillsSection() {
           </h2>
         </motion.div>
 
-        {/* Interactive Skills List: Only Number + Title visible by default; Description & Tags appear on hover / click */}
-        <div className="divide-y divide-black/10 dark:divide-white/10 border-y border-black/10 dark:border-white/10">
+        {/* Skills list: number + title by default; description and tools open on hover (mouse)
+            or tap (touch). */}
+        <div
+          onMouseLeave={closeOnLeave}
+          className="divide-y divide-black/10 dark:divide-white/10 border-y border-black/10 dark:border-white/10"
+        >
           {SKILLS_DATA.map((skill, index) => {
-            const isHoveredOrActive = activeSkillId === skill.id;
+            const isOpen = activeSkillId === skill.id;
+            const panelId = `skill-panel-${skill.id}`;
 
             return (
               <motion.div
@@ -130,58 +162,65 @@ export function SkillsSection() {
                   delay: index * 0.05,
                   ease: [0.16, 1, 0.3, 1]
                 }}
-                onMouseEnter={() => setActiveSkillId(skill.id)}
-                onMouseLeave={() => setActiveSkillId(null)}
-                className={`group transition-all duration-300 ${
-                  isHoveredOrActive ? 'bg-black/[0.02] dark:bg-white/[0.02]' : ''
+                onMouseEnter={() => openOnHover(skill.id)}
+                onMouseLeave={cancelHover}
+                className={`group transition-colors duration-200 ${
+                  isOpen ? 'bg-black/[0.02] dark:bg-white/[0.02]' : ''
                 }`}
               >
+                {/* The whole row is clickable for the mouse; the <button> carries keyboard + a11y.
+                    Its click bubbles here, so it toggles exactly once. */}
                 <div
-                  onClick={() => toggleSkill(skill.id)}
-                  className="py-7 sm:py-8 cursor-pointer select-none"
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
+                  onClick={(e) => {
+                    // e.detail === 0: keyboard activation of the <button> → toggle
+                    if (canHover && e.detail > 0) {
+                      cancelHover();
+                      setActiveSkillId(skill.id);
+                    } else {
                       toggleSkill(skill.id);
                     }
                   }}
-                  aria-expanded={isHoveredOrActive}
+                  className="py-7 sm:py-8 cursor-pointer select-none"
                 >
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-10 items-start">
                     {/* Index + Titre principal */}
-                    <div className="lg:col-span-5 flex items-baseline gap-4 sm:gap-6">
-                      <span
-                        className={`font-syne font-bold text-xs sm:text-sm transition-colors duration-200 select-none ${
-                          isHoveredOrActive
-                            ? 'text-[var(--accent)]'
-                            : 'text-neutral-400 dark:text-white/40 group-hover:text-[var(--accent)]'
-                        }`}
+                    <h3 className="lg:col-span-5">
+                      <button
+                        type="button"
+                        aria-expanded={isOpen}
+                        aria-controls={panelId}
+                        className="flex items-baseline gap-4 sm:gap-6 text-left w-full cursor-pointer rounded-md"
                       >
-                        {skill.number}
-                      </span>
-                      <h3
-                        className={`text-xl sm:text-2xl lg:text-3xl font-extrabold font-syne tracking-tight transition-colors duration-200 ${
-                          isHoveredOrActive
-                            ? 'text-[var(--accent)]'
-                            : 'text-neutral-900 dark:text-white group-hover:text-[var(--accent)]'
-                        }`}
-                      >
-                        {lang === 'fr' ? skill.titleFr : skill.titleEn}
-                      </h3>
-                    </div>
+                        <span
+                          className={`font-bold text-xs sm:text-sm transition-colors duration-200 select-none ${
+                            isOpen
+                              ? 'text-[var(--accent)]'
+                              : 'text-neutral-500 dark:text-white/40 group-hover:text-[var(--accent)]'
+                          }`}
+                        >
+                          {skill.number}
+                        </span>
+                        <span
+                          className={`text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight transition-colors duration-200 ${
+                            isOpen
+                              ? 'text-[var(--accent)]'
+                              : 'text-neutral-900 dark:text-white group-hover:text-[var(--accent)]'
+                          }`}
+                        >
+                          {lang === 'fr' ? skill.titleFr : skill.titleEn}
+                        </span>
+                      </button>
+                    </h3>
 
-                    {/* Description et tags qui apparaissent UNIQUEMENT quand on va dessus */}
-                    <div className="lg:col-span-7">
-                      <AnimatePresence>
-                        {isHoveredOrActive ? (
+                    <div className="lg:col-span-7" id={panelId}>
+                      <AnimatePresence initial={false}>
+                        {isOpen ? (
                           <motion.div
                             key="content"
-                            initial={{ opacity: 0, y: -6, height: 0 }}
-                            animate={{ opacity: 1, y: 0, height: 'auto' }}
-                            exit={{ opacity: 0, y: -6, height: 0 }}
-                            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0, transition: { duration: 0.18, ease: [0.23, 1, 0.32, 1] } }}
+                            transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
                             className="space-y-4 overflow-hidden"
                           >
                             <p className="text-sm sm:text-base text-neutral-600 dark:text-[#A1A1AA] leading-relaxed max-w-2xl">
@@ -193,7 +232,7 @@ export function SkillsSection() {
                               {skill.tools.map((tool) => (
                                 <span
                                   key={tool}
-                                  className="h-7 px-3 rounded-full text-xs font-syne font-medium inline-flex items-center bg-black/[0.05] text-neutral-800 dark:bg-white/[0.08] dark:text-neutral-200"
+                                  className="h-7 px-3 rounded-full text-xs font-medium inline-flex items-center bg-black/[0.05] text-neutral-800 dark:bg-white/[0.08] dark:text-neutral-200"
                                 >
                                   {tool}
                                 </span>
@@ -201,8 +240,7 @@ export function SkillsSection() {
                             </div>
                           </motion.div>
                         ) : (
-                          // Hint discret sur desktop quand pas survolé
-                          <div className="hidden lg:flex items-center h-8 text-xs font-syne text-neutral-400 dark:text-neutral-600 group-hover:text-neutral-600 dark:group-hover:text-neutral-400 transition-colors">
+                          <div className="hidden lg:flex items-center h-8 text-xs text-neutral-500 dark:text-neutral-500 group-hover:text-neutral-700 dark:group-hover:text-neutral-300 transition-colors">
                             <span>{lang === 'fr' ? 'Survoler pour afficher' : 'Hover to reveal'}</span>
                           </div>
                         )}

@@ -1,5 +1,8 @@
+export type Language = 'fr' | 'en';
+
 export interface Project {
   id: string;
+  name: string;
   number: string;
   title: string;
   subtitle: string;
@@ -19,26 +22,5 @@ export interface Project {
   metrics: { label: string; value: string }[];
   stack: string[];
   accentColor?: string;
-}
-
-export interface SkillCategory {
-  id: string;
-  title: string;
-  number: string;
-  description: string;
-  philosophy: string;
-  skills: {
-    name: string;
-    level: string;
-    detail: string;
-    highlight?: boolean;
-  }[];
-}
-
-export interface EducationMilestone {
-  period: string;
-  title: string;
-  institution: string;
-  location: string;
-  details: string;
+  accentColorDark?: string;
 }
