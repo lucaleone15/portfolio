@@ -66,8 +66,14 @@ export function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
   // Timeline dots light up (accent) once their step has come into view, and stay lit
   const [litSteps, setLitSteps] = useState<Set<string>>(() => new Set());
-  const lightUp = (key: string) =>
-    setLitSteps((prev) => (prev.has(key) ? prev : new Set(prev).add(key)));
+  const setLit = (key: string, on: boolean) =>
+    setLitSteps((prev) => {
+      if (prev.has(key) === on) return prev;
+      const next = new Set(prev);
+      if (on) next.add(key);
+      else next.delete(key);
+      return next;
+    });
   const dotClass = (key: string) =>
     `absolute -left-8 top-1.5 w-[15px] h-[15px] rounded-full border-2 transition-[background-color,border-color,box-shadow] duration-300 group-hover:bg-[var(--accent)] group-hover:border-[var(--accent)] ${
       litSteps.has(key)
@@ -97,8 +103,19 @@ export function AboutSection() {
             gsap.fromTo(
               timeline.querySelector('[data-timeline-progress]'),
               { scaleY: 0 },
-              { scaleY: 1, ease: 'none', scrollTrigger: { trigger: timeline, start: 'top 70%', end: 'bottom 60%', scrub: true } },
+              { scaleY: 1, ease: 'none', scrollTrigger: { trigger: timeline, start: 'top 65%', end: 'bottom 65%', scrub: true } },
             );
+          });
+        });
+        // Each dot lights up when the drawn line reaches it (same 65% reading line), and
+        // turns off again when scrolling back up
+        gsap.utils.toArray<HTMLElement>('[data-timeline-item]').forEach((item) => {
+          const key = item.dataset.timelineItem!;
+          ScrollTrigger.create({
+            trigger: item,
+            start: 'top+=10 65%',
+            onEnter: () => setLit(key, true),
+            onLeaveBack: () => setLit(key, false),
           });
         });
         return () => mm.revert();
@@ -247,8 +264,7 @@ export function AboutSection() {
                 {experience.map((item, idx) => (
                   <motion.div
                     key={`exp-${idx}`}
-                    data-timeline-item
-                    onViewportEnter={() => lightUp(`exp-${idx}`)}
+                    data-timeline-item={`exp-${idx}`}
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-30px' }}
@@ -310,8 +326,7 @@ export function AboutSection() {
                 {education.map((item, idx) => (
                   <motion.div
                     key={`edu-${idx}`}
-                    data-timeline-item
-                    onViewportEnter={() => lightUp(`edu-${idx}`)}
+                    data-timeline-item={`edu-${idx}`}
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-30px' }}

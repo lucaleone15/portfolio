@@ -16,6 +16,8 @@ const SPRING = { stiffness: 520, damping: 46, mass: 0.6 }; // critically damped,
 export function PointerHighlight() {
   const reduceMotion = useReducedMotion();
   const [enabled, setEnabled] = useState(false);
+  // On an accent background (contact sheet) the accent outline would vanish: switch to white
+  const [onAccent, setOnAccent] = useState(false);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -74,6 +76,7 @@ export function PointerHighlight() {
         // Glide between neighbours; snap if the outline has been hidden for a while
         const instant = !target && performance.now() - hiddenAt > 120;
         target = el;
+        setOnAccent(!!el.closest('[data-on-accent]'));
         place(el, instant);
         animate(opacity, 1, { duration: 0.18, ease: 'easeOut' });
       } else {
@@ -132,7 +135,7 @@ export function PointerHighlight() {
         opacity,
         scale,
       }}
-      className="[view-transition-name:pointer-outline] pointer-events-none fixed left-0 top-0 z-[9999] border-[1.5px] border-[var(--accent)] shadow-[0_0_0_4px_rgba(var(--accent-rgb),0.08)]"
+      className={`[view-transition-name:pointer-outline] pointer-events-none fixed left-0 top-0 z-[9999] border-[1.5px] ${onAccent ? 'border-white shadow-[0_0_0_4px_rgba(255,255,255,0.12)]' : 'border-[var(--accent)] shadow-[0_0_0_4px_rgba(var(--accent-rgb),0.08)]'}`}
     />
   );
 }

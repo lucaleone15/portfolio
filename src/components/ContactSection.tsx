@@ -111,16 +111,29 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="relative py-20 sm:py-28 overflow-hidden bg-[#F9F9FB] dark:bg-[#0A0A0C] transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-6 sm:px-10">
+    // The whole contact area is one accent "sheet" rising over the page (rounded top):
+    // form, direct contacts and signature share the same ground, so they read as one block.
+    // Fixed deep accent (≥ 6:1 with white) in both themes.
+    <section id="contact" className="relative pt-6 sm:pt-10 bg-[#F9F9FB] dark:bg-[#0A0A0C] transition-colors duration-300">
+      <div
+        data-on-accent
+        className="relative overflow-hidden rounded-t-[2rem] sm:rounded-t-[3rem] bg-[var(--accent-light)] text-white pt-16 sm:pt-24 pb-20 sm:pb-28 selection:bg-white selection:text-[var(--accent-light)] [&_*:focus-visible]:outline-white"
+      >
+        {/* Depth: a darker pool bottom-left, a lighter one top-right, and grain */}
+        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <div className="absolute -top-1/3 -right-1/4 w-[70vw] h-[70vw] rounded-full bg-[radial-gradient(closest-side,rgba(255,255,255,0.14),transparent)]" />
+          <div className="absolute -bottom-1/3 -left-1/4 w-[70vw] h-[70vw] rounded-full bg-[radial-gradient(closest-side,rgba(0,0,0,0.22),transparent)]" />
+          <div className="paper-grain absolute inset-0 opacity-[0.08] mix-blend-overlay" />
+        </div>
+      <div className="relative max-w-7xl mx-auto px-6 sm:px-10">
         
         {/* Headline: words rise out of their masks */}
-        <h2 className="mb-14 sm:mb-20 text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.05] font-normal text-neutral-900 dark:text-white">
+        <h2 className="mb-14 sm:mb-20 text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.05] font-normal text-white/75">
           <span className="block">
             <RevealWords text={t('contact.talkPrefix')} />
           </span>
           <span className="block">
-            <RevealWords text={t('contact.talkHighlight')} delay={0.2} className="font-extrabold text-[var(--accent)]" />
+            <RevealWords text={t('contact.talkHighlight')} delay={0.2} className="font-extrabold text-white" />
           </span>
         </h2>
 
@@ -140,7 +153,7 @@ export function ContactSection() {
             >
               {/* Topic: one tap instead of typing a subject */}
               <fieldset>
-                <legend className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-neutral-500 dark:text-[#A1A1AA]">
+                <legend className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-white/70">
                   {lang === 'fr' ? 'Votre demande concerne' : 'This is about'}
                 </legend>
                 <div className="flex flex-wrap gap-2">
@@ -154,8 +167,8 @@ export function ContactSection() {
                         onClick={() => setFormData({ ...formData, subject: selected ? '' : topic })}
                         className={`font-syne h-10 px-4 rounded-full text-sm font-bold border transition active:scale-[0.97] cursor-pointer ${
                           selected
-                            ? 'bg-[var(--accent)] border-[var(--accent)] text-[var(--accent-contrast-text)]'
-                            : 'border-black/15 dark:border-white/15 text-neutral-700 dark:text-[#D4D4D8] hover:border-black/40 dark:hover:border-white/40'
+                            ? 'bg-white border-white text-[var(--accent-light)]'
+                            : 'border-white/40 text-white hover:border-white hover:bg-white/10'
                         }`}
                       >
                         {topic}
@@ -221,7 +234,7 @@ export function ContactSection() {
                       initial={{ opacity: 0, y: -6 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -6 }}
-                      className={`text-sm font-medium ${submitStatus === 'error' ? 'text-red-600 dark:text-red-400' : 'text-neutral-700 dark:text-[#D4D4D8]'}`}
+                      className={`text-sm font-medium ${submitStatus === 'error' ? 'text-white font-semibold' : 'text-white/90'}`}
                     >
                       {statusMessage}
                     </motion.p>
@@ -229,14 +242,11 @@ export function ContactSection() {
                 </AnimatePresence>
               </div>
 
-              <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-5">
-                <p className="text-xs text-neutral-500 dark:text-[#A1A1AA]">
-                  {lang === 'fr' ? '* Nom, email et message requis.' : '* Name, email and message required.'}
-                </p>
+              <div>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="font-syne relative min-w-[15rem] h-14 px-10 rounded-full bg-[var(--accent)] text-[var(--accent-contrast-text)] hover:opacity-90 disabled:cursor-wait font-bold text-sm tracking-wide transition duration-200 cursor-pointer shadow-xs active:scale-[0.97] inline-flex items-center justify-center overflow-hidden"
+                  className="font-syne relative min-w-[15rem] h-14 px-10 rounded-full bg-white text-[var(--accent-light)] hover:bg-white/90 disabled:cursor-wait font-bold text-sm tracking-wide transition duration-200 cursor-pointer shadow-xs active:scale-[0.97] inline-flex items-center justify-center overflow-hidden"
                 >
                   {/* State morph: the labels cross-fade through a light blur so they read as one
                       element changing, not two swapping */}
@@ -269,7 +279,7 @@ export function ContactSection() {
             </form>
           </motion.div>
 
-          {/* Direct contact: three big rows, an accent band sweeps across on hover */}
+          {/* Direct contact: three big rows, a white band sweeps across on hover */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -277,10 +287,10 @@ export function ContactSection() {
             transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5"
           >
-            <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-neutral-500 dark:text-[#A1A1AA]">
+            <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-white/70">
               {lang === 'fr' ? 'Ou directement' : 'Or directly'}
             </p>
-            <ul className="border-t border-black/10 dark:border-white/10">
+            <ul className="border-t border-white/25">
               <ContactRow
                 icon={<Mail className="w-5 h-5" />}
                 label={copied ? (lang === 'fr' ? 'Copié !' : 'Copied!') : lang === 'fr' ? 'Email · cliquer pour copier' : 'Email · click to copy'}
@@ -310,25 +320,25 @@ export function ContactSection() {
         </div>
 
         {/* Minimal Clean Footer with WCAG AAA Compliant High Contrast */}
-        <footer className="mt-20 pt-8 border-t border-black/[0.08] dark:border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-700 dark:text-neutral-300">
+        <footer className="mt-20 pt-8 border-t border-white/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/80">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-neutral-900 dark:text-white inline-flex items-baseline">
-              Luca Leone<span className="text-[var(--accent)] font-bold">.</span>
+            <span className="font-bold text-white inline-flex items-baseline">
+              Luca Leone<span className="text-[#0A0A0C] font-bold">.</span>
             </span>
-            <span className="font-medium text-neutral-700 dark:text-neutral-300">© {new Date().getFullYear()}</span>
-            <span className="text-neutral-400 dark:text-neutral-500">·</span>
-            <span className="font-medium text-neutral-700 dark:text-neutral-300">HEIG-VD</span>
+            <span className="font-medium text-white/80">© {new Date().getFullYear()}</span>
+            <span className="text-white/50">·</span>
+            <span className="font-medium text-white/80">HEIG-VD</span>
           </div>
           <div className="flex items-center gap-4 sm:gap-5">
             <Link
               href={sectionPath(lang, 'projets')}
-              className="text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white transition-colors font-medium"
+              className="text-white/80 hover:text-white transition-colors font-medium"
             >
               {t('nav.projects')}
             </Link>
             <Link
               href={sectionPath(lang, 'a-propos')}
-              className="text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white transition-colors font-medium"
+              className="text-white/80 hover:text-white transition-colors font-medium"
             >
               {t('nav.about')}
             </Link>
@@ -336,7 +346,7 @@ export function ContactSection() {
               href={USER_INFO.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white transition-colors font-medium"
+              className="text-white/80 hover:text-white transition-colors font-medium"
             >
               LinkedIn
             </a>
@@ -348,7 +358,7 @@ export function ContactSection() {
                   behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
                 })
               }
-              className="font-syne inline-flex items-center gap-1.5 font-bold text-neutral-900 dark:text-white hover:text-[var(--accent)] dark:hover:text-[var(--accent)] transition-colors cursor-pointer"
+              className="font-syne inline-flex items-center gap-1.5 font-bold text-white hover:text-white/70 transition-colors cursor-pointer"
             >
               {lang === 'fr' ? 'Retour en haut' : 'Back to top'} ↑
             </button>
@@ -359,6 +369,7 @@ export function ContactSection() {
         <div className="mt-12 sm:mt-16 -mb-20 sm:-mb-28">
           <Signature />
         </div>
+      </div>
       </div>
     </section>
   );
