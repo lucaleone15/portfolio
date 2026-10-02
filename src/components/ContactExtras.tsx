@@ -53,6 +53,7 @@ export function FloatingField({
   multiline,
   error,
   onBlur,
+  className = '',
 }: {
   id: string;
   name: string;
@@ -65,6 +66,7 @@ export function FloatingField({
   multiline?: boolean;
   error?: string;
   onBlur?: (el: HTMLInputElement | HTMLTextAreaElement) => void;
+  className?: string;
 }) {
   // Styled for the accent contact sheet (white on accent); autofill keeps the sheet's colours
   const fieldClass = `peer w-full bg-transparent border-b pt-6 pb-2.5 text-base sm:text-lg text-white caret-white outline-none placeholder-transparent transition-colors [&:-webkit-autofill]:[-webkit-text-fill-color:white] [&:-webkit-autofill]:[transition:background-color_99999s] ${
@@ -83,13 +85,13 @@ export function FloatingField({
   };
 
   return (
-    <div className="relative">
+    <div className={`relative ${className}`}>
       {multiline ? (
         <textarea
           {...common}
           rows={3}
           onChange={(e) => onChange(e.target.value)}
-          className={`${fieldClass} resize-none min-h-[7.5rem] [field-sizing:content]`}
+          className={`${fieldClass} block resize-none min-h-[4.75rem] [field-sizing:content]`}
         />
       ) : (
         <input {...common} type={type} onChange={(e) => onChange(e.target.value)} className={fieldClass} />
@@ -127,6 +129,7 @@ export function ContactRow({
   external,
   ariaLabel,
   trailing,
+  className = '',
 }: {
   icon: ReactNode;
   label: string;
@@ -136,15 +139,16 @@ export function ContactRow({
   external?: boolean;
   ariaLabel?: string;
   trailing?: ReactNode;
+  className?: string;
 }) {
   return (
-    <li className="border-b border-white/25">
+    <li className={`flex border-b border-white/25 ${className}`}>
       <a
         href={href}
         onClick={onClick}
         aria-label={ariaLabel}
         {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-        className="group relative flex items-center gap-4 px-3 sm:px-4 py-5 sm:py-6 overflow-hidden text-white active:scale-[0.99] transition-transform"
+        className="group relative flex flex-1 items-center gap-4 px-3 sm:px-4 py-5 sm:py-6 overflow-hidden text-white active:scale-[0.99] transition-transform"
       >
         <span
           className="absolute inset-0 bg-white [clip-path:inset(0_100%_0_0)] group-hover:[clip-path:inset(0_0_0_0)] transition-[clip-path] duration-500 ease-[cubic-bezier(0.77,0,0.175,1)]"

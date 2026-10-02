@@ -124,80 +124,75 @@ export function ContactSection() {
           </span>
         </RevealHeading>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* Form (open layout, like the rest of the site) */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-7"
-          >
-            <form
-              onSubmit={handleFormSubmit}
-              noValidate={false}
-              className="relative space-y-10"
-            >
-              {/* Topic: one tap instead of typing a subject */}
-              <fieldset>
-                <legend className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-white/70">
-                  {lang === 'fr' ? 'Votre demande concerne' : 'This is about'}
-                </legend>
-                <div className="flex flex-wrap gap-2">
-                  {TOPICS[lang].map((topic) => {
-                    const selected = formData.subject === topic;
-                    return (
-                      <button
-                        key={topic}
-                        type="button"
-                        aria-pressed={selected}
-                        onClick={() => setFormData({ ...formData, subject: selected ? '' : topic })}
-                        className={`font-syne h-10 px-4 rounded-full text-sm font-bold border transition active:scale-[0.97] cursor-pointer ${
-                          selected
-                            ? 'bg-white border-white text-[var(--accent-light)]'
-                            : 'border-white/40 text-white hover:border-white hover:bg-white/10'
-                        }`}
-                      >
-                        {topic}
-                      </button>
-                    );
-                  })}
-                </div>
-              </fieldset>
+        {/* One shared grid of rows: each form row sits on the same row as a direct-contact row,
+            so their lines meet (labels / chips ↔ email / name+email ↔ phone / message ↔ LinkedIn).
+            The form and the list use display:contents so their children become grid items;
+            on mobile the DOM order (form, then contacts) is kept. */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-16">
+          <form onSubmit={handleFormSubmit} className="contents">
+            {/* Row 1 — label */}
+            <p id="contact-topic-label" className="lg:col-span-7 lg:row-start-1 mb-3 lg:mb-4 self-end text-xs font-bold uppercase tracking-[0.2em] text-white/70">
+              {lang === 'fr' ? 'Votre demande concerne' : 'This is about'}
+            </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-9">
-                <FloatingField
-                  id="contact-name"
-                  name="name"
-                  label={lang === 'fr' ? 'Votre nom' : 'Your name'}
-                  autoComplete="name"
-                  required
-                  value={formData.name}
-                  onChange={(v) => setFormData({ ...formData, name: v })}
-                />
-                <FloatingField
-                  id="contact-email"
-                  name="email"
-                  type="email"
-                  label={lang === 'fr' ? 'Votre email' : 'Your email'}
-                  autoComplete="email"
-                  required
-                  value={formData.email}
-                  onChange={(v) => setFormData({ ...formData, email: v })}
-                  error={emailInvalid ? (lang === 'fr' ? 'Cette adresse email semble incomplète.' : 'This email address looks incomplete.') : undefined}
-                  onBlur={(el) => setEmailInvalid(el.value.length > 0 && !el.validity.valid)}
-                />
-              </div>
+            {/* Row 2 — topic chips (one tap instead of typing a subject) */}
+            <div role="group" aria-labelledby="contact-topic-label" className="lg:col-span-7 lg:row-start-2 self-center flex flex-wrap gap-2">
+                    {TOPICS[lang].map((topic) => {
+                      const selected = formData.subject === topic;
+                      return (
+                        <button
+                          key={topic}
+                          type="button"
+                          aria-pressed={selected}
+                          onClick={() => setFormData({ ...formData, subject: selected ? '' : topic })}
+                          className={`font-syne h-10 px-4 rounded-full text-sm font-bold border transition active:scale-[0.97] cursor-pointer ${
+                            selected
+                              ? 'bg-white border-white text-[var(--accent-light)]'
+                              : 'border-white/40 text-white hover:border-white hover:bg-white/10'
+                          }`}
+                        >
+                          {topic}
+                        </button>
+                      );
+                    })}
+            </div>
 
+            {/* Row 3 — name + email, underlines on the row's bottom edge */}
+            <div className="lg:col-span-7 lg:row-start-3 self-end grid grid-cols-1 sm:grid-cols-2 gap-x-9 gap-y-2 pt-8">
               <FloatingField
-                id="contact-message"
-                name="message"
-                label={lang === 'fr' ? 'Parlez-moi de votre projet' : 'Tell me about your project'}
-                multiline
+                id="contact-name"
+                name="name"
+                label={lang === 'fr' ? 'Votre nom' : 'Your name'}
+                autoComplete="name"
                 required
-                value={formData.message}
-                onChange={(v) => setFormData({ ...formData, message: v })}
+                value={formData.name}
+                onChange={(v) => setFormData({ ...formData, name: v })}
               />
+              <FloatingField
+                id="contact-email"
+                name="email"
+                type="email"
+                label={lang === 'fr' ? 'Votre email' : 'Your email'}
+                autoComplete="email"
+                required
+                value={formData.email}
+                onChange={(v) => setFormData({ ...formData, email: v })}
+                error={emailInvalid ? (lang === 'fr' ? 'Cette adresse email semble incomplète.' : 'This email address looks incomplete.') : undefined}
+                onBlur={(el) => setEmailInvalid(el.value.length > 0 && !el.validity.valid)}
+              />
+            </div>
+
+            {/* Row 4 — message */}
+            <FloatingField
+              id="contact-message"
+              name="message"
+              label={lang === 'fr' ? 'Parlez-moi de votre projet' : 'Tell me about your project'}
+              multiline
+              required
+              value={formData.message}
+              onChange={(v) => setFormData({ ...formData, message: v })}
+              className="lg:col-span-7 lg:row-start-4 self-end pt-10"
+            />
 
               {/* Honeypot: off-screen, skipped by keyboard and screen readers */}
               <div className="absolute -left-[9999px] w-px h-px overflow-hidden" aria-hidden="true">
@@ -213,105 +208,103 @@ export function ContactSection() {
                 />
               </div>
 
-              {/* Submit Status Feedback (announced by screen readers) */}
-              <div role="status" aria-live="polite">
-                <AnimatePresence>
-                  {submitStatus !== 'idle' && statusMessage && (
-                    <motion.p
-                      initial={{ opacity: 0, y: -6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -6 }}
-                      className={`text-sm font-medium ${submitStatus === 'error' ? 'text-white font-semibold' : 'text-white/90'}`}
-                    >
-                      {statusMessage}
-                      {submitStatus === 'error' && (
-                        <a
-                          href={mailtoFallback}
-                          className="font-syne ml-2 inline-flex items-center gap-1.5 underline underline-offset-4 decoration-white/50 hover:decoration-white font-bold"
-                        >
-                          {lang === 'fr' ? 'Envoyer via votre messagerie' : 'Send with your mail app'} ↗
-                        </a>
-                      )}
-                    </motion.p>
-                  )}
-                </AnimatePresence>
-              </div>
+            {/* Row 5 — status + submit */}
+            <div className="lg:col-span-7 lg:row-start-5 pt-10 space-y-5">
+                {/* Submit Status Feedback (announced by screen readers) */}
+                <div role="status" aria-live="polite">
+                  <AnimatePresence>
+                    {submitStatus !== 'idle' && statusMessage && (
+                      <motion.p
+                        initial={{ opacity: 0, y: -6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -6 }}
+                        className={`text-sm font-medium ${submitStatus === 'error' ? 'text-white font-semibold' : 'text-white/90'}`}
+                      >
+                        {statusMessage}
+                        {submitStatus === 'error' && (
+                          <a
+                            href={mailtoFallback}
+                            className="font-syne ml-2 inline-flex items-center gap-1.5 underline underline-offset-4 decoration-white/50 hover:decoration-white font-bold"
+                          >
+                            {lang === 'fr' ? 'Envoyer via votre messagerie' : 'Send with your mail app'} ↗
+                          </a>
+                        )}
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
+                </div>
 
               <div>
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="font-syne relative min-w-[15rem] h-14 px-10 rounded-full bg-white text-[var(--accent-light)] hover:bg-white/90 disabled:cursor-wait font-bold text-sm tracking-wide transition duration-200 cursor-pointer shadow-xs active:scale-[0.97] inline-flex items-center justify-center overflow-hidden"
-                >
-                  {/* State morph: the labels cross-fade through a light blur so they read as one
-                      element changing, not two swapping */}
-                  <AnimatePresence mode="popLayout" initial={false}>
-                    <motion.span
-                      key={isSubmitting ? 'sending' : submitStatus === 'success' ? 'sent' : 'idle'}
-                      initial={{ opacity: 0, y: 8, filter: 'blur(4px)' }}
-                      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                      exit={{ opacity: 0, y: -8, filter: 'blur(4px)' }}
-                      transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}
-                      className="inline-flex items-center gap-2"
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
-                          {lang === 'fr' ? 'Envoi…' : 'Sending…'}
-                        </>
-                      ) : submitStatus === 'success' ? (
-                        <>
-                          <Check className="w-4 h-4" aria-hidden="true" />
-                          {lang === 'fr' ? 'Message envoyé' : 'Message sent'}
-                        </>
-                      ) : (
-                        t('contact.sendBtn')
-                      )}
-                    </motion.span>
-                  </AnimatePresence>
-                </button>
-              </div>
-            </form>
-          </motion.div>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="font-syne relative min-w-[15rem] h-14 px-10 rounded-full bg-white text-[var(--accent-light)] hover:bg-white/90 disabled:cursor-wait font-bold text-sm tracking-wide transition duration-200 cursor-pointer shadow-xs active:scale-[0.97] inline-flex items-center justify-center overflow-hidden"
+                  >
+                    {/* State morph: the labels cross-fade through a light blur so they read as one
+                        element changing, not two swapping */}
+                    <AnimatePresence mode="popLayout" initial={false}>
+                      <motion.span
+                        key={isSubmitting ? 'sending' : submitStatus === 'success' ? 'sent' : 'idle'}
+                        initial={{ opacity: 0, y: 8, filter: 'blur(4px)' }}
+                        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                        exit={{ opacity: 0, y: -8, filter: 'blur(4px)' }}
+                        transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}
+                        className="inline-flex items-center gap-2"
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
+                            {lang === 'fr' ? 'Envoi…' : 'Sending…'}
+                          </>
+                        ) : submitStatus === 'success' ? (
+                          <>
+                            <Check className="w-4 h-4" aria-hidden="true" />
+                            {lang === 'fr' ? 'Message envoyé' : 'Message sent'}
+                          </>
+                        ) : (
+                          t('contact.sendBtn')
+                        )}
+                      </motion.span>
+                    </AnimatePresence>
+                  </button>
 
-          {/* Direct contact: three big rows, a white band sweeps across on hover */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5"
-          >
-            <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-white/70">
-              {lang === 'fr' ? 'Ou directement' : 'Or directly'}
-            </p>
-            <ul className="border-t border-white/25">
-              <ContactRow
-                icon={<Mail className="w-5 h-5" />}
-                label={copied ? (lang === 'fr' ? 'Copié !' : 'Copied!') : lang === 'fr' ? 'Email · cliquer pour copier' : 'Email · click to copy'}
-                value={PRIMARY_EMAIL}
-                href={`mailto:${PRIMARY_EMAIL}`}
-                onClick={copyEmailToClipboard}
-                ariaLabel={lang === 'fr' ? `Copier l'adresse ${PRIMARY_EMAIL}` : `Copy the address ${PRIMARY_EMAIL}`}
-                trailing={<Copy className="w-4 h-4" />}
-              />
-              <ContactRow
-                icon={<Phone className="w-5 h-5" />}
-                label={lang === 'fr' ? 'Téléphone' : 'Phone'}
-                value={USER_INFO.phone}
-                href={`tel:${USER_INFO.phone.replace(/\s/g, '')}`}
-              />
-              <ContactRow
-                icon={<Linkedin className="w-5 h-5" />}
-                label="LinkedIn"
-                value="in/leone-luca"
-                href={USER_INFO.linkedin}
-                external
-              />
-            </ul>
-            {/* Copy confirmation for screen readers */}
-            <span className="sr-only" role="status" aria-live="polite">{copied ? (lang === 'fr' ? 'Adresse copiée' : 'Address copied') : ''}</span>
-          </motion.div>
+              </div>
+            </div>
+          </form>
+
+          {/* Direct contact rows (rows 1–4 of the right column) */}
+          <p className="mt-16 lg:mt-0 lg:col-start-8 lg:col-span-5 lg:row-start-1 mb-3 lg:mb-4 self-end text-xs font-bold uppercase tracking-[0.2em] text-white/70">
+            {lang === 'fr' ? 'Ou directement' : 'Or directly'}
+          </p>
+          <ul role="list" className="contents">
+            <ContactRow
+              className="lg:col-start-8 lg:col-span-5 lg:row-start-2 border-t"
+              icon={<Mail className="w-5 h-5" />}
+              label={copied ? (lang === 'fr' ? 'Copié !' : 'Copied!') : lang === 'fr' ? 'Email · cliquer pour copier' : 'Email · click to copy'}
+              value={PRIMARY_EMAIL}
+              href={`mailto:${PRIMARY_EMAIL}`}
+              onClick={copyEmailToClipboard}
+              ariaLabel={lang === 'fr' ? `Copier l'adresse ${PRIMARY_EMAIL}` : `Copy the address ${PRIMARY_EMAIL}`}
+              trailing={<Copy className="w-4 h-4" />}
+            />
+            <ContactRow
+              className="lg:col-start-8 lg:col-span-5 lg:row-start-3"
+              icon={<Phone className="w-5 h-5" />}
+              label={lang === 'fr' ? 'Téléphone' : 'Phone'}
+              value={USER_INFO.phone}
+              href={`tel:${USER_INFO.phone.replace(/\s/g, '')}`}
+            />
+            <ContactRow
+              className="lg:col-start-8 lg:col-span-5 lg:row-start-4"
+              icon={<Linkedin className="w-5 h-5" />}
+              label="LinkedIn"
+              value="in/leone-luca"
+              href={USER_INFO.linkedin}
+              external
+            />
+          </ul>
+          {/* Copy confirmation for screen readers */}
+          <span className="sr-only" role="status" aria-live="polite">{copied ? (lang === 'fr' ? 'Adresse copiée' : 'Address copied') : ''}</span>
         </div>
 
         {/* Minimal Clean Footer with WCAG AAA Compliant High Contrast */}
