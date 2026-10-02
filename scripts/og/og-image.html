@@ -20,19 +20,16 @@
     position: absolute; inset: 0; opacity: 0.09; mix-blend-mode: screen;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
   }
-  .content { position: absolute; top: 0; bottom: 0; left: 0; width: 720px; padding: 72px 0 72px 88px; display: flex; flex-direction: column; justify-content: space-between; }
+  .content { position: absolute; z-index: 1; top: 0; bottom: 0; left: 0; width: 640px; padding: 72px 0 72px 88px; display: flex; flex-direction: column; justify-content: space-between; }
   .label { white-space: nowrap; font-size: 20px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.72); }
-  .name { font-size: 116px; font-weight: 800; letter-spacing: -0.045em; line-height: 1; white-space: nowrap; }
-  .tagline { margin-top: 22px; font-size: 30px; font-weight: 500; line-height: 1.3; color: rgba(255,255,255,0.82); }
+  .name { font-size: 104px; font-weight: 800; letter-spacing: -0.045em; line-height: 1; white-space: nowrap; }
+  .tagline { margin-top: 20px; font-size: 28px; font-weight: 500; line-height: 1.3; color: rgba(255,255,255,0.82); }
   .tagline b { color: #FF2E55; font-weight: 800; }
-  /* Portrait card on the right, framed on head and shoulders */
-  .portrait {
-    position: absolute; right: 88px; top: 50%; transform: translateY(-50%);
-    width: 330px; height: 430px; border-radius: 28px; overflow: hidden;
-    box-shadow: 0 30px 80px -20px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,255,255,0.12), 0 0 90px -10px rgba(255,46,85,0.35);
-  }
-  .portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; transform: scale(1.6); transform-origin: 50% 30%; }
-  .portrait::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,12,0.35), transparent 40%); }
+  /* Cut-out portrait (public/photo-transparent.png) rising from the bottom edge, with an
+     accent glow behind the head */
+  .glow { position: absolute; width: 560px; height: 560px; left: 680px; top: -40px; border-radius: 9999px;
+          background: radial-gradient(closest-side, rgba(255,46,85,0.55), rgba(255,46,85,0.12) 60%, transparent); filter: blur(10px); }
+  .cutout { position: absolute; height: 1062px; left: 618px; top: -127px; filter: drop-shadow(0 30px 60px rgba(0,0,0,0.55)); }
   .name .dot { color: #FF2E55; }
   .bottom { display: flex; gap: 40px; align-items: baseline; font-size: 22px; font-weight: 500; color: rgba(255,255,255,0.6); }
   .bottom strong { color: #fff; font-weight: 700; }
@@ -54,6 +51,7 @@
       <strong>luca-leone.ch</strong>
     </div>
   </div>
-  <div class="portrait"><img src="../../public/photo.jpeg" alt="" /></div>
+  <div class="glow"></div>
+  <img class="cutout" src="../../public/photo-transparent.png" alt="" />
 </body>
 </html>
