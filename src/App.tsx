@@ -12,6 +12,7 @@ import { InvertedCursor } from './components/InvertedCursor';
 import { CommandPalette } from './components/CommandPalette';
 import { IntroCurtain, skipIntro } from './components/IntroCurtain';
 import { NotFound } from './components/NotFound';
+import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { AccentProvider } from './context/AccentContext';
@@ -109,6 +110,8 @@ function PortfolioApp() {
       {/* Main Content Area: home, project page, or 404 */}
       {notFound ? (
         <NotFound />
+      ) : route.name === 'privacy' ? (
+        <PrivacyPolicy />
       ) : selectedProject ? (
         <ProjectDetailView
           project={selectedProject}
