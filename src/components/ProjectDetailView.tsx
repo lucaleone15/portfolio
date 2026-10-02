@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowLeft, ChevronLeft, ChevronRight, Calendar, User } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, Calendar, User } from 'lucide-react';
 import { Project } from '../types';
 import { projectAccentVars } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
@@ -282,55 +282,80 @@ export function ProjectDetailView({
         {/* Case study told while scrolling */}
         <ProjectStory key={`${project.id}-${lang}`} project={project} />
 
-        {/* Bottom Carousel Project Bar (Loop through projects) */}
-        <div className="mt-16 sm:mt-24 pt-8 border-t border-black/10 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <Link
-            href={prevHref}
-            style={projectAccentVars(prevProject)}
-            className="project-accent w-full sm:w-auto inline-flex items-center justify-center sm:justify-start gap-3 px-6 py-4 rounded-2xl bg-black/[0.03] hover:bg-black/[0.08] dark:bg-white/[0.04] dark:hover:bg-white/[0.1] border border-black/10 dark:border-white/15 transition cursor-pointer group text-left"
-          >
-            <ChevronLeft
-              className="w-5 h-5 group-hover:-translate-x-1 transition-transform"
-              style={{ color: 'var(--pa-text)' }}
-            />
-            <div>
-              <p className="text-xs text-neutral-500 dark:text-[#A1A1AA] uppercase font-semibold">
-                {lang === 'fr' ? 'Projet précédent' : 'Previous'}
-              </p>
-              <p className="text-sm sm:text-base font-bold text-neutral-900 dark:text-white line-clamp-1">
-                {prevProject.title}
-              </p>
-            </div>
-          </Link>
-
-          {/* End of a case study: back to the list of projects (the card morphs back) */}
-          <Link
-            href={backHref}
-            className="font-syne group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-neutral-900 text-white hover:bg-[var(--accent)] hover:text-[var(--accent-contrast-text)] dark:bg-white dark:text-black dark:hover:bg-[var(--accent)] dark:hover:text-[var(--accent-contrast-text)] text-xs sm:text-sm font-bold transition active:scale-[0.97] cursor-pointer shadow-xs"
-          >
-            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" aria-hidden="true" />
-            {lang === 'fr' ? 'Retour aux projets' : 'Back to projects'}
-          </Link>
-
+        {/* End of the case study: a preview of the next project (its image morphs into that
+            project's main visual), then the way back */}
+        <nav
+          aria-label={lang === 'fr' ? 'Autres projets' : 'More projects'}
+          className="mt-16 sm:mt-24 pt-10 sm:pt-14 border-t border-black/10 dark:border-white/10"
+        >
           <Link
             href={nextHref}
             style={projectAccentVars(nextProject)}
-            className="project-accent w-full sm:w-auto inline-flex items-center justify-center sm:justify-end gap-3 px-6 py-4 rounded-2xl bg-black/[0.03] hover:bg-black/[0.08] dark:bg-white/[0.04] dark:hover:bg-white/[0.1] border border-black/10 dark:border-white/15 transition cursor-pointer group text-right"
+            className="project-accent group grid sm:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] items-center gap-6 sm:gap-10 p-3 sm:p-4 rounded-3xl bg-black/[0.03] hover:bg-black/[0.06] dark:bg-white/[0.04] dark:hover:bg-white/[0.07] border border-black/10 dark:border-white/10 transition-colors cursor-pointer"
           >
-            <div>
-              <p className="text-xs text-neutral-500 dark:text-[#A1A1AA] uppercase font-semibold">
-                {lang === 'fr' ? 'Projet suivant' : 'Next'}
-              </p>
-              <p className="text-sm sm:text-base font-bold text-neutral-900 dark:text-white line-clamp-1">
-                {nextProject.title}
-              </p>
+            <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-neutral-200 dark:bg-[#121215]">
+              <div
+                className="w-full h-full"
+                style={nextProject.id !== project.id ? projectMediaTransition(nextProject.id) : undefined}
+              >
+                <img
+                  src={smallImage(nextProject.imageUrl)}
+                  srcSet={imageSrcSet(nextProject.imageUrl)}
+                  sizes="(min-width: 640px) 50vw, 100vw"
+                  alt=""
+                  width={640}
+                  height={400}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+                />
+              </div>
             </div>
-            <ChevronRight
-              className="w-5 h-5 group-hover:translate-x-1 transition-transform"
-              style={{ color: 'var(--pa-text)' }}
-            />
+
+            <div className="px-3 pb-4 sm:p-0 sm:pr-8 min-w-0">
+              <p className="font-syne text-xs sm:text-sm font-bold uppercase tracking-widest" style={{ color: 'var(--pa-text)' }}>
+                {lang === 'fr' ? 'Projet suivant' : 'Next project'}
+                <span className="text-neutral-400 dark:text-white/40"> · {nextProject.number}</span>
+              </p>
+              <p className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-extrabold uppercase tracking-tight leading-[1.05] text-neutral-900 dark:text-white break-words">
+                {nextProject.name}
+              </p>
+              <p className="mt-3 text-sm sm:text-base text-neutral-600 dark:text-[#A1A1AA] leading-relaxed">
+                {nextProject.subtitle}
+              </p>
+              <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-neutral-900 dark:text-white">
+                {lang === 'fr' ? 'Voir le projet' : 'View project'}
+                <span
+                  className="inline-flex items-center justify-center w-9 h-9 rounded-full transition-transform duration-300 ease-out group-hover:translate-x-1"
+                  style={{ backgroundColor: 'var(--pa)', color: 'white' }}
+                  aria-hidden="true"
+                >
+                  <ArrowRight className="w-4 h-4" />
+                </span>
+              </span>
+            </div>
           </Link>
-        </div>
+
+          <div className="mt-6 flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
+            <Link
+              href={prevHref}
+              className="group inline-flex items-center gap-2 min-h-11 px-2 text-sm text-neutral-600 dark:text-[#A1A1AA] hover:text-neutral-900 dark:hover:text-white transition-colors"
+            >
+              <ChevronLeft className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" aria-hidden="true" />
+              {lang === 'fr' ? 'Projet précédent' : 'Previous project'}
+              <span className="font-bold uppercase text-neutral-900 dark:text-white">{prevProject.name}</span>
+            </Link>
+
+            {/* Back to the list of projects (the card morphs back) */}
+            <Link
+              href={backHref}
+              className="font-syne group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-neutral-900 text-white hover:bg-[var(--accent)] hover:text-[var(--accent-contrast-text)] dark:bg-white dark:text-black dark:hover:bg-[var(--accent)] dark:hover:text-[var(--accent-contrast-text)] text-xs sm:text-sm font-bold transition active:scale-[0.97] cursor-pointer shadow-xs"
+            >
+              <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" aria-hidden="true" />
+              {lang === 'fr' ? 'Retour aux projets' : 'Back to projects'}
+            </Link>
+          </div>
+        </nav>
       </div>
     </div>
   );

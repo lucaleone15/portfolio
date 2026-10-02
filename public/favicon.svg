@@ -1,15 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <defs>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700&amp;display=swap');
-      .syne-logo {
-        font-family: 'Syne', system-ui, -apple-system, sans-serif;
-        font-weight: 700;
-        font-size: 45px;
-        letter-spacing: -1.5px;
-      }
-    </style>
-  </defs>
-  <rect width="64" height="64" rx="14" fill="#0A0A0C" />
-  <text x="31" y="47" text-anchor="middle" class="syne-logo" fill="#FFFFFF">L<tspan fill="#FF2E55">.</tspan></text>
+  <rect width="64" height="64" rx="14" fill="#0A0A0C"/>
+  <path fill="#FFFFFF" d="M20.39 17.77V41.35H39.31V46.23H14.54V17.77Z"/>
+  <path fill="#FF2E55" d="M49.46 41.22V46.23H42.82V41.22Z"/>
 </svg>

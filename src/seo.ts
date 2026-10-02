@@ -1,6 +1,6 @@
 import { Language } from './types';
 import { PROJECTS_EN, PROJECTS_FR, UNIFIED_PROJECTS, USER_INFO } from './data/portfolioData';
-import { homePath, pathFor, privacyPath, projectPath, Route } from './router';
+import { homePath, pathFor, privacyPath, projectPath, Route, SECTION_IDS, SectionId, sectionPath } from './router';
 
 /**
  * Per-page <head> metadata and structured data. Used by the build-time
@@ -23,6 +23,8 @@ export interface HeadData {
   title: string;
   description: string;
   canonical: string;
+  /** The page's own URL when it differs from the canonical one (home sections) */
+  url?: string;
   alternates: { hreflang: string; href: string }[];
   ogType: 'profile' | 'article';
   image: string;
@@ -36,6 +38,7 @@ export function getAllRoutes(): Route[] {
   const langs: Language[] = ['fr', 'en'];
   return langs.flatMap((lang) => [
     { name: 'home', lang } as Route,
+    ...SECTION_IDS.map((section) => ({ name: 'home', lang, section }) as Route),
     ...UNIFIED_PROJECTS.map((p) => ({ name: 'project', lang, slug: p.id }) as Route),
     { name: 'privacy', lang } as Route,
   ]);
@@ -188,6 +191,54 @@ function homeHead(lang: Language): HeadData {
   };
 }
 
+const SECTION_COPY: Record<Language, Record<SectionId, { title: string; description: string }>> = {
+  fr: {
+    projets: {
+      title: 'Projets | Luca Leone – Portfolio',
+      description:
+        'Les projets de Luca Leone, étudiant en ingénierie des médias à la HEIG-VD : campagnes de communication, UI/UX design, sites web et production photo/vidéo.',
+    },
+    'a-propos': {
+      title: 'À propos | Luca Leone – Portfolio',
+      description:
+        'Qui est Luca Leone : étudiant en dernière année d’ingénierie des médias à la HEIG-VD et community manager au Karting de Vuiteboeuf. Parcours, expériences et langues.',
+    },
+    contact: {
+      title: 'Contact | Luca Leone – Portfolio',
+      description:
+        'Écrire à Luca Leone pour un projet, une collaboration, un travail de Bachelor, un stage ou un emploi dans le digital.',
+    },
+  },
+  en: {
+    projets: {
+      title: 'Projects | Luca Leone – Portfolio',
+      description:
+        'Projects by Luca Leone, Media Engineering student at HEIG-VD: communication campaigns, UI/UX design, websites and photo/video production.',
+    },
+    'a-propos': {
+      title: 'About | Luca Leone – Portfolio',
+      description:
+        'About Luca Leone: final-year Media Engineering student at HEIG-VD and community manager at Karting de Vuiteboeuf. Background, experience and languages.',
+    },
+    contact: {
+      title: 'Contact | Luca Leone – Portfolio',
+      description:
+        'Get in touch with Luca Leone about a project, a collaboration, a Bachelor thesis, an internship or a job in digital.',
+    },
+  },
+};
+
+/**
+ * /projets, /a-propos, /contact: the home page landing on a section. Own title and
+ * description (browser tab, link previews), but the canonical stays the home page, so
+ * search engines don't see four copies of the same content (and they're not in the sitemap).
+ */
+function sectionHead(lang: Language, section: SectionId): HeadData {
+  const home = homeHead(lang);
+  const copy = SECTION_COPY[lang][section];
+  return { ...home, ...copy, url: abs(sectionPath(lang, section)), alternates: [] };
+}
+
 function projectHead(lang: Language, slug: string): HeadData | null {
   const project = projectsFor(lang).find((p) => p.id === slug);
   if (!project) return null;
@@ -244,7 +295,7 @@ function projectHead(lang: Language, slug: string): HeadData | null {
           '@id': `${url}#breadcrumb`,
           itemListElement: [
             { '@type': 'ListItem', position: 1, name: copy.home, item: abs(homePath(lang)) },
-            { '@type': 'ListItem', position: 2, name: copy.projects, item: `${abs(homePath(lang))}#projets` },
+            { '@type': 'ListItem', position: 2, name: copy.projects, item: abs(sectionPath(lang, 'projets')) },
             { '@type': 'ListItem', position: 3, name: project.name, item: url },
           ],
         },
@@ -305,6 +356,7 @@ export function getHeadData(route: Route): HeadData {
   }
   if (route.name === 'notFound') return notFoundHead(route.lang);
   if (route.name === 'privacy') return privacyHead(route.lang);
+  if (route.section) return sectionHead(route.lang, route.section);
   return homeHead(route.lang);
 }
 
@@ -333,7 +385,7 @@ export function renderHeadTags(head: HeadData): string {
     `<link rel="canonical" href="${head.canonical}" />`,
     ...head.alternates.map((a) => `<link rel="alternate" hreflang="${a.hreflang}" href="${a.href}" />`),
     `<meta property="og:type" content="${head.ogType}" />`,
-    `<meta property="og:url" content="${head.canonical}" />`,
+    `<meta property="og:url" content="${head.url ?? head.canonical}" />`,
     `<meta property="og:site_name" content="Luca Leone – Portfolio" />`,
     `<meta property="og:title" content="${escapeAttr(head.title)}" />`,
     `<meta property="og:description" content="${escapeAttr(head.description)}" />`,
@@ -355,7 +407,8 @@ export function renderHeadTags(head: HeadData): string {
 }
 
 export function renderSitemap(lastmod: string): string {
-  const pages = getAllRoutes().map((route) => {
+  // Only canonical pages: the section URLs point to the home page
+  const pages = getAllRoutes().filter((route) => !(route.name === 'home' && route.section)).map((route) => {
     const head = getHeadData(route);
     const links = head.alternates
       .map((a) => `    <xhtml:link rel="alternate" hreflang="${a.hreflang}" href="${a.href}" />`)

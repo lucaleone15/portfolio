@@ -5,7 +5,7 @@ import { USER_INFO } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { CommandPaletteHint } from './CommandPalette';
-import { alternatePath, homePath, Link, sectionPath, useRouter } from '../router';
+import { alternatePath, homePath, Link, SectionId, sectionPath, useRouter } from '../router';
 
 interface HeaderProps {
   activeSection: string;
@@ -60,7 +60,7 @@ export function Header({ activeSection }: HeaderProps) {
     };
   }, [isMenuOpen]);
 
-  const navItems = [
+  const navItems: { id: SectionId; label: string; index: string }[] = [
     { id: 'projets', label: t('nav.projects'), index: t('projects.index') || '01' },
     { id: 'a-propos', label: t('nav.about'), index: t('about.index') || '02' },
     { id: 'contact', label: t('nav.contact'), index: t('contact.index') || '03' },

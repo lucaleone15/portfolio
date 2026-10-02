@@ -10,6 +10,7 @@ import { ProjectDetailView } from './components/ProjectDetailView';
 import { PointerHighlight } from './components/PointerHighlight';
 import { InvertedCursor } from './components/InvertedCursor';
 import { CommandPalette } from './components/CommandPalette';
+import { LanguageHint } from './components/LanguageHint';
 import { IntroCurtain, skipIntro } from './components/IntroCurtain';
 import { NotFound } from './components/NotFound';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
@@ -17,7 +18,7 @@ import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { AccentProvider } from './context/AccentContext';
 import { getCustomProjects } from './data/projectsStorage';
-import { RouterProvider, sectionPath, useRouter } from './router';
+import { homePath, RouterProvider, SECTION_IDS, sectionPath, useRouter } from './router';
 import { getHeadData } from './seo';
 
 /** Keeps <title>, description, canonical and <html lang> in sync on client-side navigation. */
@@ -34,10 +35,9 @@ function useDocumentHead() {
 }
 
 function PortfolioApp() {
-  const [activeSection, setActiveSection] = useState<string>('hero');
   const projectsData = getCustomProjects();
   const { lang } = useLanguage();
-  const { route } = useRouter();
+  const { route, syncPath } = useRouter();
 
   const allProjects = lang === 'fr' ? projectsData.fr : projectsData.en;
   const selectedProject =
@@ -46,51 +46,54 @@ function PortfolioApp() {
   useDocumentHead();
 
   // First-party page view (server/analytics.ts): path + referrer only, no cookie, no IP.
-  // Skipped for visitors with Do Not Track.
+  // Skipped for visitors with Do Not Track. Scrolling between home sections isn't a new view.
+  const view = route.name === 'project' ? `project:${route.lang}:${route.slug}` : `${route.name}:${route.lang}`;
   useEffect(() => {
     if (navigator.doNotTrack === '1' || !navigator.sendBeacon) return;
     navigator.sendBeacon('/api/hit', JSON.stringify({ p: window.location.pathname, r: document.referrer }));
-  }, [route]);
+  }, [view]);
 
   // Unknown URLs (or a removed project slug) get a real 404 page
   const notFound = route.name === 'notFound' || (route.name === 'project' && !selectedProject);
 
   // The intro curtain only plays when the visit starts on the home page: someone opening a
   // shared project link shouldn't wait for it. Decided once, on first render.
+  // (A link straight to a section — /contact — skips it too.)
   const [playIntro] = useState(() => {
-    const isHome = route.name === 'home';
+    const isHome = route.name === 'home' && !route.section;
     if (!isHome) skipIntro();
     return isHome;
   });
 
-  // Intersection Observer for scroll spy (when not viewing a project detail page)
+  // Scroll spy: on the home page the URL follows the section being read (/projets,
+  // /a-propos, /contact, or / above them), without adding history entries. The header
+  // highlights the section from the URL.
+  const isHome = route.name === 'home';
   useEffect(() => {
-    if (selectedProject) return;
+    if (!isHome) return;
 
-    const sectionIds = ['projets', 'a-propos', 'contact'];
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + 250;
-
-      for (const id of sectionIds) {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const probe = window.scrollY + 250;
+      const current = SECTION_IDS.find((id) => {
         const el = document.getElementById(id);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(id);
-            return;
-          }
-        }
-      }
-
-      if (window.scrollY < 300) {
-        setActiveSection('hero');
-      }
+        return !!el && probe >= el.offsetTop && probe < el.offsetTop + el.offsetHeight;
+      });
+      syncPath(current ? sectionPath(lang, current) : homePath(lang));
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [selectedProject]);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, [isHome, lang, syncPath]);
+
+  const activeSection = selectedProject ? 'projets' : route.name === 'home' ? route.section ?? 'hero' : '';
 
   return (
     <div className="min-h-screen bg-[#F9F9FB] text-neutral-900 dark:bg-[#0A0A0C] dark:text-white font-sans antialiased selection:bg-neutral-900 selection:text-white dark:selection:bg-[var(--accent-primary)] dark:selection:text-[var(--accent-text)] relative overflow-x-clip transition-colors duration-300">
@@ -112,8 +115,11 @@ function PortfolioApp() {
       {/* ⌘K / Ctrl+K */}
       <CommandPalette />
 
+      {/* "English version available" for browsers that don't ask for French (and vice versa) */}
+      <LanguageHint />
+
       {/* Editorial Navigation Masthead */}
-      <Header activeSection={selectedProject ? 'projets' : activeSection} />
+      <Header activeSection={activeSection} />
 
       {/* Main Content Area: home, project page, or 404 */}
       {notFound ? (

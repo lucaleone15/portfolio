@@ -99,10 +99,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0 flex-1">
               <h3
-                className="font-sans text-xl sm:text-2xl font-bold text-neutral-900 dark:text-white tracking-tight transition-colors truncate leading-snug"
+                className="font-sans text-xl sm:text-2xl font-bold text-neutral-900 dark:text-white tracking-tight transition-colors truncate leading-snug uppercase"
                 style={isHovered ? { color: 'var(--pa-text)' } : undefined}
               >
-                {project.title}
+                {/* Same name as the project page (proper case in the DOM, uppercase on screen) */}
+                {project.name}
               </h3>
               {/* Date directly below title with project's own accent */}
               <div className="mt-1.5 flex items-baseline gap-2.5">

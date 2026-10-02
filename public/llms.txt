@@ -4,10 +4,10 @@
 
 ## Liens Rapides & Ressources
 - [Site Officiel & Portfolio](https://luca-leone.ch/)
-- [Section Projets](https://luca-leone.ch/#projets)
+- [Section Projets](https://luca-leone.ch/projets)
 - [Version anglaise du portfolio](https://luca-leone.ch/en/)
-- [À Propos de Luca Leone](https://luca-leone.ch/#a-propos)
-- [Contact Direct](https://luca-leone.ch/#contact)
+- [À Propos de Luca Leone](https://luca-leone.ch/a-propos)
+- [Contact Direct](https://luca-leone.ch/contact)
 - [Profil Professionnel LinkedIn](https://linkedin.com/in/leone-luca)
 - [CV de Luca Leone (PDF)](https://luca-leone.ch/pdf/CV-LucaLeone2026.pdf)
 - [Document PDF Sangsationnel HUG](https://luca-leone.ch/pdf/ProjInt1_HUG.pdf)
