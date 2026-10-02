@@ -189,7 +189,7 @@ export function Signature() {
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true, margin: '-20px' }}
         transition={{ duration: 0.9, ease: [0.23, 1, 0.32, 1] }}
-        className="inline-block font-serif whitespace-nowrap font-black leading-[0.95] py-[0.14em] tracking-[-0.05em] bg-gradient-to-b from-white to-white/45 bg-clip-text text-transparent"
+        className="inline-block font-serif whitespace-nowrap font-black leading-[0.95] py-[0.14em] tracking-[-0.05em] bg-gradient-to-b from-white via-white/70 to-white/10 bg-clip-text text-transparent"
       >
         Luca Leone<span className="text-[#0A0A0C]">.</span>
       </motion.p>
