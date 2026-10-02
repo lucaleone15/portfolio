@@ -5,10 +5,13 @@ import { HeroBandeau } from './HeroBandeau';
 import { ImageTrail } from './ImageTrail';
 import { NeonBackdrop } from './NeonBackdrop';
 import { Link, sectionPath } from '../router';
+import { BACHELOR_TOPIC_INDEX, PRESELECT_TOPIC_EVENT } from './ContactSection';
 import { introPending, onIntroLifted } from './IntroCurtain';
 import { UNIFIED_PROJECTS } from '../data/portfolioData';
 
-// What the ideas become. Each fits on one line on a 360px phone (measured).
+// What the ideas become. The longest line ("en contenus engageants.") is 11.6× the font size
+// (measured in the page), so the headline size is derived from the available width ÷ 11.8:
+// every outcome stays on one line, from a 360px phone to a wide screen.
 const OUTCOMES = {
   fr: ['expériences digitales', 'interfaces intuitives', 'contenus engageants', 'identités visuelles', 'sites web sur mesure'],
   en: ['digital experiences', 'intuitive interfaces', 'engaging content', 'visual identities', 'custom websites'],
@@ -32,7 +35,9 @@ function RotatingWords({ words, running }: { words: string[]; running: boolean; 
 
   return (
     <span className="relative inline-grid align-bottom overflow-hidden pb-[0.1em] -mb-[0.1em]">
-      <AnimatePresence initial={false}>
+      {/* popLayout: the outgoing word leaves the layout while it exits, so the line is always
+          as wide as the current word (the full stop stays right after it, no reflow) */}
+      <AnimatePresence initial={false} mode="popLayout">
         <motion.span
           key={words[index]}
           initial={{ y: '105%', opacity: 0 }}
@@ -79,12 +84,37 @@ export function Hero() {
         <motion.div {...reveal()} className="max-w-5xl space-y-6 sm:space-y-8">
           {/* The page's single <h1>: identity label + positioning statement. The name is visible
               in the logo, so it's only repeated for screen readers and search engines. */}
-          <h1 className="font-normal">
-            <span className="sr-only">Luca Leone, </span>
-            <span className="block mb-5 sm:mb-6 text-xs sm:text-sm font-bold uppercase tracking-widest text-neutral-900 dark:text-white">
+          {/* Identity line + availability, typographic (same style as the section labels, e.g.
+              "Compétences"): the first thing read on arrival. The availability links to the form
+              with the "Bachelor thesis" topic preselected. */}
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs sm:text-sm font-bold uppercase tracking-widest">
+            <span className="text-neutral-900 dark:text-white" aria-hidden="true">
               {lang === 'fr' ? 'Étudiant en ingénierie des médias · HEIG-VD' : 'Media Engineering student · HEIG-VD'}
             </span>
-            <span className="block font-serif text-[2rem] leading-[1.05] sm:text-5xl md:text-6xl lg:text-[4.5rem] xl:text-[5.6rem] tracking-[-0.035em] text-neutral-900 dark:text-white">
+            <span className="hidden sm:inline text-neutral-400 dark:text-white/30" aria-hidden="true">·</span>
+            <Link
+              href={sectionPath(lang, 'contact')}
+              onClick={() => window.dispatchEvent(new CustomEvent(PRESELECT_TOPIC_EVENT, { detail: BACHELOR_TOPIC_INDEX }))}
+              className="pointer-events-auto group text-[var(--accent)] hover:underline underline-offset-4 decoration-2"
+            >
+              {/* Inline (not flex) so the arrow stays glued to the last word when the line wraps */}
+              <span className="relative inline-flex w-2 h-2 mr-2 align-middle -translate-y-px" aria-hidden="true">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--accent)] opacity-60 animate-ping motion-reduce:animate-none" />
+                <span className="relative inline-flex w-2 h-2 rounded-full bg-[var(--accent)]" />
+              </span>
+              {lang === 'fr' ? 'En recherche d’un travail de Bachelor' : 'Looking for a Bachelor thesis'}
+              <span className="inline-block ml-1.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
+            </Link>
+          </div>
+
+          <h1 className="font-normal">
+            {/* Name, field and school stay in the h1 for search engines and screen readers */}
+            <span className="sr-only">
+              {lang === 'fr'
+                ? 'Luca Leone, étudiant en ingénierie des médias à la HEIG-VD — '
+                : 'Luca Leone, Media Engineering student at HEIG-VD — '}
+            </span>
+            <span className="block font-serif leading-[1.05] tracking-[-0.035em] text-[min(2rem,calc((100vw-3rem)/11.8))] sm:text-[min(3rem,calc((100vw-5rem)/11.8))] md:text-[min(3.75rem,calc((100vw-5rem)/11.8))] lg:text-[min(4.5rem,calc((100vw-5rem)/11.8))] xl:text-[min(5.6rem,calc(64rem/11.8))] text-neutral-900 dark:text-white">
               {lang === 'fr' ? (
                 <span className="block">
                   Je transforme des <span className="font-extrabold text-[var(--accent)]">idées</span>
