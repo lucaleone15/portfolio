@@ -1,11 +1,28 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import {defineConfig} from 'vite';
+import {defineConfig, loadEnv, type Plugin} from 'vite';
+import {createContactHandler} from './server/contact';
 
-export default defineConfig(({ isSsrBuild }) => {
+/** POST /api/contact on the dev and preview (production) servers — see server/contact.ts */
+function contactApi(env: Record<string, string>): Plugin {
+  const handler = createContactHandler(env);
   return {
-    plugins: [react(), tailwindcss()],
+    name: 'contact-api',
+    configureServer(server) {
+      server.middlewares.use(handler);
+    },
+    configurePreviewServer(server) {
+      server.middlewares.use(handler);
+    },
+  };
+}
+
+export default defineConfig(({ isSsrBuild, mode }) => {
+  // All variables from .env (not only VITE_*): SMTP settings stay server-side
+  const env = { ...loadEnv(mode, process.cwd(), ''), ...process.env } as Record<string, string>;
+  return {
+    plugins: [react(), tailwindcss(), contactApi(env)],
     build: {
       // The SSR bundle (dist-ssr) is only used by scripts/prerender.mjs: no need to copy public/
       copyPublicDir: !isSsrBuild,

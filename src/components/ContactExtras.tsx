@@ -2,26 +2,38 @@ import type { MouseEvent, ReactNode } from 'react';
 import { motion } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 
-/** Words rise one by one out of their own mask when the heading enters the viewport. */
+/**
+ * Words rise one by one out of their own mask. The trigger is NOT on the words: a word
+ * hidden below its mask has no visible area, so it would never count as "in view". The
+ * parent heading (see RevealHeading) owns the viewport trigger; words follow via variants.
+ */
+const wordVariants = {
+  hidden: { y: '110%' },
+  shown: (delay: number) => ({ y: '0%', transition: { duration: 0.8, delay, ease: [0.23, 1, 0.32, 1] as const } }),
+};
+
 export function RevealWords({ text, className = '', delay = 0 }: { text: string; className?: string; delay?: number }) {
   const words = text.split(' ');
   return (
     <>
       {words.map((word, i) => (
         <span key={`${word}-${i}`} className="inline-flex overflow-hidden pb-[0.08em] -mb-[0.08em] align-bottom">
-          <motion.span
-            initial={{ y: '110%' }}
-            whileInView={{ y: '0%' }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.8, delay: delay + i * 0.06, ease: [0.23, 1, 0.32, 1] }}
-            className={`inline-block ${className}`}
-          >
+          <motion.span variants={wordVariants} custom={delay + i * 0.06} className={`inline-block ${className}`}>
             {word}
           </motion.span>
           {i < words.length - 1 && <span>&nbsp;</span>}
         </span>
       ))}
     </>
+  );
+}
+
+/** Heading that reveals its RevealWords children when it enters the viewport. */
+export function RevealHeading({ className = '', children }: { className?: string; children: ReactNode }) {
+  return (
+    <motion.h2 initial="hidden" whileInView="shown" viewport={{ once: true, amount: 0.4 }} className={className}>
+      {children}
+    </motion.h2>
   );
 }
 

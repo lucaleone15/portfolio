@@ -4,7 +4,7 @@ import { USER_INFO } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
 import { Link, sectionPath } from '../router';
 import { Check, Copy, Linkedin, Loader2, Mail, Phone } from 'lucide-react';
-import { ContactRow, FloatingField, RevealWords, Signature } from './ContactExtras';
+import { ContactRow, FloatingField, RevealHeading, RevealWords, Signature } from './ContactExtras';
 
 const TOPICS = {
   fr: ['Projet', 'Collaboration', 'Stage / emploi', 'Autre'],
@@ -61,54 +61,41 @@ export function ContactSection() {
     setStatusMessage('');
 
     try {
-      const response = await fetch(`https://formsubmit.co/ajax/${PRIMARY_EMAIL}`, {
+      // Our own endpoint (server/contact.ts): sent through the site's own mailbox, no third party
+      const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          subject: formData.subject || `Message de ${formData.name} via le portfolio`,
-          message: formData.message,
-          _subject: `${formData.subject ? `${formData.subject} – ` : 'Nouveau message – '}Portfolio Luca Leone (${formData.name})`,
-          _replyto: formData.email,
-          _captcha: 'false',
-          _honey: formData.honey,
-          _template: 'table'
-        })
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(formData),
       });
-
       const data = await response.json().catch(() => ({}));
-      // FormSubmit answers { success: "false" } (sometimes with HTTP 200) when it rejects a message
-      if (!response.ok || String(data?.success) === 'false') {
-        throw new Error(`FormSubmit rejected the message (${response.status}): ${data?.message ?? ''}`);
+      if (!response.ok || !data?.ok) {
+        throw Object.assign(new Error(data?.error || `HTTP ${response.status}`), { code: data?.error });
       }
       setIsSubmitting(false);
       setSubmitStatus('success');
+      setStatusMessage(successMessage);
       setFormData({ name: '', email: '', subject: '', message: '', honey: '' });
-
-      if (data?.message && typeof data.message === 'string' && data.message.toLowerCase().includes('activation')) {
-        setStatusMessage(
-          lang === 'fr'
-            ? "Message transmis ! Un premier email d'activation a été envoyé à votre adresse pour autoriser la réception."
-            : "Message transmitted! An activation email has been sent to confirm receipt."
-        );
-      } else {
-        setStatusMessage(successMessage);
-      }
     } catch (err) {
       console.error('Contact submission error:', err);
       setIsSubmitting(false);
       setSubmitStatus('error');
+      const code = (err as { code?: string }).code;
       setStatusMessage(
-        lang === 'fr'
-          ? "Une erreur est survenue lors de l'envoi. Vous pouvez également écrire à " + PRIMARY_EMAIL
-          : "An error occurred while sending. You can also write directly to " + PRIMARY_EMAIL
+        code === 'rate_limited'
+          ? lang === 'fr'
+            ? 'Plusieurs messages viennent d’être envoyés. Réessayez dans quelques minutes, ou utilisez votre messagerie :'
+            : 'Several messages were just sent. Try again in a few minutes, or use your mail app:'
+          : lang === 'fr'
+            ? 'L’envoi n’a pas abouti. Votre message n’est pas perdu : envoyez-le depuis votre messagerie.'
+            : 'Sending didn’t go through. Your message isn’t lost: send it from your mail app.'
       );
     }
   };
+
+  // Fallback that always works: the visitor's own mail app, with their message pre-filled
+  const mailtoFallback = `mailto:${PRIMARY_EMAIL}?subject=${encodeURIComponent(
+    `${formData.subject ? `${formData.subject} – ` : ''}Portfolio Luca Leone (${formData.name})`,
+  )}&body=${encodeURIComponent(formData.message)}`;
 
   return (
     // The whole contact area is one accent "sheet" rising over the page (rounded top):
@@ -128,14 +115,14 @@ export function ContactSection() {
       <div className="relative max-w-7xl mx-auto px-6 sm:px-10">
         
         {/* Headline: words rise out of their masks */}
-        <h2 className="mb-14 sm:mb-20 text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.05] font-normal text-white/75">
+        <RevealHeading className="mb-14 sm:mb-20 text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.05] font-normal text-white/75">
           <span className="block">
             <RevealWords text={t('contact.talkPrefix')} />
           </span>
           <span className="block">
             <RevealWords text={t('contact.talkHighlight')} delay={0.2} className="font-extrabold text-white" />
           </span>
-        </h2>
+        </RevealHeading>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Form (open layout, like the rest of the site) */}
@@ -237,6 +224,14 @@ export function ContactSection() {
                       className={`text-sm font-medium ${submitStatus === 'error' ? 'text-white font-semibold' : 'text-white/90'}`}
                     >
                       {statusMessage}
+                      {submitStatus === 'error' && (
+                        <a
+                          href={mailtoFallback}
+                          className="font-syne ml-2 inline-flex items-center gap-1.5 underline underline-offset-4 decoration-white/50 hover:decoration-white font-bold"
+                        >
+                          {lang === 'fr' ? 'Envoyer via votre messagerie' : 'Send with your mail app'} ↗
+                        </a>
+                      )}
                     </motion.p>
                   )}
                 </AnimatePresence>
