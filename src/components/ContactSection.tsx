@@ -1,4 +1,4 @@
-import { useState, FormEvent, MouseEvent } from 'react';
+import { useEffect, useState, FormEvent, MouseEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { USER_INFO } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
@@ -7,9 +7,13 @@ import { Check, Copy, Linkedin, Loader2, Mail, Phone } from 'lucide-react';
 import { ContactRow, FloatingField, RevealHeading, RevealWords, Signature } from './ContactExtras';
 
 const TOPICS = {
-  fr: ['Projet', 'Collaboration', 'Stage / emploi', 'Autre'],
-  en: ['Project', 'Collaboration', 'Internship / job', 'Other'],
+  fr: ['Projet', 'Collaboration', 'Travail de Bachelor', 'Autre'],
+  en: ['Project', 'Collaboration', 'Bachelor thesis', 'Other'],
 };
+
+/** Fired by the hero's "looking for a Bachelor thesis" pill: preselects that topic. */
+export const PRESELECT_TOPIC_EVENT = 'contact-preselect-topic';
+export const BACHELOR_TOPIC_INDEX = 2;
 
 export function ContactSection() {
   const { lang, t } = useLanguage();
@@ -29,6 +33,15 @@ export function ContactSection() {
 
   const PRIMARY_EMAIL = 'luca@luca-leone.ch';
   const [emailInvalid, setEmailInvalid] = useState(false);
+
+  useEffect(() => {
+    const onPreselect = (e: Event) => {
+      const index = (e as CustomEvent<number>).detail;
+      setFormData((prev) => ({ ...prev, subject: TOPICS[lang][index] ?? prev.subject }));
+    };
+    window.addEventListener(PRESELECT_TOPIC_EVENT, onPreselect);
+    return () => window.removeEventListener(PRESELECT_TOPIC_EVENT, onPreselect);
+  }, [lang]);
 
   // Clicking the address copies it; if the clipboard is unavailable, fall back to the mail app
   const copyEmailToClipboard = async (e: MouseEvent<HTMLAnchorElement>) => {

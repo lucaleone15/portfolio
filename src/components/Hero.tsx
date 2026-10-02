@@ -5,6 +5,8 @@ import { HeroBandeau } from './HeroBandeau';
 import { ImageTrail } from './ImageTrail';
 import { NeonBackdrop } from './NeonBackdrop';
 import { Link, sectionPath } from '../router';
+import { ArrowRight } from 'lucide-react';
+import { BACHELOR_TOPIC_INDEX, PRESELECT_TOPIC_EVENT } from './ContactSection';
 import { introPending, onIntroLifted } from './IntroCurtain';
 import { UNIFIED_PROJECTS } from '../data/portfolioData';
 
@@ -79,6 +81,23 @@ export function Hero() {
         <motion.div {...reveal()} className="max-w-5xl space-y-6 sm:space-y-8">
           {/* The page's single <h1>: identity label + positioning statement. The name is visible
               in the logo, so it's only repeated for screen readers and search engines. */}
+          {/* Availability: what recruiters should know first. Takes them to the form with the
+              "Bachelor thesis" topic already selected. */}
+          <Link
+            href={sectionPath(lang, 'contact')}
+            onClick={() => window.dispatchEvent(new CustomEvent(PRESELECT_TOPIC_EVENT, { detail: BACHELOR_TOPIC_INDEX }))}
+            className="pointer-events-auto group inline-flex items-center gap-2.5 min-h-9 py-1.5 pl-3 pr-3.5 rounded-2xl sm:rounded-full text-left leading-snug border border-black/10 dark:border-white/15 bg-white/70 dark:bg-white/[0.06] backdrop-blur-md text-xs sm:text-sm font-semibold text-neutral-800 dark:text-white/90 hover:border-black/25 dark:hover:border-white/30 transition active:scale-[0.97]"
+          >
+            <span className="relative flex w-2 h-2" aria-hidden="true">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-60 animate-ping motion-reduce:animate-none" />
+              <span className="relative inline-flex w-2 h-2 rounded-full bg-emerald-500" />
+            </span>
+            {lang === 'fr'
+              ? 'Je recherche une entreprise pour mon travail de Bachelor'
+              : "I'm looking for a company to host my Bachelor thesis"}
+            <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+          </Link>
+
           <h1 className="font-normal">
             <span className="sr-only">Luca Leone, </span>
             <span className="block mb-5 sm:mb-6 text-xs sm:text-sm font-bold uppercase tracking-widest text-neutral-900 dark:text-white">

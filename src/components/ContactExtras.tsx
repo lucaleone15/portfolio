@@ -173,16 +173,23 @@ export function ContactRow({
   );
 }
 
-/** Oversized signature closing the page: the very last element, fully visible, flush with the bottom. */
+/**
+ * Oversized signature closing the page: the very last element, fully visible, flush with the
+ * page bottom. The gradient is clipped to the text, and a background only covers the element's
+ * box: with such tight leading the letters overflow the line box by ~0.15em, so the paragraph
+ * carries em-based vertical padding to keep every glyph painted (it looked cut otherwise).
+ * Width: the word is 5.4× its font size (measured), so the size is derived from the space
+ * available (viewport minus side padding, capped by the 1200px container) ÷ 5.5.
+ */
 export function Signature() {
   return (
-    <div className="select-none pb-3 sm:pb-5" aria-hidden="true">
+    <div className="select-none text-[min(calc((100vw-3rem)/5.5),13.6rem)] sm:text-[min(calc((100vw-5rem)/5.5),13.6rem)] pb-[0.04em]" aria-hidden="true">
       <motion.p
         initial={{ y: 40, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true, margin: '-20px' }}
         transition={{ duration: 0.9, ease: [0.23, 1, 0.32, 1] }}
-        className="font-serif whitespace-nowrap font-black leading-[0.95] tracking-[-0.05em] text-[min(18vw,15.5rem)] bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent"
+        className="inline-block font-serif whitespace-nowrap font-black leading-[0.95] py-[0.14em] tracking-[-0.05em] bg-gradient-to-b from-white to-white/45 bg-clip-text text-transparent"
       >
         Luca Leone<span className="text-[#0A0A0C]">.</span>
       </motion.p>
