@@ -84,28 +84,10 @@ export function Hero() {
         <motion.div {...reveal()} className="max-w-5xl space-y-6 sm:space-y-8">
           {/* The page's single <h1>: identity label + positioning statement. The name is visible
               in the logo, so it's only repeated for screen readers and search engines. */}
-          {/* Identity line + availability, typographic (same style as the section labels, e.g.
-              "Compétences"): the first thing read on arrival. The availability links to the form
-              with the "Bachelor thesis" topic preselected. */}
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs sm:text-sm font-bold uppercase tracking-widest">
-            <span className="text-neutral-900 dark:text-white" aria-hidden="true">
-              {lang === 'fr' ? 'Étudiant en ingénierie des médias · HEIG-VD' : 'Media Engineering student · HEIG-VD'}
-            </span>
-            <span className="hidden sm:inline text-neutral-400 dark:text-white/30" aria-hidden="true">·</span>
-            <Link
-              href={sectionPath(lang, 'contact')}
-              onClick={() => window.dispatchEvent(new CustomEvent(PRESELECT_TOPIC_EVENT, { detail: BACHELOR_TOPIC_INDEX }))}
-              className="pointer-events-auto group text-[var(--accent)] hover:underline underline-offset-4 decoration-2"
-            >
-              {/* Inline (not flex) so the arrow stays glued to the last word when the line wraps */}
-              <span className="relative inline-flex w-2 h-2 mr-2 align-middle -translate-y-px" aria-hidden="true">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--accent)] opacity-60 animate-ping motion-reduce:animate-none" />
-                <span className="relative inline-flex w-2 h-2 rounded-full bg-[var(--accent)]" />
-              </span>
-              {lang === 'fr' ? 'En recherche d’un travail de Bachelor' : 'Looking for a Bachelor thesis'}
-              <span className="inline-block ml-1.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
-            </Link>
-          </div>
+          {/* Identity line (same style as the section labels, e.g. "Compétences") */}
+          <p className="text-xs sm:text-sm font-bold uppercase tracking-widest text-neutral-900 dark:text-white" aria-hidden="true">
+            {lang === 'fr' ? 'Étudiant en ingénierie des médias · HEIG-VD' : 'Media Engineering student · HEIG-VD'}
+          </p>
 
           <h1 className="font-normal">
             {/* Name, field and school stay in the h1 for search engines and screen readers */}
@@ -131,11 +113,26 @@ export function Hero() {
             </span>
           </h1>
 
-          <p className="max-w-3xl text-base sm:text-lg md:text-xl lg:text-2xl text-neutral-600 dark:text-[#A1A1AA] leading-relaxed font-normal">
-            {lang === 'fr'
-              ? 'De A à Z, avec une approche qui allie créativité et technique : contenus, réseaux sociaux, identité visuelle, UI/UX et développement web.'
-              : 'End to end, with an approach that blends creativity and technique: content, social media, visual identity, UI/UX and web development.'}
-          </p>
+          <div className="max-w-3xl space-y-3 text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed font-normal">
+            <p className="text-neutral-600 dark:text-[#A1A1AA]">
+              {lang === 'fr'
+                ? 'De A à Z, avec une approche qui allie créativité et technique : contenus, réseaux sociaux, identité visuelle, UI/UX et développement web.'
+                : 'End to end, with an approach that blends creativity and technique: content, social media, visual identity, UI/UX and web development.'}
+            </p>
+            {/* Availability, written as a plain sentence; the key words link to the form with the
+                "Bachelor thesis" topic preselected */}
+            <p className="text-neutral-900 dark:text-white">
+              {lang === 'fr' ? 'Je cherche actuellement une entreprise pour réaliser mon ' : "I'm currently looking for a company to host my "}
+              <Link
+                href={sectionPath(lang, 'contact')}
+                onClick={() => window.dispatchEvent(new CustomEvent(PRESELECT_TOPIC_EVENT, { detail: BACHELOR_TOPIC_INDEX }))}
+                className="pointer-events-auto whitespace-nowrap font-semibold underline decoration-[var(--accent)] decoration-2 underline-offset-[0.2em] hover:text-[var(--accent)] transition-colors"
+              >
+                {lang === 'fr' ? 'travail de Bachelor' : 'Bachelor thesis'}
+              </Link>
+              .
+            </p>
+          </div>
 
           {/* CTAs (the content layer lets the pointer through to the trail; buttons opt back in) */}
           <div className="pt-2 sm:pt-4 flex flex-wrap items-center gap-3.5 sm:gap-4 pointer-events-auto">
