@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { USER_INFO } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
 import { Link, sectionPath } from '../router';
+import { Check, Loader2 } from 'lucide-react';
+import { LocalTime, MagneticBadge, RevealWords, Signature } from './ContactExtras';
 
 export function ContactSection() {
   const { lang, t } = useLanguage();
@@ -106,21 +108,45 @@ export function ContactSection() {
     <section id="contact" className="relative py-20 sm:py-28 overflow-hidden bg-[#F9F9FB] dark:bg-[#0A0A0C] transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 sm:px-10">
         
-        {/* Massive Typographic Headline with Clean High Contrast */}
+        {/* Status line: open to work + live local time */}
         <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-14 sm:mb-20"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-wrap items-center gap-x-6 gap-y-2 mb-8 text-xs sm:text-sm text-neutral-600 dark:text-[#A1A1AA]"
         >
+          <span className="inline-flex items-center gap-2.5">
+            <span className="relative flex w-2 h-2" aria-hidden="true">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-60 animate-ping motion-reduce:animate-none" />
+              <span className="relative inline-flex w-2 h-2 rounded-full bg-emerald-500" />
+            </span>
+            {lang === 'fr' ? 'Ouvert aux collaborations et opportunités' : 'Open to collaborations and opportunities'}
+          </span>
+          <LocalTime lang={lang} />
+        </motion.div>
+
+        {/* Headline (words rise out of their masks) + magnetic "write to me" badge */}
+        <div className="flex items-end justify-between gap-10 mb-14 sm:mb-20">
           <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.05] font-normal text-neutral-900 dark:text-white">
-            {t('contact.talkPrefix')} <br />
-            <span className="font-extrabold text-[var(--accent)]">
-              {t('contact.talkHighlight')}
+            <span className="block">
+              <RevealWords text={t('contact.talkPrefix')} />
+            </span>
+            <span className="block">
+              <RevealWords text={t('contact.talkHighlight')} delay={0.2} className="font-extrabold text-[var(--accent)]" />
             </span>
           </h2>
-        </motion.div>
+          <div className="hidden lg:block shrink-0 mb-2">
+            <MagneticBadge
+              label={lang === 'fr' ? 'Écrivez-moi' : 'Write to me'}
+              onActivate={() => {
+                const field = document.getElementById('contact-name');
+                field?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                field?.focus({ preventScroll: true });
+              }}
+            />
+          </div>
+        </div>
 
         {/* 2-Column Minimalist Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
@@ -255,13 +281,34 @@ export function ContactSection() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="font-syne py-4 px-10 rounded-full bg-[var(--accent)] text-[var(--accent-contrast-text)] hover:opacity-90 disabled:opacity-50 font-bold text-sm tracking-wide transition duration-200 cursor-pointer disabled:cursor-not-allowed shadow-xs active:scale-[0.97] inline-flex items-center justify-center"
+                  className="font-syne relative min-w-[15rem] h-14 px-10 rounded-full bg-[var(--accent)] text-[var(--accent-contrast-text)] hover:opacity-90 disabled:cursor-wait font-bold text-sm tracking-wide transition duration-200 cursor-pointer shadow-xs active:scale-[0.97] inline-flex items-center justify-center overflow-hidden"
                 >
-                  {isSubmitting ? (
-                    <span>{lang === 'fr' ? 'Envoi du message...' : 'Sending message...'}</span>
-                  ) : (
-                    <span>{t('contact.sendBtn')}</span>
-                  )}
+                  {/* State morph: the labels cross-fade through a light blur so they read as one
+                      element changing, not two swapping */}
+                  <AnimatePresence mode="popLayout" initial={false}>
+                    <motion.span
+                      key={isSubmitting ? 'sending' : submitStatus === 'success' ? 'sent' : 'idle'}
+                      initial={{ opacity: 0, y: 8, filter: 'blur(4px)' }}
+                      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                      exit={{ opacity: 0, y: -8, filter: 'blur(4px)' }}
+                      transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}
+                      className="inline-flex items-center gap-2"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
+                          {lang === 'fr' ? 'Envoi…' : 'Sending…'}
+                        </>
+                      ) : submitStatus === 'success' ? (
+                        <>
+                          <Check className="w-4 h-4" aria-hidden="true" />
+                          {lang === 'fr' ? 'Message envoyé' : 'Message sent'}
+                        </>
+                      ) : (
+                        t('contact.sendBtn')
+                      )}
+                    </motion.span>
+                  </AnimatePresence>
                 </button>
               </div>
             </form>
@@ -367,8 +414,25 @@ export function ContactSection() {
             >
               LinkedIn
             </a>
+            <button
+              type="button"
+              onClick={() =>
+                window.scrollTo({
+                  top: 0,
+                  behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+                })
+              }
+              className="font-syne inline-flex items-center gap-1.5 font-bold text-neutral-900 dark:text-white hover:text-[var(--accent)] dark:hover:text-[var(--accent)] transition-colors cursor-pointer"
+            >
+              {lang === 'fr' ? 'Retour en haut' : 'Back to top'} ↑
+            </button>
           </div>
         </footer>
+
+        {/* Signature */}
+        <div className="mt-10 sm:mt-14 -mb-20 sm:-mb-28">
+          <Signature />
+        </div>
       </div>
     </section>
   );

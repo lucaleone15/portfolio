@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { useLanguage } from '../context/LanguageContext';
 import { HeroBandeau } from './HeroBandeau';
 import { ImageTrail } from './ImageTrail';
+import { NeonBackdrop } from './NeonBackdrop';
 import { Link, sectionPath } from '../router';
 import { introPending, onIntroLifted } from './IntroCurtain';
 import { UNIFIED_PROJECTS } from '../data/portfolioData';
@@ -56,8 +57,6 @@ export function Hero() {
   useEffect(() => onIntroLifted(() => setReady(true)), []);
 
   const trailImages = useMemo(() => UNIFIED_PROJECTS.flatMap((p) => p.images), []);
-  const [canHover, setCanHover] = useState(false);
-  useEffect(() => setCanHover(window.matchMedia('(hover: hover) and (pointer: fine)').matches), []);
 
   const reveal = (delay = 0) => ({
     initial: ready ? false : ({ opacity: 0, y: 30 } as const),
@@ -70,6 +69,9 @@ export function Hero() {
       ref={sectionRef}
       className="relative min-h-[90dvh] pt-24 sm:pt-32 pb-10 sm:pb-14 border-b border-black/[0.06] dark:border-white/[0.06] overflow-hidden flex flex-col justify-between bg-[#F9F9FB] dark:bg-[#0A0A0C] transition-colors duration-300"
     >
+      {/* Grain + neon accent lines (same texture as the intro curtain) */}
+      <NeonBackdrop />
+
       {/* Project visuals trailing the pointer (autopilot on touch / when idle) */}
       <ImageTrail images={trailImages} areaRef={sectionRef} active={ready} />
 
@@ -121,11 +123,6 @@ export function Hero() {
             </Link>
           </div>
 
-          {canHover && (
-            <p className="hidden lg:block text-xs text-neutral-500 dark:text-[#71717A]">
-              {lang === 'fr' ? '↖ Bougez la souris : mes projets vous suivent.' : '↖ Move your mouse: my projects follow you.'}
-            </p>
-          )}
         </motion.div>
       </div>
 

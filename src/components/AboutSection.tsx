@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { EDUCATION_TIMELINE, EXPERIENCE_TIMELINE } from '../data/portfolioData';
+import { useEffect, useRef } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
 export function AboutSection() {
@@ -60,8 +61,57 @@ export function AboutSection() {
     ? ['Automobile', 'Sport', 'Voyage', 'Technologies']
     : ['Automotive', 'Sports', 'Travel', 'Technology'];
 
+  // Scroll-linked details (GSAP loaded on demand): bio words sharpen while read,
+  // timeline rails draw and their dots light up as each step is passed
+  const sectionRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    let cleanup: (() => void) | undefined;
+    let cancelled = false;
+    Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([{ default: gsap }, { ScrollTrigger }]) => {
+      if (cancelled || !sectionRef.current) return;
+      gsap.registerPlugin(ScrollTrigger);
+      const ctx = gsap.context(() => {
+        const mm = gsap.matchMedia();
+        mm.add('(prefers-reduced-motion: no-preference)', () => {
+          gsap.fromTo(
+            '[data-bio] [data-word]',
+            { opacity: 0.2 },
+            {
+              opacity: 1,
+              ease: 'none',
+              stagger: 0.05,
+              scrollTrigger: { trigger: '[data-bio]', start: 'top 80%', end: 'bottom 55%', scrub: true },
+            },
+          );
+          gsap.utils.toArray<HTMLElement>('[data-timeline]').forEach((timeline) => {
+            gsap.fromTo(
+              timeline.querySelector('[data-timeline-progress]'),
+              { scaleY: 0 },
+              { scaleY: 1, ease: 'none', scrollTrigger: { trigger: timeline, start: 'top 70%', end: 'bottom 60%', scrub: true } },
+            );
+          });
+        });
+        // Dots light up (also with reduced motion: it's a state change, not movement)
+        gsap.utils.toArray<HTMLElement>('[data-timeline-item]').forEach((item) => {
+          ScrollTrigger.create({
+            trigger: item,
+            start: 'top 70%',
+            onEnter: () => item.classList.add('timeline-lit'),
+            onLeaveBack: () => item.classList.remove('timeline-lit'),
+          });
+        });
+        return () => mm.revert();
+      }, sectionRef);
+      cleanup = () => ctx.revert();
+    });
+    return () => {
+      cancelled = true;
+      cleanup?.();
+    };
+  }, [lang]);
+
   return (
-    <section id="a-propos" className="relative py-20 sm:py-28 border-b border-black/[0.06] dark:border-white/[0.06] bg-[#F9F9FB] dark:bg-[#0A0A0C] transition-colors duration-300">
+    <section ref={sectionRef} id="a-propos" className="relative py-20 sm:py-28 border-b border-black/[0.06] dark:border-white/[0.06] bg-[#F9F9FB] dark:bg-[#0A0A0C] transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 sm:px-10">
         {/* Section Header */}
         <motion.div
@@ -118,13 +168,32 @@ export function AboutSection() {
               <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-neutral-900 dark:text-white tracking-tight">
                 Luca Leone
               </h3>
+
+              {/* What I'm doing right now */}
+              <div className="mt-5 inline-flex items-start gap-3 px-4 py-3 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/[0.04]">
+                <span className="relative flex w-2.5 h-2.5 mt-1.5 shrink-0" aria-hidden="true">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--accent)] opacity-60 animate-ping motion-reduce:animate-none" />
+                  <span className="relative inline-flex w-2.5 h-2.5 rounded-full bg-[var(--accent)]" />
+                </span>
+                <span className="text-sm text-neutral-600 dark:text-[#A1A1AA] leading-relaxed">
+                  <span className="font-bold text-neutral-900 dark:text-white">{lang === 'fr' ? 'En ce moment' : 'Right now'}</span>
+                  {' · '}
+                  {lang === 'fr' ? 'Community manager au Karting de Vuiteboeuf' : 'Community manager at Karting de Vuiteboeuf'}
+                  <br />
+                  {lang === 'fr' ? 'Dernière année de Bachelor à la HEIG-VD (2024–2027)' : 'Final year of my Bachelor at HEIG-VD (2024–2027)'}
+                </span>
+              </div>
             </div>
 
-            {/* Profile Bio paragraphs */}
-            <div className="space-y-4">
+            {/* Bio: each word sharpens from faint to full as it scrolls through the reading zone */}
+            <div data-bio className="space-y-4">
               {t('about.bio').split('\n\n').map((paragraph, idx) => (
-                <p key={idx} className="text-sm sm:text-base text-neutral-700 dark:text-[#D4D4D8] leading-relaxed">
-                  {paragraph}
+                <p key={idx} className="text-base sm:text-lg text-neutral-800 dark:text-[#E4E4E7] leading-relaxed">
+                  {paragraph.split(' ').map((word, w) => (
+                    <span key={w} data-word>
+                      {word}{' '}
+                    </span>
+                  ))}
                 </p>
               ))}
             </div>
@@ -184,16 +253,22 @@ export function AboutSection() {
                 <span>{t('about.experienceTitle')}</span>
               </div>
 
-              <div className="space-y-6">
+              <div data-timeline className="relative space-y-8 pl-8">
+                {/* Rail + progress drawn by the scroll */}
+                <div className="absolute left-[7px] top-2 bottom-2 w-px bg-black/10 dark:bg-white/10" aria-hidden="true">
+                  <div data-timeline-progress className="w-full h-full origin-top bg-[var(--accent)]" style={{ transform: 'scaleY(0)' }} />
+                </div>
                 {experience.map((item, idx) => (
                   <motion.div
                     key={`exp-${idx}`}
+                    data-timeline-item
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-30px' }}
                     transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                    className="pb-6 border-b border-black/[0.06] dark:border-white/[0.06] last:border-b-0 last:pb-0 transition-colors duration-200 group"
+                    className="relative transition-colors duration-200 group"
                   >
+                    <span data-dot className="timeline-dot absolute -left-8 top-1.5 w-[15px] h-[15px] rounded-full border-2 border-black/20 dark:border-white/25 bg-[#F9F9FB] dark:bg-[#0A0A0C]" aria-hidden="true" />
                     <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-2 mb-1.5">
                       <h4 className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white group-hover:text-[var(--accent)] transition-colors">
                         {item.title}
@@ -240,16 +315,22 @@ export function AboutSection() {
                 <span>{t('about.educationTitle')}</span>
               </div>
 
-              <div className="space-y-6">
+              <div data-timeline className="relative space-y-8 pl-8">
+                {/* Rail + progress drawn by the scroll */}
+                <div className="absolute left-[7px] top-2 bottom-2 w-px bg-black/10 dark:bg-white/10" aria-hidden="true">
+                  <div data-timeline-progress className="w-full h-full origin-top bg-[var(--accent)]" style={{ transform: 'scaleY(0)' }} />
+                </div>
                 {education.map((item, idx) => (
                   <motion.div
                     key={`edu-${idx}`}
+                    data-timeline-item
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-30px' }}
                     transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                    className="pb-6 border-b border-black/[0.06] dark:border-white/[0.06] last:border-b-0 last:pb-0 transition-colors duration-200 group"
+                    className="relative transition-colors duration-200 group"
                   >
+                    <span data-dot className="timeline-dot absolute -left-8 top-1.5 w-[15px] h-[15px] rounded-full border-2 border-black/20 dark:border-white/25 bg-[#F9F9FB] dark:bg-[#0A0A0C]" aria-hidden="true" />
                     <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-2 mb-1.5">
                       <h4 className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white group-hover:text-[var(--accent)] transition-colors">
                         {item.title}
