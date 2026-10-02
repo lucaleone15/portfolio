@@ -159,6 +159,8 @@ export function AboutSection() {
             className="lg:col-span-5 flex justify-center lg:justify-start"
           >
             <div className="relative rounded-2xl overflow-hidden bg-neutral-200 dark:bg-[#141416] aspect-[4/5] max-w-sm sm:max-w-md w-full shadow-2xl border border-black/5 dark:border-white/5">
+              {/* Full-resolution original (1684×2528): even zoomed ×1.6 on the face, the screen
+                  still gets real pixels (a 900px copy looked soft once zoomed) */}
               <img
                 src="/photo.webp"
                 alt="Portrait de Luca Leone - Étudiant en ingénierie des médias"
