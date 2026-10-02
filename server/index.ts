@@ -15,6 +15,7 @@ import { createAnalyticsHandler } from './analytics';
  * - brotli / gzip for text files (cached in memory)
  * - Cache: hashed build assets 1 year (immutable), HTML always revalidated, the rest 30 days
  * - Security headers incl. a strict CSP (only own scripts + the inline theme script, by hash)
+ * - www.* is redirected (301) to the bare domain
  * - POST /api/contact (server/contact.ts) and first-party analytics (server/analytics.ts)
  *
  * Env (.env in the project root): PORT (default 3000), SMTP_* / CONTACT_TO, STATS_KEY.
@@ -151,6 +152,16 @@ const analytics = createAnalyticsHandler(env);
 
 const server = http.createServer((req, res) => {
   for (const [name, value] of Object.entries(SECURITY_HEADERS)) res.setHeader(name, value);
+
+  // One canonical host: www.luca-leone.ch → luca-leone.ch (301, path and query kept), so
+  // search engines only ever see one version of the site
+  const host = String(req.headers['x-forwarded-host'] ?? req.headers.host ?? '').split(',')[0].trim();
+  if (host.startsWith('www.')) {
+    res.statusCode = 301;
+    res.setHeader('Location', `https://${host.slice(4)}${req.url ?? '/'}`);
+    res.end();
+    return;
+  }
 
   const next404 = () => {
     if (req.method !== 'GET' && req.method !== 'HEAD') {
