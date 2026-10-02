@@ -3,8 +3,13 @@ import { motion, AnimatePresence } from 'motion/react';
 import { USER_INFO } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
 import { Link, sectionPath } from '../router';
-import { Check, Loader2 } from 'lucide-react';
-import { LocalTime, MagneticBadge, RevealWords, Signature } from './ContactExtras';
+import { Check, Copy, Linkedin, Loader2, Mail, Phone } from 'lucide-react';
+import { ContactRow, FloatingField, RevealWords, Signature } from './ContactExtras';
+
+const TOPICS = {
+  fr: ['Projet', 'Collaboration', 'Stage / emploi', 'Autre'],
+  en: ['Project', 'Collaboration', 'Internship / job', 'Other'],
+};
 
 export function ContactSection() {
   const { lang, t } = useLanguage();
@@ -23,6 +28,7 @@ export function ContactSection() {
   });
 
   const PRIMARY_EMAIL = 'luca@luca-leone.ch';
+  const [emailInvalid, setEmailInvalid] = useState(false);
 
   // Clicking the address copies it; if the clipboard is unavailable, fall back to the mail app
   const copyEmailToClipboard = async (e: MouseEvent<HTMLAnchorElement>) => {
@@ -66,7 +72,7 @@ export function ContactSection() {
           email: formData.email,
           subject: formData.subject || `Message de ${formData.name} via le portfolio`,
           message: formData.message,
-          _subject: formData.subject || `Nouveau message - Portfolio Luca Leone (${formData.name})`,
+          _subject: `${formData.subject ? `${formData.subject} – ` : 'Nouveau message – '}Portfolio Luca Leone (${formData.name})`,
           _replyto: formData.email,
           _captcha: 'false',
           _honey: formData.honey,
@@ -108,50 +114,18 @@ export function ContactSection() {
     <section id="contact" className="relative py-20 sm:py-28 overflow-hidden bg-[#F9F9FB] dark:bg-[#0A0A0C] transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 sm:px-10">
         
-        {/* Status line: open to work + live local time */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="flex flex-wrap items-center gap-x-6 gap-y-2 mb-8 text-xs sm:text-sm text-neutral-600 dark:text-[#A1A1AA]"
-        >
-          <span className="inline-flex items-center gap-2.5">
-            <span className="relative flex w-2 h-2" aria-hidden="true">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-60 animate-ping motion-reduce:animate-none" />
-              <span className="relative inline-flex w-2 h-2 rounded-full bg-emerald-500" />
-            </span>
-            {lang === 'fr' ? 'Ouvert aux collaborations et opportunités' : 'Open to collaborations and opportunities'}
+        {/* Headline: words rise out of their masks */}
+        <h2 className="mb-14 sm:mb-20 text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.05] font-normal text-neutral-900 dark:text-white">
+          <span className="block">
+            <RevealWords text={t('contact.talkPrefix')} />
           </span>
-          <LocalTime lang={lang} />
-        </motion.div>
+          <span className="block">
+            <RevealWords text={t('contact.talkHighlight')} delay={0.2} className="font-extrabold text-[var(--accent)]" />
+          </span>
+        </h2>
 
-        {/* Headline (words rise out of their masks) + magnetic "write to me" badge */}
-        <div className="flex items-end justify-between gap-10 mb-14 sm:mb-20">
-          <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.05] font-normal text-neutral-900 dark:text-white">
-            <span className="block">
-              <RevealWords text={t('contact.talkPrefix')} />
-            </span>
-            <span className="block">
-              <RevealWords text={t('contact.talkHighlight')} delay={0.2} className="font-extrabold text-[var(--accent)]" />
-            </span>
-          </h2>
-          <div className="hidden lg:block shrink-0 mb-2">
-            <MagneticBadge
-              label={lang === 'fr' ? 'Écrivez-moi' : 'Write to me'}
-              onActivate={() => {
-                const field = document.getElementById('contact-name');
-                field?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                field?.focus({ preventScroll: true });
-              }}
-            />
-          </div>
-        </div>
-
-        {/* 2-Column Minimalist Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-          
-          {/* Left Column: Underline Form Fields */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          {/* Form card */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -159,77 +133,71 @@ export function ContactSection() {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-7"
           >
-            <form onSubmit={handleFormSubmit} className="relative space-y-8 sm:space-y-10">
-              {/* Nom */}
-              <div className="relative group">
-                <label htmlFor="contact-name" className="sr-only">
-                  {lang === 'fr' ? 'Votre nom' : 'Your name'}
-                </label>
-                <input
+            <form
+              onSubmit={handleFormSubmit}
+              noValidate={false}
+              className="relative rounded-3xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/[0.03] backdrop-blur-xl p-6 sm:p-10 space-y-9 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.35)]"
+            >
+              {/* Topic: one tap instead of typing a subject */}
+              <fieldset>
+                <legend className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-neutral-500 dark:text-[#A1A1AA]">
+                  {lang === 'fr' ? 'Votre demande concerne' : 'This is about'}
+                </legend>
+                <div className="flex flex-wrap gap-2">
+                  {TOPICS[lang].map((topic) => {
+                    const selected = formData.subject === topic;
+                    return (
+                      <button
+                        key={topic}
+                        type="button"
+                        aria-pressed={selected}
+                        onClick={() => setFormData({ ...formData, subject: selected ? '' : topic })}
+                        className={`font-syne h-10 px-4 rounded-full text-sm font-bold border transition active:scale-[0.97] cursor-pointer ${
+                          selected
+                            ? 'bg-[var(--accent)] border-[var(--accent)] text-[var(--accent-contrast-text)]'
+                            : 'border-black/15 dark:border-white/15 text-neutral-700 dark:text-[#D4D4D8] hover:border-black/40 dark:hover:border-white/40'
+                        }`}
+                      >
+                        {topic}
+                      </button>
+                    );
+                  })}
+                </div>
+              </fieldset>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-9">
+                <FloatingField
                   id="contact-name"
                   name="name"
+                  label={lang === 'fr' ? 'Votre nom' : 'Your name'}
                   autoComplete="name"
-                  type="text"
                   required
-                  placeholder={t('contact.namePlaceholder')}
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full pb-3 bg-transparent border-b border-black/20 dark:border-white/20 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-white/35 text-base sm:text-lg focus:outline-none focus:border-[var(--accent)] transition-colors"
+                  onChange={(v) => setFormData({ ...formData, name: v })}
                 />
-              </div>
-
-              {/* Email */}
-              <div className="relative group">
-                <label htmlFor="contact-email" className="sr-only">
-                  {lang === 'fr' ? 'Votre adresse email' : 'Your email address'}
-                </label>
-                <input
+                <FloatingField
                   id="contact-email"
                   name="email"
-                  autoComplete="email"
                   type="email"
+                  label={lang === 'fr' ? 'Votre email' : 'Your email'}
+                  autoComplete="email"
                   required
-                  placeholder={t('contact.emailPlaceholder')}
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full pb-3 bg-transparent border-b border-black/20 dark:border-white/20 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-white/35 text-base sm:text-lg focus:outline-none focus:border-[var(--accent)] transition-colors"
+                  onChange={(v) => setFormData({ ...formData, email: v })}
+                  error={emailInvalid ? (lang === 'fr' ? 'Cette adresse email semble incomplète.' : 'This email address looks incomplete.') : undefined}
+                  onBlur={(el) => setEmailInvalid(el.value.length > 0 && !el.validity.valid)}
                 />
               </div>
 
-              {/* Sujet */}
-              <div className="relative group">
-                <label htmlFor="contact-subject" className="sr-only">
-                  {lang === 'fr' ? 'Sujet' : 'Subject'}
-                </label>
-                <input
-                  id="contact-subject"
-                  name="subject"
-                  autoComplete="off"
-                  type="text"
-                  placeholder={t('contact.subjectPlaceholder')}
-                  value={formData.subject}
-                  onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                  className="w-full pb-3 bg-transparent border-b border-black/20 dark:border-white/20 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-white/35 text-base sm:text-lg focus:outline-none focus:border-[var(--accent)] transition-colors"
-                />
-              </div>
-
-              {/* Message */}
-              <div className="relative group">
-                <label htmlFor="contact-message" className="sr-only">
-                  {lang === 'fr' ? 'Votre message' : 'Your message'}
-                </label>
-                <textarea
-                  id="contact-message"
-                  name="message"
-                  autoComplete="off"
-                  required
-                  rows={4}
-                  placeholder={t('contact.messagePlaceholder')}
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full pb-3 bg-transparent border-b border-black/20 dark:border-white/20 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-white/35 text-base sm:text-lg focus:outline-none focus:border-[var(--accent)] transition-colors resize-none"
-                />
-              </div>
+              <FloatingField
+                id="contact-message"
+                name="message"
+                label={lang === 'fr' ? 'Parlez-moi de votre projet' : 'Tell me about your project'}
+                multiline
+                required
+                value={formData.message}
+                onChange={(v) => setFormData({ ...formData, message: v })}
+              />
 
               {/* Honeypot: off-screen, skipped by keyboard and screen readers */}
               <div className="absolute -left-[9999px] w-px h-px overflow-hidden" aria-hidden="true">
@@ -247,37 +215,24 @@ export function ContactSection() {
 
               {/* Submit Status Feedback (announced by screen readers) */}
               <div role="status" aria-live="polite">
-              <AnimatePresence>
-                {submitStatus === 'success' && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="p-4 rounded-2xl bg-[var(--accent)] text-[var(--accent-contrast-text)]"
-                  >
-                    <div className="text-xs sm:text-sm leading-relaxed font-medium">
+                <AnimatePresence>
+                  {submitStatus !== 'idle' && statusMessage && (
+                    <motion.p
+                      initial={{ opacity: 0, y: -6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      className={`text-sm font-medium ${submitStatus === 'error' ? 'text-red-600 dark:text-red-400' : 'text-neutral-700 dark:text-[#D4D4D8]'}`}
+                    >
                       {statusMessage}
-                    </div>
-                  </motion.div>
-                )}
-
-                {submitStatus === 'error' && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400"
-                  >
-                    <div className="text-xs sm:text-sm leading-relaxed font-medium">
-                      {statusMessage}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                    </motion.p>
+                  )}
+                </AnimatePresence>
               </div>
 
-              {/* Submit button: Pill Button with Loading State */}
-              <div>
+              <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-5">
+                <p className="text-xs text-neutral-500 dark:text-[#A1A1AA]">
+                  {lang === 'fr' ? '* Nom, email et message requis.' : '* Name, email and message required.'}
+                </p>
                 <button
                   type="submit"
                   disabled={isSubmitting}
@@ -314,73 +269,44 @@ export function ContactSection() {
             </form>
           </motion.div>
 
-          {/* Right Column: EMAIL DIRECT & LinkedIn with clean typography & line dividers */}
+          {/* Direct contact: three big rows, an accent band sweeps across on hover */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 space-y-12 lg:pl-6"
+            className="lg:col-span-5"
           >
-            {/* EMAIL DIRECT */}
-            <div>
-              <div className="flex items-baseline gap-3 mb-3">
-                <span className="text-xs uppercase font-bold tracking-[0.2em] text-neutral-600 dark:text-neutral-300">
-                  {t('contact.directEmailLabel')}
-                </span>
-                {/* Copy confirmation, announced to screen readers */}
-                <span role="status" aria-live="polite" className="text-xs font-bold text-[var(--accent)]">
-                  {copied ? (lang === 'fr' ? 'Copié !' : 'Copied!') : ''}
-                </span>
-              </div>
-              <a
+            <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-neutral-500 dark:text-[#A1A1AA]">
+              {lang === 'fr' ? 'Ou directement' : 'Or directly'}
+            </p>
+            <ul className="border-t border-black/10 dark:border-white/10">
+              <ContactRow
+                icon={<Mail className="w-5 h-5" />}
+                label={copied ? (lang === 'fr' ? 'Copié !' : 'Copied!') : lang === 'fr' ? 'Email · cliquer pour copier' : 'Email · click to copy'}
+                value={PRIMARY_EMAIL}
                 href={`mailto:${PRIMARY_EMAIL}`}
                 onClick={copyEmailToClipboard}
-                title={lang === 'fr' ? "Cliquer pour copier l'adresse" : 'Click to copy the address'}
-                aria-label={lang === 'fr' ? `Copier l'adresse ${PRIMARY_EMAIL}` : `Copy the address ${PRIMARY_EMAIL}`}
-                className="text-xl sm:text-2xl md:text-3xl font-bold text-neutral-900 dark:text-white hover:text-[var(--accent)] transition inline-block break-all font-sans active:scale-[0.99] origin-left"
-              >
-                {PRIMARY_EMAIL}
-              </a>
-            </div>
-
-            {/* NUMÉRO DIRECT */}
-            <div>
-              <span className="block text-xs uppercase font-bold tracking-[0.2em] text-neutral-600 dark:text-neutral-300 mb-3">
-                {t('contact.directPhoneLabel')}
-              </span>
-              <a
+                ariaLabel={lang === 'fr' ? `Copier l'adresse ${PRIMARY_EMAIL}` : `Copy the address ${PRIMARY_EMAIL}`}
+                trailing={<Copy className="w-4 h-4" />}
+              />
+              <ContactRow
+                icon={<Phone className="w-5 h-5" />}
+                label={lang === 'fr' ? 'Téléphone' : 'Phone'}
+                value={USER_INFO.phone}
                 href={`tel:${USER_INFO.phone.replace(/\s/g, '')}`}
-                className="text-xl sm:text-2xl md:text-3xl font-bold text-neutral-900 dark:text-white hover:text-[var(--accent)] transition-colors block font-sans"
-              >
-                {USER_INFO.phone}
-              </a>
-            </div>
-
-            {/* RÉSEAUX SOCIAUX - LinkedIn Only */}
-            <div>
-              <span className="block text-xs uppercase font-bold tracking-[0.2em] text-neutral-600 dark:text-neutral-300 mb-4">
-                {t('contact.socialLabel')}
-              </span>
-
-              <div className="divide-y divide-black/10 dark:divide-white/15">
-                {/* LinkedIn */}
-                <a
-                  href={USER_INFO.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-between py-4 text-base sm:text-lg font-semibold text-neutral-900 dark:text-white hover:text-[var(--accent)] transition-colors"
-                >
-                  <span>LinkedIn</span>
-                  <span className="text-neutral-600 dark:text-neutral-300 group-hover:text-[var(--accent)] group-hover:translate-x-1 transition">
-                    →
-                  </span>
-                </a>
-              </div>
-            </div>
-
+              />
+              <ContactRow
+                icon={<Linkedin className="w-5 h-5" />}
+                label="LinkedIn"
+                value="in/leone-luca"
+                href={USER_INFO.linkedin}
+                external
+              />
+            </ul>
+            {/* Copy confirmation for screen readers */}
+            <span className="sr-only" role="status" aria-live="polite">{copied ? (lang === 'fr' ? 'Adresse copiée' : 'Address copied') : ''}</span>
           </motion.div>
-
         </div>
 
         {/* Minimal Clean Footer with WCAG AAA Compliant High Contrast */}
@@ -430,7 +356,7 @@ export function ContactSection() {
         </footer>
 
         {/* Signature */}
-        <div className="mt-10 sm:mt-14 -mb-20 sm:-mb-28">
+        <div className="mt-12 sm:mt-16 -mb-10 sm:-mb-14">
           <Signature />
         </div>
       </div>

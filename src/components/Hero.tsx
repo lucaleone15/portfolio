@@ -69,7 +69,7 @@ export function Hero() {
       ref={sectionRef}
       className="relative min-h-[90dvh] pt-24 sm:pt-32 pb-10 sm:pb-14 border-b border-black/[0.06] dark:border-white/[0.06] overflow-hidden flex flex-col justify-between bg-[#F9F9FB] dark:bg-[#0A0A0C] transition-colors duration-300"
     >
-      {/* Grain + neon accent lines (same texture as the intro curtain) */}
+      {/* Accent gradient + grain (same texture as the intro curtain) */}
       <NeonBackdrop />
 
       {/* Project visuals trailing the pointer (autopilot on touch / when idle) */}

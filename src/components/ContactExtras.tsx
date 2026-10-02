@@ -1,28 +1,6 @@
-import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
-import { motion, useMotionValue, useSpring } from 'motion/react';
-import { ArrowDown } from 'lucide-react';
-
-/** Live local time in Yverdon-les-Bains (Europe/Zurich), updated every 20 s. Client only. */
-export function LocalTime({ lang }: { lang: 'fr' | 'en' }) {
-  const [time, setTime] = useState<string | null>(null);
-  useEffect(() => {
-    const format = () =>
-      new Intl.DateTimeFormat(lang === 'fr' ? 'fr-CH' : 'en-GB', {
-        hour: '2-digit',
-        minute: '2-digit',
-        timeZone: 'Europe/Zurich',
-      }).format(new Date());
-    setTime(format());
-    const id = window.setInterval(() => setTime(format()), 20_000);
-    return () => window.clearInterval(id);
-  }, [lang]);
-  if (!time) return null;
-  return (
-    <span className="tabular-nums">
-      Yverdon-les-Bains · {time}
-    </span>
-  );
-}
+import type { MouseEvent, ReactNode } from 'react';
+import { motion } from 'motion/react';
+import { ArrowUpRight } from 'lucide-react';
 
 /** Words rise one by one out of their own mask when the heading enters the viewport. */
 export function RevealWords({ text, className = '', delay = 0 }: { text: string; className?: string; delay?: number }) {
@@ -48,54 +26,133 @@ export function RevealWords({ text, className = '', delay = 0 }: { text: string;
 }
 
 /**
- * Round "write to me" badge: text running around a circle (slow rotation) with an arrow in
- * the middle. It leans toward the pointer (magnetic, spring, no overshoot) and takes the
- * visitor to the form. Rotation stops under reduced motion.
+ * Text field whose label sits inside the field and floats up when focused or filled; an
+ * accent underline draws from the left on focus. Errors appear under the field.
  */
-export function MagneticBadge({ label, onActivate }: { label: string; onActivate: () => void }) {
-  const ref = useRef<HTMLButtonElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const springX = useSpring(x, { stiffness: 220, damping: 22, mass: 0.6 });
-  const springY = useSpring(y, { stiffness: 220, damping: 22, mass: 0.6 });
-
-  const onMove = (e: ReactPointerEvent) => {
-    if (e.pointerType !== 'mouse' || !ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    x.set((e.clientX - (rect.left + rect.width / 2)) * 0.35);
-    y.set((e.clientY - (rect.top + rect.height / 2)) * 0.35);
+export function FloatingField({
+  id,
+  name,
+  label,
+  value,
+  onChange,
+  type = 'text',
+  autoComplete,
+  required,
+  multiline,
+  error,
+  onBlur,
+}: {
+  id: string;
+  name: string;
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  type?: string;
+  autoComplete?: string;
+  required?: boolean;
+  multiline?: boolean;
+  error?: string;
+  onBlur?: (el: HTMLInputElement | HTMLTextAreaElement) => void;
+}) {
+  const fieldClass = `peer w-full bg-transparent border-b pt-6 pb-2.5 text-base sm:text-lg text-neutral-900 dark:text-white outline-none placeholder-transparent transition-colors ${
+    error ? 'border-red-500/70' : 'border-black/20 dark:border-white/20'
+  }`;
+  const common = {
+    id,
+    name,
+    value,
+    required,
+    autoComplete,
+    placeholder: ' ', // keeps :placeholder-shown usable to know if the field is empty
+    'aria-invalid': error ? true : undefined,
+    'aria-describedby': error ? `${id}-error` : undefined,
+    onBlur: (e: { currentTarget: HTMLInputElement | HTMLTextAreaElement }) => onBlur?.(e.currentTarget),
   };
-  const onLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  const ring = `${label} • ${label} • `;
 
   return (
-    // Larger invisible hit area so the pull starts before the pointer reaches the badge
-    <div className="p-6 -m-6" onPointerMove={onMove} onPointerLeave={onLeave}>
-      <motion.button
-        ref={ref}
-        type="button"
-        onClick={onActivate}
-        style={{ x: springX, y: springY }}
-        aria-label={label}
-        className="group relative w-36 h-36 rounded-full cursor-pointer active:scale-[0.97] transition-transform"
+    <div className="relative">
+      {multiline ? (
+        <textarea
+          {...common}
+          rows={3}
+          onChange={(e) => onChange(e.target.value)}
+          className={`${fieldClass} resize-none min-h-[7.5rem] [field-sizing:content]`}
+        />
+      ) : (
+        <input {...common} type={type} onChange={(e) => onChange(e.target.value)} className={fieldClass} />
+      )}
+      <label
+        htmlFor={id}
+        className="pointer-events-none absolute left-0 top-6 origin-left text-base sm:text-lg text-neutral-500 dark:text-[#A1A1AA] transition-transform duration-200 ease-out peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[var(--accent)] peer-[:not(:placeholder-shown)]:-translate-y-6 peer-[:not(:placeholder-shown)]:scale-75"
       >
-        <svg viewBox="0 0 100 100" className="badge-spin absolute inset-0 w-full h-full" aria-hidden="true">
-          <defs>
-            <path id="badge-circle" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" />
-          </defs>
-          <text className="fill-neutral-900 dark:fill-white" style={{ fontSize: 9.2, fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase' }}>
-            <textPath href="#badge-circle">{ring}</textPath>
-          </text>
-        </svg>
-        <span className="absolute inset-0 m-auto w-14 h-14 rounded-full bg-[var(--accent)] text-[var(--accent-contrast-text)] flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-          <ArrowDown className="w-5 h-5" />
-        </span>
-      </motion.button>
+        {label}
+        {required && <span aria-hidden="true"> *</span>}
+      </label>
+      <span
+        className="pointer-events-none absolute left-0 bottom-0 h-[2px] w-full origin-left scale-x-0 bg-[var(--accent)] transition-transform duration-300 ease-out peer-focus:scale-x-100"
+        aria-hidden="true"
+      />
+      {error && (
+        <p id={`${id}-error`} className="absolute -bottom-6 left-0 text-xs text-red-600 dark:text-red-400">
+          {error}
+        </p>
+      )}
     </div>
+  );
+}
+
+/**
+ * Big direct-contact row (icon, small label, large value, trailing icon). On hover an accent
+ * band sweeps across from the left and the content flips to the accent's contrast colour.
+ */
+export function ContactRow({
+  icon,
+  label,
+  value,
+  href,
+  onClick,
+  external,
+  ariaLabel,
+  trailing,
+}: {
+  icon: ReactNode;
+  label: string;
+  value: string;
+  href: string;
+  onClick?: (e: MouseEvent<HTMLAnchorElement>) => void;
+  external?: boolean;
+  ariaLabel?: string;
+  trailing?: ReactNode;
+}) {
+  return (
+    <li className="border-b border-black/10 dark:border-white/10">
+      <a
+        href={href}
+        onClick={onClick}
+        aria-label={ariaLabel}
+        {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        className="group relative flex items-center gap-4 px-3 sm:px-4 py-5 sm:py-6 overflow-hidden text-neutral-900 dark:text-white active:scale-[0.99] transition-transform"
+      >
+        <span
+          className="absolute inset-0 bg-[var(--accent)] [clip-path:inset(0_100%_0_0)] group-hover:[clip-path:inset(0_0_0_0)] transition-[clip-path] duration-500 ease-[cubic-bezier(0.77,0,0.175,1)]"
+          aria-hidden="true"
+        />
+        <span className="relative w-11 h-11 shrink-0 rounded-full border border-black/15 dark:border-white/15 flex items-center justify-center transition-colors duration-300 group-hover:border-[var(--accent-contrast-text)]/40 group-hover:text-[var(--accent-contrast-text)]">
+          {icon}
+        </span>
+        <span className="relative min-w-0 flex-1">
+          <span className="block text-xs text-neutral-500 dark:text-[#A1A1AA] transition-colors duration-300 group-hover:text-[var(--accent-contrast-text)]/80">
+            {label}
+          </span>
+          <span className="block text-lg sm:text-2xl font-bold tracking-tight truncate transition-colors duration-300 group-hover:text-[var(--accent-contrast-text)]">
+            {value}
+          </span>
+        </span>
+        <span className="relative shrink-0 transition-[color,transform] duration-300 group-hover:text-[var(--accent-contrast-text)] group-hover:translate-x-1" aria-hidden="true">
+          {trailing ?? <ArrowUpRight className="w-5 h-5" />}
+        </span>
+      </a>
+    </li>
   );
 }
 
