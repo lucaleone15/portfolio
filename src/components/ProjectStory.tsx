@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { FileDown } from 'lucide-react';
+import { ArrowUpRight01Icon, Pdf02Icon } from '@hugeicons/core-free-icons';
+import { Icon } from './Icon';
 import { Project } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { imageSrcSet } from '../data/images';
@@ -170,7 +171,7 @@ export function ProjectStory({ project }: { project: Project; key?: string }) {
         <div className="sticky top-28 h-[calc(100vh-9rem)] flex items-center [perspective:1400px]">
           <div
             data-story-frame
-            className="w-full rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 bg-white dark:bg-[#141418] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.25)] dark:shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)] origin-bottom"
+            className="w-full rounded-2xl overflow-hidden bg-white dark:bg-[#141418] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.25)] dark:shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)] origin-bottom"
           >
             {/* Browser chrome */}
             <div className="flex items-center gap-3 h-10 px-4 border-b border-black/10 dark:border-white/10 bg-neutral-100/80 dark:bg-white/[0.04]">
@@ -306,7 +307,7 @@ export function ProjectStory({ project }: { project: Project; key?: string }) {
                     {project.stack.map((tech) => (
                       <span
                         key={tech}
-                        className="h-8 px-3.5 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-neutral-800 dark:text-[#E4E4E7] border border-black/10 dark:border-white/15 text-xs font-medium inline-flex items-center"
+                        className="h-8 px-3.5 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-neutral-800 dark:text-[#E4E4E7] text-xs font-medium inline-flex items-center"
                       >
                         {tech}
                       </span>
@@ -317,13 +318,16 @@ export function ProjectStory({ project }: { project: Project; key?: string }) {
                 {project.pdfUrl && (
                   <a
                     href={project.pdfUrl}
-                    download
-                    className="font-syne inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-black/[0.04] hover:bg-black/[0.08] dark:bg-white/[0.08] dark:hover:bg-white/[0.18] text-neutral-900 dark:text-white border border-black/15 dark:border-white/20 transition duration-200 cursor-pointer group active:scale-[0.97]"
+                    target="_blank"
+                    rel="noopener"
+                    className="glass font-syne inline-flex items-center gap-3 pl-5 pr-6 py-3.5 rounded-full text-neutral-900 dark:text-white duration-200 cursor-pointer group active:scale-[0.97]"
                   >
-                    <FileDown className="w-5 h-5 group-hover:scale-110 transition-transform" style={{ color: 'var(--pa-text)' }} />
+                    <Icon icon={Pdf02Icon} className="w-5 h-5" style={{ color: 'var(--pa-text)' }} />
                     <span className="text-sm sm:text-base font-semibold tracking-wide">
-                      {lang === 'fr' ? 'Télécharger le document PDF' : 'Download PDF Document'}
+                      {lang === 'fr' ? 'Voir le document PDF' : 'View the PDF document'}
                     </span>
+                    <Icon icon={ArrowUpRight01Icon} className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <span className="sr-only">{lang === 'fr' ? '(nouvel onglet)' : '(opens in a new tab)'}</span>
                   </a>
                 )}
               </div>

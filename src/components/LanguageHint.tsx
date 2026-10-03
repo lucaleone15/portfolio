@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { X } from 'lucide-react';
+import { Cancel01Icon } from '@hugeicons/core-free-icons';
+import { Icon } from './Icon';
 import { useLanguage } from '../context/LanguageContext';
 import { alternatePath, Link, useRouter } from '../router';
 import { onIntroLifted } from './IntroCurtain';
@@ -93,7 +94,7 @@ export function LanguageHint() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } }}
           exit={{ opacity: 0, y: 10, transition: { duration: 0.2, ease: [0.4, 0, 1, 1] } }}
-          className="fixed z-50 bottom-4 left-4 sm:bottom-6 sm:left-6 flex items-center gap-1 pl-4 pr-1.5 py-1.5 rounded-full bg-neutral-900/95 text-white dark:bg-white/95 dark:text-neutral-900 backdrop-blur-md shadow-[0_12px_32px_rgba(0,0,0,0.25)] border border-white/10 dark:border-black/10"
+          className="glass-bar fixed z-50 bottom-4 left-4 sm:bottom-6 sm:left-6 flex items-center gap-1 pl-4 pr-1.5 py-1.5 rounded-full text-neutral-900 dark:text-white"
         >
           <Link
             href={alternatePath(route, suggested)}
@@ -111,9 +112,9 @@ export function LanguageHint() {
             type="button"
             onClick={close}
             aria-label={copy.close}
-            className="ml-1 inline-flex items-center justify-center w-8 h-8 rounded-full text-white/60 hover:text-white hover:bg-white/10 dark:text-neutral-500 dark:hover:text-neutral-900 dark:hover:bg-black/5 transition-colors"
+            className="ml-1 inline-flex items-center justify-center w-8 h-8 rounded-full text-neutral-500 hover:text-neutral-900 hover:bg-black/[0.06] dark:text-white/60 dark:hover:text-white dark:hover:bg-white/10 transition-colors"
           >
-            <X className="w-3.5 h-3.5" aria-hidden="true" />
+            <Icon icon={Cancel01Icon} className="w-3.5 h-3.5" />
           </button>
         </motion.div>
       )}

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
-import { ArrowUpRight, Filter } from 'lucide-react';
+import { ArrowDown01Icon, FilterHorizontalIcon } from '@hugeicons/core-free-icons';
+import { Icon } from './Icon';
 import { getCustomProjects } from '../data/projectsStorage';
 import { ProjectCard } from './ProjectCard';
 import { useLanguage } from '../context/LanguageContext';
@@ -79,15 +80,12 @@ export function ProjectsSection() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowAllFilterPills(!showAllFilterPills)}
-              className={`font-syne px-5 py-2.5 rounded-full border text-xs sm:text-sm font-bold transition duration-200 backdrop-blur-md inline-flex items-center gap-2 cursor-pointer active:scale-[0.97] ${
-                showAllFilterPills
-                  ? 'bg-neutral-900 text-white dark:bg-white dark:text-black border-neutral-900 dark:border-white shadow-xs'
-                  : 'bg-black/[0.04] hover:bg-black text-neutral-900 hover:text-white border-black/15 dark:bg-white/[0.05] dark:hover:bg-white dark:text-white dark:hover:text-black dark:border-white/20'
-              }`}
+              aria-expanded={showAllFilterPills}
+              className="glass font-syne px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-neutral-900 dark:text-white inline-flex items-center gap-2 cursor-pointer active:scale-[0.97]"
             >
-              <Filter className="w-3.5 h-3.5" />
+              <Icon icon={FilterHorizontalIcon} className="w-4 h-4" />
               <span>{selectedFilter === 'all' ? t('projects.seeAll') : t('projects.reset')}</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              <Icon icon={ArrowDown01Icon} className={`w-3.5 h-3.5 transition-transform duration-200 ${showAllFilterPills ? 'rotate-180' : ''}`} />
             </button>
           </div>
         </motion.div>
@@ -102,7 +100,7 @@ export function ProjectsSection() {
                 className={`font-syne text-xs px-4 py-2 rounded-full transition cursor-pointer font-bold active:scale-[0.97] ${
                   selectedFilter === cat.id
                     ? 'bg-neutral-900 text-white dark:bg-white dark:text-black shadow-xs'
-                    : 'bg-black/[0.05] hover:bg-black text-neutral-600 hover:text-white dark:bg-white/[0.06] dark:hover:bg-white dark:text-[#A1A1AA] dark:hover:text-black'
+                    : 'glass text-neutral-700 dark:text-[#D4D4D8]'
                 }`}
               >
                 {cat.label}

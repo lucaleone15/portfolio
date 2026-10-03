@@ -32,12 +32,12 @@ function ToolItem({ tool }: { tool: ToolLogo; key?: string | number }) {
     <div className="relative group shrink-0 flex flex-col items-center justify-center">
       {/* Floating Name Badge right ABOVE the icon */}
       <div className="absolute -top-7 left-1/2 -translate-x-1/2 opacity-0 translate-y-1.5 group-hover:opacity-100 group-hover:translate-y-0 transition duration-200 pointer-events-none z-30">
-        <div className="relative px-2.5 py-1 rounded-md bg-neutral-900/95 dark:bg-[#18181B]/95 backdrop-blur-md border border-black/10 dark:border-white/20 shadow-[0_8px_20px_rgba(0,0,0,0.4)] dark:shadow-[0_8px_20px_rgba(0,0,0,0.8)] flex items-center justify-center whitespace-nowrap">
+        <div className="relative px-2.5 py-1 rounded-md bg-neutral-900/95 dark:bg-[#18181B]/95 backdrop-blur-md shadow-[0_8px_20px_rgba(0,0,0,0.4)] dark:shadow-[0_8px_20px_rgba(0,0,0,0.8)] flex items-center justify-center whitespace-nowrap">
           <span className="text-[11px] sm:text-xs font-bold tracking-wide text-white select-none">
             {tool.name}
           </span>
           {/* Small downward indicator triangle */}
-          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-neutral-900 dark:bg-[#18181B] border-r border-b border-black/10 dark:border-white/20 rotate-45" />
+          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-neutral-900 dark:bg-[#18181B] rotate-45" />
         </div>
       </div>
 

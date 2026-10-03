@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { Menu, X, ArrowUpRight, Linkedin, Sun, Moon } from 'lucide-react';
+import { ArrowUpRight01Icon, Cancel01Icon, Linkedin02Icon, Menu01Icon, Moon02Icon, Sun03Icon } from '@hugeicons/core-free-icons';
+import { Icon } from './Icon';
 import { motion, AnimatePresence, useScroll } from 'motion/react';
 import { USER_INFO } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
@@ -23,11 +24,11 @@ function ThemeToggle() {
     <button
       type="button"
       onClick={toggleTheme}
-      className="w-7 h-7 inline-flex items-center justify-center rounded-full text-neutral-600 hover:text-black dark:text-[#A1A1AA] dark:hover:text-white hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition cursor-pointer active:scale-[0.97]"
+      className="w-8 h-8 inline-flex items-center justify-center rounded-full text-neutral-600 hover:text-black dark:text-[#A1A1AA] dark:hover:text-white hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition cursor-pointer active:scale-[0.97]"
       aria-label={label}
       title={label}
     >
-      {theme === 'dark' ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
+      {theme === 'dark' ? <Icon icon={Sun03Icon} className="w-4 h-4" /> : <Icon icon={Moon02Icon} className="w-4 h-4" />}
     </button>
   );
 }
@@ -68,30 +69,31 @@ export function Header({ activeSection }: HeaderProps) {
 
   return (
     <>
-      <header className="[view-transition-name:site-header] fixed top-0 left-0 right-0 z-40 bg-white/90 dark:bg-[#0A0A0C]/85 backdrop-blur-xl border-b border-black/[0.08] dark:border-white/[0.08] shadow-[0_4px_20px_rgba(0,0,0,0.04)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.6)] transition-colors duration-300">
-        {/* Sleek scroll line */}
-        <motion.div
-          className="h-[2px] bg-[var(--accent)] origin-left"
-          style={{ scaleX: scrollYProgress }}
-          aria-hidden="true"
-        />
+      {/* Floating liquid-glass bar: the page scrolls underneath it */}
+      <header className="[view-transition-name:site-header] fixed top-0 left-0 right-0 z-40 px-3 sm:px-6 pt-3 sm:pt-4 pointer-events-none">
+        <div className="glass-bar pointer-events-auto relative max-w-7xl mx-auto rounded-full pl-5 pr-2 sm:pl-7 sm:pr-2.5 h-14 sm:h-16 flex items-center justify-between overflow-hidden">
+          {/* Sleek scroll line along the bottom edge */}
+          <motion.div
+            className="absolute bottom-0 left-6 right-6 h-[2px] rounded-full bg-[var(--accent)] origin-left"
+            style={{ scaleX: scrollYProgress }}
+            aria-hidden="true"
+          />
 
-        <div className="max-w-7xl mx-auto px-6 sm:px-10 h-16 sm:h-20 flex items-center justify-between">
           {/* Logo with baseline dot */}
           <Link
             href={homePath(lang)}
             aria-label={lang === 'fr' ? 'Luca Leone, accueil' : 'Luca Leone, home'}
             className="text-left group cursor-pointer inline-flex items-baseline"
           >
-            <span className="font-syne text-xl sm:text-2xl font-bold tracking-tight text-neutral-900 dark:text-white transition-colors">
+            <span className="font-syne text-lg sm:text-xl font-bold tracking-tight text-neutral-900 dark:text-white transition-colors">
               Luca Leone<span className="text-[var(--accent)] font-bold drop-shadow-[0_0_1px_rgba(0,0,0,0.5)]">.</span>
             </span>
           </Link>
 
           {/* Right side: sections, then one compact group for site preferences */}
-          <div className="flex items-center gap-2 sm:gap-2.5">
+          <div className="flex items-center gap-1 sm:gap-1.5">
             {/* Nav displayed on desktop (md+) */}
-            <nav className="hidden md:flex items-center gap-1.5 p-1 bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.08] rounded-full text-xs shadow-2xs backdrop-blur-md" aria-label="Navigation">
+            <nav className="hidden md:flex items-center gap-1 text-xs" aria-label="Navigation">
               {navItems.map((item) => (
                 <Link
                   key={item.id}
@@ -99,7 +101,7 @@ export function Header({ activeSection }: HeaderProps) {
                   aria-current={activeSection === item.id ? 'location' : undefined}
                   className={`font-syne cursor-pointer transition px-4 py-2 rounded-full text-xs active:scale-[0.97] ${
                     activeSection === item.id
-                      ? 'bg-[var(--accent)] text-[var(--accent-contrast-text)] font-bold shadow-xs'
+                      ? 'bg-[var(--accent)] text-[var(--accent-contrast-text)] font-bold shadow-[0_4px_14px_-4px_rgba(var(--accent-rgb),0.6)]'
                       : 'text-neutral-600 dark:text-[#A1A1AA] hover:text-black dark:hover:text-white hover:bg-black/[0.05] dark:hover:bg-white/[0.06] font-semibold'
                   }`}
                 >
@@ -109,7 +111,8 @@ export function Header({ activeSection }: HeaderProps) {
             </nav>
 
             {/* Preferences (desktop): language + theme share one pill; on mobile they live in the menu */}
-            <div className="hidden md:flex items-center gap-0.5 p-1 bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.08] rounded-full text-xs font-semibold backdrop-blur-md">
+            <span className="hidden md:block w-px h-5 mx-2 bg-black/10 dark:bg-white/15" aria-hidden="true" />
+            <div className="hidden md:flex items-center gap-0.5 text-xs font-semibold">
                 <Link
                   href={alternatePath(route, 'fr')}
                   keepScroll
@@ -142,19 +145,20 @@ export function Header({ activeSection }: HeaderProps) {
                 </Link>
                 <span className="w-px h-4 mx-1 bg-black/10 dark:bg-white/15" aria-hidden="true" />
                 <ThemeToggle />
-                <CommandPaletteHint />
+                <CommandPaletteHint className="w-8 h-8" />
             </div>
 
+            <CommandPaletteHint className="md:hidden w-10 h-10" />
             {/* Menu button ONLY shown on mobile/small screens (hidden on md+) */}
             <button
               ref={menuButtonRef}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="font-syne md:hidden flex items-center gap-2 px-3.5 py-2 rounded-full border border-black/10 dark:border-white/10 bg-black/[0.04] dark:bg-white/[0.04] hover:bg-black/10 dark:hover:bg-white/10 text-neutral-900 dark:text-white text-xs font-bold cursor-pointer transition shadow-xs active:scale-[0.97]"
+              className="font-syne md:hidden flex items-center gap-2 h-10 px-4 rounded-full bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/10 dark:hover:bg-white/15 text-neutral-900 dark:text-white text-xs font-bold cursor-pointer transition active:scale-[0.97]"
               aria-label={isMenuOpen ? t('nav.close') : t('nav.menu')}
               aria-expanded={isMenuOpen}
               aria-controls="mobile-menu"
             >
-              {isMenuOpen ? <X className="w-3.5 h-3.5" /> : <Menu className="w-3.5 h-3.5" />}
+              {isMenuOpen ? <Icon icon={Cancel01Icon} className="w-4 h-4" /> : <Icon icon={Menu01Icon} className="w-4 h-4" />}
               <span>{isMenuOpen ? t('nav.close') : t('nav.menu')}</span>
             </button>
           </div>
@@ -188,7 +192,7 @@ export function Header({ activeSection }: HeaderProps) {
             // Same path in and out (spatial consistency); leaving is faster than arriving
             exit={{ x: '100%', transition: { duration: 0.2, ease: [0.32, 0.72, 0, 1] } }}
             transition={{ duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
-            className="fixed inset-y-0 right-0 z-[60] w-full sm:w-[380px] bg-white dark:bg-[#0E0E12] border-l border-black/10 dark:border-white/10 shadow-2xl p-8 sm:p-10 flex flex-col justify-between"
+            className="glass-bar fixed inset-y-2 right-2 z-[60] w-[calc(100%-1rem)] sm:w-[380px] rounded-[2rem] p-8 sm:p-10 flex flex-col justify-between"
           >
             <div className="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-4 text-xs text-neutral-500 dark:text-[#A1A1AA]">
               <span className="uppercase tracking-wider font-semibold">{t('nav.menu')}</span>
@@ -221,7 +225,7 @@ export function Header({ activeSection }: HeaderProps) {
                   className="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 text-neutral-900 dark:text-white cursor-pointer transition-colors"
                   aria-label={t('nav.close')}
                 >
-                  <X className="w-4 h-4" />
+                  <Icon icon={Cancel01Icon} className="w-4 h-4" />
                 </button>
               </div>
             </div>
@@ -232,7 +236,7 @@ export function Header({ activeSection }: HeaderProps) {
                   key={item.id}
                   href={sectionPath(lang, item.id)}
                   onClick={closeMenu}
-                  className="w-full text-left group flex items-baseline gap-4 cursor-pointer p-4 rounded-2xl hover:bg-black/5 dark:hover:bg-white/5 border border-transparent hover:border-black/5 dark:hover:border-white/10 transition"
+                  className="w-full text-left group flex items-baseline gap-4 cursor-pointer p-4 rounded-2xl hover:bg-black/5 dark:hover:bg-white/5 transition"
                 >
                   <span className="font-serif italic text-2xl sm:text-3xl text-neutral-500 dark:text-white/40 group-hover:text-[var(--accent)] font-normal select-none transition-colors shrink-0">
                     {item.index}
@@ -255,11 +259,11 @@ export function Header({ activeSection }: HeaderProps) {
                   href={USER_INFO.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 py-2.5 rounded-full bg-black/5 hover:bg-black hover:text-white dark:bg-white/5 dark:hover:bg-white dark:hover:text-black text-neutral-900 dark:text-white border border-black/10 dark:border-white/10 font-bold inline-flex items-center justify-center gap-1.5 shadow-xs transition-colors text-xs cursor-pointer"
+                  className="flex-1 py-2.5 rounded-full bg-black/[0.05] hover:bg-black hover:text-white dark:bg-white/[0.08] dark:hover:bg-white dark:hover:text-black text-neutral-900 dark:text-white font-bold inline-flex items-center justify-center gap-1.5 transition-colors text-xs cursor-pointer"
                 >
-                  <Linkedin className="w-3.5 h-3.5" />
+                  <Icon icon={Linkedin02Icon} className="w-4 h-4" />
                   <span>LinkedIn</span>
-                  <ArrowUpRight className="w-3 h-3" />
+                  <Icon icon={ArrowUpRight01Icon} className="w-3 h-3" />
                 </a>
 
                 <a
@@ -267,7 +271,7 @@ export function Header({ activeSection }: HeaderProps) {
                   className="flex-1 py-2.5 rounded-full bg-neutral-900 text-white hover:bg-[var(--accent)] hover:text-[var(--accent-contrast-text)] dark:bg-white dark:text-black dark:hover:bg-[var(--accent)] dark:hover:text-[var(--accent-contrast-text)] font-bold inline-flex items-center justify-center gap-1 shadow-xs transition-colors text-xs cursor-pointer"
                 >
                   <span>Email</span>
-                  <ArrowUpRight className="w-3 h-3" />
+                  <Icon icon={ArrowUpRight01Icon} className="w-3 h-3" />
                 </a>
               </div>
             </div>

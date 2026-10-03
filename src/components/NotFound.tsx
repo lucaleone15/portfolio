@@ -30,7 +30,7 @@ export function NotFound() {
           </Link>
           <Link
             href={homePath(lang)}
-            className="font-syne py-4 px-8 rounded-full border border-black/15 dark:border-white/20 text-neutral-900 dark:text-white hover:bg-black/[0.05] dark:hover:bg-white/10 text-sm sm:text-base font-bold transition active:scale-[0.97]"
+            className="glass font-syne py-4 px-8 rounded-full text-neutral-900 dark:text-white text-sm sm:text-base font-bold active:scale-[0.97]"
           >
             {lang === 'fr' ? 'Retour à l’accueil' : 'Back to home'}
           </Link>

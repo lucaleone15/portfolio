@@ -14,6 +14,8 @@ import { motion, useMotionValue } from 'motion/react';
 
 const INTERACTIVE = 'a, button, [role="button"], summary, label[for], .cursor-pointer';
 const FIELD = 'input, textarea, select';
+// Areas drawing their own pointer (project images): the dot hides there
+const HIDDEN = '[data-cursor-hidden]';
 
 export function InvertedCursor() {
   const [enabled, setEnabled] = useState(false);
@@ -47,7 +49,7 @@ export function InvertedCursor() {
     const onOver = (e: PointerEvent) => {
       const target = e.target as HTMLElement | null;
       if (!target) return;
-      setOverField(!!target.closest(FIELD));
+      setOverField(!!target.closest(FIELD) || !!target.closest(HIDDEN));
       window.clearTimeout(shrinkTimer);
       if (target.closest(INTERACTIVE)) {
         setHovering(true);

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, Calendar, User } from 'lucide-react';
+import { ArrowLeft01Icon, ArrowLeft02Icon, ArrowRight01Icon, ArrowRight02Icon, Calendar03Icon, UserIcon } from '@hugeicons/core-free-icons';
+import { Icon } from './Icon';
 import { Project } from '../types';
 import { projectAccentVars } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
@@ -86,9 +87,9 @@ export function ProjectDetailView({
           {/* Back button */}
           <Link
             href={backHref}
-            className="font-syne group inline-flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-full bg-black/[0.04] hover:bg-neutral-900 hover:text-white dark:bg-white/[0.06] dark:hover:bg-[var(--accent-primary)] dark:hover:text-[var(--accent-text)] border border-black/15 dark:border-white/15 text-neutral-900 dark:text-white text-xs sm:text-sm font-bold transition duration-200 cursor-pointer active:scale-[0.97] shadow-xs"
+            className="glass font-syne group inline-flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-full text-neutral-900 dark:text-white text-xs sm:text-sm font-bold cursor-pointer active:scale-[0.97]"
           >
-            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+            <Icon icon={ArrowLeft02Icon} className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
             <span>{lang === 'fr' ? 'Retour aux projets' : 'Back to projects'}</span>
           </Link>
 
@@ -102,11 +103,11 @@ export function ProjectDetailView({
             <Link
               href={prevHref}
               rel="prev"
-              className="font-syne inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-black/[0.04] hover:bg-black/[0.08] dark:bg-white/[0.04] dark:hover:bg-white/[0.12] border border-black/15 dark:border-white/15 text-neutral-800 dark:text-white/90 hover:text-black dark:hover:text-white text-xs font-semibold transition cursor-pointer group active:scale-[0.97]"
+              className="glass font-syne inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-neutral-800 dark:text-white/90 hover:text-black dark:hover:text-white text-xs font-semibold cursor-pointer group active:scale-[0.97]"
               title={prevProject.name}
               aria-label={`${lang === 'fr' ? 'Projet précédent' : 'Previous project'} : ${prevProject.name}`}
             >
-              <ChevronLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
+              <Icon icon={ArrowLeft01Icon} className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
               <span className="hidden md:inline">{lang === 'fr' ? 'Projet précédent' : 'Previous project'}</span>
             </Link>
 
@@ -114,12 +115,12 @@ export function ProjectDetailView({
             <Link
               href={nextHref}
               rel="next"
-              className="font-syne inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-black/[0.04] hover:bg-black/[0.08] dark:bg-white/[0.04] dark:hover:bg-white/[0.12] border border-black/15 dark:border-white/15 text-neutral-800 dark:text-white/90 hover:text-black dark:hover:text-white text-xs font-semibold transition cursor-pointer group active:scale-[0.97]"
+              className="glass font-syne inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-neutral-800 dark:text-white/90 hover:text-black dark:hover:text-white text-xs font-semibold cursor-pointer group active:scale-[0.97]"
               title={nextProject.name}
               aria-label={`${lang === 'fr' ? 'Projet suivant' : 'Next project'} : ${nextProject.name}`}
             >
               <span className="hidden md:inline">{lang === 'fr' ? 'Projet suivant' : 'Next project'}</span>
-              <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              <Icon icon={ArrowRight01Icon} className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </div>
         </div>
@@ -128,8 +129,8 @@ export function ProjectDetailView({
         <div className="space-y-4 mb-8 sm:mb-10">
           <div className="flex flex-wrap items-center gap-3">
             <span
-              className="font-syne font-bold px-4 py-1.5 rounded-full text-xs tracking-wide shadow-xs transition-colors text-white"
-              style={{ backgroundColor: 'var(--pa)' }}
+              className="font-syne font-bold px-4 py-1.5 rounded-full text-xs tracking-wide shadow-xs transition-colors"
+              style={{ backgroundColor: 'var(--pa)', color: 'var(--pa-on)' }}
             >
               {project.category}
             </span>
@@ -142,12 +143,12 @@ export function ProjectDetailView({
               className="flex items-center gap-1.5 text-xs font-bold"
               style={{ color: 'var(--pa-text)' }}
             >
-              <Calendar className="w-3.5 h-3.5" />
+              <Icon icon={Calendar03Icon} className="w-3.5 h-3.5" />
               {project.year}
             </span>
             {project.client && (
               <span className="flex items-center gap-1.5 text-xs text-neutral-500 dark:text-[#A1A1AA] font-medium">
-                <User className="w-3.5 h-3.5 text-neutral-400 dark:text-white/50" />
+                <Icon icon={UserIcon} className="w-3.5 h-3.5 text-neutral-400 dark:text-white/50" />
                 {project.client}
               </span>
             )}
@@ -180,7 +181,7 @@ export function ProjectDetailView({
           {/* Shares its view-transition name with this project's card: the card image morphs into it */}
           <div
             style={projectMediaTransition(project.id)}
-            className="relative aspect-[16/9] w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-neutral-200 dark:bg-[#141418] border border-black/10 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.8)] group"
+            className="relative aspect-[16/9] w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-neutral-200 dark:bg-[#141418] shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.8)] group"
           >
             {/* Crossfade: old and new image overlap (no blank gap between them) */}
             <AnimatePresence initial={false}>
@@ -205,22 +206,22 @@ export function ProjectDetailView({
               <>
                 <button
                   onClick={handlePrevImage}
-                  className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/60 hover:bg-black/90 text-white border border-white/20 backdrop-blur-md opacity-90 hover:opacity-100 transition cursor-pointer shadow-lg active:scale-[0.97]"
+                  className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 glass-media p-3 rounded-full transition cursor-pointer active:scale-[0.97]"
                   aria-label={lang === 'fr' ? 'Image précédente' : 'Previous image'}
                 >
-                  <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <Icon icon={ArrowLeft01Icon} className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
 
                 <button
                   onClick={handleNextImage}
-                  className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/60 hover:bg-black/90 text-white border border-white/20 backdrop-blur-md opacity-90 hover:opacity-100 transition cursor-pointer shadow-lg active:scale-[0.97]"
+                  className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 glass-media p-3 rounded-full transition cursor-pointer active:scale-[0.97]"
                   aria-label={lang === 'fr' ? 'Image suivante' : 'Next image'}
                 >
-                  <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <Icon icon={ArrowRight01Icon} className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
 
                 {/* Counter Pill */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-0.5 pl-2 pr-3.5 py-0.5 rounded-full bg-black/70 border border-white/20 backdrop-blur-md">
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 glass-media flex items-center gap-0.5 pl-2 pr-3.5 py-0.5 rounded-full">
                   {projectImages.map((_, idx) => (
                     // 24px touch target (buttons side by side, no overlap); the dot is the inner span
                     <button
@@ -234,7 +235,7 @@ export function ProjectDetailView({
                         className={`block transition-all rounded-full ${
                           currentImageIndex === idx ? 'w-6 h-1.5' : 'w-1.5 h-1.5 bg-white/40 group-hover/dot:bg-white/80'
                         }`}
-                        style={currentImageIndex === idx ? { backgroundColor: 'var(--pa-dark)' } : undefined}
+                        style={currentImageIndex === idx ? { backgroundColor: 'var(--pa)' } : undefined}
                       />
                     </button>
                   ))}
@@ -256,11 +257,10 @@ export function ProjectDetailView({
                   onClick={() => setCurrentImageIndex(idx)}
                   className={`relative w-24 sm:w-32 h-16 sm:h-20 rounded-xl overflow-hidden shrink-0 transition duration-200 cursor-pointer ${
                     currentImageIndex === idx
-                      ? 'ring-2 opacity-100'
-                      : 'border border-black/15 dark:border-white/20 opacity-60 hover:opacity-100 hover:border-black/30 dark:hover:border-white/40'
+                      ? 'opacity-100'
+                      : 'opacity-60 hover:opacity-100'
                   }`}
                   style={currentImageIndex === idx ? {
-                    borderColor: 'var(--pa-text)',
                     boxShadow: '0 0 14px color-mix(in srgb, var(--pa-text) 40%, transparent)'
                   } : undefined}
                 >
@@ -291,7 +291,7 @@ export function ProjectDetailView({
           <Link
             href={nextHref}
             style={projectAccentVars(nextProject)}
-            className="project-accent group grid sm:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] items-center gap-6 sm:gap-10 p-3 sm:p-4 rounded-3xl bg-black/[0.03] hover:bg-black/[0.06] dark:bg-white/[0.04] dark:hover:bg-white/[0.07] border border-black/10 dark:border-white/10 transition-colors cursor-pointer"
+            className="project-accent group grid sm:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] items-center gap-6 sm:gap-10 p-3 sm:p-4 rounded-3xl bg-black/[0.03] hover:bg-black/[0.06] dark:bg-white/[0.04] dark:hover:bg-white/[0.07] transition-colors cursor-pointer"
           >
             <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-neutral-200 dark:bg-[#121215]">
               <div
@@ -327,10 +327,10 @@ export function ProjectDetailView({
                 {lang === 'fr' ? 'Voir le projet' : 'View project'}
                 <span
                   className="inline-flex items-center justify-center w-9 h-9 rounded-full transition-transform duration-300 ease-out group-hover:translate-x-1"
-                  style={{ backgroundColor: 'var(--pa)', color: 'white' }}
+                  style={{ backgroundColor: 'var(--pa)', color: 'var(--pa-on)' }}
                   aria-hidden="true"
                 >
-                  <ArrowRight className="w-4 h-4" />
+                  <Icon icon={ArrowRight02Icon} className="w-4 h-4" />
                 </span>
               </span>
             </div>
@@ -341,7 +341,7 @@ export function ProjectDetailView({
               href={prevHref}
               className="group inline-flex items-center gap-2 min-h-11 px-2 text-sm text-neutral-600 dark:text-[#A1A1AA] hover:text-neutral-900 dark:hover:text-white transition-colors"
             >
-              <ChevronLeft className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" aria-hidden="true" />
+              <Icon icon={ArrowLeft01Icon} className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" />
               {lang === 'fr' ? 'Projet précédent' : 'Previous project'}
               <span className="font-bold uppercase text-neutral-900 dark:text-white">{prevProject.name}</span>
             </Link>
@@ -351,7 +351,7 @@ export function ProjectDetailView({
               href={backHref}
               className="font-syne group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-neutral-900 text-white hover:bg-[var(--accent)] hover:text-[var(--accent-contrast-text)] dark:bg-white dark:text-black dark:hover:bg-[var(--accent)] dark:hover:text-[var(--accent-contrast-text)] text-xs sm:text-sm font-bold transition active:scale-[0.97] cursor-pointer shadow-xs"
             >
-              <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" aria-hidden="true" />
+              <Icon icon={ArrowLeft02Icon} className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" />
               {lang === 'fr' ? 'Retour aux projets' : 'Back to projects'}
             </Link>
           </div>

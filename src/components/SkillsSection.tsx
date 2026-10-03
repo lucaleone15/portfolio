@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight01Icon } from '@hugeicons/core-free-icons';
+import { Icon } from './Icon';
 import { useLanguage } from '../context/LanguageContext';
 
 interface SkillItem {

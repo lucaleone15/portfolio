@@ -1,4 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
+import { Search01Icon } from '@hugeicons/core-free-icons';
+import { Icon } from './Icon';
 import { useLanguage } from '../context/LanguageContext';
 
 /**
@@ -49,23 +51,24 @@ export function CommandPalette() {
   );
 }
 
-/** Small "⌘K" hint button (shows Ctrl K outside Apple platforms). */
+/** Search button opening the palette; the tooltip mentions the ⌘K / Ctrl K shortcut. */
 export function CommandPaletteHint({ className = '' }: { className?: string }) {
   const [isApple, setIsApple] = useState(true);
   const { lang } = useLanguage();
   useEffect(() => {
     setIsApple(/Mac|iPhone|iPad/i.test(navigator.platform || navigator.userAgent));
   }, []);
+  const shortcut = isApple ? '⌘K' : 'Ctrl K';
   return (
     <button
       type="button"
       onClick={() => window.dispatchEvent(new Event(OPEN_COMMAND_PALETTE))}
-      aria-label={lang === 'fr' ? 'Ouvrir la barre de commande' : 'Open command menu'}
-      title={lang === 'fr' ? 'Barre de commande' : 'Command menu'}
-      className={`font-syne h-7 px-2 inline-flex items-center gap-0.5 rounded-full text-[11px] font-bold text-neutral-600 hover:text-black dark:text-[#A1A1AA] dark:hover:text-white hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition cursor-pointer active:scale-[0.97] ${className}`}
+      aria-label={lang === 'fr' ? 'Rechercher' : 'Search'}
+      aria-keyshortcuts={isApple ? 'Meta+K' : 'Control+K'}
+      title={`${lang === 'fr' ? 'Rechercher' : 'Search'} (${shortcut})`}
+      className={`inline-flex items-center justify-center rounded-full text-neutral-600 hover:text-black dark:text-[#A1A1AA] dark:hover:text-white hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition cursor-pointer active:scale-[0.97] ${className}`}
     >
-      {isApple ? '⌘' : 'Ctrl'} K
+      <Icon icon={Search01Icon} className="w-4 h-4" />
     </button>
   );
 }
-
