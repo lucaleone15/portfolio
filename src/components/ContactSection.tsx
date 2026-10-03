@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { USER_INFO } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
 import { Link, privacyPath, sectionPath } from '../router';
-import { Check, Copy, Linkedin, Loader2, Mail, Phone } from 'lucide-react';
+import { Call02Icon, Copy01Icon, Linkedin02Icon, Loading03Icon, Mail01Icon, Tick02Icon } from '@hugeicons/core-free-icons';
+import { Icon } from './Icon';
 import { ContactRow, FloatingField, RevealHeading, RevealWords, Signature } from './ContactExtras';
 
 const TOPICS = {
@@ -182,10 +183,10 @@ export function ContactSection() {
                           type="button"
                           aria-pressed={selected}
                           onClick={() => setFormData({ ...formData, subject: selected ? '' : topic })}
-                          className={`font-syne h-10 px-4 rounded-full text-sm font-bold border transition active:scale-[0.97] cursor-pointer ${
+                          className={`font-syne h-10 px-4 rounded-full text-sm font-bold transition active:scale-[0.97] cursor-pointer ${
                             selected
-                              ? 'bg-white border-white text-[var(--accent-light)]'
-                              : 'border-white/40 text-white hover:border-white hover:bg-white/10'
+                              ? 'bg-white text-[var(--accent-light)]'
+                              : 'bg-white/15 text-white hover:bg-white/25'
                           }`}
                         >
                           {topic}
@@ -290,12 +291,12 @@ export function ContactSection() {
                       >
                         {isSubmitting ? (
                           <>
-                            <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
+                            <Icon icon={Loading03Icon} className="w-4 h-4 animate-spin" />
                             {lang === 'fr' ? 'Envoi…' : 'Sending…'}
                           </>
                         ) : submitStatus === 'success' ? (
                           <>
-                            <Check className="w-4 h-4" aria-hidden="true" />
+                            <Icon icon={Tick02Icon} className="w-4 h-4" />
                             {lang === 'fr' ? 'Message envoyé' : 'Message sent'}
                           </>
                         ) : (
@@ -321,23 +322,23 @@ export function ContactSection() {
           <ul role="list" className="contents">
             <ContactRow
               className="lg:col-start-8 lg:col-span-5 lg:row-start-2 border-t"
-              icon={<Mail className="w-5 h-5" />}
+              icon={<Icon icon={Mail01Icon} className="w-5 h-5" />}
               label={copied ? (lang === 'fr' ? 'Copié !' : 'Copied!') : lang === 'fr' ? 'Email · cliquer pour copier' : 'Email · click to copy'}
               value={PRIMARY_EMAIL}
               href={`mailto:${PRIMARY_EMAIL}`}
               onClick={copyEmailToClipboard}
-              trailing={<Copy className="w-4 h-4" />}
+              trailing={<Icon icon={Copy01Icon} className="w-4 h-4" />}
             />
             <ContactRow
               className="lg:col-start-8 lg:col-span-5 lg:row-start-3"
-              icon={<Phone className="w-5 h-5" />}
+              icon={<Icon icon={Call02Icon} className="w-5 h-5" />}
               label={lang === 'fr' ? 'Téléphone' : 'Phone'}
               value={USER_INFO.phone}
               href={`tel:${USER_INFO.phone.replace(/\s/g, '')}`}
             />
             <ContactRow
               className="lg:col-start-8 lg:col-span-5 lg:row-start-4"
-              icon={<Linkedin className="w-5 h-5" />}
+              icon={<Icon icon={Linkedin02Icon} className="w-5 h-5" />}
               label="LinkedIn"
               value="in/leone-luca"
               href={USER_INFO.linkedin}

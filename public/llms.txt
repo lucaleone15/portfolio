@@ -34,21 +34,21 @@ En parallèle de ses études, il exerce le rôle de Community Manager pour le [K
    - *Rôle* : Conception 360° (UX/UI Design, Développement Web & Communication). Équipe : Marc Bridy, Romain Blanchard, Étienne Bergeon, Liliana Kolmakova, Christophe Cunha et Assya Mghirbi.
    - *Technologies* : Laravel, Vue.js, PHP, MySQL, Figma, Print, Intranet & Réseaux sociaux.
    - *Évaluation* : 6/6.
-   - *Documentation* : [Télécharger le PDF Sangsationnel](https://luca-leone.ch/pdf/ProjInt1_HUG.pdf).
+   - *Documentation* : [Voir le PDF Sangsationnel](https://luca-leone.ch/pdf/ProjInt1_HUG.pdf).
 
 2. **[Karting de Vuiteboeuf](https://luca-leone.ch/projets/karting-vuiteboeuf)** (2026) :
    - *Type* : Expérience professionnelle & gestion de marque sur circuit.
    - *Description* : Accompagnement dans le développement de l'image et de la présence en ligne du circuit. Captation photo et vidéo directement sur le circuit, animation des comptes Instagram et TikTok.
    - *Rôle* : Responsable communication digitale & Community Manager.
    - *Technologies* : Instagram, TikTok, Premiere Pro, Photoshop, Photo & Vidéo sportive.
-   - *Documentation* : [Télécharger le dossier Karting](https://luca-leone.ch/pdf/Repenser-la-communication-digitale-du-Karting-Vuiteboeuf.pdf).
+   - *Documentation* : [Voir le dossier Karting](https://luca-leone.ch/pdf/Repenser-la-communication-digitale-du-Karting-Vuiteboeuf.pdf).
 
 3. **[OceanSight](https://luca-leone.ch/projets/oceansight)** (2026) :
    - *Type* : Application mobile & UI/UX Design (Projet académique HEIG-VD).
    - *Description* : Application collaborative de signalement des déchets marins, valorisation des missions citoyennes de nettoyage et suivi d'impact environnemental.
    - *Rôle* : UI/UX Design & Recherche utilisateur. Collaboration avec Sacha Loskov et Romain Blanchard.
    - *Technologies* : Figma, Prototypage mobile, Tests utilisateurs, Design Thinking. Évaluations : UI 5.4/6, UX 6/6.
-   - *Documentation* : [Télécharger le dossier OceanSight](https://luca-leone.ch/pdf/OceanSight.pdf).
+   - *Documentation* : [Voir le dossier OceanSight](https://luca-leone.ch/pdf/OceanSight.pdf).
 
 4. **[DriveGear](https://luca-leone.ch/projets/drivegear)** (2025) :
    - *Type* : E-Commerce & Web Design (Projet académique HEIG-VD).

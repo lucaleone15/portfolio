@@ -1,14 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useLanguage } from '../context/LanguageContext';
 import { HeroBandeau } from './HeroBandeau';
-import { ImageTrail } from './ImageTrail';
 import { NeonBackdrop } from './NeonBackdrop';
 import { Link, sectionPath } from '../router';
 import { BACHELOR_TOPIC_INDEX, PRESELECT_TOPIC_EVENT } from './ContactSection';
 import { introPending, onIntroLifted } from './IntroCurtain';
-import { UNIFIED_PROJECTS } from '../data/portfolioData';
-import { smallImage } from '../data/images';
 
 // What the ideas become. The longest line ("en contenus engageants.") is 11.6× the font size
 // (measured in the page), so the headline size is derived from the available width ÷ 11.8:
@@ -56,14 +53,10 @@ function RotatingWords({ words, running }: { words: string[]; running: boolean; 
 
 export function Hero() {
   const { lang, t } = useLanguage();
-  const sectionRef = useRef<HTMLElement>(null);
   // Hidden while the intro curtain covers the page, revealed the moment it lifts (or at once
   // when the hero mounts later, e.g. coming back from a project page)
   const [ready, setReady] = useState(() => !introPending());
   useEffect(() => onIntroLifted(() => setReady(true)), []);
-
-  // Trail tiles are ≤ 260px wide: the 640px variants are plenty (≈ 316 KB for all, vs 2 MB)
-  const trailImages = useMemo(() => UNIFIED_PROJECTS.flatMap((p) => p.images).map(smallImage), []);
 
   const reveal = (delay = 0) => ({
     initial: ready ? false : ({ opacity: 0, y: 30 } as const),
@@ -73,14 +66,10 @@ export function Hero() {
 
   return (
     <section
-      ref={sectionRef}
       className="relative min-h-[90dvh] pt-24 sm:pt-32 pb-10 sm:pb-14 overflow-hidden flex flex-col justify-between bg-[#F9F9FB] dark:bg-[#0A0A0C] transition-colors duration-300"
     >
       {/* Accent gradient + grain (same texture as the intro curtain) */}
       <NeonBackdrop />
-
-      {/* Project visuals trailing the pointer (autopilot on touch / when idle) */}
-      <ImageTrail images={trailImages} areaRef={sectionRef} active={ready} />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 w-full py-8 sm:py-12 pointer-events-none">
         <motion.div {...reveal()} className="max-w-5xl space-y-6 sm:space-y-8">
@@ -136,17 +125,17 @@ export function Hero() {
             </p>
           </div>
 
-          {/* CTAs (the content layer lets the pointer through to the trail; buttons opt back in) */}
+          {/* CTAs (the content layer lets the pointer through to the backdrop; buttons opt back in) */}
           <div className="pt-2 sm:pt-4 flex flex-wrap items-center gap-3.5 sm:gap-4 pointer-events-auto">
             <Link
               href={sectionPath(lang, 'projets')}
-              className="font-syne py-4 px-8 sm:px-9 rounded-full bg-[var(--accent)] text-[var(--accent-contrast-text)] hover:opacity-90 text-sm sm:text-base font-bold transition duration-200 inline-flex items-center justify-center cursor-pointer shadow-xs active:scale-[0.97]"
+              className="font-syne py-4 px-8 sm:px-9 rounded-full bg-[var(--accent)] text-[var(--accent-contrast-text)] hover:opacity-90 text-sm sm:text-base font-bold transition duration-200 inline-flex items-center justify-center cursor-pointer shadow-[0_10px_30px_-10px_rgba(var(--accent-rgb),0.7)] active:scale-[0.97]"
             >
               <span>{t('hero.ctaProjects')}</span>
             </Link>
             <Link
               href={sectionPath(lang, 'contact')}
-              className="font-syne py-4 px-8 sm:px-9 rounded-full bg-white/70 hover:bg-white text-neutral-900 border border-black/15 dark:bg-[#0A0A0C]/60 dark:hover:bg-[#0A0A0C]/80 dark:text-white dark:border-white/20 text-sm sm:text-base font-bold backdrop-blur-xl transition duration-200 cursor-pointer active:scale-[0.97] inline-flex items-center justify-center shadow-xs"
+              className="glass font-syne py-4 px-8 sm:px-9 rounded-full text-neutral-900 dark:text-white text-sm sm:text-base font-bold cursor-pointer active:scale-[0.97] inline-flex items-center justify-center"
             >
               <span>{t('hero.ctaContact')}</span>
             </Link>

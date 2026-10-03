@@ -70,7 +70,9 @@ export function PointerHighlight() {
     };
 
     const onPointerOver = (e: PointerEvent) => {
-      const el = (e.target as HTMLElement | null)?.closest<HTMLElement>(INTERACTIVE) ?? null;
+      const over = e.target as HTMLElement | null;
+      // Areas drawing their own pointer (project images) get no outline
+      const el = over?.closest('[data-cursor-hidden]') ? null : (over?.closest<HTMLElement>(INTERACTIVE) ?? null);
       if (el === target) return;
       if (el) {
         // Glide between neighbours; snap if the outline has been hidden for a while

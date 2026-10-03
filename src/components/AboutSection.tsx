@@ -1,4 +1,5 @@
-import { Download } from 'lucide-react';
+import { ArrowUpRight01Icon, Pdf02Icon } from '@hugeicons/core-free-icons';
+import { Icon } from './Icon';
 import { motion } from 'motion/react';
 import { EDUCATION_TIMELINE, EXPERIENCE_TIMELINE, USER_INFO } from '../data/portfolioData';
 import { useEffect, useRef, useState } from 'react';
@@ -76,10 +77,10 @@ export function AboutSection() {
       return next;
     });
   const dotClass = (key: string) =>
-    `absolute -left-8 top-1.5 w-[15px] h-[15px] rounded-full border-2 transition-[background-color,border-color,box-shadow] duration-300 group-hover:bg-[var(--accent)] group-hover:border-[var(--accent)] ${
+    `absolute -left-8 top-1.5 w-[15px] h-[15px] rounded-full transition-[background-color,box-shadow] duration-300 group-hover:bg-[var(--accent)] ${
       litSteps.has(key)
-        ? 'bg-[var(--accent)] border-[var(--accent)] shadow-[0_0_0_4px_rgba(var(--accent-rgb),0.18),0_0_14px_rgba(var(--accent-rgb),0.5)]'
-        : 'bg-[#F9F9FB] dark:bg-[#0A0A0C] border-black/20 dark:border-white/25'
+        ? 'bg-[var(--accent)] shadow-[0_0_0_4px_rgba(var(--accent-rgb),0.18),0_0_14px_rgba(var(--accent-rgb),0.5)]'
+        : 'bg-neutral-300 dark:bg-neutral-700'
     }`;
   useEffect(() => {
     let cleanup: (() => void) | undefined;
@@ -138,14 +139,29 @@ export function AboutSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="border-b border-black/[0.08] dark:border-white/[0.08] pb-6 mb-12 flex items-baseline gap-3.5"
+          className="border-b border-black/[0.08] dark:border-white/[0.08] pb-6 mb-12 flex flex-wrap items-center justify-between gap-4"
         >
-          <span className="font-serif italic text-2xl sm:text-3xl text-neutral-500 dark:text-white/40 font-normal select-none">
-            {t('about.index')}
-          </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl text-neutral-900 dark:text-white tracking-tight font-extrabold">
-            {t('about.title')}
-          </h2>
+          <div className="flex items-baseline gap-3.5">
+            <span className="font-serif italic text-2xl sm:text-3xl text-neutral-500 dark:text-white/40 font-normal select-none">
+              {t('about.index')}
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl text-neutral-900 dark:text-white tracking-tight font-extrabold">
+              {t('about.title')}
+            </h2>
+          </div>
+
+          {/* CV: same place and style as the projects filter button */}
+          <a
+            href={USER_INFO.cv}
+            target="_blank"
+            rel="noopener"
+            className="glass font-syne group px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-neutral-900 dark:text-white inline-flex items-center gap-2 cursor-pointer active:scale-[0.97]"
+          >
+            <Icon icon={Pdf02Icon} className="w-4 h-4" />
+            {lang === 'fr' ? 'Voir mon CV' : 'View my CV'}
+            <Icon icon={ArrowUpRight01Icon} className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            <span className="sr-only">{lang === 'fr' ? '(PDF, nouvel onglet)' : '(PDF, opens in a new tab)'}</span>
+          </a>
         </motion.div>
 
         {/* Top Block: Photo + Presentation/Profil side-by-side */}
@@ -158,7 +174,7 @@ export function AboutSection() {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 flex justify-center lg:justify-start"
           >
-            <div className="relative rounded-2xl overflow-hidden bg-neutral-200 dark:bg-[#141416] aspect-[4/5] max-w-sm sm:max-w-md w-full shadow-2xl border border-black/5 dark:border-white/5">
+            <div className="relative rounded-2xl overflow-hidden bg-neutral-200 dark:bg-[#141416] aspect-[4/5] max-w-sm sm:max-w-md w-full shadow-2xl">
               {/* Full-resolution original (1684×2528): even zoomed ×1.6 on the face, the screen
                   still gets real pixels (a 900px copy looked soft once zoomed) */}
               <img
@@ -204,15 +220,6 @@ export function AboutSection() {
               ))}
             </div>
 
-            {/* CV */}
-            <a
-              href={USER_INFO.cv}
-              download
-              className="font-syne group inline-flex items-center gap-2.5 h-12 px-6 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-black hover:bg-[var(--accent)] hover:text-[var(--accent-contrast-text)] dark:hover:bg-[var(--accent)] dark:hover:text-[var(--accent-contrast-text)] text-sm font-bold transition active:scale-[0.97]"
-            >
-              <Download className="w-4 h-4 transition-transform group-hover:translate-y-0.5" aria-hidden="true" />
-              {lang === 'fr' ? 'Télécharger mon CV (PDF)' : 'Download my CV (PDF)'}
-            </a>
 
             {/* Langues & Centres d'intérêt */}
             <div className="pt-4 border-t border-black/[0.08] dark:border-white/[0.08] grid grid-cols-1 sm:grid-cols-2 gap-6">

@@ -1,6 +1,7 @@
 import { useRef, type MouseEvent, type ReactNode } from 'react';
 import { motion, useInView } from 'motion/react';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight01Icon } from '@hugeicons/core-free-icons';
+import { Icon } from './Icon';
 
 /**
  * Words rise one by one out of their own mask. The trigger is NOT on the words: a word
@@ -162,7 +163,7 @@ export function ContactRow({
           className="absolute inset-0 bg-white [clip-path:inset(0_100%_0_0)] group-hover:[clip-path:inset(0_0_0_0)] transition-[clip-path] duration-500 ease-[cubic-bezier(0.77,0,0.175,1)]"
           aria-hidden="true"
         />
-        <span className="relative w-11 h-11 shrink-0 rounded-full border border-white/35 flex items-center justify-center transition-colors duration-300 group-hover:border-[var(--accent-light)]/30 group-hover:text-[var(--accent-light)]">
+        <span className="relative w-11 h-11 shrink-0 rounded-full bg-white/15 flex items-center justify-center transition-colors duration-300 group-hover:bg-[var(--accent-light)]/10 group-hover:text-[var(--accent-light)]">
           {icon}
         </span>
         <span className="relative min-w-0 flex-1">
@@ -174,7 +175,7 @@ export function ContactRow({
           </span>
         </span>
         <span className="relative shrink-0 transition-[color,transform] duration-300 group-hover:text-[var(--accent-light)] group-hover:translate-x-1" aria-hidden="true">
-          {trailing ?? <ArrowUpRight className="w-5 h-5" />}
+          {trailing ?? <Icon icon={ArrowUpRight01Icon} className="w-5 h-5" />}
         </span>
       </a>
     </li>

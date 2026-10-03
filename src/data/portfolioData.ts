@@ -29,9 +29,9 @@ export interface UnifiedProjectDefinition {
   stack: string[];
   /** English labels of `stack` (same order) */
   stackEn: string[];
-  /** Fill colour behind white text, and text colour on light backgrounds (≥ 4.5:1 both ways) */
+  /** Project colour (taken from the project's own documents): buttons, badges and accent texts */
   accentColor?: string;
-  /** Text colour on the dark theme background (≥ 4.5:1 on #0A0A0C) */
+  /** Same role on the dark theme, when the brand has a lighter variant that reads better there */
   accentColorDark?: string;
   fr: {
     title: string;
@@ -61,11 +61,25 @@ export interface UnifiedProjectDefinition {
   };
 }
 
+/** Text on a fill of this colour: white when it reads (≥ 3:1, bold UI labels), dark otherwise */
+function textOn(hex: string) {
+  const channel = (i: number) => {
+    const c = parseInt(hex.slice(1 + i * 2, 3 + i * 2), 16) / 255;
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  };
+  const luminance = 0.2126 * channel(0) + 0.7152 * channel(1) + 0.0722 * channel(2);
+  return 1.05 / (luminance + 0.05) >= 3 ? '#FFFFFF' : '#0A0A0C';
+}
+
 /** CSS variables for a project's accent; pair with the `project-accent` class (see index.css). */
 export function projectAccentVars(project: Pick<Project, 'accentColor' | 'accentColorDark'>) {
+  const light = project.accentColor || '#C50E36';
+  const dark = project.accentColorDark || light;
   return {
-    '--pa': project.accentColor || 'var(--accent)',
-    '--pa-dark': project.accentColorDark || project.accentColor || 'var(--accent)',
+    '--pa-l': light,
+    '--pa-d': dark,
+    '--pa-on-l': textOn(light),
+    '--pa-on-d': textOn(dark),
   } as React.CSSProperties;
 }
 
@@ -94,8 +108,8 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       'Print & Social Media'
     ],
     stackEn: ['Laravel & Vue.js', 'UI/UX Design', 'Digital Communication', 'Print & Social Media'],
-    accentColor: '#991B1B',
-    accentColorDark: '#F87171',
+    // HUG red, as in the project PDF
+    accentColor: '#E62F2E',
     fr: {
       title: 'HUG',
       subtitle: 'Campagne digitale & plateforme web',
@@ -179,8 +193,8 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       'Premiere Pro'
     ],
     stackEn: ['Social Media Strategy', 'Instagram & TikTok', 'Photo & Video', 'Premiere Pro'],
-    accentColor: '#DC2626',
-    accentColorDark: '#F87171',
+    // Karting Vuiteboeuf red, as in the project PDF (underlines, italics)
+    accentColor: '#EB1D3E',
     fr: {
       title: 'KARTING VUITEBOEUF',
       subtitle: 'Communication digitale & création de contenus',
@@ -252,8 +266,9 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       'Design Mobile'
     ],
     stackEn: ['UI/UX Design', 'Figma & Prototyping', 'User Testing', 'Mobile Design'],
-    accentColor: '#166534',
-    accentColorDark: '#4ADE80',
+    // OceanSight teal, as in the project PDF: the deep one on light, the bright one on dark
+    accentColor: '#275F5F',
+    accentColorDark: '#2EBBA6',
     fr: {
       title: 'OCEANSIGHT',
       subtitle: 'Application mobile de signalement des déchets marins',
@@ -324,7 +339,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       'UI/UX Design'
     ],
     stackEn: ['E-Commerce', 'WordPress & WooCommerce', 'UI/UX Design'],
-    accentColor: '#0369A1',
+    accentColor: '#0277B6',
     accentColorDark: '#38BDF8',
     fr: {
       title: 'DRIVEGEAR',
