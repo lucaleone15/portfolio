@@ -106,7 +106,10 @@ function Figures({ items, source }: { items: CaseFigure[]; source?: string }) {
           <Reveal key={f.label}>
             <dt className="sr-only">{f.label}</dt>
             <dd>
-              <span className="block font-serif font-extrabold tracking-tight leading-none text-[clamp(3.5rem,9vw,7.5rem)]" style={{ color: 'var(--pa-text)' }}>
+              <span
+                className={`block font-serif font-extrabold tracking-tight leading-none ${items.length > 2 ? 'text-[clamp(3rem,6vw,5rem)]' : 'text-[clamp(3.5rem,9vw,7.5rem)]'}`}
+                style={{ color: 'var(--pa-text)' }}
+              >
                 <Counter figure={f} />
               </span>
               <span className="mt-3 block max-w-xs text-base text-neutral-600 dark:text-[#A1A1AA]">{f.label}</span>
@@ -371,7 +374,7 @@ function Block({ block }: { block: CaseBlock; key?: string | number }) {
       );
     case 'strip':
       return (
-        <div className="py-6 -mx-5 sm:mx-0 flex gap-4 overflow-x-auto snap-x snap-mandatory px-5 sm:px-0 sm:grid sm:grid-cols-3 sm:overflow-visible">
+        <div className={`py-6 -mx-5 sm:mx-0 flex gap-4 overflow-x-auto snap-x snap-mandatory px-5 sm:px-0 sm:grid sm:overflow-visible ${block.items.length === 2 ? 'sm:grid-cols-2' : 'sm:grid-cols-3'}`}>
           {block.items.map((im, i) => (
             <Reveal key={im.src} delay={i * 0.08} className="w-[72%] shrink-0 snap-start sm:w-auto">
               <figure>
@@ -416,7 +419,12 @@ function Block({ block }: { block: CaseBlock; key?: string | number }) {
       return (
         <Reveal className="py-16 sm:py-24">
           <figure className="mx-auto max-w-4xl text-center">
-            <blockquote className="font-serif text-[clamp(2rem,5vw,4rem)] font-extrabold leading-[1.1] tracking-tight text-neutral-900 dark:text-white">
+            {/* Short quotes go giant; longer ones stay readable */}
+            <blockquote
+              className={`font-serif font-extrabold leading-[1.15] tracking-tight text-neutral-900 dark:text-white ${
+                block.text.length > 80 ? 'text-[clamp(1.6rem,3.4vw,2.6rem)]' : 'text-[clamp(2rem,5vw,4rem)]'
+              }`}
+            >
               <span style={{ color: 'var(--pa-text)' }}>«&nbsp;</span>
               {block.text}
               <span style={{ color: 'var(--pa-text)' }}>&nbsp;»</span>

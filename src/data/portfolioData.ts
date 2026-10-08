@@ -116,7 +116,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       client: 'Hôpitaux universitaires de Genève · Projet académique',
       category: 'Projet 360°',
       role: 'Conception 360° (UX/UI, Dév & Com)',
-      team: 'Marc Bridy, Romain Blanchard, Étienne Bergeon, Liliana Kolmakova, Christophe Cunha et Assya Mghirbi.',
+      team: 'Marc Bridy, Romain Blanchard, Étienne Bergeon, Liliana Kolmakova, Christophe Cunha et Aissya M’Ghirbi.',
       summary: 'Conception d’une campagne de communication et d’une plateforme digitale gamifiée pour dynamiser les collectes de sang au sein des entreprises partenaires des HUG.',
       overview: 'Projet 360° réalisé dans le cadre d’un projet académique pour les Hôpitaux universitaires de Genève. Sangsationnel transforme le don du sang en une enquête interactive afin de rendre la participation plus engageante. Le projet couvre l’ensemble de l’expérience : conception UX/UI, identité et direction artistique, plateforme web full-stack, contenus pour les réseaux sociaux, affiches, bannières intranet et supports promotionnels. La plateforme permet notamment aux collaborateurs de créer leur profil, de passer un quiz d’éligibilité, d’accéder aux informations de leur collecte et de suivre leur impact. Un dashboard administrateur permet aux entreprises de suivre les statistiques de leurs campagnes.',
       challenges: [
@@ -145,7 +145,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       client: 'Geneva University Hospitals · Academic project',
       category: '360° Project',
       role: '360° Lead (UX/UI, Dev & Com)',
-      team: 'Marc Bridy, Romain Blanchard, Étienne Bergeon, Liliana Kolmakova, Christophe Cunha and Assya Mghirbi.',
+      team: 'Marc Bridy, Romain Blanchard, Étienne Bergeon, Liliana Kolmakova, Christophe Cunha and Aissya M’Ghirbi.',
       summary: 'Design of a communication campaign and gamified digital platform to increase blood donation participation within partner companies of the Geneva University Hospitals.',
       overview: 'A 360° academic project developed for the Geneva University Hospitals. Sangsationnel transforms blood donation into an interactive investigation to make participation more engaging. The project covers the entire experience: UX/UI design, visual identity and art direction, a full-stack web platform, social media content, posters, intranet banners and promotional materials. The platform allows employees to create their profile, complete an eligibility quiz, access information about their company’s blood drive and track their impact. An administrative dashboard allows companies to monitor campaign statistics.',
       challenges: [
