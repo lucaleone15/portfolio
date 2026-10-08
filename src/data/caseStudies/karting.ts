@@ -21,7 +21,7 @@ const KARTING_FR: CaseStudy = {
   brief: [
     { label: 'Le problème', text: 'Une offre attractive, mais une présence en ligne irrégulière et peu variée.' },
     { label: 'Ma réponse', text: 'Des contenus réguliers, tournés sur la piste, et des rendez-vous qui reviennent.' },
-    { label: 'Le résultat', text: '329’000 vues sur Instagram (+72,7 %) et des vues Facebook multipliées par près de six (+479 %).' },
+    { label: 'Le résultat', text: 'Depuis mai : 329’000 vues sur Instagram (+72,7 %) et des vues Facebook multipliées par près de six (+479 %).' },
   ],
   sections: [
     {
@@ -67,12 +67,23 @@ const KARTING_FR: CaseStudy = {
         },
         {
           type: 'gallery',
-          cols: 4,
+          cols: 5,
           items: [
-            img('mes-photo-casque', 1000, 1500, 'Jeune pilote casqué dans son kart, sur la grille de la Sprint Junior Cup'),
-            img('mes-photo-file', 1000, 1500, 'Kart flou de vitesse sur la piste intérieure, feux arrière en traînée'),
-            img('mes-photo-ask', 1000, 1500, 'Coach de l’Académie suisse de karting penché sur un jeune pilote'),
-            img('mes-photo-forsmile', 1000, 1500, 'Participants souriants lors de la journée Karting for Smile'),
+            img('photo-08', 1000, 1500, 'File de karts au départ de la Sprint Junior Cup'),
+            img('photo-12', 1000, 1500, 'Jeune pilote casqué de vert dans son kart, de près'),
+            img('photo-11', 1000, 1500, 'Kart numéro 217 attaquant un virage'),
+            img('photo-09', 1000, 1500, 'Commissaire au drapeau rouge au bord de la piste'),
+            img('photo-07', 1000, 1500, 'Kart seul dans un virage de la piste extérieure'),
+            img('photo-10', 1000, 1500, 'Pilote sortant du paddock couvert vers la piste'),
+            img('photo-13', 1000, 1500, 'Kart passant devant les arbres, de loin'),
+            img('photo-14', 1000, 1500, 'Kart dans un virage, un commissaire en arrière-plan'),
+            img('photo-15', 1000, 1500, 'Kart dans un virage, l’herbe au premier plan'),
+            img('photo-06', 1000, 1500, 'Coach de l’ASK débriefant devant le tableau des chronos'),
+            img('photo-05', 1000, 1500, 'Coach de l’ASK expliquant un tracé à un jeune pilote'),
+            img('photo-04', 1000, 1500, 'Pilote en combinaison Red Bull dans le paddock intérieur'),
+            img('photo-01', 1000, 1500, 'Supercar exposée devant le karting lors du Karting for Smile'),
+            img('photo-02', 1000, 1500, 'Portière papillon ouverte d’une supercar sur le parking'),
+            img('photo-03', 1000, 1500, 'Jante et étrier jaunes d’une Porsche, voitures de collection derrière'),
           ],
         },
       ],
@@ -132,7 +143,7 @@ const KARTING_FR: CaseStudy = {
         {
           type: 'figures',
           items: [
-            { value: 329.3, suffix: ' k', label: 'vues sur Instagram, +72,7 %' },
+            { value: 329.3, suffix: ' k', label: 'vues sur Instagram depuis mai, +72,7 %' },
             { value: 88.8, prefix: '+', suffix: ' %', label: 'd’interactions sur Instagram' },
             { value: 117.5, suffix: ' k', label: 'vues sur le reel le plus regardé' },
             { value: 479, prefix: '+', suffix: ' %', label: 'de vues sur Facebook' },
@@ -174,7 +185,7 @@ const KARTING_EN: CaseStudy = {
   brief: [
     { label: 'The problem', text: 'An attractive offer, but an irregular and repetitive online presence.' },
     { label: 'My answer', text: 'Regular content shot on the track, and formats that come back.' },
-    { label: 'The result', text: '329,000 views on Instagram (+72.7%) and Facebook views up nearly sixfold (+479%).' },
+    { label: 'The result', text: 'Since May: 329,000 views on Instagram (+72.7%) and Facebook views up nearly sixfold (+479%).' },
   ],
   sections: [
     {
@@ -220,12 +231,23 @@ const KARTING_EN: CaseStudy = {
         },
         {
           type: 'gallery',
-          cols: 4,
+          cols: 5,
           items: [
-            img('mes-photo-casque', 1000, 1500, 'Young helmeted driver in his kart on the Sprint Junior Cup grid'),
-            img('mes-photo-file', 1000, 1500, 'Kart blurred by speed on the indoor track, tail lights trailing'),
-            img('mes-photo-ask', 1000, 1500, 'Swiss Karting Academy coach leaning over a young driver'),
-            img('mes-photo-forsmile', 1000, 1500, 'Smiling participants at the Karting for Smile day'),
+            img('photo-08', 1000, 1500, 'Line of karts at the start of the Sprint Junior Cup'),
+            img('photo-12', 1000, 1500, 'Close-up of a young driver in a green helmet in his kart'),
+            img('photo-11', 1000, 1500, 'Kart number 217 attacking a bend'),
+            img('photo-09', 1000, 1500, 'Marshal with a red flag at the trackside'),
+            img('photo-07', 1000, 1500, 'A lone kart in a bend of the outdoor track'),
+            img('photo-10', 1000, 1500, 'Driver leaving the covered paddock for the track'),
+            img('photo-13', 1000, 1500, 'Kart passing in front of the trees, from afar'),
+            img('photo-14', 1000, 1500, 'Kart in a bend, a marshal in the background'),
+            img('photo-15', 1000, 1500, 'Kart in a bend, grass in the foreground'),
+            img('photo-06', 1000, 1500, 'ASK coach debriefing in front of the lap-time board'),
+            img('photo-05', 1000, 1500, 'ASK coach explaining a racing line to a young driver'),
+            img('photo-04', 1000, 1500, 'Driver in a Red Bull suit in the indoor paddock'),
+            img('photo-01', 1000, 1500, 'Supercar on display in front of the karting at Karting for Smile'),
+            img('photo-02', 1000, 1500, 'Open butterfly door of a supercar in the car park'),
+            img('photo-03', 1000, 1500, 'Yellow brake caliper of a Porsche, classic cars behind'),
           ],
         },
       ],
@@ -285,7 +307,7 @@ const KARTING_EN: CaseStudy = {
         {
           type: 'figures',
           items: [
-            { value: 329.3, suffix: 'k', label: 'Instagram views, up 72.7%' },
+            { value: 329.3, suffix: 'k', label: 'Instagram views since May, up 72.7%' },
             { value: 88.8, prefix: '+', suffix: '%', label: 'Instagram interactions' },
             { value: 117.5, suffix: 'k', label: 'views on the most-watched reel' },
             { value: 479, prefix: '+', suffix: '%', label: 'Facebook views' },

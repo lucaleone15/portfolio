@@ -37,7 +37,7 @@ export type CaseBlock =
   | { type: 'compare'; before: CaseImage; after: CaseImage; beforeLabel: string; afterLabel: string; caption: string }
   | { type: 'pair'; items: [CaseImage, CaseImage]; caption: string }
   | { type: 'strip'; items: CaseImage[] }
-  | { type: 'gallery'; items: CaseImage[]; cols?: 1 | 2 | 3 | 4; boxed?: boolean; narrow?: boolean; caption?: string }
+  | { type: 'gallery'; items: CaseImage[]; cols?: 1 | 2 | 3 | 4 | 5; boxed?: boolean; narrow?: boolean; caption?: string }
   | { type: 'image'; image: CaseImage; href?: string }
   | { type: 'quote'; text: string; source: string }
   | { type: 'video'; src: string; poster: string; width: number; height: number; caption: string }
