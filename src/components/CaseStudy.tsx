@@ -472,6 +472,85 @@ function Block({ block }: { block: CaseBlock; key?: string | number }) {
   }
 }
 
+/* ---------- Side table of contents (wide screens) ---------- */
+
+function Toc({ sections }: { sections: CaseStudyData['sections'] }) {
+  const [active, setActive] = useState<string | null>(null);
+  const { lang } = useLanguage();
+
+  useEffect(() => {
+    // The section crossing the upper third of the viewport is the one being read
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(e.target.id);
+        });
+      },
+      { rootMargin: '-30% 0px -60% 0px' },
+    );
+    sections.forEach((s) => {
+      const el = document.getElementById(s.id);
+      if (el) io.observe(el);
+    });
+    // Hidden above the first section (hero) and below the last one (credits)
+    const first = document.getElementById(sections[0].id);
+    const credits = document.getElementById('credits-title');
+    const onScroll = () => {
+      const top = first?.getBoundingClientRect().top ?? 0;
+      const bottom = credits?.getBoundingClientRect().top ?? Infinity;
+      if (top > window.innerHeight * 0.5 || bottom < window.innerHeight * 0.5) setActive(null);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      io.disconnect();
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, [sections]);
+
+  // Over a band in the project colour, the list switches to that band's text colour
+  const onAccent = sections.find((s) => s.id === active)?.tone === 'accent';
+
+  return (
+    <nav
+      aria-label={lang === 'fr' ? 'Sommaire du projet' : 'Project contents'}
+      className={`fixed left-6 top-1/2 z-30 hidden -translate-y-1/2 transition-opacity duration-300 min-[1360px]:block ${active ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+    >
+      <ol
+        className={`space-y-1 border-l transition-colors ${onAccent ? 'border-current/30' : 'border-black/10 dark:border-white/10'}`}
+        style={onAccent ? { color: 'var(--pa-on)' } : undefined}
+      >
+        {sections.map((s) => {
+          const on = s.id === active;
+          return (
+            <li key={s.id}>
+              <a
+                href={`#${s.id}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById(s.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+                aria-current={on ? 'location' : undefined}
+                className={`-ml-px block border-l-2 py-1.5 pl-4 text-[13px] font-semibold transition-colors ${
+                  onAccent
+                    ? on
+                      ? 'border-current'
+                      : 'border-transparent opacity-60 hover:opacity-100'
+                    : on
+                      ? 'text-neutral-900 dark:text-white'
+                      : 'border-transparent text-neutral-500 hover:text-neutral-900 dark:text-[#71717A] dark:hover:text-white'
+                }`}
+                style={on && !onAccent ? { borderColor: 'var(--pa)' } : undefined}
+              >
+                {s.nav}
+              </a>
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
+  );
+}
+
 /* ---------- Page ---------- */
 
 export function CaseStudy({ project, study }: { project: Project; study: CaseStudyData; key?: string }) {
@@ -536,7 +615,7 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
       {/* Same view-transition name as the project card: the card image morphs into this one */}
       <div
         style={projectMediaTransition(project.id)}
-        className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl sm:rounded-3xl bg-neutral-200 dark:bg-[#141418] shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
+        className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl sm:rounded-3xl bg-neutral-200 dark:bg-[#141418] shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
       >
         <img
           src={project.imageUrl}
@@ -562,8 +641,16 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
       </section>
 
       {/* The story */}
+      <Toc sections={study.sections} />
+
       {study.sections.map((section, s) => (
-        <section key={section.id} id={section.id} aria-labelledby={`${section.id}-title`} className="mt-24 sm:mt-32">
+        <section
+          key={section.id}
+          id={section.id}
+          aria-labelledby={`${section.id}-title`}
+          className={section.tone === 'accent' ? 'case-accent mt-24 sm:mt-32 py-16 sm:py-24' : 'mt-24 sm:mt-32'}
+          style={section.tone === 'accent' ? { backgroundColor: 'var(--pa)', color: 'var(--pa-on)' } : undefined}
+        >
           <Reveal>
             <p className="font-syne text-sm font-bold tabular-nums" style={{ color: 'var(--pa-text)' }}>
               {String(s + 1).padStart(2, '0')}
