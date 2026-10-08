@@ -2,6 +2,7 @@ export type Language = 'fr' | 'en';
 
 export interface Project {
   id: string;
+  kind: 'pro' | 'school-client' | 'school';
   name: string;
   number: string;
   title: string;

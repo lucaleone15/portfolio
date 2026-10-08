@@ -17,6 +17,8 @@ export const USER_INFO = {
 export interface UnifiedProjectDefinition {
   /** Also the URL slug: /projets/:id and /en/projects/:id */
   id: string;
+  /** pro: real work · school-client: course project for a real client · school: course project, fictional brief */
+  kind: ProjectKind;
   /** Proper-case project name used in page titles and structured data */
   name: string;
   number: string;
@@ -88,9 +90,19 @@ export function projectAccentVars(project: Pick<Project, 'accentColor' | 'accent
   } as React.CSSProperties;
 }
 
+export type ProjectKind = 'pro' | 'school-client' | 'school';
+
+/** How a project came about, shown on its card and page */
+export const PROJECT_KIND_LABEL: Record<ProjectKind, { fr: string; en: string }> = {
+  pro: { fr: 'Projet professionnel', en: 'Professional work' },
+  'school-client': { fr: 'Académique · vrai client', en: 'Academic · real client' },
+  school: { fr: 'Projet académique', en: 'Academic project' },
+};
+
 export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
   {
     id: 'hug',
+    kind: 'school-client',
     name: 'HUG',
     number: '01',
     year: '2026',
@@ -117,7 +129,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       title: 'HUG',
       subtitle: 'Campagne digitale & plateforme web',
       client: 'Hôpitaux universitaires de Genève · Projet académique',
-      category: 'Projet 360°',
+      category: 'Développement web',
       role: 'Conception 360° (UX/UI, Dév & Com)',
       team: 'Marc Bridy, Romain Blanchard, Étienne Bergeon, Liliana Kolmakova, Christophe Cunha et Aissya M’Ghirbi.',
       hook: '3 inscrits sur 10 repartaient sans donner.',
@@ -148,7 +160,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       title: 'HUG',
       subtitle: 'Digital campaign & web platform',
       client: 'Geneva University Hospitals · Academic project',
-      category: '360° Project',
+      category: 'Web development',
       role: '360° Lead (UX/UI, Dev & Com)',
       team: 'Marc Bridy, Romain Blanchard, Étienne Bergeon, Liliana Kolmakova, Christophe Cunha and Aissya M’Ghirbi.',
       hook: '3 in 10 donors left without giving.',
@@ -178,6 +190,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
   },
   {
     id: 'karting-vuiteboeuf',
+    kind: 'pro',
     name: 'Karting de Vuiteboeuf',
     number: '02',
     year: '2026',
@@ -203,7 +216,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       title: 'KARTING VUITEBOEUF',
       subtitle: 'Communication digitale & création de contenus',
       client: 'Karting de Vuiteboeuf',
-      category: 'Communication Digitale',
+      category: 'Communication digitale',
       role: 'Responsable communication digitale',
       hook: 'De la piste à 329’000 vues.',
       badge: 'Community manager',
@@ -230,7 +243,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       title: 'KARTING VUITEBOEUF',
       subtitle: 'Digital communication & content creation',
       client: 'Karting de Vuiteboeuf',
-      category: 'Digital Communication',
+      category: 'Digital communication',
       role: 'Digital Communications Manager',
       hook: 'From the track to 329,000 views.',
       badge: 'Community manager',
@@ -256,6 +269,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
   },
   {
     id: 'oceansight',
+    kind: 'school',
     name: 'OceanSight',
     number: '03',
     year: '2026',
@@ -279,7 +293,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       title: 'OCEANSIGHT',
       subtitle: 'Application mobile de signalement des déchets marins',
       client: 'Projet académique · HEIG-VD',
-      category: 'UI/UX Design',
+      category: 'UX/UI design',
       role: 'UI/UX Design',
       team: 'Sacha Loskov et Romain Blanchard.',
       hook: '11 millions de tonnes de plastique par an.',
@@ -307,7 +321,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       title: 'OCEANSIGHT',
       subtitle: 'Mobile app for marine waste reporting',
       client: 'Academic project · HEIG-VD',
-      category: 'UI/UX Design',
+      category: 'UX/UI design',
       role: 'UI/UX Design',
       team: 'Sacha Loskov and Romain Blanchard.',
       hook: '11 million tonnes of plastic a year.',
@@ -334,6 +348,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
   },
   {
     id: 'drivegear',
+    kind: 'school',
     name: 'DriveGear',
     number: '04',
     year: '2025',
@@ -356,10 +371,10 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       title: 'DRIVEGEAR',
       subtitle: 'Boutique e-commerce automobile',
       client: 'Cours E-commerce · HEIG-VD',
-      category: 'E-Commerce',
+      category: 'E-commerce',
       role: 'Projet solo : stratégie, design, boutique et marketing',
       hook: 'Une boutique pour passionnés, ouverte de A à Z.',
-      badge: 'E-commerce, projet solo',
+      badge: 'E-commerce manager',
       summary: "Conception d'une boutique e-commerce spécialisée dans l'univers automobile, développée sur WordPress et WooCommerce.",
       overview: "Création de DriveGear, une boutique en ligne dédiée aux passionnés d'automobile. Le projet porte sur la conception de l'expérience utilisateur, la structuration du catalogue, l'identité visuelle et la mise en place de la boutique avec WordPress et WooCommerce. Une attention particulière a été portée à la clarté de la navigation, à la présentation des produits et à la cohérence de l'ensemble de l'expérience d'achat.",
       challenges: [
@@ -383,10 +398,10 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       title: 'DRIVEGEAR',
       subtitle: 'Automotive e-commerce store',
       client: 'E-commerce course · HEIG-VD',
-      category: 'E-Commerce',
+      category: 'E-commerce',
       role: 'Solo project: strategy, design, store and marketing',
       hook: 'A store for car lovers, built from A to Z.',
-      badge: 'E-commerce, solo project',
+      badge: 'E-commerce manager',
       summary: 'Design of an e-commerce store dedicated to the automotive world, built with WordPress and WooCommerce.',
       overview: 'Creation of DriveGear, an online store dedicated to automotive enthusiasts. The project focused on user experience, catalogue structure, visual identity and the implementation of the online store using WordPress and WooCommerce. Particular attention was given to clear navigation, product presentation and a consistent purchasing experience.',
       challenges: [
@@ -409,6 +424,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
   },
   {
     id: 'etoile-blanche',
+    kind: 'school-client',
     name: 'Étoile Blanche',
     number: '05',
     year: '2026',
@@ -423,11 +439,11 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       title: 'ÉTOILE BLANCHE',
       subtitle: 'Communication d’un restaurant lausannois',
       client: 'Restaurant L’Étoile Blanche, Lausanne · Projet académique',
-      category: 'Communication & print',
+      category: 'Communication digitale',
       role: 'Vision globale et cohérence du projet',
       team: 'Sacha Loskov, Romain Blanchard, Ryad Ait-Slimane et Cindy Demont.',
       hook: 'Une nouvelle direction, une nouvelle image.',
-      badge: 'Directeur de projet',
+      badge: 'Chef de projet',
       summary: 'Refonte de la communication du restaurant L’Étoile Blanche à Lausanne : cartes, affichage, anecdotes et réseaux sociaux, autour d’un message rassembleur.',
       overview: 'Projet de l’agence étudiante Zest pour le restaurant L’Étoile Blanche à Lausanne, repris par une nouvelle direction : refonte des cartes, campagne d’affichage pour l’afterwork, affichettes « anecdotes » et contenus pour les réseaux sociaux.',
       challenges: [
@@ -451,7 +467,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       title: 'ÉTOILE BLANCHE',
       subtitle: 'Communication for a Lausanne restaurant',
       client: 'L’Étoile Blanche restaurant, Lausanne · Academic project',
-      category: 'Communication & print',
+      category: 'Digital communication',
       role: 'Overall vision and consistency',
       team: 'Sacha Loskov, Romain Blanchard, Ryad Ait-Slimane and Cindy Demont.',
       hook: 'New owners, a new image.',
@@ -478,6 +494,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
   },
   {
     id: 'f1-pitwall',
+    kind: 'school',
     name: 'F1 PitWall',
     number: '06',
     year: '2025',
@@ -492,10 +509,10 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       title: 'F1 PITWALL',
       subtitle: 'Application de second écran pour la Formule 1',
       client: 'Projet personnel de cours · HEIG-VD',
-      category: 'Concept & UI',
+      category: 'UX/UI design',
       role: 'Concept, données et UI (projet solo)',
       hook: 'Et si on regardait la course comme un ingénieur ?',
-      badge: 'Concept & UI',
+      badge: 'Product designer',
       summary: 'Concept d’une application qui donne aux fans de Formule 1 les données et la stratégie du muret des stands, en direct.',
       overview: 'Projet individuel du cours WebDon : une app de second écran qui affiche le classement détaillé, la télémétrie, la position des pilotes sur le circuit, et des prédictions de course basées sur l’IA et la simulation.',
       challenges: [
@@ -519,10 +536,10 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       title: 'F1 PITWALL',
       subtitle: 'A second-screen app for Formula 1',
       client: 'Individual course project · HEIG-VD',
-      category: 'Concept & UI',
+      category: 'UX/UI design',
       role: 'Concept, data and UI (solo project)',
       hook: 'What if you watched the race like an engineer?',
-      badge: 'Concept & UI',
+      badge: 'Product designer',
       summary: 'Concept for an app that brings the pit wall’s data and strategy to Formula 1 fans, live.',
       overview: 'Individual project for the WebDon course: a second-screen app showing detailed standings, telemetry, drivers’ positions on track, and race predictions powered by AI and simulation.',
       challenges: [
@@ -547,6 +564,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
 
 export const PROJECTS_FR: Project[] = UNIFIED_PROJECTS.map((item) => ({
   id: item.id,
+  kind: item.kind,
   name: item.name,
   number: item.number,
   year: item.year,
@@ -560,6 +578,7 @@ export const PROJECTS_FR: Project[] = UNIFIED_PROJECTS.map((item) => ({
 
 export const PROJECTS_EN: Project[] = UNIFIED_PROJECTS.map((item) => ({
   id: item.id,
+  kind: item.kind,
   name: item.name,
   number: item.number,
   year: item.year,
