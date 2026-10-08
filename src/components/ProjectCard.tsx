@@ -86,7 +86,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           {/* Clipped image wrapper. Its view-transition name matches the project page's main
               visual, so opening the project morphs this image into it (and back). */}
           <div
-            className="w-full h-full overflow-hidden rounded-2xl"
+            className="absolute inset-0 overflow-hidden rounded-2xl"
             style={projectMediaTransition(project.id)}
           >
             <img
