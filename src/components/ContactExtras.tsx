@@ -138,6 +138,7 @@ export function ContactRow({
   external,
   ariaLabel,
   trailing,
+  aside,
   className = '',
 }: {
   icon: ReactNode;
@@ -148,6 +149,8 @@ export function ContactRow({
   external?: boolean;
   ariaLabel?: string;
   trailing?: ReactNode;
+  /** Secondary action beside the row (e.g. copy), outside the link */
+  aside?: ReactNode;
   className?: string;
 }) {
   return (
@@ -178,6 +181,7 @@ export function ContactRow({
           {trailing ?? <Icon icon={ArrowUpRight01Icon} className="w-5 h-5" />}
         </span>
       </a>
+      {aside}
     </li>
   );
 }
