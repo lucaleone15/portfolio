@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { animate, motion, useInView, useReducedMotion } from 'motion/react';
-import { ArrowUpRight01Icon, Pdf02Icon } from '@hugeicons/core-free-icons';
+import { ArrowUpRight01Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
 import { useLanguage } from '../context/LanguageContext';
 import { Project } from '../types';
@@ -584,31 +584,22 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
           </p>
           <p className="mt-5 max-w-3xl text-lg sm:text-xl leading-relaxed text-neutral-600 dark:text-[#A1A1AA]">{study.intro}</p>
           <div className="mt-8 flex flex-wrap gap-3">
-            {study.liveUrl && (
+            {study.links?.map((link, i) => (
               <a
-                href={study.liveUrl}
+                key={link.href}
+                href={link.href}
                 target="_blank"
                 rel="noopener"
-                className="font-syne group inline-flex items-center gap-2 h-12 px-6 rounded-full text-sm font-bold transition active:scale-[0.97] hover:opacity-90"
-                style={{ backgroundColor: 'var(--pa)', color: 'var(--pa-on)' }}
+                className={`font-syne group inline-flex items-center gap-2 h-12 px-6 rounded-full text-sm font-bold transition active:scale-[0.97] ${
+                  i === 0 ? 'hover:opacity-90' : 'glass text-neutral-900 dark:text-white'
+                }`}
+                style={i === 0 ? { backgroundColor: 'var(--pa)', color: 'var(--pa-on)' } : undefined}
               >
-                {study.liveLabel}
+                {link.label}
                 <Icon icon={ArrowUpRight01Icon} className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 <span className="sr-only">{newTab}</span>
               </a>
-            )}
-            {project.pdfUrl && (
-              <a
-                href={project.pdfUrl}
-                target="_blank"
-                rel="noopener"
-                className="glass font-syne inline-flex items-center gap-2 h-12 px-6 rounded-full text-sm font-bold text-neutral-900 dark:text-white active:scale-[0.97]"
-              >
-                <Icon icon={Pdf02Icon} className="w-4 h-4" />
-                {lang === 'fr' ? 'Dossier PDF' : 'PDF report'}
-                <span className="sr-only">{newTab}</span>
-              </a>
-            )}
+            ))}
           </div>
         </Reveal>
 

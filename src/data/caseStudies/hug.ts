@@ -26,8 +26,7 @@ const HUG_FR: CaseStudy = {
     { label: 'Équipe', value: '7 étudiant·e·s' },
     { label: 'Outils', value: 'Laravel, Vue 3, MySQL, Figma' },
   ],
-  liveUrl: 'https://donnez-votre-sang.ch',
-  liveLabel: 'Voir le site en ligne',
+  links: [{ label: 'Voir le site en ligne', href: 'https://donnez-votre-sang.ch' }],
   brief: [
     { label: 'Le problème', text: '30 % des inscrits ne peuvent pas donner le jour de la collecte.' },
     { label: 'Notre réponse', text: 'Vérifier son éligibilité avant de s’inscrire, en menant l’enquête.' },
@@ -259,8 +258,7 @@ const HUG_EN: CaseStudy = {
     { label: 'Team', value: '7 students' },
     { label: 'Tools', value: 'Laravel, Vue 3, MySQL, Figma' },
   ],
-  liveUrl: 'https://donnez-votre-sang.ch',
-  liveLabel: 'Visit the live site',
+  links: [{ label: 'Visit the live site', href: 'https://donnez-votre-sang.ch' }],
   brief: [
     { label: 'The problem', text: '30% of people who book cannot give blood on the day.' },
     { label: 'Our answer', text: 'Check your eligibility before booking, by leading the investigation.' },

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight01Icon, Pdf02Icon } from '@hugeicons/core-free-icons';
+import { ArrowUpRight01Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
 import { Project } from '../types';
 import { useLanguage } from '../context/LanguageContext';
@@ -315,21 +315,6 @@ export function ProjectStory({ project }: { project: Project; key?: string }) {
                   </div>
                 </div>
 
-                {project.pdfUrl && (
-                  <a
-                    href={project.pdfUrl}
-                    target="_blank"
-                    rel="noopener"
-                    className="glass font-syne inline-flex items-center gap-3 pl-5 pr-6 py-3.5 rounded-full text-neutral-900 dark:text-white duration-200 cursor-pointer group active:scale-[0.97]"
-                  >
-                    <Icon icon={Pdf02Icon} className="w-5 h-5" style={{ color: 'var(--pa-text)' }} />
-                    <span className="text-sm sm:text-base font-semibold tracking-wide">
-                      {lang === 'fr' ? 'Voir le document PDF' : 'View the PDF document'}
-                    </span>
-                    <Icon icon={ArrowUpRight01Icon} className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    <span className="sr-only">{lang === 'fr' ? '(nouvel onglet)' : '(opens in a new tab)'}</span>
-                  </a>
-                )}
               </div>
             )}
             </div>

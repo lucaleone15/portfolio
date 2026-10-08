@@ -16,8 +16,11 @@ const KARTING_FR: CaseStudy = {
     { label: 'Équipe', value: 'Seul, avec l’équipe du karting' },
     { label: 'Outils', value: 'Premiere Pro, Instagram, TikTok' },
   ],
-  liveUrl: 'https://www.instagram.com/kartingvuiteboeuf/',
-  liveLabel: 'Voir le compte Instagram',
+  links: [
+    { label: 'Instagram', href: 'https://www.instagram.com/kartingvuiteboeuf/' },
+    { label: 'TikTok', href: 'https://www.tiktok.com/@kartingvuiteboeuf' },
+    { label: 'Facebook', href: 'https://www.facebook.com/KartingVuiteboeuf/' },
+  ],
   brief: [
     { label: 'Le problème', text: 'Une offre attractive, mais une présence en ligne irrégulière et peu variée.' },
     { label: 'Ma réponse', text: 'Des contenus réguliers, tournés sur la piste, et des rendez-vous qui reviennent.' },
@@ -171,8 +174,11 @@ const KARTING_EN: CaseStudy = {
     { label: 'Team', value: 'Solo, with the karting staff' },
     { label: 'Tools', value: 'Premiere Pro, Instagram, TikTok' },
   ],
-  liveUrl: 'https://www.instagram.com/kartingvuiteboeuf/',
-  liveLabel: 'See the Instagram account',
+  links: [
+    { label: 'Instagram', href: 'https://www.instagram.com/kartingvuiteboeuf/' },
+    { label: 'TikTok', href: 'https://www.tiktok.com/@kartingvuiteboeuf' },
+    { label: 'Facebook', href: 'https://www.facebook.com/KartingVuiteboeuf/' },
+  ],
   brief: [
     { label: 'The problem', text: 'An attractive offer, but an irregular and repetitive online presence.' },
     { label: 'My answer', text: 'Regular content shot on the track, and formats that come back.' },

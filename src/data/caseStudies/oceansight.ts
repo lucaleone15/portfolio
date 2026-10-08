@@ -16,8 +16,6 @@ const OCEANSIGHT_FR: CaseStudy = {
     { label: 'Équipe', value: '3 étudiants' },
     { label: 'Outils', value: 'Figma, FigJam' },
   ],
-  liveUrl: 'https://www.figma.com/proto/VOO5Px3QTumBsEX2m7OpwI/Projet-UX-UI?node-id=425-2236&scaling=scale-down',
-  liveLabel: 'Voir le prototype',
   brief: [
     { label: 'Le problème', text: 'Pêcheurs, plaisanciers et ONG croisent des déchets en mer sans savoir comment les signaler.' },
     { label: 'Notre réponse', text: 'Une app collaborative : signaler, rejoindre une mission, suivre son impact.' },
@@ -196,8 +194,6 @@ const OCEANSIGHT_EN: CaseStudy = {
     { label: 'Team', value: '3 students' },
     { label: 'Tools', value: 'Figma, FigJam' },
   ],
-  liveUrl: 'https://www.figma.com/proto/VOO5Px3QTumBsEX2m7OpwI/Projet-UX-UI?node-id=425-2236&scaling=scale-down',
-  liveLabel: 'Open the prototype',
   brief: [
     { label: 'The problem', text: 'Fishers, sailors and NGOs come across waste at sea without knowing how to report it.' },
     { label: 'Our answer', text: 'A collaborative app: report, join a mission, track your impact.' },
