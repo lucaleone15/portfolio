@@ -97,9 +97,9 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     name: 'HUG',
     number: '01',
     year: '2026',
-    imageUrl: '/images/HUG-01.webp',
+    imageUrl: '/images/HUG-cover.webp',
     images: [
-      '/images/HUG-01.webp',
+      '/images/HUG-cover.webp',
       '/images/HUG-02.webp',
       '/images/HUG-03.webp',
       '/images/HUG-04.webp',
