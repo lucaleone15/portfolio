@@ -11,7 +11,7 @@ export * from './types';
 
 /** One case study per project id, in French and English (see types.ts for the writing rules) */
 const CASE_STUDIES: Record<string, Partial<Record<Language, CaseStudy>>> = {
-  'hug-sangsationnel': hug,
+  hug,
   'karting-vuiteboeuf': karting,
   oceansight,
   drivegear,

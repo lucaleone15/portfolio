@@ -126,6 +126,7 @@ const KARTING_FR: CaseStudy = {
             img('resultats-4', 800, 1000, 'Podium et classement de la Sprint 270cc, deuxième manche'),
           ],
         },
+        'Pour ces résultats, j’ai développé un logiciel qui va chercher les classements des courses en ligne et prépare automatiquement les visuels à publier. Les résultats sortent plus vite, toujours au même format, et sans erreur de recopie.',
       ],
     },
     {
@@ -284,6 +285,7 @@ const KARTING_EN: CaseStudy = {
             img('resultats-4', 800, 1000, 'Podium and standings of the Sprint 270cc, second heat'),
           ],
         },
+        'For these results, I developed a piece of software that fetches race standings online and automatically prepares the visuals to post. Results go out faster, always in the same format, and without copying mistakes.',
       ],
     },
     {

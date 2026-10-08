@@ -90,7 +90,7 @@ export function projectAccentVars(project: Pick<Project, 'accentColor' | 'accent
 
 export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
   {
-    id: 'hug-sangsationnel',
+    id: 'hug',
     name: 'HUG',
     number: '01',
     year: '2026',

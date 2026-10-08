@@ -7,7 +7,7 @@ const DRIVEGEAR_FR: CaseStudy = {
   title: 'DriveGear',
   hook: 'Une boutique auto suisse, du nom de domaine à la première campagne.',
   intro:
-    'Seul, j’ai créé DriveGear de A à Z : la stratégie, la marque, la boutique WooCommerce, les contenus, la newsletter et les réseaux sociaux.',
+    'Seul, j’ai créé DriveGear de A à Z : la marque, la boutique WooCommerce, les fiches produits, les contenus, la newsletter et les réseaux sociaux.',
   meta: [
     { label: 'Contexte', value: 'Cours E-commerce, HEIG-VD' },
     { label: 'Année', value: '2025–2026' },
@@ -17,41 +17,18 @@ const DRIVEGEAR_FR: CaseStudy = {
     { label: 'Outils', value: 'WordPress, WooCommerce, Yoast, GA4, Notion' },
   ],
   brief: [
-    { label: 'Le constat', text: 'Les boutiques auto en ligne sont soit très techniques, soit génériques, et rarement pensées pour la Suisse.' },
-    { label: 'Ma réponse', text: 'Une boutique hybride : vente directe, affiliation et objets imprimés à la demande.' },
-    { label: 'Le résultat', text: 'Une boutique en ligne sur drivegear.ch, notée 5.9/6.' },
+    { label: 'L’idée', text: 'Une boutique qui parle à la fois aux passionnés d’automobile et aux conducteurs du quotidien.' },
+    { label: 'Mon rôle', text: 'Tout construire seul : marque, boutique, catalogue, contenus et promotion.' },
+    { label: 'Le résultat', text: 'Une boutique complète et fonctionnelle, notée 5.9/6.' },
   ],
   sections: [
     {
-      id: 'marche',
-      nav: 'Le marché',
-      title: 'Une place à prendre',
+      id: 'idee',
+      nav: 'L’idée',
+      title: 'Une boutique pour passionnés',
       content: [
-        'La Suisse compte des millions de voitures, dont beaucoup ont besoin d’entretien et d’accessoires. En face, Autodoc mise sur le prix, Swisstuning sur le tuning, Amazon sur le volume. Aucun ne parle à la fois aux passionnés et aux conducteurs du quotidien.',
-        {
-          type: 'figures',
-          items: [
-            { value: 4.7, suffix: ' mio', label: 'de voitures en Suisse, dont un tiers ont plus de 10 ans' },
-            { value: 14.9, suffix: ' mia', label: 'de francs de commerce en ligne en Suisse en 2024' },
-          ],
-        },
-        'Deux personas ont guidé le projet : Léo, 27 ans, passionné et pilote amateur, qui veut des gadgets et des vêtements à l’image de sa passion ; et Sofia, 33 ans, conductrice pragmatique, qui veut des accessoires fiables, des conseils clairs et une livraison rapide.',
-      ],
-    },
-    {
-      id: 'modele',
-      nav: 'Le modèle',
-      title: 'Trois façons de vendre',
-      content: [
-        'Pour proposer une offre riche sans stocker de matériel électronique, DriveGear repose sur trois piliers : la vente directe pour l’entretien et l’usage quotidien, l’affiliation pour les gadgets technologiques comme les dashcams, et l’impression à la demande pour les produits lifestyle comme les t-shirts et les posters.',
-        {
-          type: 'figures',
-          items: [
-            { value: 40, suffix: ' %', label: 'du chiffre d’affaires visé en vente directe' },
-            { value: 35, suffix: ' %', label: 'en affiliation' },
-            { value: 25, suffix: ' %', label: 'en impression à la demande' },
-          ],
-        },
+        'Le cours demandait de lancer une vraie boutique en ligne, de A à Z. J’ai choisi l’automobile, une passion : les boutiques existantes sont soit très techniques, soit génériques, et rarement pensées pour la Suisse.',
+        'DriveGear mélange trois façons de vendre : des produits d’entretien en vente directe, des gadgets comme les dashcams en affiliation, et des objets lifestyle, t-shirts et posters, imprimés à la demande. Deux profils m’ont guidé : le passionné qui veut afficher sa passion, et le conducteur pragmatique qui veut des accessoires fiables et une livraison rapide.',
       ],
     },
     {
@@ -60,7 +37,7 @@ const DRIVEGEAR_FR: CaseStudy = {
       tone: 'accent',
       title: 'Une marque à créer',
       content: [
-        'J’ai dessiné le logo, choisi la palette et la typographie, puis créé les visuels des produits pour que la boutique ait une vraie identité, entre passion automobile et lifestyle.',
+        'J’ai dessiné le logo, choisi la palette et la typographie, puis mis en scène les produits aux couleurs de la marque, pour que la boutique ait une vraie identité, entre passion automobile et lifestyle.',
         {
           type: 'gallery',
           cols: 2,
@@ -72,14 +49,13 @@ const DRIVEGEAR_FR: CaseStudy = {
         {
           type: 'gallery',
           cols: 3,
-          caption: 'Quelques visuels des produits de la boutique.',
           items: [
-            img('produit-kit', 1000, 1000, 'Kit de nettoyage intérieur utilisé sur le tableau de bord d’une voiture'),
-            img('produit-gant', 1000, 1000, 'Mains gantées de cuir sur le volant en bois d’une voiture ancienne'),
-            img('produit-led', 1000, 1000, 'Éclairage LED hexagonal au plafond d’un garage'),
-            img('produit-brosse', 1000, 1000, 'Brosse spéciale pour nettoyer les jantes'),
-            img('produit-dashcam', 1000, 1000, 'Caméra embarquée fixée au pare-brise d’une voiture'),
-            img('produit-housse', 1000, 1000, 'Housse de protection posée sur une voiture'),
+            img('produit-spray-studio', 1000, 1000, 'Flacon de rénovateur intérieur DriveGear en studio, sur fond gris'),
+            img('produit-spray-interieur', 1000, 1000, 'Rénovateur intérieur DriveGear utilisé dans l’habitacle d’une voiture'),
+            img('produit-parfum', 1000, 1000, 'Désodorisant premium DriveGear et sa boîte posés dans une voiture'),
+            img('produit-brosse-lavage', 1000, 1000, 'Brosse à jantes en action sur une voiture noire, sous un jet d’eau'),
+            img('produit-gants', 1000, 1000, 'Mains gantées de cuir sur le volant en bois d’une voiture ancienne'),
+            img('produit-housse-jardin', 1000, 1000, 'Housse de protection DriveGear posée sur une voiture devant une maison'),
           ],
         },
       ],
@@ -87,16 +63,8 @@ const DRIVEGEAR_FR: CaseStudy = {
     {
       id: 'boutique',
       nav: 'La boutique',
-      title: 'Du wireframe à la boutique',
+      title: 'La boutique',
       content: [
-        {
-          type: 'compare',
-          before: img('avant-accueil', 1600, 1000, 'Wireframe en noir et blanc de la page d’accueil'),
-          after: img('apres-accueil', 1600, 1000, 'Page d’accueil de DriveGear : « Votre route. Votre style. Votre passion. »'),
-          beforeLabel: 'Wireframe',
-          afterLabel: 'Boutique en ligne',
-          caption: 'La page d’accueil, du wireframe à la boutique en ligne. Faites glisser pour comparer.',
-        },
         'Peu de catégories, une hiérarchie claire et des appels à l’action toujours visibles : la navigation a été pensée pour qu’on comprenne l’offre en quelques secondes, sans la surcharge des grandes plateformes.',
         {
           type: 'steps',
@@ -107,7 +75,7 @@ const DRIVEGEAR_FR: CaseStudy = {
               image: img('site-accueil', 1600, 1000, 'Page d’accueil de DriveGear avec une voiture de sport jaune'),
             },
             {
-              text: 'Chaque fiche produit est optimisée pour le référencement : description, caractéristiques et photos.',
+              text: 'Chacune des 30 fiches produits est rédigée et optimisée pour le référencement : description, caractéristiques et photos.',
               image: img('site-produit', 1600, 1000, 'Fiche produit d’un spray rénovateur pour plastiques, avec prix et boutons d’achat'),
             },
             {
@@ -161,7 +129,7 @@ const DRIVEGEAR_EN: CaseStudy = {
   title: 'DriveGear',
   hook: 'A Swiss car store, from the domain name to the first campaign.',
   intro:
-    'On my own, I built DriveGear from A to Z: the strategy, the brand, the WooCommerce store, the content, the newsletter and the social media.',
+    'On my own, I built DriveGear from A to Z: the brand, the WooCommerce store, the product pages, the content, the newsletter and the social media.',
   meta: [
     { label: 'Context', value: 'E-commerce course, HEIG-VD' },
     { label: 'Year', value: '2025–2026' },
@@ -171,41 +139,18 @@ const DRIVEGEAR_EN: CaseStudy = {
     { label: 'Tools', value: 'WordPress, WooCommerce, Yoast, GA4, Notion' },
   ],
   brief: [
-    { label: 'The gap', text: 'Online car stores are either highly technical or generic, and rarely designed for Switzerland.' },
-    { label: 'My answer', text: 'A hybrid store: direct sales, affiliate products and print-on-demand.' },
-    { label: 'The result', text: 'A live store at drivegear.ch, graded 5.9/6.' },
+    { label: 'The idea', text: 'A store that speaks to car enthusiasts and everyday drivers alike.' },
+    { label: 'My role', text: 'Build everything on my own: brand, store, catalogue, content and promotion.' },
+    { label: 'The result', text: 'A complete, working store, graded 5.9/6.' },
   ],
   sections: [
     {
-      id: 'marche',
-      nav: 'The market',
-      title: 'A gap in the market',
+      id: 'idee',
+      nav: 'The idea',
+      title: 'A store for car lovers',
       content: [
-        'Switzerland has millions of cars, many of them in need of care and accessories. Meanwhile, Autodoc competes on price, Swisstuning on tuning, Amazon on volume. None of them speaks to enthusiasts and everyday drivers at the same time.',
-        {
-          type: 'figures',
-          items: [
-            { value: 4.7, suffix: ' mio', label: 'cars in Switzerland, a third of them over 10 years old' },
-            { value: 14.9, suffix: ' bn', label: 'Swiss francs of online retail in Switzerland in 2024' },
-          ],
-        },
-        'Two personas guided the project: Léo, 27, an enthusiast and amateur racer who wants gadgets and clothes that reflect his passion; and Sofia, 33, a pragmatic driver who wants reliable accessories, clear advice and fast delivery.',
-      ],
-    },
-    {
-      id: 'modele',
-      nav: 'The model',
-      title: 'Three ways to sell',
-      content: [
-        'To offer a rich range without stocking electronics, DriveGear rests on three pillars: direct sales for care and everyday use, affiliate links for tech gadgets such as dashcams, and print-on-demand for lifestyle products such as t-shirts and posters.',
-        {
-          type: 'figures',
-          items: [
-            { value: 40, suffix: '%', label: 'of target revenue from direct sales' },
-            { value: 35, suffix: '%', label: 'from affiliate sales' },
-            { value: 25, suffix: '%', label: 'from print-on-demand' },
-          ],
-        },
+        'The course asked us to launch a real online store, from A to Z. I chose cars, a passion of mine: existing stores are either highly technical or generic, and rarely designed for Switzerland.',
+        'DriveGear mixes three ways of selling: care products sold directly, gadgets such as dashcams through affiliate links, and lifestyle items, t-shirts and posters, printed on demand. Two profiles guided me: the enthusiast who wants to show his passion, and the pragmatic driver who wants reliable accessories and fast delivery.',
       ],
     },
     {
@@ -214,7 +159,7 @@ const DRIVEGEAR_EN: CaseStudy = {
       tone: 'accent',
       title: 'A brand to create',
       content: [
-        'I drew the logo, chose the palette and typeface, then created the product visuals so the store would have a real identity, between car culture and lifestyle.',
+        'I drew the logo, chose the palette and typeface, then staged the products in the brand’s colours, so the store would have a real identity, between car culture and lifestyle.',
         {
           type: 'gallery',
           cols: 2,
@@ -226,14 +171,13 @@ const DRIVEGEAR_EN: CaseStudy = {
         {
           type: 'gallery',
           cols: 3,
-          caption: 'A few of the store’s product visuals.',
           items: [
-            img('produit-kit', 1000, 1000, 'Interior cleaning kit used on a car dashboard'),
-            img('produit-gant', 1000, 1000, 'Leather-gloved hands on the wooden steering wheel of a classic car'),
-            img('produit-led', 1000, 1000, 'Hexagonal LED lighting on a garage ceiling'),
-            img('produit-brosse', 1000, 1000, 'Special brush for cleaning wheel rims'),
-            img('produit-dashcam', 1000, 1000, 'Dashcam mounted on a car windscreen'),
-            img('produit-housse', 1000, 1000, 'Protective cover on a car'),
+            img('produit-spray-studio', 1000, 1000, 'DriveGear interior restorer bottle in a studio, on a grey background'),
+            img('produit-spray-interieur', 1000, 1000, 'DriveGear interior restorer used inside a car'),
+            img('produit-parfum', 1000, 1000, 'DriveGear premium air freshener and its box inside a car'),
+            img('produit-brosse-lavage', 1000, 1000, 'Wheel brush at work on a black car, under a jet of water'),
+            img('produit-gants', 1000, 1000, 'Leather-gloved hands on the wooden steering wheel of a classic car'),
+            img('produit-housse-jardin', 1000, 1000, 'DriveGear protective cover on a car in front of a house'),
           ],
         },
       ],
@@ -241,16 +185,8 @@ const DRIVEGEAR_EN: CaseStudy = {
     {
       id: 'boutique',
       nav: 'The store',
-      title: 'From wireframe to store',
+      title: 'The store',
       content: [
-        {
-          type: 'compare',
-          before: img('avant-accueil', 1600, 1000, 'Black and white wireframe of the home page'),
-          after: img('apres-accueil', 1600, 1000, 'DriveGear home page: “Your road. Your style. Your passion.”'),
-          beforeLabel: 'Wireframe',
-          afterLabel: 'Live store',
-          caption: 'The home page, from wireframe to live store. Drag to compare.',
-        },
         'Few categories, a clear hierarchy and calls to action always in sight: navigation is designed so you understand the offer in seconds, without the clutter of the big marketplaces.',
         {
           type: 'steps',
@@ -261,7 +197,7 @@ const DRIVEGEAR_EN: CaseStudy = {
               image: img('site-accueil', 1600, 1000, 'DriveGear home page with a yellow sports car'),
             },
             {
-              text: 'Every product page is optimised for search: description, specifications and photos.',
+              text: 'Each of the 30 product pages is written and optimised for search: description, specifications and photos.',
               image: img('site-produit', 1600, 1000, 'Product page of a plastic restorer spray, with price and buy buttons'),
             },
             {
