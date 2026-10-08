@@ -12,6 +12,7 @@ export interface Project {
   role: string;
   team?: string;
   hook?: string;
+  badge?: string;
   summary: string;
   overview: string;
   imageUrl: string;
