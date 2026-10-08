@@ -5,6 +5,7 @@ dist-ssr/
 dist-server/
 .data/
 design-originals/
+matiere/
 coverage/
 .DS_Store
 *.log
