@@ -316,8 +316,197 @@ const HUG_FR: CaseStudy = {
   creditsNote: 'Projet d’intégration du Bachelor en Ingénierie des médias, HEIG-VD, pour le Centre de transfusion sanguine des HUG.',
 };
 
+const OS = '/images/case/oceansight/';
+const os = (name: string, width: number, height: number, alt: string, caption?: string): CaseImage => ({
+  src: `${OS}${name}.webp`,
+  width,
+  height,
+  alt,
+  caption,
+});
+
+const OCEANSIGHT_FR: CaseStudy = {
+  kicker: 'HEIG-VD · ODD 14, vie aquatique',
+  title: 'OceanSight',
+  hook: 'Les gens de la mer voient les déchets. Ils ne savent pas à qui les signaler.',
+  intro:
+    'Avec Sacha Loskov et Romain Blanchard, j’ai conçu une app mobile qui permet à n’importe qui de signaler des filets fantômes et des îles de plastique, puis de rejoindre une mission pour les ramasser.',
+  meta: [
+    { label: 'Contexte', value: 'Cours Bases UI/UX, HEIG-VD' },
+    { label: 'Année', value: '2026' },
+    { label: 'Durée', value: 'Un semestre' },
+    { label: 'Mon rôle', value: 'UX/UI design, de la recherche au prototype' },
+    { label: 'Équipe', value: '3 étudiants' },
+    { label: 'Outils', value: 'Figma, FigJam' },
+  ],
+  liveUrl: 'https://www.figma.com/proto/VOO5Px3QTumBsEX2m7OpwI/Projet-UX-UI?node-id=425-2236&scaling=scale-down',
+  liveLabel: 'Voir le prototype',
+  brief: [
+    { label: 'Le problème', text: 'Pêcheurs, plaisanciers et ONG croisent des déchets en mer sans savoir comment les signaler.' },
+    { label: 'Notre réponse', text: 'Une app collaborative : signaler, rejoindre une mission, suivre son impact.' },
+    { label: 'Le résultat', text: '6/6 en UX et 5.4/6 en UI, après des tests avec cinq personnes.' },
+  ],
+  sections: [
+    {
+      id: 'constat',
+      nav: 'Le constat',
+      title: 'Un océan qui se vide',
+      content: [
+        'Le cours nous demandait de choisir un des Objectifs de développement durable de l’ONU et d’y répondre par le design. Après trois mind maps, nous avons retenu la vie aquatique : la pollution y est aussi souvent invisible, et c’est là qu’une app pouvait agir vite.',
+        {
+          type: 'figures',
+          items: [
+            { value: 11, suffix: ' mio', label: 'de tonnes de plastique finissent en mer chaque année' },
+            { value: 6500, label: 'espèces aquatiques menacées' },
+            { value: 17, suffix: ' %', label: 'de biomasse marine en moins d’ici 2100' },
+          ],
+        },
+        'Nous nous sommes concentrés sur deux fléaux concrets : les filets de pêche abandonnés, qui continuent de piéger des animaux, et les îles flottantes de plastique.',
+      ],
+    },
+    {
+      id: 'recherche',
+      nav: 'Les utilisateurs',
+      title: 'Trois profils, un même blocage',
+      content: [
+        {
+          type: 'steps',
+          frame: 'plain',
+          steps: [
+            {
+              text: 'Le pêcheur veut agir et refuse d’abandonner ses filets, mais il se sent impuissant face à l’ampleur des dégâts, et chaque démarche lui fait perdre du temps.',
+              image: os('persona-pecheur', 1200, 680, 'Fiche persona du pêcheur : description, aisance avec la technologie, motivations et points de douleur'),
+            },
+            {
+              text: 'Le plaisancier croise des déchets lors de ses sorties, sans savoir à qui s’adresser. Il veut que son temps en mer ait un impact mesurable.',
+              image: os('persona-plaisancier', 1200, 677, 'Fiche persona du plaisancier, passionné d’océan et de technologie'),
+            },
+            {
+              text: 'La responsable d’ONG, le persona que j’ai construit, croule sous les signalements imprécis : sans photo ni position fiable, impossible d’envoyer une équipe.',
+              image: os('persona-ong', 1200, 677, 'Fiche persona de la responsable d’ONG qui coordonne des missions de dépollution'),
+            },
+          ],
+        },
+        'Les trois profils butaient sur le même point : ils voient le problème, mais rien ne leur permet de le signaler simplement, ni de passer à l’action.',
+      ],
+    },
+    {
+      id: 'idee',
+      nav: 'L’idée',
+      title: 'Trois idées, une seule retenue',
+      content: [
+        {
+          type: 'strip',
+          items: [
+            os('mindmap-vie-aquatique', 1000, 750, 'Mind map dessinée à la main autour de la vie aquatique', 'Vie aquatique'),
+            os('mindmap-consommation', 1000, 751, 'Mind map dessinée à la main autour de la consommation responsable', 'Consommation responsable'),
+            os('mindmap-education', 1000, 753, 'Mind map dessinée à la main autour de l’éducation de qualité', 'Éducation de qualité'),
+          ],
+        },
+        'Notre question : comment simplifier le signalement des filets abandonnés et des îles de plastique ? Nous avons exploré trois pistes : un éco-score qui récompense les pêcheurs, un outil qui prédit les zones d’accumulation grâce aux courants marins, et une app de signalement ouverte à tous.',
+        'Nous avons gardé la troisième. C’est la plus accessible, celle qui rassemble le plus de monde autour d’une même cause, et chaque signalement crée une donnée géolocalisée utile aux ONG comme aux scientifiques.',
+      ],
+    },
+    {
+      id: 'app',
+      nav: 'L’app',
+      title: 'L’app',
+      content: [
+        {
+          type: 'steps',
+          frame: 'mockup',
+          steps: [
+            {
+              text: 'Rejoindre la communauté : un compte suffit pour signaler et participer.',
+              image: os('app-1-accueil', 1600, 1200, 'Écran d’accueil « Join us » sur une photo de déchets plastiques en mer'),
+            },
+            {
+              text: 'Trouver une mission sur la carte ou dans une liste, filtrée par région, type de déchet ou difficulté.',
+              image: os('app-2-carte', 1600, 1200, 'Deux écrans : la carte des missions et la liste des missions avec leurs photos'),
+            },
+            {
+              text: 'Chaque mission indique le lieu, la date et ce qui a été vu. On la rejoint en un geste.',
+              image: os('app-3-mission', 1600, 1200, 'Écran de détail d’une mission : photo, type de déchet, lieu, date et description'),
+            },
+            {
+              text: 'Après une mission, le rapport documente l’action et les espèces sauvées, avec leur fiche.',
+              image: os('app-4-rapport', 1600, 1200, 'Deux écrans : le détail d’une mission et la liste des espèces sauvées'),
+            },
+            {
+              text: 'Le profil montre son impact : missions réalisées, kilos de plastique retirés, espèces sauvées, badges.',
+              image: os('app-5-profil', 1600, 1200, 'Écran du profil avec les badges, les statistiques et le nombre de missions réalisées'),
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'design',
+      nav: 'Le design',
+      title: 'Une identité couleur océan',
+      tone: 'accent',
+      content: [
+        'Pour l’interface, nous avons construit un design system complet : une palette de dix teintes de vert d’eau, une typographie hiérarchisée et une bibliothèque de composants réutilisables, des cartes de mission aux filtres.',
+        {
+          type: 'gallery',
+          cols: 3,
+          items: [
+            os('logo', 1600, 900, 'Logo OceanSight : un globe et le nom de l’app sur fond vert d’eau'),
+            os('design-typo-couleurs', 1600, 900, 'Échelle typographique et palette de dix teintes de vert d’eau'),
+            os('design-composants', 1600, 900, 'Composants de l’interface : cartes de mission, filtres, tri et carte'),
+          ],
+        },
+      ],
+    },
+    {
+      id: 'tests',
+      nav: 'Tests et résultats',
+      title: 'Cinq testeurs, cinq frictions',
+      content: [
+        'Nous avons fait tester le prototype à cinq personnes. Chaque friction est devenue une piste d’amélioration : pouvoir zoomer sur la carte, faire défiler les espèces et les badges, agrandir les photos de la galerie, et valider ses filtres avec un bouton.',
+        {
+          type: 'quote',
+          text: 'Quand je remplis les filtres, je m’attends à avoir un bouton pour les valider.',
+          source: 'Participante aux tests',
+        },
+        'Il nous restait du temps après les tests : nous avons intégré quatre des cinq améliorations dans le prototype final.',
+        {
+          type: 'figures',
+          items: [
+            { value: 6, suffix: '/6', label: 'note en UX' },
+            { value: 5.4, suffix: '/6', label: 'note en UI' },
+            { value: 5, label: 'personnes ont testé le prototype' },
+            { value: 4, label: 'améliorations intégrées après les tests' },
+          ],
+        },
+        {
+          type: 'quote',
+          text: 'Le design system est solide et démontre une bonne compréhension des principes d’accessibilité, de grille et de Gestalt.',
+          source: 'Retour des enseignants',
+        },
+      ],
+    },
+    {
+      id: 'retenu',
+      nav: 'Ce que je retiens',
+      title: 'Ce que je retiens',
+      content: [
+        'J’ai suivi pour la première fois une vraie démarche UX de bout en bout : de la recherche aux personas, de l’idée au prototype, puis aux tests. Les retours des testeurs ont été précieux, chaque friction relevée nous a fait progresser.',
+        'Je suis fier du chemin parcouru avec Sacha et Romain, et encore plus de ce que nous avons appris ensemble.',
+      ],
+    },
+  ],
+  credits: [
+    { name: 'Luca Leone', role: 'UX/UI design' },
+    { name: 'Sacha Loskov', role: 'UX/UI design' },
+    { name: 'Romain Blanchard', role: 'UX/UI design' },
+  ],
+  creditsNote: 'Cours Bases UI/UX du Bachelor en Ingénierie des médias, HEIG-VD. Accompagnement : Marie Kuter et Patrick Donaldson.',
+};
+
 const CASE_STUDIES: Record<string, Partial<Record<Language, CaseStudy>>> = {
   'hug-sangsationnel': { fr: HUG_FR },
+  oceansight: { fr: OCEANSIGHT_FR },
 };
 
 export function getCaseStudy(projectId: string, lang: Language): CaseStudy | null {
