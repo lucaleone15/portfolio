@@ -15,6 +15,8 @@ export interface CaseImage {
   height: number;
   alt: string;
   caption?: string;
+  /** Inside a fixed frame: crop to fill (default) or show whole */
+  fit?: 'cover' | 'contain';
 }
 
 export interface CaseFigure {
@@ -32,7 +34,7 @@ export interface CaseStep {
 
 export type CaseBlock =
   | { type: 'figures'; items: CaseFigure[]; source?: string }
-  | { type: 'steps'; steps: CaseStep[]; frame?: 'screen' | 'plain' }
+  | { type: 'steps'; steps: CaseStep[]; frame?: 'screen' | 'plain' | 'mockup' }
   | { type: 'compare'; before: CaseImage; after: CaseImage; beforeLabel: string; afterLabel: string; caption: string }
   | { type: 'pair'; items: [CaseImage, CaseImage]; caption: string }
   | { type: 'strip'; items: CaseImage[] }
@@ -85,12 +87,13 @@ const HUG_TEAM = [
   { name: 'Marc Bridy', role: 'Marketing et communication' },
 ];
 
+const mockup = (n: number, alt: string): CaseImage => ({ src: `/images/HUG-0${n}.webp`, width: 1920, height: 1440, alt });
+
 const HUG_FR: CaseStudy = {
-  kicker: 'HUG · Centre de transfusion sanguine',
-  title: 'Dossier Sang-26',
-  hook: 'Sur dix personnes inscrites à une collecte de sang, trois repartent sans avoir pu donner.',
-  intro:
-    'Les HUG nous ont demandé de dynamiser les collectes organisées dans les entreprises genevoises. Notre réponse : une enquête qui vérifie l’éligibilité avant l’inscription, et une campagne pour les entreprises.',
+  kicker: 'Hôpitaux universitaires de Genève · Don du sang',
+  title: 'Les HUG mènent l’enquête',
+  hook: 'Sur dix inscrits à une collecte de sang, trois repartaient sans avoir pu donner.',
+  intro: 'Nous avons transformé le questionnaire d’éligibilité en enquête policière, pour que chacun sache avant de s’inscrire s’il peut donner.',
   meta: [
     { label: 'Contexte', value: 'Projet d’intégration HEIG-VD, mandat des HUG' },
     { label: 'Année', value: '2026' },
@@ -102,16 +105,16 @@ const HUG_FR: CaseStudy = {
   liveUrl: 'https://donnez-votre-sang.ch',
   liveLabel: 'Voir le site en ligne',
   brief: [
-    { label: 'Le problème', text: '30 % des inscrits ne remplissent pas les critères le jour de la collecte.' },
-    { label: 'Notre réponse', text: 'Une enquête d’éligibilité à faire avant de s’inscrire, et une campagne pour les entreprises.' },
+    { label: 'Le problème', text: '30 % des inscrits ne peuvent pas donner le jour de la collecte.' },
+    { label: 'Notre réponse', text: 'Vérifier son éligibilité avant de s’inscrire, en menant l’enquête.' },
     { label: 'Le résultat', text: 'Un site en ligne pendant un an et la note maximale : 6/6.' },
   ],
   sections: [
     {
-      id: 'contexte',
-      title: 'Un problème de logistique, pas de générosité',
+      id: 'mandat',
+      title: 'Trois inscrits sur dix, perdus d’avance',
       content: [
-        'Les HUG organisent des collectes de sang directement dans les entreprises partenaires. Mais le jour J, près d’un tiers des inscrits ne remplissent pas les critères : un vaccin récent, un voyage hors d’Europe, une fièvre. Ils se sont libérés pour rien, et le centre de transfusion a réservé un créneau pour rien.',
+        'Les Hôpitaux universitaires de Genève (HUG) sont le groupe hospitalier public du canton. Leur Centre de transfusion sanguine doit garantir des réserves de sang toute l’année, et une partie des dons vient de collectes organisées directement dans les entreprises genevoises, des banques aux maisons de luxe.',
         {
           type: 'figures',
           items: [
@@ -120,7 +123,7 @@ const HUG_FR: CaseStudy = {
           ],
           source: 'Source : brief des HUG, 2026',
         },
-        'Les entreprises, elles, ne recevaient aucun support pour communiquer, et rien ne mettait en avant celles qui s’engagent.',
+        'Le problème se voit le jour J : un vaccin récent, un voyage, une fièvre, et l’inscrit repart sans avoir donné. Notre mandat : dynamiser ces collectes.',
       ],
     },
     {
@@ -131,73 +134,62 @@ const HUG_FR: CaseStudy = {
           type: 'image',
           image: img('equipe', 1600, 588, 'Les sept membres de l’équipe photographiés devant une toise, chacun tenant une pancarte avec son nom et son rôle'),
         },
-        'Nous étions sept, en Scrum, avec un sprint par semaine. Pour la photo d’équipe, nous avons joué le jeu jusqu’au bout.',
-        'J’étais le développeur full-stack du groupe. J’ai réalisé une grande partie du front-end en Vue 3 : les pages publiques, l’enquête, la page de chaque entreprise, le label, le trophée, le kit et les rapports PDF. Le back-end Laravel était partagé. J’ai aussi participé à la recherche du concept et aux choix d’UX/UI.',
+        'Nous étions sept, en Scrum. J’étais le développeur full-stack : une grande partie du front-end en Vue 3 (pages publiques, enquête, pages des entreprises, label, trophée, kit), une part du back-end Laravel, et ma contribution au concept et à l’UX/UI.',
       ],
     },
     {
       id: 'idee',
-      title: 'Du constat à l’idée',
+      title: 'Et si le donneur menait l’enquête ?',
       content: [
-        'Nous avons étudié ce qui existe ailleurs et construit trois personas. Constat : les questionnaires d’éligibilité sont des listes administratives qu’on découvre souvent sur place, quand il est trop tard.',
+        'Les questionnaires d’éligibilité sont des listes administratives qu’on découvre souvent trop tard. Nous en avons fait une enquête : on examine le dossier de l’agent, critère après critère, sans jamais culpabiliser. « Suspect » est devenu « profil recherché ».',
         {
-          type: 'strip',
+          type: 'gallery',
           items: [
-            img('brainstorm', 1000, 1333, 'Tableau de papier couvert de pistes écrites au feutre pendant un brainstorming', 'Brainstorming'),
-            img('persona-lea', 1000, 1340, 'Fiche persona de Léa, 27 ans, chargée de communication', 'Persona principal'),
-            img('wireframe-papier', 1000, 1333, 'Wireframe dessiné à la main d’une page du site', 'Wireframes papier'),
+            img('affiche-loupe', 1000, 1415, 'Affiche noire « Seriez-vous le profil recherché ? » avec une empreinte digitale sous une loupe'),
+            img('affiche-poche', 1000, 1415, 'Affiche « 1 don peut sauver 3 vies, es-tu éligible ? » dans une poche de sang avec un chapeau d’inspecteur'),
           ],
-        },
-        'Après une semaine à trier beaucoup d’idées, nous avons retenu celle-ci : transformer le questionnaire en enquête. La personne qui veut donner devient un agent dont on examine le dossier. Les critères restent les mêmes, mais on les découvre en avançant, sans jamais culpabiliser : « suspect » est devenu « profil recherché ».',
-        {
-          type: 'compare',
-          before: img('cobrande-wireframe', 1280, 1280, 'Wireframe en niveaux de gris de la page d’une entreprise partenaire'),
-          after: img('cobrande-final', 1280, 1280, 'Maquette finale de la page d’une entreprise partenaire, avec compte à rebours et tableau d’indices'),
-          beforeLabel: 'Wireframe',
-          afterLabel: 'Maquette finale',
-          caption: 'La page de chaque entreprise, du wireframe à la maquette finale.',
         },
       ],
     },
     {
       id: 'site',
-      title: 'Le site, page par page',
+      title: 'Du wireframe au site',
       content: [
         {
+          type: 'compare',
+          before: img('avant-wireframe-label', 1440, 900, 'Wireframe en niveaux de gris de la page du label'),
+          after: img('apres-site-label', 1440, 900, 'Page du Label 100 pour Sang sur le site en ligne'),
+          beforeLabel: 'Wireframe',
+          afterLabel: 'Site en ligne',
+          caption: 'La page du label, du wireframe au site en ligne. Faites glisser pour comparer.',
+        },
+        {
           type: 'steps',
-          frame: 'screen',
+          frame: 'mockup',
           steps: [
             {
-              text: 'L’accueil s’adresse aux entreprises : « Les HUG mènent l’enquête ». On y découvre le programme, le trophée et le label, et on peut inscrire son entreprise.',
-              image: img('site-en-ligne', 1440, 900, 'Page d’accueil du site : « Les HUG mènent l’enquête », avec une loupe sur une goutte de sang'),
+              text: 'Chaque entreprise reçoit sa propre page, à ses couleurs : un don sauve trois vies, une mission de sept minutes.',
+              image: mockup(3, 'Ordinateur portable affichant la page d’une entreprise : « Un don de sang sauve 3 vies. Une mission de 7 minutes. »'),
             },
             {
-              text: 'Chaque entreprise reçoit sa propre page, à ses couleurs. Ses collaborateurs y lancent l’enquête : êtes-vous apte à sauver une vie aujourd’hui ?',
-              image: img('quiz-1-intro', 1440, 900, 'Écran d’accueil de l’enquête : « Êtes-vous apte à sauver une vie aujourd’hui ? » à côté d’un dossier confidentiel'),
-            },
-            {
-              text: 'Les questions reprennent les critères officiels, présentés comme les pièces d’un dossier. Certaines n’apparaissent que si une réponse précédente les rend nécessaires.',
-              image: img('quiz-3-question', 1440, 900, 'Question du dossier : avez-vous séjourné en dehors de l’Europe au cours des six derniers mois ?'),
+              text: 'L’enquête reprend les critères officiels du centre de transfusion, posés comme les questions d’un interrogatoire.',
+              image: mockup(7, 'Écran affichant une question de l’enquête : « Avez-vous entre 18 et 75 ans ? » sur un dossier en papier kraft'),
             },
             {
               text: 'Le verdict tombe tout de suite. Éligible : on prend rendez-vous. Sinon : on transmet l’enquête à un collègue.',
-              image: img('quiz-5-eligible', 1440, 900, 'Dossier d’agent tamponné « Éligible », avec le bouton de prise de rendez-vous'),
+              image: { ...img('quiz-5-eligible', 1440, 900, 'Dossier d’agent tamponné « Éligible », avec le bouton de prise de rendez-vous'), fit: 'contain' },
             },
             {
-              text: 'Le Trophée Sangsationnel récompense chaque année les trois entreprises les plus engagées.',
-              image: img('site-trophee', 1440, 900, 'Page du Trophée Sangsationnel avec le trophée en forme de main tenant une goutte'),
+              text: 'Toutes les entreprises qui organisent une collecte reçoivent le Label 100 pour Sang ; le Trophée Sangsationnel récompense les trois plus engagées.',
+              image: mockup(6, 'Ordinateur portable affichant le classement 2026 du trophée avec un podium'),
             },
             {
-              text: 'Le Label 100 pour Sang, lui, est attribué à toutes les entreprises qui organisent une collecte.',
-              image: img('site-label', 1440, 900, 'Page du Label 100 pour Sang avec le badge du label'),
-            },
-            {
-              text: 'Les entreprises téléchargent un kit de communication complet, et le centre de transfusion suit chaque collecte depuis son administration.',
-              image: img('site-kit', 1440, 900, 'Page du kit de communication avec la liste des supports à télécharger'),
+              text: 'Le centre de transfusion suit chaque collecte depuis son administration et envoie un rapport à chaque entreprise.',
+              image: mockup(5, 'Deux tablettes affichant le tableau de bord de l’administration'),
             },
           ],
         },
-        'Côté technique, l’éligibilité est calculée sur le serveur : le navigateur ne reçoit jamais les réponses qui disqualifient, donc impossible de tricher. Et nous ne gardons aucune donnée personnelle, secret médical oblige.',
+        'Côté technique, l’éligibilité est calculée sur le serveur : le navigateur ne reçoit jamais les réponses qui disqualifient. Et aucune donnée personnelle n’est enregistrée, secret médical oblige.',
         {
           type: 'architecture',
           nodes: [
@@ -207,30 +199,6 @@ const HUG_FR: CaseStudy = {
           ],
           links: ['questions', 'résultat'],
           caption: 'Les critères de disqualification ne quittent jamais le serveur.',
-        },
-      ],
-    },
-    {
-      id: 'campagne',
-      title: 'Une campagne autour du site',
-      content: [
-        'L’équipe marketing a décliné l’enquête sur tous les supports : affiches, flyers, bannières intranet, réseaux sociaux et une vidéo pour les écrans des entreprises.',
-        {
-          type: 'video',
-          src: `${IMG}infotv.mp4`,
-          poster: `${IMG}infotv-poster.webp`,
-          width: 1280,
-          height: 720,
-          caption: 'La vidéo diffusée sur les écrans des entreprises.',
-        },
-        {
-          type: 'gallery',
-          items: [
-            img('affiche-loupe', 1000, 1415, 'Affiche noire « Seriez-vous le profil recherché ? » avec une empreinte digitale sous une loupe', 'Affiche A3'),
-            img('affiche-poche', 1000, 1415, 'Affiche « 1 don peut sauver 3 vies, es-tu éligible ? » dans une poche de sang avec un chapeau d’inspecteur', 'Affiche A3'),
-            img('carrousel-1', 900, 1125, 'Visuel Instagram : « Les indices sont formels »', 'Réseaux sociaux'),
-            img('carrousel-2', 900, 1125, 'Visuel Instagram : 700 dons nécessaires par jour', 'Réseaux sociaux'),
-          ],
         },
       ],
     },
@@ -247,28 +215,26 @@ const HUG_FR: CaseStudy = {
             { value: 4, label: 'langues' },
           ],
         },
-        'Avant la fin, nous avons testé le site avec quatre personnes : trois étudiants et un enseignant. L’univers de l’enquête a tout de suite parlé, une testeuse a même eu « l’impression d’arriver dans un escape game, mais sérieux ». Leurs remarques nous ont fait corriger des formulations trop culpabilisantes et des boutons en double.',
-        {
-          type: 'strip',
-          items: [
-            img('tests-1', 1000, 1333, 'Un étudiant et une étudiante testent le site sur un ordinateur portable en prenant des notes', 'Tests utilisateurs'),
-            img('tests-2', 1000, 1333, 'Une testeuse parcourt l’enquête sur un ordinateur portable', 'Tests utilisateurs'),
-          ],
-        },
         {
           type: 'quote',
           text: 'Le concept basé sur une enquête est très original et apporte une approche intéressante pour mieux engager les publics cibles.',
           source: 'Retour des HUG',
         },
-        'L’équipe pédagogique a salué le parti pris de l’enquête, la qualité des rendus et notre gestion de projet : « vous avez fait preuve de beaucoup de dynamisme et de professionnalisme ».',
+        'Avant la fin, quatre personnes ont testé le site. Une testeuse a eu « l’impression d’arriver dans un escape game, mais sérieux » ; leurs remarques nous ont fait corriger des formulations trop culpabilisantes.',
+        {
+          type: 'strip',
+          items: [
+            img('tests-1', 1000, 1333, 'Un étudiant et une étudiante testent le site sur un ordinateur portable en prenant des notes'),
+            img('tests-2', 1000, 1333, 'Une testeuse parcourt l’enquête sur un ordinateur portable'),
+          ],
+        },
       ],
     },
     {
       id: 'apprentissages',
       title: 'Ce que je ferais autrement',
       content: [
-        'Les HUG l’ont relevé, comme nos testeurs : avec 7 minutes, l’enquête est un peu longue et peut décourager. Le site enregistre la question à laquelle les gens abandonnent ; c’est par là que je commencerais pour la raccourcir.',
-        'C’est le premier projet où j’ai livré un produit complet, de la base de données à la mise en ligne, avec une équipe de sept et des retours chaque semaine. J’y ai appris qu’un bon concept se trie autant qu’il se trouve.',
+        'Les HUG l’ont relevé comme nos testeurs : sept minutes, c’est long. Le site enregistre à quelle question les gens abandonnent ; c’est par là que je commencerais pour raccourcir l’enquête.',
       ],
     },
   ],

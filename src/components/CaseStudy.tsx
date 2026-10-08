@@ -124,7 +124,7 @@ function Figures({ items, source }: { items: CaseFigure[]; source?: string }) {
 
 /* ---------- Sticky steps: the visual stays, the text scrolls ---------- */
 
-function StepVisual({ step, frame, active }: { step: CaseStep; frame: 'screen' | 'plain'; active: boolean; key?: string }) {
+function StepVisual({ step, frame, active }: { step: CaseStep; frame: 'screen' | 'plain' | 'mockup'; active: boolean; key?: string }) {
   return (
     <div
       className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${active ? 'opacity-100' : 'opacity-0'}`}
@@ -133,13 +133,15 @@ function StepVisual({ step, frame, active }: { step: CaseStep; frame: 'screen' |
       <Picture
         image={step.image}
         sizes="(min-width: 1024px) 640px, 100vw"
-        className={`max-w-full max-h-full ${frame === 'screen' ? 'w-full h-full object-cover' : 'object-contain rounded-xl'}`}
+        className={`max-w-full max-h-full ${
+          frame === 'plain' ? 'object-contain rounded-xl' : `w-full h-full ${step.image.fit === 'contain' ? 'object-contain' : 'object-cover'}`
+        }`}
       />
     </div>
   );
 }
 
-function Steps({ steps, frame = 'plain' }: { steps: CaseStep[]; frame?: 'screen' | 'plain' }) {
+function Steps({ steps, frame = 'plain' }: { steps: CaseStep[]; frame?: 'screen' | 'plain' | 'mockup' }) {
   const [active, setActive] = useState(0);
   const refs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -160,7 +162,9 @@ function Steps({ steps, frame = 'plain' }: { steps: CaseStep[]; frame?: 'screen'
   const frameClass =
     frame === 'screen'
       ? 'relative w-full aspect-[16/10] overflow-hidden rounded-2xl bg-neutral-900 ring-1 ring-black/10 dark:ring-white/10 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.5)]'
-      : 'relative w-full aspect-[4/3] overflow-hidden rounded-2xl bg-neutral-100 dark:bg-[#141418] p-4 sm:p-6';
+      : frame === 'mockup'
+        ? 'relative w-full aspect-[4/3] overflow-hidden rounded-2xl bg-[#0A0A0C] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.5)]'
+        : 'relative w-full aspect-[4/3] overflow-hidden rounded-2xl bg-neutral-100 dark:bg-[#141418] p-4 sm:p-6';
 
   return (
     <div className="py-6 lg:grid lg:grid-cols-12 lg:gap-12">
@@ -223,8 +227,12 @@ function Compare({ block }: { block: Extract<CaseBlock, { type: 'compare' }> }) 
 
   return (
     <Reveal className="py-6">
-      <figure className="mx-auto max-w-3xl">
-        <div ref={ref} className="relative aspect-square overflow-hidden rounded-2xl bg-neutral-200 dark:bg-[#141418] select-none">
+      <figure className="mx-auto max-w-5xl">
+        <div
+          ref={ref}
+          className="relative overflow-hidden rounded-2xl bg-neutral-200 dark:bg-[#141418] select-none ring-1 ring-black/5 dark:ring-white/10"
+          style={{ aspectRatio: `${block.after.width} / ${block.after.height}` }}
+        >
           <Picture image={block.after} sizes="(min-width: 768px) 768px, 100vw" className="absolute inset-0 w-full h-full object-cover" />
           <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
             <Picture image={block.before} sizes="(min-width: 768px) 768px, 100vw" className="absolute inset-0 w-full h-full object-cover" />
@@ -387,7 +395,7 @@ function Block({ block }: { block: CaseBlock; key?: string | number }) {
       );
     case 'gallery':
       return (
-        <div className="py-6 grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className={`py-6 grid grid-cols-2 gap-4 ${block.items.length === 2 ? 'max-w-3xl' : 'lg:grid-cols-4'}`}>
           {block.items.map((im, i) => (
             <Reveal key={im.src} delay={(i % 4) * 0.08}>
               <figure>
