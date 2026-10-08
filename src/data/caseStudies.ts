@@ -87,8 +87,6 @@ const HUG_TEAM = [
   { name: 'Marc Bridy', role: 'Marketing et communication' },
 ];
 
-const mockup = (n: number, alt: string): CaseImage => ({ src: `/images/HUG-0${n}.webp`, width: 1920, height: 1440, alt });
-
 const HUG_FR: CaseStudy = {
   kicker: 'Hôpitaux universitaires de Genève · Don du sang',
   title: 'Les HUG mènent l’enquête',
@@ -121,7 +119,6 @@ const HUG_FR: CaseStudy = {
             { value: 10, suffix: ' %', label: 'des dons viennent des collectes en entreprise' },
             { value: 30, suffix: ' %', label: 'des inscrits ne peuvent finalement pas donner' },
           ],
-          source: 'Source : brief des HUG, 2026',
         },
         'Le problème se voit le jour J : un vaccin récent, un voyage, une fièvre, et l’inscrit repart sans avoir donné. Notre mandat : dynamiser ces collectes.',
       ],
@@ -142,6 +139,14 @@ const HUG_FR: CaseStudy = {
       title: 'Et si le donneur menait l’enquête ?',
       content: [
         'Les questionnaires d’éligibilité sont des listes administratives qu’on découvre souvent trop tard. Nous en avons fait une enquête : on examine le dossier de l’agent, critère après critère, sans jamais culpabiliser. « Suspect » est devenu « profil recherché ».',
+        {
+          type: 'strip',
+          items: [
+            img('papier-brainstorm', 1000, 1333, 'Tableau de papier couvert de pistes écrites au feutre pendant un brainstorming', 'Brainstorming'),
+            img('papier-wireframe', 1000, 1333, 'Wireframe dessiné à la main d’une page du site', 'Wireframes papier'),
+            img('papier-esquisses', 1000, 1333, 'Esquisses au crayon du label et du trophée', 'Esquisses du label et du trophée'),
+          ],
+        },
         {
           type: 'gallery',
           items: [
@@ -169,23 +174,23 @@ const HUG_FR: CaseStudy = {
           steps: [
             {
               text: 'Chaque entreprise reçoit sa propre page, à ses couleurs : un don sauve trois vies, une mission de sept minutes.',
-              image: mockup(3, 'Ordinateur portable affichant la page d’une entreprise : « Un don de sang sauve 3 vies. Une mission de 7 minutes. »'),
+              image: img('site-1', 1600, 1200, 'Ordinateur portable affichant la page d’une entreprise : « Un don de sang sauve 3 vies. Une mission de 7 minutes. »'),
             },
             {
               text: 'L’enquête reprend les critères officiels du centre de transfusion, posés comme les questions d’un interrogatoire.',
-              image: mockup(7, 'Écran affichant une question de l’enquête : « Avez-vous entre 18 et 75 ans ? » sur un dossier en papier kraft'),
+              image: img('site-2', 1600, 1200, 'Écran affichant une question de l’enquête : « Avez-vous entre 18 et 75 ans ? » sur un dossier en papier kraft'),
             },
             {
               text: 'Le verdict tombe tout de suite. Éligible : on prend rendez-vous. Sinon : on transmet l’enquête à un collègue.',
-              image: { ...img('quiz-5-eligible', 1440, 900, 'Dossier d’agent tamponné « Éligible », avec le bouton de prise de rendez-vous'), fit: 'contain' },
+              image: img('site-3', 1600, 1200, 'Dossier d’agent tamponné « Éligible », avec le bouton de prise de rendez-vous'),
             },
             {
               text: 'Toutes les entreprises qui organisent une collecte reçoivent le Label 100 pour Sang ; le Trophée Sangsationnel récompense les trois plus engagées.',
-              image: mockup(6, 'Ordinateur portable affichant le classement 2026 du trophée avec un podium'),
+              image: img('site-4', 1600, 1200, 'Ordinateur portable affichant le classement 2026 du trophée avec un podium'),
             },
             {
               text: 'Le centre de transfusion suit chaque collecte depuis son administration et envoie un rapport à chaque entreprise.',
-              image: mockup(5, 'Deux tablettes affichant le tableau de bord de l’administration'),
+              image: img('site-5', 1600, 1200, 'Deux tablettes affichant le tableau de bord de l’administration'),
             },
           ],
         },
@@ -210,7 +215,6 @@ const HUG_FR: CaseStudy = {
           type: 'figures',
           items: [
             { value: 6, suffix: '/6', label: 'note du projet' },
-            { value: 8, suffix: '/10', label: 'note moyenne d’utilisabilité de nos testeurs' },
             { value: 24, label: 'questions, environ 7 minutes' },
             { value: 4, label: 'langues' },
           ],
@@ -220,21 +224,13 @@ const HUG_FR: CaseStudy = {
           text: 'Le concept basé sur une enquête est très original et apporte une approche intéressante pour mieux engager les publics cibles.',
           source: 'Retour des HUG',
         },
-        'Avant la fin, quatre personnes ont testé le site. Une testeuse a eu « l’impression d’arriver dans un escape game, mais sérieux » ; leurs remarques nous ont fait corriger des formulations trop culpabilisantes.',
-        {
-          type: 'strip',
-          items: [
-            img('tests-1', 1000, 1333, 'Un étudiant et une étudiante testent le site sur un ordinateur portable en prenant des notes'),
-            img('tests-2', 1000, 1333, 'Une testeuse parcourt l’enquête sur un ordinateur portable'),
-          ],
-        },
       ],
     },
     {
       id: 'apprentissages',
       title: 'Ce que je ferais autrement',
       content: [
-        'Les HUG l’ont relevé comme nos testeurs : sept minutes, c’est long. Le site enregistre à quelle question les gens abandonnent ; c’est par là que je commencerais pour raccourcir l’enquête.',
+        'Les HUG l’ont relevé : sept minutes, c’est long. Le site enregistre à quelle question les gens abandonnent ; c’est par là que je commencerais pour raccourcir l’enquête.',
       ],
     },
   ],
