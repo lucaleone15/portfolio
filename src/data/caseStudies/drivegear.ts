@@ -16,8 +16,6 @@ const DRIVEGEAR_FR: CaseStudy = {
     { label: 'Équipe', value: 'Projet solo' },
     { label: 'Outils', value: 'WordPress, WooCommerce, Yoast, GA4, Notion' },
   ],
-  liveUrl: 'https://drivegear.ch',
-  liveLabel: 'Voir la boutique',
   brief: [
     { label: 'Le constat', text: 'Les boutiques auto en ligne sont soit très techniques, soit génériques, et rarement pensées pour la Suisse.' },
     { label: 'Ma réponse', text: 'Une boutique hybride : vente directe, affiliation et objets imprimés à la demande.' },
@@ -172,8 +170,6 @@ const DRIVEGEAR_EN: CaseStudy = {
     { label: 'Team', value: 'Solo project' },
     { label: 'Tools', value: 'WordPress, WooCommerce, Yoast, GA4, Notion' },
   ],
-  liveUrl: 'https://drivegear.ch',
-  liveLabel: 'Visit the store',
   brief: [
     { label: 'The gap', text: 'Online car stores are either highly technical or generic, and rarely designed for Switzerland.' },
     { label: 'My answer', text: 'A hybrid store: direct sales, affiliate products and print-on-demand.' },

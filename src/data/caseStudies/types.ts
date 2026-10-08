@@ -65,8 +65,8 @@ export interface CaseStudy {
   meta: { label: string; value: string }[];
   /** Main visual at the top of the case study (defaults to the project's card image) */
   hero?: CaseImage;
-  liveUrl?: string;
-  liveLabel?: string;
+  /** Public links shown under the intro (live site, social accounts…) */
+  links?: { label: string; href: string }[];
   brief: { label: string; text: string }[];
   sections: CaseSection[];
   credits: { name: string; role: string }[];

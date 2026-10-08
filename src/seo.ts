@@ -288,7 +288,6 @@ function projectHead(lang: Language, slug: string): HeadData | null {
           keywords: project.stack.join(', '),
           author: { '@id': PERSON_ID },
           creator: { '@id': PERSON_ID },
-          ...(project.pdfUrl ? { associatedMedia: { '@type': 'MediaObject', contentUrl: abs(project.pdfUrl), encodingFormat: 'application/pdf' } } : {}),
         },
         {
           '@type': 'BreadcrumbList',
@@ -417,8 +416,8 @@ export function renderSitemap(lastmod: string): string {
     return `  <url>\n    <loc>${head.canonical}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <priority>${priority}</priority>\n${links}\n  </url>`;
   });
 
-  const pdfs = [{ pdfUrl: USER_INFO.cv }, ...UNIFIED_PROJECTS].filter((p) => p.pdfUrl).map(
-    (p) => `  <url>\n    <loc>${abs(p.pdfUrl!)}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <priority>0.5</priority>\n  </url>`,
+  const pdfs = [USER_INFO.cv].map(
+    (pdf) => `  <url>\n    <loc>${abs(pdf)}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <priority>0.5</priority>\n  </url>`,
   );
 
   return [

@@ -23,9 +23,6 @@ export interface UnifiedProjectDefinition {
   year: string;
   imageUrl: string;
   images: string[];
-  pdfUrl?: string;
-  pdfTitle?: string;
-  pdfTitleEn?: string;
   stack: string[];
   /** English labels of `stack` (same order) */
   stackEn: string[];
@@ -107,8 +104,6 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       '/images/HUG-06.webp',
       '/images/HUG-07.webp'
     ],
-    pdfUrl: '/pdf/ProjInt1_HUG.pdf',
-    pdfTitle: 'Projet Sangsationnel · HUG',
     stack: [
       'Laravel & Vue.js',
       'UI/UX Design',
@@ -195,9 +190,6 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       '/images/KV-06.webp',
       '/images/KV-07.webp'
     ],
-    pdfUrl: '/pdf/Repenser-la-communication-digitale-du-Karting-Vuiteboeuf.pdf',
-    pdfTitle: 'Dossier de communication & contenus · Karting Vuiteboeuf',
-    pdfTitleEn: 'Communication & Content Strategy · Karting Vuiteboeuf',
     stack: [
       'Stratégie Social Media',
       'Instagram & TikTok',
@@ -213,7 +205,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       client: 'Karting de Vuiteboeuf',
       category: 'Communication Digitale',
       role: 'Responsable communication digitale',
-      hook: '329’000 vues, tournées sur la piste.',
+      hook: 'De la piste à 329’000 vues.',
       badge: 'Community manager',
       summary: 'Développement de la présence digitale du Karting de Vuiteboeuf à travers la création de contenus, la gestion des réseaux sociaux et la promotion des offres et événements.',
       overview: "Accompagnement du Karting de Vuiteboeuf dans le développement de son image et de sa présence en ligne. De la conception à la publication, je prends en charge la création de contenus photo et vidéo, l'animation d'Instagram et TikTok ainsi que la communication autour des offres, événements, compétitions et activités du circuit.",
@@ -240,7 +232,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       client: 'Karting de Vuiteboeuf',
       category: 'Digital Communication',
       role: 'Digital Communications Manager',
-      hook: '329,000 views, shot on the track.',
+      hook: 'From the track to 329,000 views.',
       badge: 'Community manager',
       summary: "Developing Karting de Vuiteboeuf's digital presence through content creation, social media management and the promotion of offers and events.",
       overview: 'Supporting Karting de Vuiteboeuf in developing its digital image and online presence. From concept to publication, I manage photo and video content creation, Instagram and TikTok activity, as well as communication around offers, events, competitions and activities at the circuit.',
@@ -273,8 +265,6 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       '/images/OceanSight-02.webp',
       '/images/OceanSight-03.webp'
     ],
-    pdfUrl: '/pdf/OceanSight.pdf',
-    pdfTitle: 'OceanSight · UI/UX Design',
     stack: [
       'UI/UX Design',
       'Figma & Prototypage',
@@ -562,8 +552,6 @@ export const PROJECTS_FR: Project[] = UNIFIED_PROJECTS.map((item) => ({
   year: item.year,
   imageUrl: item.imageUrl,
   images: item.images,
-  pdfUrl: item.pdfUrl,
-  pdfTitle: item.pdfTitle || item.fr.title,
   stack: item.stack,
   accentColor: item.accentColor,
   accentColorDark: item.accentColorDark,
@@ -577,8 +565,6 @@ export const PROJECTS_EN: Project[] = UNIFIED_PROJECTS.map((item) => ({
   year: item.year,
   imageUrl: item.imageUrl,
   images: item.images,
-  pdfUrl: item.pdfUrl,
-  pdfTitle: item.pdfTitleEn || item.pdfTitle || item.en.title,
   stack: item.stackEn,
   accentColor: item.accentColor,
   accentColorDark: item.accentColorDark,
