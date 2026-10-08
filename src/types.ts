@@ -11,6 +11,7 @@ export interface Project {
   category: string;
   role: string;
   team?: string;
+  hook?: string;
   summary: string;
   overview: string;
   imageUrl: string;

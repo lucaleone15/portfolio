@@ -171,9 +171,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </div>
           </div>
 
-          {/* Mini Description */}
-          <p className="text-xs sm:text-sm text-neutral-600 dark:text-[#A1A1AA] leading-relaxed line-clamp-2">
-            {project.summary}
+          {/* Hook: the problem or the stake in one sentence (falls back to the summary) */}
+          <p className={project.hook ? 'text-sm sm:text-base font-medium text-neutral-800 dark:text-[#E4E4E7] leading-snug line-clamp-2' : 'text-xs sm:text-sm text-neutral-600 dark:text-[#A1A1AA] leading-relaxed line-clamp-2'}>
+            {project.hook ?? project.summary}
           </p>
         </div>
       </div>
