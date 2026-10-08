@@ -64,6 +64,8 @@ export interface CaseStudy {
   hook: string;
   intro: string;
   meta: { label: string; value: string }[];
+  /** Main visual at the top of the case study (defaults to the project's card image) */
+  hero?: CaseImage;
   liveUrl?: string;
   liveLabel?: string;
   brief: { label: string; text: string }[];
@@ -104,6 +106,7 @@ const HUG_FR: CaseStudy = {
     { label: 'Équipe', value: '7 étudiant·e·s' },
     { label: 'Outils', value: 'Laravel, Vue 3, MySQL, Figma' },
   ],
+  hero: img('hero', 1920, 1200, 'Ordinateur portable sur fond rouge affichant la page d’accueil « Les HUG mènent l’enquête »'),
   liveUrl: 'https://donnez-votre-sang.ch',
   liveLabel: 'Voir le site en ligne',
   brief: [

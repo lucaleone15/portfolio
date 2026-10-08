@@ -617,17 +617,29 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
         style={projectMediaTransition(project.id)}
         className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl sm:rounded-3xl bg-neutral-200 dark:bg-[#141418] shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
       >
-        <img
-          src={project.imageUrl}
-          srcSet={imageSrcSet(project.imageUrl)}
-          sizes="(min-width: 1152px) 1088px, 100vw"
-          alt={`${project.name} – ${project.subtitle}`}
-          width={1920}
-          height={1200}
-          fetchPriority="high"
-          decoding="async"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+        {study.hero ? (
+          <img
+            src={study.hero.src}
+            alt={study.hero.alt}
+            width={study.hero.width}
+            height={study.hero.height}
+            fetchPriority="high"
+            decoding="async"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        ) : (
+          <img
+            src={project.imageUrl}
+            srcSet={imageSrcSet(project.imageUrl)}
+            sizes="(min-width: 1152px) 1088px, 100vw"
+            alt={`${project.name} – ${project.subtitle}`}
+            width={1920}
+            height={1200}
+            fetchPriority="high"
+            decoding="async"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        )}
       </div>
 
       {/* In short: for the 60-second read */}
