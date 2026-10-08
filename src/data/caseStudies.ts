@@ -162,11 +162,11 @@ const HUG_FR: CaseStudy = {
       content: [
         {
           type: 'compare',
-          before: img('avant-wireframe-label', 1440, 900, 'Wireframe en niveaux de gris de la page du label'),
-          after: img('apres-site-label', 1440, 900, 'Page du Label 100 pour Sang sur le site en ligne'),
+          before: img('avant-wireframe-entreprise', 1440, 1080, 'Wireframe en niveaux de gris du haut de la page d’une entreprise partenaire'),
+          after: img('apres-site-entreprise', 1440, 1080, 'Haut de la page d’une entreprise partenaire sur le site en ligne'),
           beforeLabel: 'Wireframe',
           afterLabel: 'Site en ligne',
-          caption: 'La page du label, du wireframe au site en ligne. Faites glisser pour comparer.',
+          caption: 'La page d’une entreprise, du wireframe au site en ligne. Faites glisser pour comparer.',
         },
         {
           type: 'steps',
