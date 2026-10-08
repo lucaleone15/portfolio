@@ -40,7 +40,7 @@ export interface UnifiedProjectDefinition {
     category: string;
     role: string;
     team?: string;
-    /** One intriguing sentence on the project card: the problem or the stake */
+    /** A few words written over the card image: the problem or the stake */
     hook?: string;
     summary: string;
     overview: string;
@@ -55,7 +55,7 @@ export interface UnifiedProjectDefinition {
     category: string;
     role: string;
     team?: string;
-    /** One intriguing sentence on the project card: the problem or the stake */
+    /** A few words written over the card image: the problem or the stake */
     hook?: string;
     summary: string;
     overview: string;
@@ -121,7 +121,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       category: 'Projet 360°',
       role: 'Conception 360° (UX/UI, Dév & Com)',
       team: 'Marc Bridy, Romain Blanchard, Étienne Bergeon, Liliana Kolmakova, Christophe Cunha et Aissya M’Ghirbi.',
-      hook: 'Sur dix inscrits à une collecte de sang, trois repartaient sans avoir pu donner.',
+      hook: '3 inscrits sur 10 repartaient sans donner.',
       summary: 'Conception d’une campagne de communication et d’une plateforme digitale gamifiée pour dynamiser les collectes de sang au sein des entreprises partenaires des HUG.',
       overview: 'Projet 360° réalisé dans le cadre d’un projet académique pour les Hôpitaux universitaires de Genève. Sangsationnel transforme le don du sang en une enquête interactive afin de rendre la participation plus engageante. Le projet couvre l’ensemble de l’expérience : conception UX/UI, identité et direction artistique, plateforme web full-stack, contenus pour les réseaux sociaux, affiches, bannières intranet et supports promotionnels. La plateforme permet notamment aux collaborateurs de créer leur profil, de passer un quiz d’éligibilité, d’accéder aux informations de leur collecte et de suivre leur impact. Un dashboard administrateur permet aux entreprises de suivre les statistiques de leurs campagnes.',
       challenges: [
@@ -151,7 +151,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       category: '360° Project',
       role: '360° Lead (UX/UI, Dev & Com)',
       team: 'Marc Bridy, Romain Blanchard, Étienne Bergeon, Liliana Kolmakova, Christophe Cunha and Aissya M’Ghirbi.',
-      hook: 'Three in ten people booked to give blood were leaving without being able to.',
+      hook: '3 in 10 donors left without giving.',
       summary: 'Design of a communication campaign and gamified digital platform to increase blood donation participation within partner companies of the Geneva University Hospitals.',
       overview: 'A 360° academic project developed for the Geneva University Hospitals. Sangsationnel transforms blood donation into an interactive investigation to make participation more engaging. The project covers the entire experience: UX/UI design, visual identity and art direction, a full-stack web platform, social media content, posters, intranet banners and promotional materials. The platform allows employees to create their profile, complete an eligibility quiz, access information about their company’s blood drive and track their impact. An administrative dashboard allows companies to monitor campaign statistics.',
       challenges: [
@@ -207,7 +207,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       client: 'Karting de Vuiteboeuf',
       category: 'Communication Digitale',
       role: 'Responsable communication digitale',
-      hook: 'Comment faire ressentir la vitesse d’un circuit à travers l’écran d’un téléphone ?',
+      hook: 'La vitesse d’un circuit, dans un téléphone.',
       summary: 'Développement de la présence digitale du Karting de Vuiteboeuf à travers la création de contenus, la gestion des réseaux sociaux et la promotion des offres et événements.',
       overview: "Accompagnement du Karting de Vuiteboeuf dans le développement de son image et de sa présence en ligne. De la conception à la publication, je prends en charge la création de contenus photo et vidéo, l'animation d'Instagram et TikTok ainsi que la communication autour des offres, événements, compétitions et activités du circuit.",
       challenges: [
@@ -233,7 +233,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       client: 'Karting de Vuiteboeuf',
       category: 'Digital Communication',
       role: 'Digital Communications Manager',
-      hook: 'How do you make people feel the speed of a race track through a phone screen?',
+      hook: 'The speed of a race track, on a phone.',
       summary: "Developing Karting de Vuiteboeuf's digital presence through content creation, social media management and the promotion of offers and events.",
       overview: 'Supporting Karting de Vuiteboeuf in developing its digital image and online presence. From concept to publication, I manage photo and video content creation, Instagram and TikTok activity, as well as communication around offers, events, competitions and activities at the circuit.',
       challenges: [
@@ -284,7 +284,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       category: 'UI/UX Design',
       role: 'UI/UX Design',
       team: 'Sacha Loskov et Romain Blanchard.',
-      hook: '11 millions de tonnes de plastique par an. Et si chacun pouvait signaler les déchets qu’il croise ?',
+      hook: '11 millions de tonnes de plastique par an.',
       summary: "Conception d'une application mobile collaborative simplifiant le signalement des déchets marins et encourageant l'action collective.",
       overview: "Projet UI/UX réalisé dans le cadre d'un semestre à la HEIG-VD avec Sacha Loskov et Romain Blanchard. OceanSight propose une plateforme collaborative permettant de signaler des déchets marins, de rejoindre des missions de nettoyage, de découvrir les espèces menacées et de suivre son impact grâce à des statistiques et des achievements. Le projet s'est appuyé sur une démarche UX itérative intégrant prototypage, tests utilisateurs et amélioration continue de l'expérience.",
       challenges: [
@@ -311,7 +311,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       category: 'UI/UX Design',
       role: 'UI/UX Design',
       team: 'Sacha Loskov and Romain Blanchard.',
-      hook: '11 million tonnes of plastic a year. What if anyone could report the waste they come across?',
+      hook: '11 million tonnes of plastic a year.',
       summary: 'Design of a collaborative mobile application that simplifies marine waste reporting and encourages collective action.',
       overview: 'UI/UX project developed over a semester at HEIG-VD with Sacha Loskov and Romain Blanchard. OceanSight is a collaborative platform designed to report marine waste, join clean-up missions, discover endangered species and track personal impact through statistics and achievements. The project followed an iterative UX approach combining prototyping, user testing and continuous improvements to the experience.',
       challenges: [
@@ -357,7 +357,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       client: 'Projet académique · HEIG-VD',
       category: 'E-Commerce',
       role: 'Conception & UX/UI',
-      hook: 'Une boutique pour passionnés d’automobile, qui donne envie de prendre la route.',
+      hook: 'Donner envie de prendre la route.',
       summary: "Conception d'une boutique e-commerce spécialisée dans l'univers automobile, développée sur WordPress et WooCommerce.",
       overview: "Création de DriveGear, une boutique en ligne dédiée aux passionnés d'automobile. Le projet porte sur la conception de l'expérience utilisateur, la structuration du catalogue, l'identité visuelle et la mise en place de la boutique avec WordPress et WooCommerce. Une attention particulière a été portée à la clarté de la navigation, à la présentation des produits et à la cohérence de l'ensemble de l'expérience d'achat.",
       challenges: [
@@ -383,7 +383,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       client: 'Academic project · HEIG-VD',
       category: 'E-Commerce',
       role: 'Design & UX/UI',
-      hook: 'An online store for car enthusiasts that makes you want to hit the road.',
+      hook: 'Make them want to hit the road.',
       summary: 'Design of an e-commerce store dedicated to the automotive world, built with WordPress and WooCommerce.',
       overview: 'Creation of DriveGear, an online store dedicated to automotive enthusiasts. The project focused on user experience, catalogue structure, visual identity and the implementation of the online store using WordPress and WooCommerce. Particular attention was given to clear navigation, product presentation and a consistent purchasing experience.',
       challenges: [
