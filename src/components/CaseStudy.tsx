@@ -393,19 +393,30 @@ function Block({ block }: { block: CaseBlock; key?: string | number }) {
           ))}
         </div>
       );
-    case 'gallery':
+    case 'gallery': {
+      const cols = block.cols ?? 4;
+      const grid = { 1: 'grid-cols-1', 2: 'grid-cols-2', 3: 'grid-cols-2 sm:grid-cols-3', 4: 'grid-cols-2 lg:grid-cols-4' }[cols];
       return (
-        <div className={`py-6 grid grid-cols-2 gap-4 ${block.items.length === 2 ? 'max-w-3xl' : 'lg:grid-cols-4'}`}>
-          {block.items.map((im, i) => (
-            <Reveal key={im.src} delay={(i % 4) * 0.08}>
-              <figure>
-                <Picture image={im} sizes="(min-width: 1024px) 272px, 50vw" className="w-full h-auto rounded-xl shadow-[0_20px_40px_-20px_rgba(0,0,0,0.4)]" />
+        <figure className="py-6">
+          <div className={`grid gap-4 ${grid} ${block.narrow ? 'max-w-xl' : ''}`}>
+            {block.items.map((im, i) => (
+              <Reveal key={im.src} delay={(i % 4) * 0.08}>
+                {block.boxed ? (
+                  // Mixed formats (A5, roll-up…) sit in equal boxes so the row stays tidy
+                  <div className="flex aspect-[3/4] items-center justify-center rounded-2xl bg-black/[0.04] dark:bg-white/[0.06] p-4 sm:p-6">
+                    <Picture image={im} sizes="(min-width: 640px) 360px, 50vw" className="max-h-full w-auto object-contain shadow-[0_20px_40px_-20px_rgba(0,0,0,0.45)]" />
+                  </div>
+                ) : (
+                  <Picture image={im} sizes={cols === 1 ? '(min-width: 1152px) 1088px, 100vw' : '(min-width: 1024px) 360px, 50vw'} className={`w-full h-auto ${block.narrow ? '' : 'rounded-xl shadow-[0_20px_40px_-20px_rgba(0,0,0,0.4)]'}`} />
+                )}
                 {im.caption && <Caption>{im.caption}</Caption>}
-              </figure>
-            </Reveal>
-          ))}
-        </div>
+              </Reveal>
+            ))}
+          </div>
+          {block.caption && <Caption>{block.caption}</Caption>}
+        </figure>
       );
+    }
     case 'image': {
       const pic = <Picture image={block.image} className="w-full h-auto rounded-2xl ring-1 ring-black/5 dark:ring-white/10" />;
       return (
