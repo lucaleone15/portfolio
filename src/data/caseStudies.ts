@@ -162,11 +162,11 @@ const HUG_FR: CaseStudy = {
       content: [
         {
           type: 'compare',
-          before: img('avant-wireframe-entreprise', 1600, 1000, 'Wireframe en niveaux de gris du haut de la page d’une entreprise partenaire'),
-          after: img('apres-site-entreprise', 1600, 1000, 'Haut de la page d’une entreprise partenaire sur le site en ligne'),
+          before: img('avant-wireframe-admin', 1600, 1000, 'Wireframe en niveaux de gris du tableau de bord de l’administration'),
+          after: img('apres-site-admin', 1600, 1000, 'Tableau de bord de l’administration sur le site en ligne, avec les chiffres et le classement du trophée'),
           beforeLabel: 'Wireframe',
           afterLabel: 'Site en ligne',
-          caption: 'La page d’une entreprise, du wireframe au site en ligne. Faites glisser pour comparer.',
+          caption: 'Le tableau de bord de l’administration, du wireframe au site en ligne. Faites glisser pour comparer.',
         },
         {
           type: 'steps',
@@ -231,10 +231,11 @@ const HUG_FR: CaseStudy = {
       ],
     },
     {
-      id: 'apprentissages',
-      title: 'Ce que je ferais autrement',
+      id: 'retenu',
+      title: 'Ce que je retiens',
       content: [
-        'Les HUG l’ont relevé : sept minutes, c’est long. Le site enregistre à quelle question les gens abandonnent ; c’est par là que je commencerais pour raccourcir l’enquête.',
+        'C’est le premier produit que j’ai mené de bout en bout, de la base de données à la mise en ligne, avec une équipe de sept et un retour chaque semaine. J’y ai appris qu’on code mieux quand on a participé à l’idée : je savais pourquoi chaque écran existait.',
+        'Je retiens aussi qu’un bon concept se trie autant qu’il se trouve, et qu’un choix comme ne stocker aucune donnée personnelle simplifie à la fois le code et la confiance des utilisateurs.',
       ],
     },
   ],
