@@ -38,7 +38,7 @@ export type CaseBlock =
   | { type: 'compare'; before: CaseImage; after: CaseImage; beforeLabel: string; afterLabel: string; caption: string }
   | { type: 'pair'; items: [CaseImage, CaseImage]; caption: string }
   | { type: 'strip'; items: CaseImage[] }
-  | { type: 'gallery'; items: CaseImage[] }
+  | { type: 'gallery'; items: CaseImage[]; cols?: 1 | 2 | 3 | 4; boxed?: boolean; narrow?: boolean; caption?: string }
   | { type: 'image'; image: CaseImage; href?: string }
   | { type: 'quote'; text: string; source: string }
   | { type: 'video'; src: string; poster: string; width: number; height: number; caption: string }
@@ -147,13 +147,6 @@ const HUG_FR: CaseStudy = {
             img('papier-esquisses', 1000, 1333, 'Esquisses au crayon du label et du trophée', 'Esquisses du label et du trophée'),
           ],
         },
-        {
-          type: 'gallery',
-          items: [
-            img('affiche-loupe', 1000, 1415, 'Affiche noire « Seriez-vous le profil recherché ? » avec une empreinte digitale sous une loupe'),
-            img('affiche-poche', 1000, 1415, 'Affiche « 1 don peut sauver 3 vies, es-tu éligible ? » dans une poche de sang avec un chapeau d’inspecteur'),
-          ],
-        },
       ],
     },
     {
@@ -212,6 +205,71 @@ const HUG_FR: CaseStudy = {
       ],
     },
     {
+      id: 'campagne',
+      title: 'La campagne : la même enquête, partout',
+      content: [
+        'Le site n’était qu’une partie de la réponse. Avec l’équipe marketing et UI, nous avons décliné l’enquête sur tous les supports qu’une entreprise peut utiliser : affiches, flyers, roll-up pour le jour de la collecte, bannières intranet, réseaux sociaux, vidéo pour les écrans et même des stickers pour les donneurs. Tout tient dans un kit que chaque entreprise télécharge depuis le site.',
+        {
+          type: 'gallery',
+          cols: 3,
+          caption: 'Affiches A3 et A4, en version noire et blanche.',
+          items: [
+            img('affiche-loupe', 1000, 1415, 'Affiche noire « Seriez-vous le profil recherché ? » avec une empreinte digitale sous une loupe'),
+            img('affiche-poche', 1000, 1415, 'Affiche « 1 don peut sauver 3 vies, es-tu éligible ? » dans une poche de sang avec un chapeau d’inspecteur'),
+            img('affiche-loupe-blanc', 1000, 1415, 'Affiche blanche « Seriez-vous le profil recherché ? »'),
+          ],
+        },
+        {
+          type: 'video',
+          src: `${IMG}infotv.mp4`,
+          poster: `${IMG}infotv-poster.webp`,
+          width: 1280,
+          height: 720,
+          caption: 'La vidéo diffusée sur les écrans des entreprises, dans les couloirs et les espaces de pause.',
+        },
+        {
+          type: 'gallery',
+          cols: 3,
+          boxed: true,
+          caption: 'Le flyer A5 recto verso, adapté à chaque collecte, et le roll-up du jour J.',
+          items: [
+            img('flyer-recto', 800, 1136, 'Recto du flyer : « Seriez-vous le profil recherché ? »'),
+            img('flyer-verso', 800, 1136, 'Verso du flyer avec la date, le lieu et les horaires de la collecte'),
+            img('rollup', 700, 1400, 'Roll-up de la campagne avec la loupe sur l’empreinte digitale'),
+          ],
+        },
+        {
+          type: 'gallery',
+          cols: 3,
+          caption: 'Un carrousel pour Instagram et LinkedIn, qui explique le don du sang en chiffres.',
+          items: [
+            img('carrousel-1', 900, 1125, 'Visuel du carrousel : « Les indices sont formels »'),
+            img('carrousel-2', 900, 1125, 'Visuel du carrousel : 700 dons nécessaires par jour'),
+            img('carrousel-3', 900, 1125, 'Visuel du carrousel : une personne sur trois aura besoin d’une transfusion'),
+          ],
+        },
+        {
+          type: 'gallery',
+          cols: 1,
+          caption: 'Les bannières pour l’intranet des entreprises, en version sombre et claire.',
+          items: [
+            img('banniere-label', 1200, 180, 'Bannière intranet sombre : « Nous organisons une collecte ! »'),
+            img('banniere-trophee', 1200, 180, 'Bannière intranet claire : « Aide ton entreprise à remporter le trophée Sangsationnel »'),
+          ],
+        },
+        {
+          type: 'gallery',
+          cols: 2,
+          narrow: true,
+          caption: 'Les stickers remis aux donneurs et aux entreprises lauréates.',
+          items: [
+            img('sticker-donneur-1', 500, 500, 'Sticker rond « Donneur certifié » avec le chapeau d’inspecteur'),
+            img('sticker-trophee', 500, 500, 'Sticker rond « Gagnant 2025 » avec la main du trophée'),
+          ],
+        },
+      ],
+    },
+    {
       id: 'resultats',
       title: 'Résultats',
       content: [
@@ -234,8 +292,9 @@ const HUG_FR: CaseStudy = {
       id: 'retenu',
       title: 'Ce que je retiens',
       content: [
-        'C’est le premier produit que j’ai mené de bout en bout, de la base de données à la mise en ligne, avec une équipe de sept et un retour chaque semaine. J’y ai appris qu’on code mieux quand on a participé à l’idée : je savais pourquoi chaque écran existait.',
-        'Je retiens aussi qu’un bon concept se trie autant qu’il se trouve, et qu’un choix comme ne stocker aucune donnée personnelle simplifie à la fois le code et la confiance des utilisateurs.',
+        'J’ai adoré travailler avec cette équipe : sept profils très différents, et une vraie entraide du premier au dernier jour. Je suis fier de ce que nous avons construit, et de ma part dans ce résultat.',
+        'Le rythme Scrum, avec un point chaque matin et un sprint par semaine, m’a beaucoup plu. Et répondre à un vrai mandat change tout : on ne code plus pour un exercice, mais pour des gens qui vont s’en servir.',
+        'Surtout, j’ai aimé mener un projet full-stack sans me limiter au code : réfléchir au concept et à l’expérience, puis les construire de la base de données jusqu’à l’écran.',
       ],
     },
   ],
