@@ -101,7 +101,7 @@ function Counter({ figure }: { figure: CaseFigure }) {
 function Figures({ items, source }: { items: CaseFigure[]; source?: string }) {
   return (
     <div className="py-6 sm:py-10">
-      <dl className={`grid gap-x-8 gap-y-10 ${items.length > 2 ? 'sm:grid-cols-2 lg:grid-cols-4' : 'sm:grid-cols-2'}`}>
+      <dl className={`grid gap-x-8 gap-y-10 ${items.length > 3 ? 'sm:grid-cols-2 lg:grid-cols-4' : items.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'}`}>
         {items.map((f) => (
           <Reveal key={f.label}>
             <dt className="sr-only">{f.label}</dt>
