@@ -168,9 +168,9 @@ export function visitorEmail(d: ContactDetails) {
   const html = frame(
     c.body[0],
     `<tr><td style="padding:32px 32px 8px;">
+${d.subject ? `<p style="margin:0 0 20px;font-size:13px;color:#6B6B6B;">${c.topic} : <span style="display:inline-block;background:#F6E3E7;color:${ACCENT};font-weight:700;font-size:13px;padding:3px 10px;border-radius:999px;">${esc(d.subject)}</span></p>` : ''}
 <p style="margin:0 0 18px;font-size:17px;line-height:1.5;color:#1A1A1A;">${esc(c.hello(name))}</p>
 ${c.body.map((p) => `<p style="margin:0 0 14px;font-size:16px;line-height:1.6;color:#3A3A3C;">${esc(p)}</p>`).join('\n')}
-${d.subject ? `<p style="margin:6px 0 0;font-size:13px;color:#6B6B6B;">${c.topic} : <strong style="color:#1A1A1A;">${esc(d.subject)}</strong></p>` : ''}
 </td></tr>
 <tr><td style="padding:22px 32px 28px;">
 <p style="margin:0 0 14px;font-size:15px;color:#3A3A3C;">${esc(c.sign)}</p>
@@ -178,7 +178,7 @@ ${signature(d.lang)}
 </td></tr>
 <tr><td style="padding:16px 32px 24px;border-top:1px solid #EEEEF0;font-size:12px;line-height:1.6;color:#8A8A8E;">${esc(c.note)}</td></tr>`,
   );
-  const text = [c.hello(name), '', ...c.body, d.subject ? `\n${c.topic} : ${d.subject}` : '', '', c.sign, 'Luca Leone', d.lang === 'fr' ? 'Étudiant en Ingénierie des médias · HEIG-VD' : 'Media Engineering student · HEIG-VD', '+41 79 868 72 04 · luca@luca-leone.ch', 'luca-leone.ch · ' + LINKEDIN, '', c.note]
+  const text = [d.subject ? `${c.topic} : ${d.subject}\n` : '', c.hello(name), '', ...c.body, '', c.sign, 'Luca Leone', d.lang === 'fr' ? 'Étudiant en Ingénierie des médias · HEIG-VD' : 'Media Engineering student · HEIG-VD', '+41 79 868 72 04 · luca@luca-leone.ch', 'luca-leone.ch · ' + LINKEDIN, '', c.note]
     .filter((l, i, a) => !(l === '' && a[i - 1] === ''))
     .join('\n');
   return { subject: c.subject, html, text };
