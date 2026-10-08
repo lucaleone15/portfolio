@@ -339,3 +339,19 @@
   mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
 }
+
+/* Case study section in the project colour (CaseStudy.tsx, tone: 'accent'): a full-width
+   band; its text follows --pa-on (white or dark, whichever reads on that colour) */
+.case-accent {
+  margin-inline: calc(50% - 50vw);
+  padding-inline: calc(50vw - 50%);
+  scroll-margin-top: 5rem;
+}
+.case-accent :is(h2, p, figcaption, blockquote, span) {
+  color: var(--pa-on) !important;
+}
+.case-accent figcaption,
+.case-accent p.font-syne {
+  opacity: 0.8;
+}
+

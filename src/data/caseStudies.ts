@@ -50,7 +50,11 @@ export type CaseContent = (string | CaseBlock)[];
 
 export interface CaseSection {
   id: string;
+  /** Short label for the side table of contents */
+  nav: string;
   title: string;
+  /** 'accent': full-width band in the project colour, to set a section apart */
+  tone?: 'accent';
   content: CaseContent;
 }
 
@@ -110,6 +114,7 @@ const HUG_FR: CaseStudy = {
   sections: [
     {
       id: 'mandat',
+      nav: 'Le mandat',
       title: 'Trois inscrits sur dix, perdus d’avance',
       content: [
         'Les Hôpitaux universitaires de Genève (HUG) sont le groupe hospitalier public du canton. Leur Centre de transfusion sanguine doit garantir des réserves de sang toute l’année, et une partie des dons vient de collectes organisées directement dans les entreprises genevoises, des banques aux maisons de luxe.',
@@ -125,6 +130,7 @@ const HUG_FR: CaseStudy = {
     },
     {
       id: 'equipe',
+      nav: 'L’équipe',
       title: 'Sept enquêteurs, quatre semaines',
       content: [
         {
@@ -136,6 +142,7 @@ const HUG_FR: CaseStudy = {
     },
     {
       id: 'idee',
+      nav: 'L’idée',
       title: 'Et si le donneur menait l’enquête ?',
       content: [
         'Les questionnaires d’éligibilité sont des listes administratives qu’on découvre souvent trop tard. Nous en avons fait une enquête : on examine le dossier de l’agent, critère après critère, sans jamais culpabiliser. « Suspect » est devenu « profil recherché ».',
@@ -151,6 +158,7 @@ const HUG_FR: CaseStudy = {
     },
     {
       id: 'site',
+      nav: 'Le site',
       title: 'Du wireframe au site',
       content: [
         {
@@ -206,6 +214,8 @@ const HUG_FR: CaseStudy = {
     },
     {
       id: 'campagne',
+      nav: 'La campagne',
+      tone: 'accent',
       title: 'La campagne : la même enquête, partout',
       content: [
         'Le site n’était qu’une partie de la réponse. Avec l’équipe marketing et UI, nous avons décliné l’enquête sur tous les supports qu’une entreprise peut utiliser : affiches, flyers, roll-up pour le jour de la collecte, bannières intranet, réseaux sociaux, vidéo pour les écrans et même des stickers pour les donneurs. Tout tient dans un kit que chaque entreprise télécharge depuis le site.',
@@ -271,6 +281,7 @@ const HUG_FR: CaseStudy = {
     },
     {
       id: 'resultats',
+      nav: 'Résultats',
       title: 'Résultats',
       content: [
         {
@@ -290,6 +301,7 @@ const HUG_FR: CaseStudy = {
     },
     {
       id: 'retenu',
+      nav: 'Ce que je retiens',
       title: 'Ce que je retiens',
       content: [
         'J’ai adoré travailler avec cette équipe : sept profils très différents, et une vraie entraide du premier au dernier jour. Je suis fier de ce que nous avons construit, et de ma part dans ce résultat.',
