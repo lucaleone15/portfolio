@@ -204,7 +204,7 @@ Après une modification de contenu : `npm run build` (le pré-rendu, les métado
 
 - Le navigateur envoie le message à **`POST /api/contact`** (`server/contact.ts`), qui l'expédie via le compte SMTP de la boîte mail du site (Nodemailer). Aucun service de formulaire tiers.
 - Protections : champ piège anti-robots, validation des champs, taille limitée, **5 messages / 10 minutes par IP**.
-- L'email reçu a pour « Répondre à » l'adresse du visiteur, et pour objet le sujet choisi (Projet, Collaboration, Travail de Bachelor…).
+- Deux emails mis en forme (`server/contactEmails.ts`) : la notification reçue (« Répondre à » = le visiteur, objet = sujet choisi) et une confirmation envoyée au visiteur, sans recopier son message (au plus 3 confirmations par jour vers une même adresse).
 - En cas d'échec, le message n'est pas perdu : un lien ouvre la messagerie du visiteur avec le message pré-rempli.
 
 ### Statistiques

@@ -1,9 +1,9 @@
-import { useEffect, useState, FormEvent, MouseEvent } from 'react';
+import { useEffect, useState, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { USER_INFO } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
 import { Link, privacyPath, sectionPath } from '../router';
-import { Call02Icon, Copy01Icon, Linkedin02Icon, Loading03Icon, Mail01Icon, Tick02Icon } from '@hugeicons/core-free-icons';
+import { ArrowUpRight01Icon, Call02Icon, Copy01Icon, Linkedin02Icon, Loading03Icon, Mail01Icon, Tick02Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
 import { ContactRow, FloatingField, RevealHeading, RevealWords, Signature } from './ContactExtras';
 
@@ -46,16 +46,24 @@ export function ContactSection() {
   }, [lang]);
 
 
-  // Clicking the address copies it; if the clipboard is unavailable, fall back to the mail app
-  const copyEmailToClipboard = async (e: MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
+  // The address row opens the mail app; this separate button copies it (for webmail users,
+  // whose browser may have no mail app set up)
+  const copyEmailToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(PRIMARY_EMAIL);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2200);
     } catch {
-      window.location.href = `mailto:${PRIMARY_EMAIL}`;
+      // Older browsers / insecure context: select-and-copy through a temporary field
+      const field = document.createElement('textarea');
+      field.value = PRIMARY_EMAIL;
+      field.style.position = 'fixed';
+      field.style.opacity = '0';
+      document.body.appendChild(field);
+      field.select();
+      document.execCommand('copy');
+      field.remove();
     }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2200);
   };
 
   const handleFormSubmit = async (e: FormEvent) => {
@@ -63,7 +71,7 @@ export function ContactSection() {
     if (!formData.name || !formData.email || !formData.message) return;
 
     const successMessage =
-      lang === 'fr' ? 'Votre message a bien été envoyé directement à Luca Leone !' : 'Your message has been sent directly to Luca Leone!';
+      lang === 'fr' ? 'Merci ! Votre message est bien arrivé, je reviens vers vous rapidement.' : 'Thank you! Your message has arrived, I’ll get back to you soon.';
 
     // A bot filled the hidden field: pretend it worked, send nothing
     if (formData.honey) {
@@ -81,7 +89,7 @@ export function ContactSection() {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, lang, page: window.location.pathname }),
       });
       const data = await response.json().catch(() => ({}));
       if (!response.ok || !data?.ok) {
@@ -89,7 +97,13 @@ export function ContactSection() {
       }
       setIsSubmitting(false);
       setSubmitStatus('success');
-      setStatusMessage(successMessage);
+      setStatusMessage(
+        data.confirmed
+          ? lang === 'fr'
+            ? `Merci ${formData.name.split(' ')[0]} ! Votre message est bien arrivé. Une confirmation vous a été envoyée à ${formData.email}.`
+            : `Thank you ${formData.name.split(' ')[0]}! Your message has arrived. A confirmation has been sent to ${formData.email}.`
+          : successMessage,
+      );
       setFormData({ name: '', email: '', subject: '', message: '', honey: '' });
     } catch (err) {
       console.error('Contact submission error:', err);
@@ -323,11 +337,21 @@ export function ContactSection() {
             <ContactRow
               className="lg:col-start-8 lg:col-span-5 lg:row-start-2 border-t"
               icon={<Icon icon={Mail01Icon} className="w-5 h-5" />}
-              label={copied ? (lang === 'fr' ? 'Copié !' : 'Copied!') : lang === 'fr' ? 'Email · cliquer pour copier' : 'Email · click to copy'}
+              label={copied ? (lang === 'fr' ? 'Adresse copiée' : 'Address copied') : lang === 'fr' ? 'Email · écrire directement' : 'Email · write directly'}
               value={PRIMARY_EMAIL}
               href={`mailto:${PRIMARY_EMAIL}`}
-              onClick={copyEmailToClipboard}
-              trailing={<Icon icon={Copy01Icon} className="w-4 h-4" />}
+              trailing={<Icon icon={ArrowUpRight01Icon} className="w-5 h-5" />}
+              aside={
+                <button
+                  type="button"
+                  onClick={copyEmailToClipboard}
+                  aria-label={lang === 'fr' ? 'Copier l’adresse email' : 'Copy the email address'}
+                  title={lang === 'fr' ? 'Copier l’adresse' : 'Copy the address'}
+                  className="shrink-0 w-14 sm:w-16 flex items-center justify-center text-white/75 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                >
+                  <Icon icon={copied ? Tick02Icon : Copy01Icon} className="w-5 h-5" />
+                </button>
+              }
             />
             <ContactRow
               className="lg:col-start-8 lg:col-span-5 lg:row-start-3"
