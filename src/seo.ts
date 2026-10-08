@@ -54,11 +54,67 @@ function alternatesFor(route: Route) {
   ];
 }
 
+/**
+ * Page titles and meta descriptions, checked against Google's display limits: titles ≤ 60
+ * characters and ≤ 580 px (Arial 20 px, what fits before truncation), descriptions 120–160
+ * characters and ≤ 920 px (two lines of Arial 14 px). Each one is unique, describes its page
+ * in plain words, puts the key information first (mobile cuts sooner) and ends titles with the name.
+ */
+export const META: Record<string, Record<Language, { title: string; description: string }>> = {
+  "home": {
+    fr: { title: "Luca Leone · Portfolio en ingénierie des médias, HEIG-VD", description: "Portfolio de Luca Leone, étudiant en ingénierie des médias à la HEIG-VD : communication digitale, UX/UI et développement web." },
+    en: { title: "Luca Leone · Media Engineering portfolio, HEIG-VD", description: "Portfolio of Luca Leone, Media Engineering student at HEIG-VD in Switzerland: digital communication, UX/UI design and web development." },
+  },
+  "projets": {
+    fr: { title: "Projets · Communication, UX/UI et web | Luca Leone", description: "Six projets de Luca Leone : plateforme web pour les HUG, réseaux du Karting de Vuiteboeuf, app OceanSight, boutique DriveGear et plus." },
+    en: { title: "Projects · Communication, UX/UI and web | Luca Leone", description: "Six projects by Luca Leone: a web platform for the HUG, Karting de Vuiteboeuf’s social media, the OceanSight app and more." },
+  },
+  "a-propos": {
+    fr: { title: "À propos de Luca Leone · Étudiant en ingénierie des médias", description: "Luca Leone, étudiant en ingénierie des médias à la HEIG-VD et community manager au Karting de Vuiteboeuf : parcours et langues." },
+    en: { title: "About Luca Leone · Media Engineering student, HEIG-VD", description: "Luca Leone, Media Engineering student at HEIG-VD and community manager at Karting de Vuiteboeuf: education, experience, languages." },
+  },
+  "contact": {
+    fr: { title: "Contacter Luca Leone · Travail de Bachelor, stage, projet", description: "Écrivez à Luca Leone pour un travail de Bachelor, un stage, un emploi ou un projet en communication digitale, UX/UI ou web." },
+    en: { title: "Contact Luca Leone · Bachelor thesis, internship, project", description: "Write to Luca Leone about a Bachelor thesis, an internship, a job or a project in digital communication, UX/UI or web development." },
+  },
+  "privacy": {
+    fr: { title: "Politique de confidentialité · Portfolio de Luca Leone", description: "Les données traitées par le portfolio de Luca Leone et vos droits : aucun cookie, aucun suivi publicitaire, hébergé en Suisse." },
+    en: { title: "Privacy policy · Luca Leone’s portfolio, Media Engineering", description: "What data Luca Leone’s portfolio processes, and your rights: no cookies, no advertising tracking, hosted in Switzerland." },
+  },
+  "notfound": {
+    fr: { title: "Page introuvable · Portfolio de Luca Leone, HEIG-VD", description: "Cette page n’existe pas ou plus. Découvrez les projets de Luca Leone en communication digitale, UX/UI et développement web." },
+    en: { title: "Page not found · Luca Leone’s portfolio, HEIG-VD", description: "This page doesn’t exist anymore. Browse Luca Leone’s projects in digital communication, UX/UI design and web development." },
+  },
+  "hug": {
+    fr: { title: "HUG : plateforme web pour le don du sang | Luca Leone", description: "Pour les HUG, une enquête en ligne qui vérifie l’éligibilité au don du sang avant l’inscription. Laravel et Vue, noté 6/6." },
+    en: { title: "HUG: a blood donation web platform | Luca Leone", description: "For the Geneva University Hospitals, an online survey that checks blood donation eligibility before booking. Graded 6/6." },
+  },
+  "karting-vuiteboeuf": {
+    fr: { title: "Karting de Vuiteboeuf : réseaux sociaux | Luca Leone", description: "Community manager du Karting de Vuiteboeuf : stratégie, photo et vidéo sur Instagram et TikTok. 329’000 vues depuis mai." },
+    en: { title: "Karting de Vuiteboeuf: social media | Luca Leone", description: "Community manager at Karting de Vuiteboeuf: strategy, photo and video on Instagram, TikTok and Facebook. 329,000 views since May." },
+  },
+  "oceansight": {
+    fr: { title: "OceanSight : app contre les déchets marins | Luca Leone", description: "OceanSight, app mobile pour signaler les déchets marins et rejoindre une mission de nettoyage. Recherche UX, prototype Figma." },
+    en: { title: "OceanSight: a marine waste reporting app | Luca Leone", description: "OceanSight, a mobile app to report marine waste and join a clean-up mission. UX research, Figma prototype and user tests, graded 6/6." },
+  },
+  "etoile-blanche": {
+    fr: { title: "L’Étoile Blanche : com’ d’un restaurant | Luca Leone", description: "Nouvelle communication pour L’Étoile Blanche à Lausanne : quatre cartes, affichage pour l’afterwork, anecdotes et réseaux sociaux." },
+    en: { title: "L’Étoile Blanche: restaurant communication | Luca Leone", description: "A new communication for L’Étoile Blanche in Lausanne: four menus, an after-work poster campaign, anecdote cards and social media." },
+  },
+  "drivegear": {
+    fr: { title: "DriveGear : boutique e-commerce automobile | Luca Leone", description: "DriveGear, boutique en ligne pour passionnés d’automobile, créée seul de A à Z : marque, WooCommerce, SEO et réseaux. Noté 5.9/6." },
+    en: { title: "DriveGear: an automotive e-commerce store | Luca Leone", description: "DriveGear, an online store for car enthusiasts built solo from A to Z: brand, WooCommerce, SEO and social. Graded 5.9/6." },
+  },
+  "f1-pitwall": {
+    fr: { title: "F1 PitWall : app second écran pour la F1 | Luca Leone", description: "F1 PitWall, concept d’app qui place les fans de F1 sur le muret des stands : télémétrie, circuit en direct et prédictions par IA." },
+    en: { title: "F1 PitWall: a second-screen app for F1 | Luca Leone", description: "F1 PitWall, an app concept that puts Formula 1 fans on the pit wall: telemetry, a live track map and AI race predictions." },
+  },
+};
+
 const HOME_COPY = {
   fr: {
-    title: 'Luca Leone – Portfolio · Ingénierie des médias HEIG-VD',
-    description:
-      'Portfolio de Luca Leone, étudiant en ingénierie des médias à la HEIG-VD (Yverdon-les-Bains) : communication numérique, UI/UX design, développement web et production média.',
+    title: META.home.fr.title,
+    description: META.home.fr.description,
     imageAlt: 'Portrait de Luca Leone, étudiant en ingénierie des médias à la HEIG-VD',
     ogAlt: 'Luca Leone. — Portfolio, ingénierie des médias, HEIG-VD',
     projectsList: 'Projets de Luca Leone',
@@ -66,9 +122,8 @@ const HOME_COPY = {
     projects: 'Projets',
   },
   en: {
-    title: 'Luca Leone – Portfolio · Media Engineering HEIG-VD',
-    description:
-      'Portfolio of Luca Leone, Media Engineering student at HEIG-VD (Yverdon-les-Bains, Switzerland): digital communication, UI/UX design, web development and media production.',
+    title: META.home.en.title,
+    description: META.home.en.description,
     imageAlt: 'Portrait of Luca Leone, Media Engineering student at HEIG-VD',
     ogAlt: 'Luca Leone. — Portfolio, Media Engineering, HEIG-VD',
     projectsList: 'Projects by Luca Leone',
@@ -192,40 +247,8 @@ function homeHead(lang: Language): HeadData {
 }
 
 const SECTION_COPY: Record<Language, Record<SectionId, { title: string; description: string }>> = {
-  fr: {
-    projets: {
-      title: 'Projets | Luca Leone – Portfolio',
-      description:
-        'Les projets de Luca Leone, étudiant en ingénierie des médias à la HEIG-VD : campagnes de communication, UI/UX design, sites web et production photo/vidéo.',
-    },
-    'a-propos': {
-      title: 'À propos | Luca Leone – Portfolio',
-      description:
-        'Qui est Luca Leone : étudiant en dernière année d’ingénierie des médias à la HEIG-VD et community manager au Karting de Vuiteboeuf. Parcours, expériences et langues.',
-    },
-    contact: {
-      title: 'Contact | Luca Leone – Portfolio',
-      description:
-        'Écrire à Luca Leone pour un projet, une collaboration, un travail de Bachelor, un stage ou un emploi dans le digital.',
-    },
-  },
-  en: {
-    projets: {
-      title: 'Projects | Luca Leone – Portfolio',
-      description:
-        'Projects by Luca Leone, Media Engineering student at HEIG-VD: communication campaigns, UI/UX design, websites and photo/video production.',
-    },
-    'a-propos': {
-      title: 'About | Luca Leone – Portfolio',
-      description:
-        'About Luca Leone: final-year Media Engineering student at HEIG-VD and community manager at Karting de Vuiteboeuf. Background, experience and languages.',
-    },
-    contact: {
-      title: 'Contact | Luca Leone – Portfolio',
-      description:
-        'Get in touch with Luca Leone about a project, a collaboration, a Bachelor thesis, an internship or a job in digital.',
-    },
-  },
+  fr: { projets: META.projets.fr, 'a-propos': META['a-propos'].fr, contact: META.contact.fr },
+  en: { projets: META.projets.en, 'a-propos': META['a-propos'].en, contact: META.contact.en },
 };
 
 /**
@@ -246,12 +269,14 @@ function projectHead(lang: Language, slug: string): HeadData | null {
   const copy = HOME_COPY[lang];
   const url = abs(projectPath(lang, slug));
   const images = (project.images?.length ? project.images : [project.imageUrl]).map(abs);
-  const title = `${project.name} – ${project.subtitle} | Luca Leone`;
+  const meta = META[slug]?.[lang];
+  const title = meta?.title ?? `${project.name} – ${project.subtitle} | Luca Leone`;
+  const description = meta?.description ?? project.summary;
 
   return {
     lang,
     title,
-    description: project.summary,
+    description,
     canonical: url,
     alternates: alternatesFor({ name: 'project', lang, slug }),
     ogType: 'article',
@@ -265,7 +290,7 @@ function projectHead(lang: Language, slug: string): HeadData | null {
           '@id': `${url}#webpage`,
           url,
           name: title,
-          description: project.summary,
+          description,
           inLanguage: IN_LANGUAGE[lang],
           isPartOf: { '@id': WEBSITE_ID },
           about: { '@id': `${url}#work` },
@@ -279,7 +304,7 @@ function projectHead(lang: Language, slug: string): HeadData | null {
           url,
           name: project.name,
           headline: project.subtitle,
-          description: project.summary,
+          description,
           abstract: project.overview,
           genre: project.category,
           image: images,
@@ -307,11 +332,7 @@ function projectHead(lang: Language, slug: string): HeadData | null {
 
 function privacyHead(lang: Language): HeadData {
   const url = abs(privacyPath(lang));
-  const title = lang === 'fr' ? 'Politique de confidentialité | Luca Leone' : 'Privacy policy | Luca Leone';
-  const description =
-    lang === 'fr'
-      ? 'Quelles données le portfolio de Luca Leone traite, pourquoi, et vos droits : aucun cookie, aucun suivi tiers, hébergement en Suisse.'
-      : 'What data Luca Leone’s portfolio processes, why, and your rights: no cookies, no third-party tracking, hosted in Switzerland.';
+  const { title, description } = META.privacy[lang];
   return {
     lang,
     title,
@@ -337,8 +358,8 @@ function privacyHead(lang: Language): HeadData {
 function notFoundHead(lang: Language): HeadData {
   return {
     lang,
-    title: lang === 'fr' ? 'Page introuvable | Luca Leone' : 'Page not found | Luca Leone',
-    description: lang === 'fr' ? 'Cette page n’existe pas ou plus.' : 'This page doesn’t exist anymore.',
+    title: META.notfound[lang].title,
+    description: META.notfound[lang].description,
     canonical: abs(homePath(lang)),
     alternates: [],
     ogType: 'profile',
