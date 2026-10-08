@@ -359,16 +359,17 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       'UI/UX Design'
     ],
     stackEn: ['E-Commerce', 'WordPress & WooCommerce', 'UI/UX Design'],
-    accentColor: '#0277B6',
-    accentColorDark: '#38BDF8',
+    // DriveGear navy and blue, as in the brand palette
+    accentColor: '#2A2A72',
+    accentColorDark: '#009FFD',
     fr: {
       title: 'DRIVEGEAR',
       subtitle: 'Boutique e-commerce automobile',
-      client: 'Projet académique · HEIG-VD',
+      client: 'Cours E-commerce · HEIG-VD',
       category: 'E-Commerce',
-      role: 'Conception & UX/UI',
-      hook: 'Donner envie de prendre la route.',
-      badge: 'UX/UI designer',
+      role: 'Projet solo : stratégie, design, boutique et marketing',
+      hook: 'Une boutique pour passionnés, ouverte de A à Z.',
+      badge: 'E-commerce, projet solo',
       summary: "Conception d'une boutique e-commerce spécialisée dans l'univers automobile, développée sur WordPress et WooCommerce.",
       overview: "Création de DriveGear, une boutique en ligne dédiée aux passionnés d'automobile. Le projet porte sur la conception de l'expérience utilisateur, la structuration du catalogue, l'identité visuelle et la mise en place de la boutique avec WordPress et WooCommerce. Une attention particulière a été portée à la clarté de la navigation, à la présentation des produits et à la cohérence de l'ensemble de l'expérience d'achat.",
       challenges: [
@@ -391,11 +392,11 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     en: {
       title: 'DRIVEGEAR',
       subtitle: 'Automotive e-commerce store',
-      client: 'Academic project · HEIG-VD',
+      client: 'E-commerce course · HEIG-VD',
       category: 'E-Commerce',
-      role: 'Design & UX/UI',
-      hook: 'Make them want to hit the road.',
-      badge: 'UX/UI designer',
+      role: 'Solo project: strategy, design, store and marketing',
+      hook: 'A store for car lovers, built from A to Z.',
+      badge: 'E-commerce, solo project',
       summary: 'Design of an e-commerce store dedicated to the automotive world, built with WordPress and WooCommerce.',
       overview: 'Creation of DriveGear, an online store dedicated to automotive enthusiasts. The project focused on user experience, catalogue structure, visual identity and the implementation of the online store using WordPress and WooCommerce. Particular attention was given to clear navigation, product presentation and a consistent purchasing experience.',
       challenges: [
@@ -413,6 +414,142 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
         { label: 'CMS', value: 'WordPress' },
         { label: 'Platform', value: 'WooCommerce' },
         { label: 'Evaluation', value: '5.9 / 6' }
+      ]
+    }
+  },
+  {
+    id: 'etoile-blanche',
+    name: 'Étoile Blanche',
+    number: '05',
+    year: '2026',
+    imageUrl: '/images/EtoileBlanche-01.webp',
+    images: ['/images/EtoileBlanche-01.webp'],
+    stack: ['Identité & print', 'Réseaux sociaux', 'Campagne d’affichage', 'Canva & Figma'],
+    stackEn: ['Identity & print', 'Social media', 'Poster campaign', 'Canva & Figma'],
+    // Étoile Blanche red, as on the printed menus
+    accentColor: '#AB2328',
+    accentColorDark: '#E0484E',
+    fr: {
+      title: 'ÉTOILE BLANCHE',
+      subtitle: 'Communication d’un restaurant lausannois',
+      client: 'Restaurant L’Étoile Blanche, Lausanne · Projet académique',
+      category: 'Communication & print',
+      role: 'Vision globale et cohérence du projet',
+      team: 'Sacha Loskov, Romain Blanchard, Ryad Ait-Slimane et Cindy Demont.',
+      hook: 'Une nouvelle direction, une nouvelle image.',
+      badge: 'Directeur de projet',
+      summary: 'Refonte de la communication du restaurant L’Étoile Blanche à Lausanne : cartes, affichage, anecdotes et réseaux sociaux, autour d’un message rassembleur.',
+      overview: 'Projet de l’agence étudiante Zest pour le restaurant L’Étoile Blanche à Lausanne, repris par une nouvelle direction : refonte des cartes, campagne d’affichage pour l’afterwork, affichettes « anecdotes » et contenus pour les réseaux sociaux.',
+      challenges: [
+        'Marquer une rupture avec l’ancienne communication du restaurant.',
+        'Donner une identité cohérente à toutes les cartes et à tous les supports.',
+        'Faire connaître l’afterwork auprès des bureaux du quartier.'
+      ],
+      solutions: [
+        'Un message clé : « L’Étoile Blanche, l’endroit qui rassemble ».',
+        'Quatre cartes repensées dans un même univers graphique, dont une carte pliée en étoile.',
+        'Une campagne d’affichage libre et des contenus Instagram, TikTok et Facebook.'
+      ],
+      metrics: [
+        { label: 'Supports', value: 'Print & digital' },
+        { label: 'Cartes', value: '4 refaites' },
+        { label: 'Réseaux', value: 'Instagram, TikTok, Facebook' },
+        { label: 'Équipe', value: 'Agence de 5' }
+      ]
+    },
+    en: {
+      title: 'ÉTOILE BLANCHE',
+      subtitle: 'Communication for a Lausanne restaurant',
+      client: 'L’Étoile Blanche restaurant, Lausanne · Academic project',
+      category: 'Communication & print',
+      role: 'Overall vision and consistency',
+      team: 'Sacha Loskov, Romain Blanchard, Ryad Ait-Slimane and Cindy Demont.',
+      hook: 'New owners, a new image.',
+      badge: 'Project lead',
+      summary: 'A new communication for L’Étoile Blanche restaurant in Lausanne: menus, posters, anecdote cards and social media, built around one welcoming message.',
+      overview: 'A project by the student agency Zest for L’Étoile Blanche, a Lausanne restaurant taken over by new owners: redesigned menus, a poster campaign for the after-work, “anecdote” cards and social media content.',
+      challenges: [
+        'Make a clear break with the restaurant’s previous communication.',
+        'Give every menu and medium one consistent identity.',
+        'Make the after-work known to the offices nearby.'
+      ],
+      solutions: [
+        'One key message: “L’Étoile Blanche, the place that brings people together”.',
+        'Four menus redesigned in one visual world, including a star-folded card.',
+        'A free-poster campaign and content for Instagram, TikTok and Facebook.'
+      ],
+      metrics: [
+        { label: 'Media', value: 'Print & digital' },
+        { label: 'Menus', value: '4 redesigned' },
+        { label: 'Social', value: 'Instagram, TikTok, Facebook' },
+        { label: 'Team', value: 'Agency of 5' }
+      ]
+    }
+  },
+  {
+    id: 'f1-pitwall',
+    name: 'F1 PitWall',
+    number: '06',
+    year: '2025',
+    imageUrl: '/images/F1PitWall-01.webp',
+    images: ['/images/F1PitWall-01.webp'],
+    stack: ['Concept produit', 'UI design', 'Données & IA', 'Figma'],
+    stackEn: ['Product concept', 'UI design', 'Data & AI', 'Figma'],
+    // The app's racing red
+    accentColor: '#C8102E',
+    accentColorDark: '#F23845',
+    fr: {
+      title: 'F1 PITWALL',
+      subtitle: 'Application de second écran pour la Formule 1',
+      client: 'Projet personnel de cours · HEIG-VD',
+      category: 'Concept & UI',
+      role: 'Concept, données et UI (projet solo)',
+      hook: 'Et si on regardait la course comme un ingénieur ?',
+      badge: 'Concept & UI',
+      summary: 'Concept d’une application qui donne aux fans de Formule 1 les données et la stratégie du muret des stands, en direct.',
+      overview: 'Projet individuel du cours WebDon : une app de second écran qui affiche le classement détaillé, la télémétrie, la position des pilotes sur le circuit, et des prédictions de course basées sur l’IA et la simulation.',
+      challenges: [
+        'Les fans ne voient que ce que la réalisation TV décide de montrer.',
+        'Les données de course sont difficiles à lire en temps réel.',
+        'Les prédictions et simulations de stratégie restent réservées aux équipes.'
+      ],
+      solutions: [
+        'Un classement détaillé, la carte du circuit en direct et la télémétrie des pilotes.',
+        'Un modèle hybride LightGBM et Monte-Carlo pour prédire le classement et les fenêtres d’arrêt.',
+        'Un simulateur de stratégie où l’on teste son propre scénario.'
+      ],
+      metrics: [
+        { label: 'Type', value: 'Application mobile' },
+        { label: 'Données', value: 'Ergast, FastF1, OpenF1' },
+        { label: 'IA', value: 'LightGBM & Monte-Carlo' },
+        { label: 'Évaluation', value: '5.5 / 6' }
+      ]
+    },
+    en: {
+      title: 'F1 PITWALL',
+      subtitle: 'A second-screen app for Formula 1',
+      client: 'Individual course project · HEIG-VD',
+      category: 'Concept & UI',
+      role: 'Concept, data and UI (solo project)',
+      hook: 'What if you watched the race like an engineer?',
+      badge: 'Concept & UI',
+      summary: 'Concept for an app that brings the pit wall’s data and strategy to Formula 1 fans, live.',
+      overview: 'Individual project for the WebDon course: a second-screen app showing detailed standings, telemetry, drivers’ positions on track, and race predictions powered by AI and simulation.',
+      challenges: [
+        'Fans only see what the TV director decides to show.',
+        'Race data is hard to read in real time.',
+        'Predictions and strategy simulations are kept for the teams.'
+      ],
+      solutions: [
+        'Detailed standings, a live track map and driver telemetry.',
+        'A hybrid LightGBM and Monte-Carlo model to predict standings and pit windows.',
+        'A strategy simulator to test your own scenario.'
+      ],
+      metrics: [
+        { label: 'Type', value: 'Mobile app' },
+        { label: 'Data', value: 'Ergast, FastF1, OpenF1' },
+        { label: 'AI', value: 'LightGBM & Monte-Carlo' },
+        { label: 'Evaluation', value: '5.5 / 6' }
       ]
     }
   }

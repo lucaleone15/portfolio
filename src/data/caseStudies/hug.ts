@@ -1,87 +1,7 @@
-import type { Language } from '../types';
-
-/**
- * Case studies told as a scroll story (CaseStudy.tsx). One entry per project and language;
- * a project without an entry for the current language keeps the classic project page.
- *
- * Writing rules: prose in the first person ("j'ai" for my work, "nous" for the team), no
- * invented figures — every number below comes from the project's own documents (brief,
- * report, user-test notes). Anything still missing is written [À COMPLÉTER].
- */
-
-export interface CaseImage {
-  src: string;
-  width: number;
-  height: number;
-  alt: string;
-  caption?: string;
-  /** Inside a fixed frame: crop to fill (default) or show whole */
-  fit?: 'cover' | 'contain';
-}
-
-export interface CaseFigure {
-  /** Numeric part, counted up when it scrolls into view */
-  value: number;
-  prefix?: string;
-  suffix?: string;
-  label: string;
-}
-
-export interface CaseStep {
-  text: string;
-  image: CaseImage;
-}
-
-export type CaseBlock =
-  | { type: 'figures'; items: CaseFigure[]; source?: string }
-  | { type: 'steps'; steps: CaseStep[]; frame?: 'screen' | 'plain' | 'mockup' }
-  | { type: 'compare'; before: CaseImage; after: CaseImage; beforeLabel: string; afterLabel: string; caption: string }
-  | { type: 'pair'; items: [CaseImage, CaseImage]; caption: string }
-  | { type: 'strip'; items: CaseImage[] }
-  | { type: 'gallery'; items: CaseImage[]; cols?: 1 | 2 | 3 | 4; boxed?: boolean; narrow?: boolean; caption?: string }
-  | { type: 'image'; image: CaseImage; href?: string }
-  | { type: 'quote'; text: string; source: string }
-  | { type: 'video'; src: string; poster: string; width: number; height: number; caption: string }
-  | { type: 'architecture'; nodes: { title: string; sub: string; note: string; highlight?: boolean }[]; links: string[]; caption: string }
-  | { type: 'team'; members: { name: string; role: string; me?: boolean }[] };
-
-/** Prose paragraphs and blocks, in reading order */
-export type CaseContent = (string | CaseBlock)[];
-
-export interface CaseSection {
-  id: string;
-  /** Short label for the side table of contents */
-  nav: string;
-  title: string;
-  /** 'accent': full-width band in the project colour, to set a section apart */
-  tone?: 'accent';
-  content: CaseContent;
-}
-
-export interface CaseStudy {
-  kicker: string;
-  title: string;
-  hook: string;
-  intro: string;
-  meta: { label: string; value: string }[];
-  /** Main visual at the top of the case study (defaults to the project's card image) */
-  hero?: CaseImage;
-  liveUrl?: string;
-  liveLabel?: string;
-  brief: { label: string; text: string }[];
-  sections: CaseSection[];
-  credits: { name: string; role: string }[];
-  creditsNote?: string;
-}
+import { imagesIn, type CaseStudy } from './types';
 
 const IMG = '/images/case/hug/';
-const img = (name: string, width: number, height: number, alt: string, caption?: string): CaseImage => ({
-  src: `${IMG}${name}.webp`,
-  width,
-  height,
-  alt,
-  caption,
-});
+const img = imagesIn('hug');
 
 const HUG_TEAM = [
   { name: 'Luca Leone', role: 'Développeur full-stack' },
@@ -316,199 +236,237 @@ const HUG_FR: CaseStudy = {
   creditsNote: 'Projet d’intégration du Bachelor en Ingénierie des médias, HEIG-VD, pour le Centre de transfusion sanguine des HUG.',
 };
 
-const OS = '/images/case/oceansight/';
-const os = (name: string, width: number, height: number, alt: string, caption?: string): CaseImage => ({
-  src: `${OS}${name}.webp`,
-  width,
-  height,
-  alt,
-  caption,
-});
+const HUG_TEAM_EN = [
+  { name: 'Luca Leone', role: 'Full-stack developer' },
+  { name: 'Romain Blanchard', role: 'Product Owner' },
+  { name: 'Étienne Bergeon', role: 'Scrum Master' },
+  { name: 'Christophe Cunha', role: 'UX/UI designer' },
+  { name: 'Aissya M’Ghirbi', role: 'UX/UI designer' },
+  { name: 'Liliana Kolmakova', role: 'Marketing and communication' },
+  { name: 'Marc Bridy', role: 'Marketing and communication' },
+];
 
-const OCEANSIGHT_FR: CaseStudy = {
-  kicker: 'HEIG-VD · ODD 14, vie aquatique',
-  title: 'OceanSight',
-  hook: 'Les gens de la mer voient les déchets. Ils ne savent pas à qui les signaler.',
-  intro:
-    'Avec Sacha Loskov et Romain Blanchard, j’ai conçu une app mobile qui permet à n’importe qui de signaler des filets fantômes et des îles de plastique, puis de rejoindre une mission pour les ramasser.',
+const HUG_EN: CaseStudy = {
+  kicker: 'Geneva University Hospitals · Blood donation',
+  title: 'The HUG are investigating',
+  hook: 'Three in ten people booked for a blood drive were leaving without being able to give.',
+  intro: 'We turned the eligibility questionnaire into a detective investigation, so that everyone knows whether they can give before they book.',
   meta: [
-    { label: 'Contexte', value: 'Cours Bases UI/UX, HEIG-VD' },
-    { label: 'Année', value: '2026' },
-    { label: 'Durée', value: 'Un semestre' },
-    { label: 'Mon rôle', value: 'UX/UI design, de la recherche au prototype' },
-    { label: 'Équipe', value: '3 étudiants' },
-    { label: 'Outils', value: 'Figma, FigJam' },
+    { label: 'Context', value: 'HEIG-VD integration project, commissioned by the HUG' },
+    { label: 'Year', value: '2026' },
+    { label: 'Duration', value: '4 weeks' },
+    { label: 'My role', value: 'Full-stack developer, concept and UX/UI' },
+    { label: 'Team', value: '7 students' },
+    { label: 'Tools', value: 'Laravel, Vue 3, MySQL, Figma' },
   ],
-  liveUrl: 'https://www.figma.com/proto/VOO5Px3QTumBsEX2m7OpwI/Projet-UX-UI?node-id=425-2236&scaling=scale-down',
-  liveLabel: 'Voir le prototype',
+  liveUrl: 'https://donnez-votre-sang.ch',
+  liveLabel: 'Visit the live site',
   brief: [
-    { label: 'Le problème', text: 'Pêcheurs, plaisanciers et ONG croisent des déchets en mer sans savoir comment les signaler.' },
-    { label: 'Notre réponse', text: 'Une app collaborative : signaler, rejoindre une mission, suivre son impact.' },
-    { label: 'Le résultat', text: '6/6 en UX et 5.4/6 en UI, après des tests avec cinq personnes.' },
+    { label: 'The problem', text: '30% of people who book cannot give blood on the day.' },
+    { label: 'Our answer', text: 'Check your eligibility before booking, by leading the investigation.' },
+    { label: 'The result', text: 'A site live for a year and the top grade: 6/6.' },
   ],
   sections: [
     {
-      id: 'constat',
-      nav: 'Le constat',
-      title: 'Un océan qui se vide',
+      id: 'mandat',
+      nav: 'The brief',
+      title: 'Three in ten, lost before they arrive',
       content: [
-        'Le cours nous demandait de choisir un des Objectifs de développement durable de l’ONU et d’y répondre par le design. Après trois mind maps, nous avons retenu la vie aquatique : la pollution y est aussi souvent invisible, et c’est là qu’une app pouvait agir vite.',
+        'The Geneva University Hospitals (HUG) are the canton’s public hospital group. Their Blood Transfusion Centre has to keep blood reserves all year round, and part of the donations comes from blood drives held directly in Geneva companies, from banks to luxury brands.',
         {
           type: 'figures',
           items: [
-            { value: 11, suffix: ' mio', label: 'de tonnes de plastique finissent en mer chaque année' },
-            { value: 6500, label: 'espèces aquatiques menacées' },
-            { value: 17, suffix: ' %', label: 'de biomasse marine en moins d’ici 2100' },
+            { value: 10, suffix: '%', label: 'of donations come from company blood drives' },
+            { value: 30, suffix: '%', label: 'of people who book end up unable to give' },
           ],
         },
-        'Nous nous sommes concentrés sur deux fléaux concrets : les filets de pêche abandonnés, qui continuent de piéger des animaux, et les îles flottantes de plastique.',
+        'The problem shows on the day itself: a recent vaccine, a trip, a fever, and the donor leaves without giving. Our brief: boost these blood drives.',
       ],
     },
     {
-      id: 'recherche',
-      nav: 'Les utilisateurs',
-      title: 'Trois profils, un même blocage',
+      id: 'equipe',
+      nav: 'The team',
+      title: 'Seven investigators, four weeks',
       content: [
         {
-          type: 'steps',
-          frame: 'plain',
-          steps: [
-            {
-              text: 'Le pêcheur veut agir et refuse d’abandonner ses filets, mais il se sent impuissant face à l’ampleur des dégâts, et chaque démarche lui fait perdre du temps.',
-              image: os('persona-pecheur', 1200, 680, 'Fiche persona du pêcheur : description, aisance avec la technologie, motivations et points de douleur'),
-            },
-            {
-              text: 'Le plaisancier croise des déchets lors de ses sorties, sans savoir à qui s’adresser. Il veut que son temps en mer ait un impact mesurable.',
-              image: os('persona-plaisancier', 1200, 677, 'Fiche persona du plaisancier, passionné d’océan et de technologie'),
-            },
-            {
-              text: 'La responsable d’ONG, le persona que j’ai construit, croule sous les signalements imprécis : sans photo ni position fiable, impossible d’envoyer une équipe.',
-              image: os('persona-ong', 1200, 677, 'Fiche persona de la responsable d’ONG qui coordonne des missions de dépollution'),
-            },
-          ],
+          type: 'image',
+          image: img('equipe', 1600, 588, 'The seven team members photographed against a height chart, each holding a sign with their name and role'),
         },
-        'Les trois profils butaient sur le même point : ils voient le problème, mais rien ne leur permet de le signaler simplement, ni de passer à l’action.',
+        'There were seven of us, working in Scrum. I was the full-stack developer: a large part of the Vue 3 front end (public pages, the survey, company pages, label, trophy, kit), part of the Laravel back end, and my share of the concept and UX/UI.',
       ],
     },
     {
       id: 'idee',
-      nav: 'L’idée',
-      title: 'Trois idées, une seule retenue',
+      nav: 'The idea',
+      title: 'What if the donor led the investigation?',
       content: [
+        'Eligibility questionnaires are administrative checklists that people often discover too late. We turned them into an investigation: the agent’s file is examined criterion by criterion, without ever making anyone feel guilty. “Suspect” became “wanted profile”.',
         {
           type: 'strip',
           items: [
-            os('mindmap-vie-aquatique', 1000, 750, 'Mind map dessinée à la main autour de la vie aquatique', 'Vie aquatique'),
-            os('mindmap-consommation', 1000, 751, 'Mind map dessinée à la main autour de la consommation responsable', 'Consommation responsable'),
-            os('mindmap-education', 1000, 753, 'Mind map dessinée à la main autour de l’éducation de qualité', 'Éducation de qualité'),
+            img('papier-brainstorm', 1000, 1333, 'Flip chart covered with ideas written in marker during a brainstorm', 'Brainstorm'),
+            img('papier-wireframe', 1000, 1333, 'Hand-drawn wireframe of a page of the site', 'Paper wireframes'),
+            img('papier-esquisses', 1000, 1333, 'Pencil sketches of the label and the trophy', 'Label and trophy sketches'),
           ],
         },
-        'Notre question : comment simplifier le signalement des filets abandonnés et des îles de plastique ? Nous avons exploré trois pistes : un éco-score qui récompense les pêcheurs, un outil qui prédit les zones d’accumulation grâce aux courants marins, et une app de signalement ouverte à tous.',
-        'Nous avons gardé la troisième. C’est la plus accessible, celle qui rassemble le plus de monde autour d’une même cause, et chaque signalement crée une donnée géolocalisée utile aux ONG comme aux scientifiques.',
       ],
     },
     {
-      id: 'app',
-      nav: 'L’app',
-      title: 'L’app',
+      id: 'site',
+      nav: 'The site',
+      title: 'From wireframe to website',
       content: [
         {
+          type: 'compare',
+          before: img('avant-wireframe-admin', 1600, 1000, 'Greyscale wireframe of the admin dashboard'),
+          after: img('apres-site-admin', 1600, 1000, 'Admin dashboard on the live site, with the figures and the trophy ranking'),
+          beforeLabel: 'Wireframe',
+          afterLabel: 'Live site',
+          caption: 'The admin dashboard, from wireframe to live site. Drag to compare.',
+        },
+        {
           type: 'steps',
-          frame: 'mockup',
+          frame: 'screen',
           steps: [
             {
-              text: 'Rejoindre la communauté : un compte suffit pour signaler et participer.',
-              image: os('app-1-accueil', 1600, 1200, 'Écran d’accueil « Join us » sur une photo de déchets plastiques en mer'),
+              text: 'The home page speaks to companies: “The HUG are investigating”. It presents the programme and lets a company sign up.',
+              image: img('site-accueil', 1600, 1000, 'Home page: “The HUG are investigating”, with a magnifying glass over a drop of blood'),
             },
             {
-              text: 'Trouver une mission sur la carte ou dans une liste, filtrée par région, type de déchet ou difficulté.',
-              image: os('app-2-carte', 1600, 1200, 'Deux écrans : la carte des missions et la liste des missions avec leurs photos'),
+              text: 'Each company gets its own page, in its own colours: one donation saves three lives, a seven-minute mission.',
+              image: img('site-entreprise', 1600, 1000, 'Banque Cantonale de Genève page, in red: “One blood donation saves 3 lives. A 7-minute mission.”'),
             },
             {
-              text: 'Chaque mission indique le lieu, la date et ce qui a été vu. On la rejoint en un geste.',
-              image: os('app-3-mission', 1600, 1200, 'Écran de détail d’une mission : photo, type de déchet, lieu, date et description'),
+              text: 'On the same page, an evidence board answers the questions people don’t dare to ask: does it hurt, how long does it take.',
+              image: img('site-indices', 1600, 1000, 'Corkboard with cards linked by red threads: “What is blood donation?”'),
             },
             {
-              text: 'Après une mission, le rapport documente l’action et les espèces sauvées, avec leur fiche.',
-              image: os('app-4-rapport', 1600, 1200, 'Deux écrans : le détail d’une mission et la liste des espèces sauvées'),
+              text: 'The survey uses the official criteria, asked like interrogation questions. At the end, eligible people book an appointment; the others pass the survey on to a colleague.',
+              image: img('site-enquete', 1600, 1000, 'Survey question on a kraft-paper file: “Are you between 18 and 75?”'),
             },
             {
-              text: 'Le profil montre son impact : missions réalisées, kilos de plastique retirés, espèces sauvées, badges.',
-              image: os('app-5-profil', 1600, 1200, 'Écran du profil avec les badges, les statistiques et le nombre de missions réalisées'),
+              text: 'Every company that holds a blood drive receives the Label 100 pour Sang; the Trophée Sangsationnel ranks the most committed ones.',
+              image: img('site-trophee', 1600, 1000, '2026 trophy ranking with a podium of three companies'),
+            },
+            {
+              text: 'The transfusion centre follows everything from its admin area, down to the question where people drop out of the survey.',
+              image: img('site-admin', 1600, 1000, 'Admin analytics page: funnel, drop-offs per question, devices and sources'),
             },
           ],
+        },
+        'Under the hood, eligibility is calculated on the server: the browser never receives the answers that disqualify. And no personal data is stored, as medical confidentiality requires.',
+        {
+          type: 'architecture',
+          nodes: [
+            { title: 'Browser', sub: 'Vue 3', note: 'Receives the questions, never the criteria' },
+            { title: 'Server', sub: 'Laravel', note: 'Strips the criteria, calculates eligibility', highlight: true },
+            { title: 'Database', sub: 'MySQL', note: 'Anonymous token, company, eligible: yes or no' },
+          ],
+          links: ['questions', 'result'],
+          caption: 'The disqualifying criteria never leave the server.',
         },
       ],
     },
     {
-      id: 'design',
-      nav: 'Le design',
-      title: 'Une identité couleur océan',
+      id: 'campagne',
+      nav: 'The campaign',
       tone: 'accent',
+      title: 'The campaign: the same investigation, everywhere',
       content: [
-        'Pour l’interface, nous avons construit un design system complet : une palette de dix teintes de vert d’eau, une typographie hiérarchisée et une bibliothèque de composants réutilisables, des cartes de mission aux filtres.',
+        'The website was only part of the answer. With the marketing and UI team, we carried the investigation onto every medium a company can use: posters, flyers, a roll-up for the day of the drive, intranet banners, social media, a video for office screens and even stickers for donors. It all comes in a kit each company downloads from the site.',
         {
           type: 'gallery',
           cols: 3,
+          caption: 'A3 and A4 posters, in black and white versions.',
           items: [
-            os('logo', 1600, 900, 'Logo OceanSight : un globe et le nom de l’app sur fond vert d’eau'),
-            os('design-typo-couleurs', 1600, 900, 'Échelle typographique et palette de dix teintes de vert d’eau'),
-            os('design-composants', 1600, 900, 'Composants de l’interface : cartes de mission, filtres, tri et carte'),
+            img('affiche-loupe', 1000, 1415, 'Black poster “Are you the wanted profile?” with a fingerprint under a magnifying glass'),
+            img('affiche-poche', 1000, 1415, 'Poster “1 donation can save 3 lives, are you eligible?” in a blood bag with a detective hat'),
+            img('affiche-loupe-blanc', 1000, 1415, 'White poster “Are you the wanted profile?”'),
+          ],
+        },
+        {
+          type: 'video',
+          src: `${IMG}infotv.mp4`,
+          poster: `${IMG}infotv-poster.webp`,
+          width: 1280,
+          height: 720,
+          caption: 'The video shown on company screens, in corridors and break rooms.',
+        },
+        {
+          type: 'gallery',
+          cols: 3,
+          boxed: true,
+          caption: 'The double-sided A5 flyer, adapted to each blood drive, and the roll-up for the day.',
+          items: [
+            img('flyer-recto', 800, 1136, 'Front of the flyer: “Are you the wanted profile?”'),
+            img('flyer-verso', 800, 1136, 'Back of the flyer with the date, place and times of the blood drive'),
+            img('rollup', 700, 1400, 'Campaign roll-up with the magnifying glass over the fingerprint'),
+          ],
+        },
+        {
+          type: 'gallery',
+          cols: 3,
+          caption: 'A carousel for Instagram and LinkedIn that explains blood donation in figures.',
+          items: [
+            img('carrousel-1', 900, 1125, 'Carousel slide: “The clues are clear”'),
+            img('carrousel-2', 900, 1125, 'Carousel slide: 700 donations needed every day'),
+            img('carrousel-3', 900, 1125, 'Carousel slide: one person in three will need a transfusion'),
+          ],
+        },
+        {
+          type: 'gallery',
+          cols: 1,
+          caption: 'Banners for company intranets, in dark and light versions.',
+          items: [
+            img('banniere-label', 1200, 180, 'Dark intranet banner: “We are holding a blood drive!”'),
+            img('banniere-trophee', 1200, 180, 'Light intranet banner: “Help your company win the Trophée Sangsationnel”'),
+          ],
+        },
+        {
+          type: 'gallery',
+          cols: 2,
+          narrow: true,
+          caption: 'Stickers handed to donors and to winning companies.',
+          items: [
+            img('sticker-donneur-1', 500, 500, 'Round “Certified donor” sticker with the detective hat'),
+            img('sticker-trophee', 500, 500, 'Round “Winner 2025” sticker with the trophy hand'),
           ],
         },
       ],
     },
     {
-      id: 'tests',
-      nav: 'Tests et résultats',
-      title: 'Cinq testeurs, cinq frictions',
+      id: 'resultats',
+      nav: 'Results',
+      title: 'Results',
       content: [
-        'Nous avons fait tester le prototype à cinq personnes. Chaque friction est devenue une piste d’amélioration : pouvoir zoomer sur la carte, faire défiler les espèces et les badges, agrandir les photos de la galerie, et valider ses filtres avec un bouton.',
-        {
-          type: 'quote',
-          text: 'Quand je remplis les filtres, je m’attends à avoir un bouton pour les valider.',
-          source: 'Participante aux tests',
-        },
-        'Il nous restait du temps après les tests : nous avons intégré quatre des cinq améliorations dans le prototype final.',
         {
           type: 'figures',
           items: [
-            { value: 6, suffix: '/6', label: 'note en UX' },
-            { value: 5.4, suffix: '/6', label: 'note en UI' },
-            { value: 5, label: 'personnes ont testé le prototype' },
-            { value: 4, label: 'améliorations intégrées après les tests' },
+            { value: 6, suffix: '/6', label: 'project grade' },
+            { value: 24, label: 'questions, about 7 minutes' },
+            { value: 4, label: 'languages' },
           ],
         },
         {
           type: 'quote',
-          text: 'Le design system est solide et démontre une bonne compréhension des principes d’accessibilité, de grille et de Gestalt.',
-          source: 'Retour des enseignants',
+          text: 'The investigation-based concept is very original and brings an interesting approach to better engage the target audiences.',
+          source: 'Feedback from the HUG',
         },
       ],
     },
     {
       id: 'retenu',
-      nav: 'Ce que je retiens',
-      title: 'Ce que je retiens',
+      nav: 'What I take away',
+      title: 'What I take away',
       content: [
-        'J’ai suivi pour la première fois une vraie démarche UX de bout en bout : de la recherche aux personas, de l’idée au prototype, puis aux tests. Les retours des testeurs ont été précieux, chaque friction relevée nous a fait progresser.',
-        'Je suis fier du chemin parcouru avec Sacha et Romain, et encore plus de ce que nous avons appris ensemble.',
+        'I loved working with this team: seven very different profiles, and real mutual support from the first day to the last. I’m proud of what we built, and of my part in it.',
+        'I really enjoyed the Scrum rhythm, with a stand-up every morning and a sprint every week. And answering a real brief changes everything: you’re no longer coding for an exercise, but for people who will use it.',
+        'Above all, I enjoyed leading a full-stack project without limiting myself to code: thinking through the concept and the experience, then building them from the database to the screen.',
       ],
     },
   ],
-  credits: [
-    { name: 'Luca Leone', role: 'UX/UI design' },
-    { name: 'Sacha Loskov', role: 'UX/UI design' },
-    { name: 'Romain Blanchard', role: 'UX/UI design' },
-  ],
-  creditsNote: 'Cours Bases UI/UX du Bachelor en Ingénierie des médias, HEIG-VD. Accompagnement : Marie Kuter et Patrick Donaldson.',
+  credits: HUG_TEAM_EN,
+  creditsNote: 'Integration project of the Bachelor in Media Engineering, HEIG-VD, for the HUG Blood Transfusion Centre.',
 };
 
-const CASE_STUDIES: Record<string, Partial<Record<Language, CaseStudy>>> = {
-  'hug-sangsationnel': { fr: HUG_FR },
-  oceansight: { fr: OCEANSIGHT_FR },
-};
-
-export function getCaseStudy(projectId: string, lang: Language): CaseStudy | null {
-  return CASE_STUDIES[projectId]?.[lang] ?? null;
-}
+export const hug = { fr: HUG_FR, en: HUG_EN };

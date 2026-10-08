@@ -336,7 +336,8 @@ function Video({ block }: { block: Extract<CaseBlock, { type: 'video' }> }) {
 
   return (
     <Reveal className="py-6">
-      <figure>
+      {/* Portrait videos (reels) stay phone-sized instead of filling the column */}
+      <figure className={block.height > block.width ? 'mx-auto max-w-sm' : undefined}>
         <video
           ref={ref}
           src={block.src}
