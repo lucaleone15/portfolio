@@ -22,6 +22,9 @@ import type { CaseBlock, CaseFigure, CaseImage, CaseStep, CaseStudy as CaseStudy
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
+/** French typography: a narrow no-break space before ! ? ; : so they never start a line */
+const nbsp = (text: string) => text.replace(/ ([!?;:])/g, '\u202F$1');
+
 /** Fades content up once as it enters the viewport */
 function Reveal({ children, className = '', delay = 0 }: { children: ReactNode; className?: string; delay?: number; key?: string | number }) {
   return (
@@ -65,7 +68,7 @@ function Prose({ text }: { text: string }) {
       </p>
     );
   }
-  return <p className="max-w-2xl text-lg sm:text-xl leading-relaxed text-neutral-700 dark:text-[#D4D4D8]">{text}</p>;
+  return <p className="max-w-2xl text-lg sm:text-xl leading-relaxed text-neutral-700 dark:text-[#D4D4D8]">{nbsp(text)}</p>;
 }
 
 /* ---------- Key figures: count up once in view ---------- */
@@ -454,7 +457,7 @@ function Block({ block }: { block: CaseBlock; key?: string | number }) {
               }`}
             >
               <span style={{ color: 'var(--pa-text)' }}>«&nbsp;</span>
-              {block.text}
+              {nbsp(block.text)}
               <span style={{ color: 'var(--pa-text)' }}>&nbsp;»</span>
             </blockquote>
             <figcaption className="mt-6 text-sm font-semibold text-neutral-500 dark:text-[#A1A1AA]">{block.source}</figcaption>

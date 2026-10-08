@@ -2,9 +2,6 @@ import { imagesIn, type CaseStudy } from './types';
 
 const img = imagesIn('karting');
 
-const stories = (alt: (n: number) => string) =>
-  [1, 2, 3, 4, 5, 6].map((n) => img(`story-${n}`, 400, 711, alt(n)));
-
 const KARTING_FR: CaseStudy = {
   kicker: 'Karting de Vuiteboeuf · Community management',
   title: 'Karting de Vuiteboeuf',
@@ -64,11 +61,18 @@ const KARTING_FR: CaseStudy = {
           cols: 3,
           items: [
             img('photo-vitesse', 1600, 1067, 'Kart en pleine vitesse sur la piste intérieure, avec un effet de filé'),
-            img('photo-exterieur', 1600, 1067, 'Kart sur la piste extérieure, l’arrière-plan flou de vitesse'),
-            img('photo-pilote', 1600, 1067, 'Pilote casqué au volant de son kart, au premier plan'),
+            img('mes-photo-paddock', 1600, 1067, 'Pilote dans son kart à la sortie du paddock, devant le damier'),
             img('photo-drapeau', 1600, 1067, 'Commissaire agitant le drapeau à damier devant un kart'),
-            img('photo-equipe', 1600, 1067, 'Groupe de pilotes en combinaison, casque à la main, dans le paddock'),
-            img('photo-anniversaire', 1600, 1243, 'Enfants réunis autour d’une table pour un anniversaire au karting'),
+          ],
+        },
+        {
+          type: 'gallery',
+          cols: 4,
+          items: [
+            img('mes-photo-casque', 1000, 1500, 'Jeune pilote casqué dans son kart, sur la grille de la Sprint Junior Cup'),
+            img('mes-photo-file', 1000, 1500, 'Kart flou de vitesse sur la piste intérieure, feux arrière en traînée'),
+            img('mes-photo-ask', 1000, 1500, 'Coach de l’Académie suisse de karting penché sur un jeune pilote'),
+            img('mes-photo-forsmile', 1000, 1500, 'Participants souriants lors de la journée Karting for Smile'),
           ],
         },
       ],
@@ -105,12 +109,17 @@ const KARTING_FR: CaseStudy = {
       tone: 'accent',
       title: 'Une image qui se reconnaît',
       content: [
-        'Toutes les publications partagent maintenant les mêmes codes : le rouge du karting, une typographie de course et des gabarits réutilisables, jusqu’aux couvertures des stories à la une. Réseaux sociaux, site et supports racontent enfin la même chose.',
+        'Toutes les publications partagent maintenant les mêmes codes : le rouge du karting, une typographie de course et des gabarits réutilisables, jusqu’aux carrousels de résultats. Réseaux sociaux, site et supports racontent enfin la même chose.',
         {
           type: 'gallery',
-          cols: 3,
-          narrow: true,
-          items: stories((n) => ['Couverture de story « Events 2026 »', 'Couverture de story « Horaires »', 'Couverture de story « Concours »', 'Couverture de story avec un calendrier 2026', 'Couverture de story avec une horloge', 'Couverture de story avec une étoile'][n - 1]),
+          cols: 4,
+          caption: 'Le carrousel des résultats d’une course SWS : une couverture, puis un podium par catégorie.',
+          items: [
+            img('resultats-1', 800, 1000, 'Couverture du carrousel « Les résultats SWS, 5 mai 2026 »'),
+            img('resultats-2', 800, 1000, 'Podium et classement de la Sprint RX250, première manche'),
+            img('resultats-3', 800, 1000, 'Podium et classement de la Sprint 270cc, première manche'),
+            img('resultats-4', 800, 1000, 'Podium et classement de la Sprint 270cc, deuxième manche'),
+          ],
         },
       ],
     },
@@ -121,22 +130,13 @@ const KARTING_FR: CaseStudy = {
       content: [
         'Avant, les contenus étaient moins réguliers, les formats plus limités et la communication moins diversifiée. Aujourd’hui : des formats variés, des rendez-vous récurrents, plus de photo et de vidéo, des offres mieux mises en avant et une image cohérente.',
         {
-          type: 'gallery',
-          cols: 2,
-          boxed: true,
-          caption: 'Le compte Instagram en mai 2026, puis aujourd’hui.',
-          items: [
-            img('avant-instagram', 1600, 982, 'Grille du compte Instagram du karting en mai 2026', 'Mai 2026'),
-            img('apres-instagram', 700, 2140, 'Profil Instagram du karting aujourd’hui, avec des publications harmonisées', 'Aujourd’hui'),
-          ],
-        },
-        {
           type: 'figures',
           items: [
             { value: 661, label: 'j’aime sur le reel des interviews du staff' },
             { value: 331, label: 'j’aime sur la publication du Karting for Smile' },
           ],
         },
+        { type: 'quote', text: 'Merci pour le travail, super boulot. Continue comme ça !', source: 'Retour de la direction du karting' },
       ],
     },
     {
@@ -212,11 +212,18 @@ const KARTING_EN: CaseStudy = {
           cols: 3,
           items: [
             img('photo-vitesse', 1600, 1067, 'Kart at full speed on the indoor track, with a motion blur'),
-            img('photo-exterieur', 1600, 1067, 'Kart on the outdoor track, the background blurred by speed'),
-            img('photo-pilote', 1600, 1067, 'Helmeted driver at the wheel of his kart, in the foreground'),
+            img('mes-photo-paddock', 1600, 1067, 'Driver in his kart leaving the paddock, in front of the chequered wall'),
             img('photo-drapeau', 1600, 1067, 'Marshal waving the chequered flag in front of a kart'),
-            img('photo-equipe', 1600, 1067, 'Group of drivers in race suits, helmets in hand, in the paddock'),
-            img('photo-anniversaire', 1600, 1243, 'Children gathered around a table for a birthday party at the karting'),
+          ],
+        },
+        {
+          type: 'gallery',
+          cols: 4,
+          items: [
+            img('mes-photo-casque', 1000, 1500, 'Young helmeted driver in his kart on the Sprint Junior Cup grid'),
+            img('mes-photo-file', 1000, 1500, 'Kart blurred by speed on the indoor track, tail lights trailing'),
+            img('mes-photo-ask', 1000, 1500, 'Swiss Karting Academy coach leaning over a young driver'),
+            img('mes-photo-forsmile', 1000, 1500, 'Smiling participants at the Karting for Smile day'),
           ],
         },
       ],
@@ -253,12 +260,17 @@ const KARTING_EN: CaseStudy = {
       tone: 'accent',
       title: 'An image you recognise',
       content: [
-        'Every post now shares the same codes: the karting red, a racing typeface and reusable templates, right down to the story highlight covers. Social media, website and printed media finally tell the same story.',
+        'Every post now shares the same codes: the karting red, a racing typeface and reusable templates, right down to the results carousels. Social media, website and printed media finally tell the same story.',
         {
           type: 'gallery',
-          cols: 3,
-          narrow: true,
-          items: stories((n) => ['“Events 2026” story cover', '“Opening hours” story cover', '“Contests” story cover', 'Story cover with a 2026 calendar', 'Story cover with a clock', 'Story cover with a star'][n - 1]),
+          cols: 4,
+          caption: 'The results carousel of an SWS race: a cover, then a podium per category.',
+          items: [
+            img('resultats-1', 800, 1000, 'Carousel cover “SWS results, 5 May 2026”'),
+            img('resultats-2', 800, 1000, 'Podium and standings of the Sprint RX250, first heat'),
+            img('resultats-3', 800, 1000, 'Podium and standings of the Sprint 270cc, first heat'),
+            img('resultats-4', 800, 1000, 'Podium and standings of the Sprint 270cc, second heat'),
+          ],
         },
       ],
     },
@@ -269,22 +281,13 @@ const KARTING_EN: CaseStudy = {
       content: [
         'Before, content was less regular, formats were more limited and communication less varied. Today: varied formats, recurring events, more photo and video, better-showcased offers and a consistent image.',
         {
-          type: 'gallery',
-          cols: 2,
-          boxed: true,
-          caption: 'The Instagram account in May 2026, and today.',
-          items: [
-            img('avant-instagram', 1600, 982, 'The karting’s Instagram grid in May 2026', 'May 2026'),
-            img('apres-instagram', 700, 2140, 'The karting’s Instagram profile today, with consistent posts', 'Today'),
-          ],
-        },
-        {
           type: 'figures',
           items: [
             { value: 661, label: 'likes on the staff interviews reel' },
             { value: 331, label: 'likes on the Karting for Smile post' },
           ],
         },
+        { type: 'quote', text: 'Thanks for the work, great job. Keep it up!', source: 'Feedback from the karting management' },
       ],
     },
     {
