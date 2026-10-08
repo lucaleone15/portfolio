@@ -164,6 +164,15 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // Renamed project URLs: old links (shared, indexed) keep working
+  const renamed = (req.url ?? '').replace(/^(\/(?:en\/)?(?:projets|projects)\/)hug-sangsationnel(?=\/?(?:\?|$))/, '$1hug');
+  if (renamed !== req.url) {
+    res.statusCode = 301;
+    res.setHeader('Location', renamed);
+    res.end();
+    return;
+  }
+
   const next404 = () => {
     if (req.method !== 'GET' && req.method !== 'HEAD') {
       res.statusCode = 405;

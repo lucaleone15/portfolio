@@ -25,7 +25,7 @@ En parallèle de ses études, il exerce le rôle de Community Manager pour le [K
 - **Production Média & Audiovisuelle** : Photographie numérique, captation sur le terrain, montage vidéo (Adobe Premiere Pro, Suite Adobe), retouche photo (Photoshop, Lightroom) et direction artistique.
 
 ## Projets Principaux & Réalisations
-1. **[HUG – Sangsationnel](https://luca-leone.ch/projets/hug-sangsationnel)** (2026) :
+1. **[HUG – Sangsationnel](https://luca-leone.ch/projets/hug)** (2026) :
    - *Type* : Projet académique 360° pour les Hôpitaux universitaires de Genève.
    - *Description* : Campagne de communication digitale et plateforme web gamifiée pour dynamiser les collectes de sang auprès des entreprises partenaires des HUG.
    - *Rôle* : Développeur full-stack, participation au concept et à l'UX/UI. Équipe : Romain Blanchard, Étienne Bergeon, Christophe Cunha, Aissya M'Ghirbi, Liliana Kolmakova et Marc Bridy.

@@ -44,25 +44,8 @@ const OCEANSIGHT_FR: CaseStudy = {
       nav: 'Les utilisateurs',
       title: 'Trois profils, un même blocage',
       content: [
-        {
-          type: 'steps',
-          frame: 'plain',
-          steps: [
-            {
-              text: 'Le pêcheur veut agir et refuse d’abandonner ses filets, mais il se sent impuissant face à l’ampleur des dégâts, et chaque démarche lui fait perdre du temps.',
-              image: os('persona-pecheur', 1200, 680, 'Fiche persona du pêcheur : description, aisance avec la technologie, motivations et points de douleur'),
-            },
-            {
-              text: 'Le plaisancier croise des déchets lors de ses sorties, sans savoir à qui s’adresser. Il veut que son temps en mer ait un impact mesurable.',
-              image: os('persona-plaisancier', 1200, 677, 'Fiche persona du plaisancier, passionné d’océan et de technologie'),
-            },
-            {
-              text: 'La responsable d’ONG, le persona que j’ai construit, croule sous les signalements imprécis : sans photo ni position fiable, impossible d’envoyer une équipe.',
-              image: os('persona-ong', 1200, 677, 'Fiche persona de la responsable d’ONG qui coordonne des missions de dépollution'),
-            },
-          ],
-        },
-        'Les trois profils butaient sur le même point : ils voient le problème, mais rien ne leur permet de le signaler simplement, ni de passer à l’action.',
+        'Nous avons interrogé le problème à travers trois profils : un pêcheur qui refuse d’abandonner ses filets mais se sent impuissant, un plaisancier qui croise des déchets sans savoir à qui s’adresser, et une responsable d’ONG submergée par des signalements imprécis.',
+        'Tous butaient sur le même point : ils voient le problème, mais rien ne leur permet de le signaler simplement, ni de passer à l’action.',
       ],
     },
     {
@@ -70,15 +53,7 @@ const OCEANSIGHT_FR: CaseStudy = {
       nav: 'L’idée',
       title: 'Trois idées, une seule retenue',
       content: [
-        {
-          type: 'strip',
-          items: [
-            os('mindmap-vie-aquatique', 1000, 750, 'Mind map dessinée à la main autour de la vie aquatique', 'Vie aquatique'),
-            os('mindmap-consommation', 1000, 751, 'Mind map dessinée à la main autour de la consommation responsable', 'Consommation responsable'),
-            os('mindmap-education', 1000, 753, 'Mind map dessinée à la main autour de l’éducation de qualité', 'Éducation de qualité'),
-          ],
-        },
-        'Notre question : comment simplifier le signalement des filets abandonnés et des îles de plastique ? Nous avons exploré trois pistes : un éco-score qui récompense les pêcheurs, un outil qui prédit les zones d’accumulation grâce aux courants marins, et une app de signalement ouverte à tous.',
+        'Tout est parti de mind maps sur papier autour de trois objectifs de l’ONU, puis d’une question : comment simplifier le signalement des filets abandonnés et des îles de plastique ? Nous avons exploré trois pistes : un éco-score qui récompense les pêcheurs, un outil qui prédit les zones d’accumulation grâce aux courants marins, et une app de signalement ouverte à tous.',
         'Nous avons gardé la troisième. C’est la plus accessible, celle qui rassemble le plus de monde autour d’une même cause, et chaque signalement crée une donnée géolocalisée utile aux ONG comme aux scientifiques.',
       ],
     },
@@ -136,22 +111,14 @@ const OCEANSIGHT_FR: CaseStudy = {
     {
       id: 'tests',
       nav: 'Tests et résultats',
-      title: 'Cinq testeurs, cinq frictions',
+      title: 'Tests et résultats',
       content: [
-        'Nous avons fait tester le prototype à cinq personnes. Chaque friction est devenue une piste d’amélioration : pouvoir zoomer sur la carte, faire défiler les espèces et les badges, agrandir les photos de la galerie, et valider ses filtres avec un bouton.',
-        {
-          type: 'quote',
-          text: 'Quand je remplis les filtres, je m’attends à avoir un bouton pour les valider.',
-          source: 'Participante aux tests',
-        },
-        'Il nous restait du temps après les tests : nous avons intégré quatre des cinq améliorations dans le prototype final.',
+        'Cinq personnes ont testé le prototype. Leurs retours, comme faire défiler les espèces ou valider ses filtres avec un bouton, nous ont permis d’intégrer quatre améliorations avant la fin.',
         {
           type: 'figures',
           items: [
             { value: 6, suffix: '/6', label: 'note en UX' },
             { value: 5.4, suffix: '/6', label: 'note en UI' },
-            { value: 5, label: 'personnes ont testé le prototype' },
-            { value: 4, label: 'améliorations intégrées après les tests' },
           ],
         },
         {
@@ -222,25 +189,8 @@ const OCEANSIGHT_EN: CaseStudy = {
       nav: 'The users',
       title: 'Three profiles, one roadblock',
       content: [
-        {
-          type: 'steps',
-          frame: 'plain',
-          steps: [
-            {
-              text: 'The fisher wants to act and refuses to abandon his nets, but feels powerless against the scale of the damage, and every procedure costs him time.',
-              image: os('persona-pecheur', 1200, 680, 'Fisher persona card: description, comfort with technology, motivations and pain points'),
-            },
-            {
-              text: 'The sailor comes across waste on his trips without knowing who to contact. He wants his time at sea to have a measurable impact.',
-              image: os('persona-plaisancier', 1200, 677, 'Persona card of the sailor, passionate about the ocean and technology'),
-            },
-            {
-              text: 'The NGO coordinator, the persona I built, is swamped with imprecise reports: without a photo or a reliable position, she can’t send a team.',
-              image: os('persona-ong', 1200, 677, 'Persona card of the NGO coordinator who organises clean-up missions'),
-            },
-          ],
-        },
-        'All three profiles hit the same wall: they see the problem, but nothing lets them report it simply, or take action.',
+        'We looked at the problem through three profiles: a fisher who refuses to abandon his nets but feels powerless, a sailor who comes across waste without knowing who to contact, and an NGO coordinator swamped with imprecise reports.',
+        'They all hit the same wall: they see the problem, but nothing lets them report it simply, or take action.',
       ],
     },
     {
@@ -248,15 +198,7 @@ const OCEANSIGHT_EN: CaseStudy = {
       nav: 'The idea',
       title: 'Three ideas, one kept',
       content: [
-        {
-          type: 'strip',
-          items: [
-            os('mindmap-vie-aquatique', 1000, 750, 'Hand-drawn mind map about life below water', 'Life below water'),
-            os('mindmap-consommation', 1000, 751, 'Hand-drawn mind map about responsible consumption', 'Responsible consumption'),
-            os('mindmap-education', 1000, 753, 'Hand-drawn mind map about quality education', 'Quality education'),
-          ],
-        },
-        'Our question: how can we simplify the reporting of abandoned nets and plastic islands? We explored three leads: an eco-score that rewards fishers, a tool that predicts accumulation zones from ocean currents, and a reporting app open to everyone.',
+        'It all started with paper mind maps around three UN goals, then one question: how can we simplify the reporting of abandoned nets and plastic islands? We explored three leads: an eco-score that rewards fishers, a tool that predicts accumulation zones from ocean currents, and a reporting app open to everyone.',
         'We kept the third. It is the most accessible, the one that rallies the most people around a common cause, and every report creates geolocated data useful to NGOs and scientists alike.',
       ],
     },
@@ -314,22 +256,14 @@ const OCEANSIGHT_EN: CaseStudy = {
     {
       id: 'tests',
       nav: 'Tests and results',
-      title: 'Five testers, five frictions',
+      title: 'Tests and results',
       content: [
-        'Five people tested the prototype. Each friction became an improvement: zooming on the map, scrolling through species and badges, enlarging gallery photos, and confirming filters with a button.',
-        {
-          type: 'quote',
-          text: 'When I fill in the filters, I expect a button to apply them.',
-          source: 'Test participant',
-        },
-        'We still had time after the tests, so we built four of the five improvements into the final prototype.',
+        'Five people tested the prototype. Their feedback, such as scrolling through species or confirming filters with a button, let us build in four improvements before the end.',
         {
           type: 'figures',
           items: [
             { value: 6, suffix: '/6', label: 'UX grade' },
             { value: 5.4, suffix: '/6', label: 'UI grade' },
-            { value: 5, label: 'people tested the prototype' },
-            { value: 4, label: 'improvements built in after testing' },
           ],
         },
         {

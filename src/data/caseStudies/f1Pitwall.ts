@@ -78,15 +78,10 @@ const F1_FR: CaseStudy = {
       tone: 'accent',
       title: 'Des données bien réelles',
       content: [
-        'Le concept repose sur des sources qui existent : Ergast pour l’historique des résultats, FastF1 pour la télémétrie, OpenF1 pour un prototype, et un flux officiel sous licence pour la version finale. Pour chaque écran, j’ai décrit les données en JSON, telles qu’elles arriveraient dans l’app.',
+        'Le concept repose sur des sources qui existent : Ergast pour l’historique des résultats, FastF1 pour la télémétrie, OpenF1 pour un prototype, et un flux officiel sous licence pour la version finale. Pour chaque écran, j’ai décrit précisément les données qu’il recevrait, du classement en direct aux résultats du modèle.',
         {
-          type: 'gallery',
-          cols: 3,
-          items: [
-            img('json-leaderboard', 1000, 1167, 'Extrait JSON du classement en direct : position, écart, pneus et arrêts'),
-            img('json-ia', 758, 724, 'Extrait JSON des résultats du modèle : probabilités de victoire et de podium'),
-            img('json-strategie', 878, 808, 'Extrait JSON d’une simulation de stratégie : distribution des résultats et risque de trafic'),
-          ],
+          type: 'image',
+          image: img('slide-second-ecran', 1600, 900, 'La course sur une télévision, et l’app PitWall dans la main d’un fan avec le classement en direct', 'Un second écran : la course à la TV, le muret des stands dans la main.'),
         },
       ],
     },
@@ -219,15 +214,10 @@ const F1_EN: CaseStudy = {
       tone: 'accent',
       title: 'Real data underneath',
       content: [
-        'The concept relies on sources that exist: Ergast for historical results, FastF1 for telemetry, OpenF1 for a prototype, and a licensed official feed for the final version. For every screen, I described the data in JSON, as it would arrive in the app.',
+        'The concept relies on sources that exist: Ergast for historical results, FastF1 for telemetry, OpenF1 for a prototype, and a licensed official feed for the final version. For every screen, I described exactly the data it would receive, from the live standings to the model’s output.',
         {
-          type: 'gallery',
-          cols: 3,
-          items: [
-            img('json-leaderboard', 1000, 1167, 'JSON excerpt of the live leaderboard: position, gap, tyres and pit stops'),
-            img('json-ia', 758, 724, 'JSON excerpt of the model output: win and podium probabilities'),
-            img('json-strategie', 878, 808, 'JSON excerpt of a strategy simulation: result distribution and traffic risk'),
-          ],
+          type: 'image',
+          image: img('slide-second-ecran', 1600, 900, 'The race on a TV, and the PitWall app in a fan’s hand showing the live standings', 'A second screen: the race on TV, the pit wall in your hand.'),
         },
       ],
     },
