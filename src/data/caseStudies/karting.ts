@@ -21,7 +21,7 @@ const KARTING_FR: CaseStudy = {
   brief: [
     { label: 'Le problème', text: 'Une offre attractive, mais une présence en ligne irrégulière et peu variée.' },
     { label: 'Ma réponse', text: 'Des contenus réguliers, tournés sur la piste, et des rendez-vous qui reviennent.' },
-    { label: 'Le résultat', text: 'Une image cohérente sur tous les supports, et des publications qui dépassent les 600 j’aime.' },
+    { label: 'Le résultat', text: '329’000 vues sur Instagram (+72,7 %) et des vues Facebook multipliées par près de six (+479 %).' },
   ],
   sections: [
     {
@@ -132,8 +132,10 @@ const KARTING_FR: CaseStudy = {
         {
           type: 'figures',
           items: [
-            { value: 661, label: 'j’aime sur le reel des interviews du staff' },
-            { value: 331, label: 'j’aime sur la publication du Karting for Smile' },
+            { value: 329.3, suffix: ' k', label: 'vues sur Instagram, +72,7 %' },
+            { value: 88.8, prefix: '+', suffix: ' %', label: 'd’interactions sur Instagram' },
+            { value: 117.5, suffix: ' k', label: 'vues sur le reel le plus regardé' },
+            { value: 479, prefix: '+', suffix: ' %', label: 'de vues sur Facebook' },
           ],
         },
         { type: 'quote', text: 'Merci pour le travail, super boulot. Continue comme ça !', source: 'Retour de la direction du karting' },
@@ -172,7 +174,7 @@ const KARTING_EN: CaseStudy = {
   brief: [
     { label: 'The problem', text: 'An attractive offer, but an irregular and repetitive online presence.' },
     { label: 'My answer', text: 'Regular content shot on the track, and formats that come back.' },
-    { label: 'The result', text: 'A consistent image across every medium, and posts with over 600 likes.' },
+    { label: 'The result', text: '329,000 views on Instagram (+72.7%) and Facebook views up nearly sixfold (+479%).' },
   ],
   sections: [
     {
@@ -283,8 +285,10 @@ const KARTING_EN: CaseStudy = {
         {
           type: 'figures',
           items: [
-            { value: 661, label: 'likes on the staff interviews reel' },
-            { value: 331, label: 'likes on the Karting for Smile post' },
+            { value: 329.3, suffix: 'k', label: 'Instagram views, up 72.7%' },
+            { value: 88.8, prefix: '+', suffix: '%', label: 'Instagram interactions' },
+            { value: 117.5, suffix: 'k', label: 'views on the most-watched reel' },
+            { value: 479, prefix: '+', suffix: '%', label: 'Facebook views' },
           ],
         },
         { type: 'quote', text: 'Thanks for the work, great job. Keep it up!', source: 'Feedback from the karting management' },
