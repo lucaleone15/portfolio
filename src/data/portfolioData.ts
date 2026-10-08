@@ -97,9 +97,9 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     name: 'HUG',
     number: '01',
     year: '2026',
-    imageUrl: '/images/HUG-cover.webp',
+    imageUrl: '/images/HUG-cover-2.webp',
     images: [
-      '/images/HUG-cover.webp',
+      '/images/HUG-cover-2.webp',
       '/images/HUG-02.webp',
       '/images/HUG-03.webp',
       '/images/HUG-04.webp',
@@ -186,9 +186,9 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     name: 'Karting de Vuiteboeuf',
     number: '02',
     year: '2026',
-    imageUrl: '/images/KV-01.webp',
+    imageUrl: '/images/KV-cover.webp',
     images: [
-      '/images/KV-01.webp',
+      '/images/KV-cover.webp',
       '/images/KV-03.webp',
       '/images/KV-04.webp',
       '/images/KV-05.webp',
@@ -267,9 +267,9 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     name: 'OceanSight',
     number: '03',
     year: '2026',
-    imageUrl: '/images/OceanSight-01.webp',
+    imageUrl: '/images/OceanSight-cover.webp',
     images: [
-      '/images/OceanSight-01.webp',
+      '/images/OceanSight-cover.webp',
       '/images/OceanSight-02.webp',
       '/images/OceanSight-03.webp'
     ],
@@ -347,9 +347,9 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     name: 'DriveGear',
     number: '04',
     year: '2025',
-    imageUrl: '/images/DriveGear-01.webp',
+    imageUrl: '/images/DriveGear-cover.webp',
     images: [
-      '/images/DriveGear-01.webp',
+      '/images/DriveGear-cover.webp',
       '/images/DriveGear-03.webp',
       '/images/DriveGear-04.webp'
     ],
@@ -422,8 +422,8 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     name: 'Étoile Blanche',
     number: '05',
     year: '2026',
-    imageUrl: '/images/EtoileBlanche-01.webp',
-    images: ['/images/EtoileBlanche-01.webp'],
+    imageUrl: '/images/EtoileBlanche-cover.webp',
+    images: ['/images/EtoileBlanche-cover.webp'],
     stack: ['Identité & print', 'Réseaux sociaux', 'Campagne d’affichage', 'Canva & Figma'],
     stackEn: ['Identity & print', 'Social media', 'Poster campaign', 'Canva & Figma'],
     // Étoile Blanche red, as on the printed menus
@@ -491,8 +491,8 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     name: 'F1 PitWall',
     number: '06',
     year: '2025',
-    imageUrl: '/images/F1PitWall-01.webp',
-    images: ['/images/F1PitWall-01.webp'],
+    imageUrl: '/images/F1PitWall-cover.webp',
+    images: ['/images/F1PitWall-cover.webp'],
     stack: ['Concept produit', 'UI design', 'Données & IA', 'Figma'],
     stackEn: ['Product concept', 'UI design', 'Data & AI', 'Figma'],
     // The app's racing red
