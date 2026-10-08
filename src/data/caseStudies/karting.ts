@@ -58,15 +58,6 @@ const KARTING_FR: CaseStudy = {
         'Les contenus se fabriquent sur le circuit : prises de vue pendant les courses, vidéos embarquées, interviews du staff et moments de vie du karting.',
         {
           type: 'gallery',
-          cols: 3,
-          items: [
-            img('photo-vitesse', 1600, 1067, 'Kart en pleine vitesse sur la piste intérieure, avec un effet de filé'),
-            img('mes-photo-paddock', 1600, 1067, 'Pilote dans son kart à la sortie du paddock, devant le damier'),
-            img('photo-drapeau', 1600, 1067, 'Commissaire agitant le drapeau à damier devant un kart'),
-          ],
-        },
-        {
-          type: 'gallery',
           cols: 5,
           items: [
             img('photo-08', 1000, 1500, 'File de karts au départ de la Sprint Junior Cup'),
@@ -220,15 +211,6 @@ const KARTING_EN: CaseStudy = {
       title: 'It all happens on the track',
       content: [
         'Content is made at the circuit: shooting during races, onboard videos, staff interviews and everyday moments of karting life.',
-        {
-          type: 'gallery',
-          cols: 3,
-          items: [
-            img('photo-vitesse', 1600, 1067, 'Kart at full speed on the indoor track, with a motion blur'),
-            img('mes-photo-paddock', 1600, 1067, 'Driver in his kart leaving the paddock, in front of the chequered wall'),
-            img('photo-drapeau', 1600, 1067, 'Marshal waving the chequered flag in front of a kart'),
-          ],
-        },
         {
           type: 'gallery',
           cols: 5,
