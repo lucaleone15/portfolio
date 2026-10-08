@@ -34,14 +34,14 @@ Site bilingue (FR / EN), pré-rendu pour le référencement, avec ses propres ro
 | Section | Contenu |
 | --- | --- |
 | **Intro** | Rideau typographique au premier chargement de l'accueil (le nom se révèle lettre par lettre) |
-| **Hero** | Accroche animée (« Je transforme des idées en… »), traînée d'images des projets qui suit la souris, fond dégradé + grain |
+| **Hero** | Accroche animée (« Je transforme des idées en… »), bandeau d'outils, fond dégradé + grain |
 | **Compétences** | Six domaines, détail au survol (souris) ou au tap (mobile) |
-| **Projets** | Cartes avec effet WebGL au survol ; sur mobile, cartes empilées au scroll |
-| **Page projet** | Étude de cas racontée au scroll : fenêtre fixe + étapes (présentation, enjeux, réponses, chiffres clés) |
-| **À propos** | Bio révélée à la lecture, langues, centres d'intérêt, frises expérience / formation, CV à télécharger |
-| **Contact** | Bloc en couleur d'accent : formulaire, coordonnées directes, signature |
+| **Projets** | Six cartes : phrase clé sur l'image, rôle, légère inclinaison au survol et pastille floutée « Voir le projet » qui suit la souris ; filtres par catégorie ; sur mobile, cartes empilées au scroll |
+| **Page projet** | Étude de cas racontée au scroll : accroche, contexte, problème / réponse / résultat, sections illustrées (captures, maquettes, galeries, comparateur avant / après, vidéo), chiffres clés animés, citation, équipe ; sommaire latéral sur grand écran ; type de projet (professionnel, académique avec un vrai client, académique) |
+| **À propos** | Bio révélée à la lecture, langues, centres d'intérêt, frises expérience / formation, CV (ouvert dans un nouvel onglet) |
+| **Contact** | Bloc en couleur d'accent : formulaire (emails de notification et de confirmation), email qui ouvre la messagerie + bouton copier, téléphone, LinkedIn |
 
-Autres : thème clair / sombre (suit le système), barre de commande **⌘K / Ctrl+K**, page 404, image d'aperçu pour les réseaux sociaux.
+Autres : thème clair / sombre (suit le système), recherche rapide (icône loupe dans l'en-tête, raccourci **⌘K / Ctrl+K**), page 404, politique de confidentialité, image d'aperçu pour les réseaux sociaux.
 
 ---
 
@@ -52,11 +52,10 @@ Autres : thème clair / sombre (suit le système), barre de commande **⌘K / Ct
 | Interface | [React 19](https://react.dev), TypeScript, [Tailwind CSS 4](https://tailwindcss.com) |
 | Build | [Vite 6](https://vite.dev) (client + rendu serveur pour le pré-rendu), esbuild (serveur) |
 | Animations | [Motion](https://motion.dev), [GSAP + ScrollTrigger](https://gsap.com), API View Transitions du navigateur |
-| WebGL | [OGL](https://github.com/oframe/ogl) (images « vivantes » au survol) |
-| UI | [cmdk](https://cmdk.paco.me) (barre ⌘K), [Lucide](https://lucide.dev) (icônes) |
+| UI | [cmdk](https://cmdk.paco.me) (recherche ⌘K), [Hugeicons](https://hugeicons.com) (icônes, via `src/components/Icon.tsx`), polices Syne et Plus Jakarta Sans (auto-hébergées) |
 | Serveur | Node.js (`node:http`, sans framework), [Nodemailer](https://nodemailer.com) (envoi des emails) |
 
-GSAP, OGL et cmdk sont **chargés à la demande** : ils ne pèsent pas sur le premier affichage.
+GSAP et cmdk sont **chargés à la demande** : ils ne pèsent pas sur le premier affichage.
 
 ---
 
@@ -88,7 +87,7 @@ npm start               # http://localhost:3000
 | `npm start` | Lance le serveur de production (`dist-server/index.mjs`) — à exécuter depuis la racine du projet |
 | `npm run preview` | Aperçu Vite du dossier `dist/` (pour vérifier, pas pour la production) |
 | `npm run lint` | Vérification TypeScript (`tsc --noEmit`) |
-| `npm run images` | Génère les variantes 640 px des images de projets (`public/images/sm/`) |
+| `npm run images` | Génère les variantes 640 px et 1280 px des couvertures de projets (`public/images/sm/`, `md/`), converties en sRGB |
 | `npm run clean` | Supprime `dist/`, `dist-ssr/`, `dist-server/` |
 
 ---
@@ -131,6 +130,8 @@ Points d'attention :
 
 Après une mise en ligne qui change l'image d'aperçu, la rafraîchir sur LinkedIn via le [Post Inspector](https://www.linkedin.com/post-inspector/).
 
+**Remplacer une image :** le serveur met les fichiers de `public/` en cache 30 jours. Une image modifiée doit donc changer de **nom** (ex. `HUG-cover.webp` → `HUG-cover-2.webp`), sinon les visiteurs gardent l'ancienne.
+
 ---
 
 ## Structure du projet
@@ -138,11 +139,13 @@ Après une mise en ligne qui change l'image d'aperçu, la rafraîchir sur Linked
 ```
 ├── index.html                 Gabarit HTML (thème appliqué avant affichage, zone SEO remplie au build)
 ├── public/                    Fichiers servis tels quels
-│   ├── images/                Visuels des projets (.webp) + sm/ (variantes 640 px)
-│   ├── pdf/                   CV et dossiers PDF des projets
+│   ├── images/                Couvertures des projets (.webp) + sm/, md/ (variantes 640 / 1280 px)
+│   │   └── case/<projet>/     Images des études de cas (captures, maquettes, photos)
+│   ├── pdf/                   CV
 │   ├── tools/                 Logos du bandeau d'outils
 │   ├── og-image.jpg           Image d'aperçu réseaux sociaux (1200×630)
-│   ├── llms.txt               Résumé du profil pour les assistants IA
+│   ├── llms.txt               Résumé du profil et des projets pour les assistants IA
+│   ├── ai-catalog.json        Catalogue pour les agents IA (copies dans .well-known/)
 │   └── robots.txt
 ├── src/
 │   ├── App.tsx                Assemblage : intro, curseur, header, page (accueil / projet / 404)
@@ -150,20 +153,23 @@ Après une mise en ligne qui change l'image d'aperçu, la rafraîchir sur Linked
 │   ├── entry-server.tsx       Point d'entrée du pré-rendu
 │   ├── router.tsx             Routeur maison (History API + View Transitions)
 │   ├── seo.ts                 <head> par page, JSON-LD, sitemap
-│   ├── components/            Sections et composants (Hero, ProjectStory, ContactSection…)
+│   ├── components/            Sections et composants (Hero, ProjectCard, CaseStudy, ContactSection…)
 │   ├── context/               Langue (depuis l'URL), thème, couleur d'accent
 │   ├── data/                  Contenu : projets, parcours, coordonnées ; variantes d'images
+│   │   └── caseStudies/       Une étude de cas par projet (FR + EN), un fichier par projet
 │   ├── hooks/                 usePauseOffscreen (animations en pause hors écran)
 │   ├── theme/colors.ts        Catalogue de palettes d'accent (ACTIVE_ACCENT_ID)
 │   └── index.css              Tailwind + styles globaux (curseur, fonds, transitions)
 ├── server/
 │   ├── index.ts               Serveur de production
 │   ├── contact.ts             POST /api/contact
+│   ├── contactEmails.ts       Emails du formulaire (notification + confirmation signée)
 │   └── analytics.ts           Statistiques internes + /stats
 ├── scripts/
 │   ├── prerender.mjs          Génère les pages HTML, la 404 et le sitemap
-│   ├── make-image-variants.py Variantes 640 px des images
+│   ├── make-image-variants.py Variantes 640 / 1280 px des couvertures (sRGB)
 │   └── og/                    Modèle de l'image d'aperçu (voir og/README.md)
+├── matiere/                   Matière brute des projets (rapports, exports) : locale, ignorée par git
 └── vite.config.ts             Build + routes API en développement
 ```
 
@@ -173,15 +179,17 @@ Après une mise en ligne qui change l'image d'aperçu, la rafraîchir sur Linked
 
 | Je veux… | Où |
 | --- | --- |
-| Ajouter / modifier un **projet** | `src/data/portfolioData.ts` → `UNIFIED_PROJECTS` (textes FR/EN, images, PDF, couleur, chiffres clés). L'`id` devient l'URL : `/projets/<id>` et `/en/projects/<id>` |
-| Ajouter des **images** de projet | Les déposer en `.webp` dans `public/images/`, puis `npm run images` |
+| Ajouter / modifier un **projet** (carte) | `src/data/portfolioData.ts` → `UNIFIED_PROJECTS` (textes FR/EN, type, catégorie, phrase clé, rôle, couverture, couleur). L'`id` devient l'URL : `/projets/<id>` et `/en/projects/<id>` |
+| Écrire l'**étude de cas** d'un projet | `src/data/caseStudies/<projet>.ts` (FR + EN), puis l'enregistrer dans `src/data/caseStudies/index.ts`. Les images vont dans `public/images/case/<projet>/` |
+| Changer le **titre / la description Google** d'une page | `META` en haut de `src/seo.ts` (titres ≤ 60 caractères, descriptions 120–160) |
+| Ajouter une **couverture** de projet | `.webp` 1920×1200 (16:10) dans `public/images/`, puis `npm run images` |
 | Modifier le **parcours** (expériences, formation) | `src/data/portfolioData.ts` (FR) et `src/components/AboutSection.tsx` (EN) |
 | Modifier la **bio** et les textes d'interface | `src/context/LanguageContext.tsx` |
 | Changer les **compétences** | `src/components/SkillsSection.tsx` → `SKILLS_DATA` |
 | Remplacer le **CV** | `public/pdf/` + `USER_INFO.cv` dans `src/data/portfolioData.ts` |
 | Changer la **couleur d'accent** | `ACTIVE_ACCENT_ID` dans `src/theme/colors.ts` **et** les valeurs par défaut en haut de `src/index.css` (premier affichage) |
 | Modifier l'**image d'aperçu** | `scripts/og/og-image.html`, puis régénérer (voir `scripts/og/README.md`) |
-| Mettre à jour les infos pour les **IA** | `public/llms.txt` |
+| Mettre à jour les infos pour les **IA** | `public/llms.txt` et `representativeQueries` dans `public/ai-catalog.json` + `public/.well-known/` |
 
 Après une modification de contenu : `npm run build` (le pré-rendu, les métadonnées et le sitemap se mettent à jour automatiquement).
 
@@ -191,11 +199,12 @@ Après une modification de contenu : `npm run build` (le pré-rendu, les métado
 
 ### Routage, pré-rendu et SEO
 
-- **URLs réelles** : `/`, `/en/`, `/projets/<slug>`, `/en/projects/<slug>` — un petit routeur maison (`src/router.tsx`) basé sur l'History API. La langue vient de l'URL.
+- **URLs réelles** : `/`, `/en/`, `/projets/<slug>`, `/en/projects/<slug>` — un petit routeur maison (`src/router.tsx`) basé sur l'History API. La langue vient de l'URL. L'ancienne adresse `/projets/hug-sangsationnel` redirige (301) vers `/projets/hug`.
 - **Sections avec leur propre URL** : `/projets`, `/a-propos`, `/contact` (`/en/projects`, `/en/about`, `/en/contact`). L'accueil reste une seule page qui défile : un lien partagé ouvre directement la section, les liens du menu défilent en douceur sans recharger, et l'URL (ainsi que le titre de l'onglet) suit la section lue. Ces URLs ont leur titre et leur description, mais leur URL canonique est l'accueil (même contenu) : elles ne figurent pas dans le sitemap.
 - **Pré-rendu** : au build, chaque page est rendue en HTML statique (`scripts/prerender.mjs`). Les moteurs de recherche et les réseaux sociaux voient le contenu complet sans exécuter de JavaScript.
-- **Métadonnées par page** (`src/seo.ts`) : titre, description, URL canonique, `hreflang` FR/EN, Open Graph, Twitter Card et données structurées JSON-LD (`Person`, `WebSite`, `ProfilePage`, `CreativeWork`, `BreadcrumbList`).
-- **Sitemap** généré automatiquement (pages + PDF).
+- **Métadonnées par page** (`src/seo.ts`, table `META`) : titre et description uniques, dans les limites d'affichage de Google (titres ≤ 60 caractères / 580 px, descriptions 120–160 caractères / 920 px ; score SEO Lighthouse 100), URL canonique, `hreflang` FR/EN, Open Graph, Twitter Card et données structurées JSON-LD (`Person`, `WebSite`, `ProfilePage`, `CreativeWork`, `BreadcrumbList`).
+- **Sitemap** généré automatiquement (pages canoniques FR/EN avec `hreflang` + CV).
+- **GEO** (assistants IA) : `llms.txt`, catalogues `ai-catalog.json`, et `robots.txt` qui autorise les robots des IA.
 - **404** : page dédiée, servie avec un vrai statut 404 et exclue de l'indexation.
 - **Suggestion de langue** (`src/components/LanguageHint.tsx`) : si le navigateur ne demande pas la langue de la page (par ex. un recruteur anglophone sur la version française), une petite pastille propose l'autre version. Jamais de redirection ; une fois fermée ou suivie, elle ne revient plus.
 - **Icônes** : `favicon.svg` (le « L. » en Syne, vectorisé : aucune police à charger), `apple-touch-icon.png`, `icon-192/512.png` et `site.webmanifest`.
@@ -203,8 +212,8 @@ Après une modification de contenu : `npm run build` (le pré-rendu, les métado
 ### Formulaire de contact
 
 - Le navigateur envoie le message à **`POST /api/contact`** (`server/contact.ts`), qui l'expédie via le compte SMTP de la boîte mail du site (Nodemailer). Aucun service de formulaire tiers.
-- Protections : champ piège anti-robots, validation des champs, taille limitée, **5 messages / 10 minutes par IP**.
-- Deux emails mis en forme (`server/contactEmails.ts`) : la notification reçue (« Répondre à » = le visiteur, objet = sujet choisi) et une confirmation envoyée au visiteur, sans recopier son message (au plus 3 confirmations par jour vers une même adresse).
+- Protections : champ piège anti-robots, validation des champs, sujet limité à la liste du formulaire, taille limitée, délais d'attente SMTP, **5 messages / 10 minutes par IP**.
+- Deux emails mis en forme (`server/contactEmails.ts`) : la notification reçue (« Répondre à » = le visiteur, objet = sujet choisi) et une confirmation envoyée au visiteur dans sa langue, avec le sujet en tête et la signature email, sans recopier son message (au plus 3 confirmations par jour vers une même adresse).
 - En cas d'échec, le message n'est pas perdu : un lien ouvre la messagerie du visiteur avec le message pré-rempli.
 
 ### Statistiques
@@ -221,7 +230,8 @@ Statistiques internes et respectueuses de la vie privée (`server/analytics.ts`)
 
 - sert les pages pré-rendues (`/x` → `x.html` ou `x/index.html`) ;
 - compression **brotli / gzip** ;
-- cache : fichiers du build 1 an (`immutable`), HTML revalidé à chaque visite, le reste 7 jours ; `ETag` / 304 ;
+- cache : fichiers du build 1 an (`immutable`), HTML revalidé à chaque visite, le reste 30 jours ; `ETag` / 304 ;
+- redirections 301 : `www.` → domaine nu, anciennes URLs de projets ;
 - en-têtes de sécurité : **CSP stricte** (seuls les scripts du site + le script de thème, autorisé par son empreinte), `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, HSTS… ;
 - protection contre la lecture de fichiers hors de `dist/`.
 
@@ -232,11 +242,10 @@ Statistiques internes et respectueuses de la vie privée (`server/analytics.ts`)
 | Élément | Technique |
 | --- | --- |
 | Carte → page projet | API **View Transitions** : l'image de la carte se transforme en visuel de la page |
-| Pages projet | **GSAP ScrollTrigger** : fenêtre fixe, volets d'images, étape active, rail de progression, notes animées |
-| Images des cartes | Shader **WebGL (OGL)** : déformation, ondulation et décalage de couleurs selon la vitesse de la souris |
-| Hero | Traînée d'images (WAAPI, nœuds DOM recyclés), pilote automatique sur mobile / souris immobile |
+| Études de cas | **IntersectionObserver + CSS sticky** : visuel fixe pendant que le texte défile, chiffres qui comptent, comparateur avant / après, sommaire qui suit la lecture |
+| Cartes de projets | Inclinaison douce au survol, pastille floutée « Voir le projet » qui remplace le curseur |
 | Curseur | Rond en couleurs inversées + contour rouge qui épouse liens et boutons |
-| ⌘K | **cmdk**, ouverture instantanée (action clavier) |
+| Recherche | **cmdk**, ouverture instantanée (loupe ou ⌘K / Ctrl+K) |
 
 Principes suivis (Emil Kowalski, Apple Human Interface) : courbes d'accélération personnalisées, durées courtes, animations interruptibles, uniquement `transform` / `opacity`, retour visuel à l'appui, effets de survol réservés aux souris.
 
@@ -259,7 +268,8 @@ Principes suivis (Emil Kowalski, Apple Human Interface) : courbes d'accélérati
 | --- | --- |
 | `main` | Version déployée |
 | `v1` | Version après l'audit (corrections, SEO, pré-rendu) — point de retour |
-| `v2` | Version actuelle (animations, nouvelles sections, serveur de production) |
+| `v2` | Animations, nouvelles sections, serveur de production (fusionnée dans `main`) |
+| `etude-de-cas` | Études de cas des six projets, contact enrichi, SEO des titres et descriptions |
 
 ---
 

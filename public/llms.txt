@@ -25,43 +25,49 @@ En parallèle de ses études, il exerce le rôle de Community Manager pour le [K
 - **Production Média & Audiovisuelle** : Photographie numérique, captation sur le terrain, montage vidéo (Adobe Premiere Pro, Suite Adobe), retouche photo (Photoshop, Lightroom) et direction artistique.
 
 ## Projets Principaux & Réalisations
-1. **[HUG – Sangsationnel](https://luca-leone.ch/projets/hug)** (2026) :
-   - *Type* : Projet académique 360° pour les Hôpitaux universitaires de Genève.
-   - *Description* : Campagne de communication digitale et plateforme web gamifiée pour dynamiser les collectes de sang auprès des entreprises partenaires des HUG.
-   - *Rôle* : Développeur full-stack, participation au concept et à l'UX/UI. Équipe : Romain Blanchard, Étienne Bergeon, Christophe Cunha, Aissya M'Ghirbi, Liliana Kolmakova et Marc Bridy.
-   - *Site en ligne* : [donnez-votre-sang.ch](https://donnez-votre-sang.ch).
-   - *Technologies* : Laravel, Vue.js, PHP, MySQL, Figma, Print, Intranet & Réseaux sociaux.
-   - *Évaluation* : 6/6.
+Chaque projet a sa propre étude de cas (contexte, démarche, résultats), en français et en anglais (`/en/projects/<id>`).
 
-2. **[Karting de Vuiteboeuf](https://luca-leone.ch/projets/karting-vuiteboeuf)** (2026) :
-   - *Type* : Expérience professionnelle & gestion de marque sur circuit.
-   - *Description* : Accompagnement dans le développement de l'image et de la présence en ligne du circuit. Captation photo et vidéo directement sur le circuit, animation des comptes Instagram et TikTok.
-   - *Rôle* : Responsable communication digitale & Community Manager.
-   - *Technologies* : Instagram, TikTok, Premiere Pro, Photoshop, Photo & Vidéo sportive.
+1. **[HUG – Les HUG mènent l'enquête](https://luca-leone.ch/projets/hug)** (2026) :
+   - *Type* : Projet académique avec un vrai client, les Hôpitaux universitaires de Genève (projet d'intégration HEIG-VD, 4 semaines).
+   - *Problème* : sur dix inscrits à une collecte de sang en entreprise, trois repartaient sans avoir pu donner.
+   - *Réponse* : le questionnaire d'éligibilité transformé en enquête policière en ligne, pour savoir avant de s'inscrire si l'on peut donner ; plateforme web, tableau de bord pour les entreprises, campagne (affiches, intranet, réseaux sociaux).
+   - *Rôle* : Développeur full-stack, participation au concept et à l'UX/UI. Équipe de 7 : Romain Blanchard, Étienne Bergeon, Christophe Cunha, Aissya M'Ghirbi, Liliana Kolmakova et Marc Bridy.
+   - *Résultat* : site en ligne pendant un an ([donnez-votre-sang.ch](https://donnez-votre-sang.ch)), note maximale 6/6.
+   - *Technologies* : Laravel, Vue 3, MySQL, Figma.
+
+2. **[Karting de Vuiteboeuf](https://luca-leone.ch/projets/karting-vuiteboeuf)** (depuis mai 2026, en cours) :
+   - *Type* : Expérience professionnelle, emploi en parallèle des études.
+   - *Description* : community management du circuit : stratégie, prises de vue photo et vidéo sur la piste, montage et publication sur Instagram, TikTok et Facebook. Un logiciel développé par Luca prépare automatiquement les visuels de résultats des courses.
+   - *Rôle* : Community manager.
+   - *Résultats depuis mai 2026* : 329'000 vues sur Instagram (+72,7 %), vues Facebook multipliées par près de six (+479 %).
+   - *Comptes* : [Instagram](https://www.instagram.com/kartingvuiteboeuf/), [TikTok](https://www.tiktok.com/@kartingvuiteboeuf), [Facebook](https://www.facebook.com/KartingVuiteboeuf/).
+   - *Outils* : Premiere Pro, Photoshop, Instagram, TikTok.
 
 3. **[OceanSight](https://luca-leone.ch/projets/oceansight)** (2026) :
-   - *Type* : Application mobile & UI/UX Design (Projet académique HEIG-VD).
-   - *Description* : Application collaborative de signalement des déchets marins, valorisation des missions citoyennes de nettoyage et suivi d'impact environnemental.
-   - *Rôle* : UI/UX Design & Recherche utilisateur. Collaboration avec Sacha Loskov et Romain Blanchard.
-   - *Technologies* : Figma, Prototypage mobile, Tests utilisateurs, Design Thinking. Évaluations : UI 5.4/6, UX 6/6.
+   - *Type* : Projet académique (cours Bases UI/UX, HEIG-VD), lié à l'ODD 14 « vie aquatique ».
+   - *Description* : application mobile collaborative pour signaler des déchets marins (filets fantômes, îles de plastique), rejoindre une mission de nettoyage et suivre son impact.
+   - *Rôle* : UX/UI design, de la recherche utilisateur au prototype. Équipe : Sacha Loskov et Romain Blanchard.
+   - *Résultat* : 6/6 en UX et 5.4/6 en UI, après des tests avec cinq personnes.
+   - *Outils* : Figma, FigJam.
 
-4. **[DriveGear](https://luca-leone.ch/projets/drivegear)** (2025) :
-   - *Type* : E-Commerce & Web Design (Projet académique HEIG-VD).
-   - *Description* : Boutique e-commerce complète dédiée à l'univers automobile.
-   - *Rôle* : Projet solo : stratégie, marque, boutique WooCommerce, SEO, newsletter, réseaux sociaux et campagne. Évaluation : 5.9/6.
-   - *Technologies* : WordPress, WooCommerce, Yoast SEO, Google Analytics 4, Notion.
-
-5. **[L'Étoile Blanche](https://luca-leone.ch/projets/etoile-blanche)** (2026) :
-   - *Type* : Communication print et digitale pour un restaurant lausannois (projet d'agence HEIG-VD, agence Zest).
-   - *Description* : Refonte des cartes, campagne d'affichage pour l'afterwork, affichettes « anecdotes » et contenus Instagram, TikTok et Facebook autour du message « L'Étoile Blanche, l'endroit qui rassemble ».
+4. **[L'Étoile Blanche](https://luca-leone.ch/projets/etoile-blanche)** (2026) :
+   - *Type* : Projet académique avec un vrai client : agence étudiante Zest (HEIG-VD) pour un restaurant de Lausanne repris par une nouvelle direction.
+   - *Description* : un message, « L'Étoile Blanche, l'endroit qui rassemble », décliné sur quatre cartes, une campagne d'affichage pour l'afterwork, des affichettes « anecdotes » et des contenus pour Instagram, TikTok et Facebook.
    - *Rôle* : Vision globale et cohérence du projet. Équipe : Sacha Loskov, Romain Blanchard, Ryad Ait-Slimane et Cindy Demont.
-   - *Technologies* : Canva, Figma.
+   - *Outils* : Canva, Figma.
+
+5. **[DriveGear](https://luca-leone.ch/projets/drivegear)** (2025) :
+   - *Type* : Projet académique (cours E-commerce, HEIG-VD), projet solo.
+   - *Description* : boutique en ligne pour passionnés d'automobile créée de A à Z : marque, boutique WooCommerce, 30 fiches produits, trois modèles de vente (vente directe, affiliation, impression à la demande), SEO, newsletter, réseaux sociaux et campagne publicitaire.
+   - *Résultat* : 5.9/6.
+   - *Outils* : WordPress, WooCommerce, Yoast SEO, Google Analytics 4, Notion.
 
 6. **[F1 PitWall](https://luca-leone.ch/projets/f1-pitwall)** (2025) :
-   - *Type* : Concept d'application de second écran pour la Formule 1 (projet individuel, cours WebDon, HEIG-VD).
-   - *Description* : Classement détaillé, télémétrie, circuit en direct et prédictions de course (modèle hybride LightGBM et simulation Monte-Carlo) à partir de données Ergast, FastF1 et OpenF1.
-   - *Rôle* : Projet solo : concept, données et UI. Évaluation : 5.5/6.
-   - *Technologies* : Figma, JSON, Machine learning, Données ouvertes.
+   - *Type* : Projet académique individuel (cours WebDon, HEIG-VD).
+   - *Description* : concept d'application de second écran qui place les fans de Formule 1 sur le muret des stands : classement détaillé, télémétrie, circuit en direct et prédictions de course (modèle hybride LightGBM et simulation Monte-Carlo) à partir des données Ergast, FastF1 et OpenF1.
+   - *Rôle* : Concept, données et UI.
+   - *Résultat* : 5.5/6, concept jugé « original et ambitieux ».
+   - *Outils* : Figma, données ouvertes, machine learning.
 
 ## Formation & Diplômes
 - **Bachelor of Science HES-SO en Ingénierie des Médias** : [HEIG-VD](https://heig-vd.ch), Yverdon-les-Bains, Suisse. Spécialisation en médias interactifs, gestion de projet et communication digitale.
