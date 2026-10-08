@@ -115,7 +115,29 @@ Envoyé le ${esc(swissDate(d.date, 'fr'))}<br>depuis ${esc(SITE + d.page)}
 
 /* ---------- To the visitor ---------- */
 
-const COPY: Record<MailLang, { subject: string; hello: (n: string) => string; body: string[]; topic: string; sign: string; site: string; note: string }> = {
+/** The email signature designed for Luca's mailbox: logo, name, title, clickable contacts */
+function signature(lang: MailLang) {
+  const red = '#E0244A';
+  const grey = '#808080';
+  const link = (href: string, label: string) => `<a href="${href}" style="color:${red};text-decoration:none;">${label}</a>`;
+  const dot = `<span style="color:${grey};font-weight:normal;">&nbsp;&nbsp;·&nbsp;&nbsp;</span>`;
+  return `<table cellpadding="0" cellspacing="0" border="0" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;border-collapse:collapse;">
+<tr>
+<td style="padding:0 14px 0 0;vertical-align:middle;">
+<a href="${SITE}" style="text-decoration:none;"><img src="${SITE}/icon-192.png" width="56" height="56" alt="Luca Leone" style="display:block;width:56px;height:56px;border:0;border-radius:12px;"></a>
+</td>
+<td style="padding:0 0 0 14px;border-left:2px solid ${red};vertical-align:top;">
+<div style="font-size:16px;font-weight:bold;line-height:21px;letter-spacing:-0.2px;color:#1A1A1A;">Luca Leone</div>
+<div style="font-size:12px;line-height:17px;color:${grey};">${lang === 'fr' ? 'Étudiant en Ingénierie des médias · HEIG-VD' : 'Media Engineering student · HEIG-VD'}</div>
+<div style="font-size:12px;line-height:17px;color:${grey};padding-bottom:6px;">${lang === 'fr' ? 'Communication digitale · UI/UX · Développement web' : 'Digital communication · UI/UX · Web development'}</div>
+<div style="font-size:12px;line-height:18px;font-weight:bold;">${link('tel:+41798687204', '+41 79 868 72 04')}${dot}${link('mailto:luca@luca-leone.ch', 'luca@luca-leone.ch')}</div>
+<div style="font-size:12px;line-height:18px;font-weight:bold;">${link(lang === 'fr' ? SITE : `${SITE}/en/`, 'luca-leone.ch')}${dot}${link(LINKEDIN, 'LinkedIn')}</div>
+</td>
+</tr>
+</table>`;
+}
+
+const COPY: Record<MailLang, { subject: string; hello: (n: string) => string; body: string[]; topic: string; sign: string; note: string }> = {
   fr: {
     subject: 'Merci pour votre message · Luca Leone',
     hello: (n) => (n ? `Bonjour ${n},` : 'Bonjour,'),
@@ -125,7 +147,6 @@ const COPY: Record<MailLang, { subject: string; hello: (n: string) => string; bo
     ],
     topic: 'Sujet',
     sign: 'Meilleures salutations,',
-    site: 'Voir mon portfolio',
     note: 'Vous recevez cet email parce que ce formulaire a été rempli avec votre adresse sur luca-leone.ch. Si ce n’était pas vous, ignorez-le simplement.',
   },
   en: {
@@ -134,7 +155,6 @@ const COPY: Record<MailLang, { subject: string; hello: (n: string) => string; bo
     body: ['Thank you for your message, it reached me safely.', 'I’ll read it carefully and get back to you as soon as possible.'],
     topic: 'Topic',
     sign: 'Best regards,',
-    site: 'See my portfolio',
     note: 'You’re receiving this email because the contact form on luca-leone.ch was filled in with your address. If it wasn’t you, simply ignore it.',
   },
 };
@@ -152,16 +172,13 @@ export function visitorEmail(d: ContactDetails) {
 ${c.body.map((p) => `<p style="margin:0 0 14px;font-size:16px;line-height:1.6;color:#3A3A3C;">${esc(p)}</p>`).join('\n')}
 ${d.subject ? `<p style="margin:6px 0 0;font-size:13px;color:#6B6B6B;">${c.topic} : <strong style="color:#1A1A1A;">${esc(d.subject)}</strong></p>` : ''}
 </td></tr>
-<tr><td style="padding:22px 32px 6px;">
-<p style="margin:0 0 4px;font-size:15px;color:#3A3A3C;">${esc(c.sign)}</p>
-<p style="margin:0;font-size:17px;font-weight:700;color:#1A1A1A;">Luca Leone</p>
-<p style="margin:2px 0 0;font-size:13px;color:#6B6B6B;">${d.lang === 'fr' ? 'Étudiant en Ingénierie des médias · HEIG-VD' : 'Media Engineering student · HEIG-VD'}</p>
+<tr><td style="padding:22px 32px 28px;">
+<p style="margin:0 0 14px;font-size:15px;color:#3A3A3C;">${esc(c.sign)}</p>
+${signature(d.lang)}
 </td></tr>
-<tr><td style="padding:22px 32px 28px;">${button(d.lang === 'fr' ? SITE : `${SITE}/en/`, c.site)}
-<a href="${LINKEDIN}" style="display:inline-block;margin-left:12px;color:${ACCENT};font-weight:700;font-size:15px;text-decoration:none;">LinkedIn</a></td></tr>
 <tr><td style="padding:16px 32px 24px;border-top:1px solid #EEEEF0;font-size:12px;line-height:1.6;color:#8A8A8E;">${esc(c.note)}</td></tr>`,
   );
-  const text = [c.hello(name), '', ...c.body, d.subject ? `\n${c.topic} : ${d.subject}` : '', '', c.sign, 'Luca Leone', SITE, '', c.note]
+  const text = [c.hello(name), '', ...c.body, d.subject ? `\n${c.topic} : ${d.subject}` : '', '', c.sign, 'Luca Leone', d.lang === 'fr' ? 'Étudiant en Ingénierie des médias · HEIG-VD' : 'Media Engineering student · HEIG-VD', '+41 79 868 72 04 · luca@luca-leone.ch', 'luca-leone.ch · ' + LINKEDIN, '', c.note]
     .filter((l, i, a) => !(l === '' && a[i - 1] === ''))
     .join('\n');
   return { subject: c.subject, html, text };
