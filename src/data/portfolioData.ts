@@ -347,10 +347,80 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     }
   },
   {
+    id: 'etoile-blanche',
+    kind: 'school-client',
+    name: 'Étoile Blanche',
+    number: '04',
+    year: '2026',
+    imageUrl: '/images/EtoileBlanche-cover-2.webp',
+    images: ['/images/EtoileBlanche-cover-2.webp'],
+    stack: ['Identité & print', 'Réseaux sociaux', 'Campagne d’affichage', 'Canva & Figma'],
+    stackEn: ['Identity & print', 'Social media', 'Poster campaign', 'Canva & Figma'],
+    // Étoile Blanche red, as on the printed menus
+    accentColor: '#AB2328',
+    accentColorDark: '#E0484E',
+    fr: {
+      title: 'ÉTOILE BLANCHE',
+      subtitle: 'Communication d’un restaurant lausannois',
+      client: 'Restaurant L’Étoile Blanche, Lausanne · Projet académique',
+      category: 'Communication digitale',
+      role: 'Vision globale et cohérence du projet',
+      team: 'Sacha Loskov, Romain Blanchard, Ryad Ait-Slimane et Cindy Demont.',
+      hook: 'Une nouvelle direction, une nouvelle image.',
+      badge: 'Chef de projet',
+      summary: 'Refonte de la communication du restaurant L’Étoile Blanche à Lausanne : cartes, affichage, anecdotes et réseaux sociaux, autour d’un message rassembleur.',
+      overview: 'Projet de l’agence étudiante Zest pour le restaurant L’Étoile Blanche à Lausanne, repris par une nouvelle direction : refonte des cartes, campagne d’affichage pour l’afterwork, affichettes « anecdotes » et contenus pour les réseaux sociaux.',
+      challenges: [
+        'Marquer une rupture avec l’ancienne communication du restaurant.',
+        'Donner une identité cohérente à toutes les cartes et à tous les supports.',
+        'Faire connaître l’afterwork auprès des bureaux du quartier.'
+      ],
+      solutions: [
+        'Un message clé : « L’Étoile Blanche, l’endroit qui rassemble ».',
+        'Quatre cartes repensées dans un même univers graphique, dont une carte pliée en étoile.',
+        'Une campagne d’affichage libre et des contenus Instagram, TikTok et Facebook.'
+      ],
+      metrics: [
+        { label: 'Supports', value: 'Print & digital' },
+        { label: 'Cartes', value: '4 refaites' },
+        { label: 'Réseaux', value: 'Instagram, TikTok, Facebook' },
+        { label: 'Équipe', value: 'Agence de 5' }
+      ]
+    },
+    en: {
+      title: 'ÉTOILE BLANCHE',
+      subtitle: 'Communication for a Lausanne restaurant',
+      client: 'L’Étoile Blanche restaurant, Lausanne · Academic project',
+      category: 'Digital communication',
+      role: 'Overall vision and consistency',
+      team: 'Sacha Loskov, Romain Blanchard, Ryad Ait-Slimane and Cindy Demont.',
+      hook: 'New owners, a new image.',
+      badge: 'Project lead',
+      summary: 'A new communication for L’Étoile Blanche restaurant in Lausanne: menus, posters, anecdote cards and social media, built around one welcoming message.',
+      overview: 'A project by the student agency Zest for L’Étoile Blanche, a Lausanne restaurant taken over by new owners: redesigned menus, a poster campaign for the after-work, “anecdote” cards and social media content.',
+      challenges: [
+        'Make a clear break with the restaurant’s previous communication.',
+        'Give every menu and medium one consistent identity.',
+        'Make the after-work known to the offices nearby.'
+      ],
+      solutions: [
+        'One key message: “L’Étoile Blanche, the place that brings people together”.',
+        'Four menus redesigned in one visual world, including a star-folded card.',
+        'A free-poster campaign and content for Instagram, TikTok and Facebook.'
+      ],
+      metrics: [
+        { label: 'Media', value: 'Print & digital' },
+        { label: 'Menus', value: '4 redesigned' },
+        { label: 'Social', value: 'Instagram, TikTok, Facebook' },
+        { label: 'Team', value: 'Agency of 5' }
+      ]
+    }
+  },
+  {
     id: 'drivegear',
     kind: 'school',
     name: 'DriveGear',
-    number: '04',
+    number: '05',
     year: '2025',
     imageUrl: '/images/DriveGear-cover.webp',
     images: [
@@ -419,76 +489,6 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
         { label: 'CMS', value: 'WordPress' },
         { label: 'Platform', value: 'WooCommerce' },
         { label: 'Evaluation', value: '5.9 / 6' }
-      ]
-    }
-  },
-  {
-    id: 'etoile-blanche',
-    kind: 'school-client',
-    name: 'Étoile Blanche',
-    number: '05',
-    year: '2026',
-    imageUrl: '/images/EtoileBlanche-cover-2.webp',
-    images: ['/images/EtoileBlanche-cover-2.webp'],
-    stack: ['Identité & print', 'Réseaux sociaux', 'Campagne d’affichage', 'Canva & Figma'],
-    stackEn: ['Identity & print', 'Social media', 'Poster campaign', 'Canva & Figma'],
-    // Étoile Blanche red, as on the printed menus
-    accentColor: '#AB2328',
-    accentColorDark: '#E0484E',
-    fr: {
-      title: 'ÉTOILE BLANCHE',
-      subtitle: 'Communication d’un restaurant lausannois',
-      client: 'Restaurant L’Étoile Blanche, Lausanne · Projet académique',
-      category: 'Communication digitale',
-      role: 'Vision globale et cohérence du projet',
-      team: 'Sacha Loskov, Romain Blanchard, Ryad Ait-Slimane et Cindy Demont.',
-      hook: 'Une nouvelle direction, une nouvelle image.',
-      badge: 'Chef de projet',
-      summary: 'Refonte de la communication du restaurant L’Étoile Blanche à Lausanne : cartes, affichage, anecdotes et réseaux sociaux, autour d’un message rassembleur.',
-      overview: 'Projet de l’agence étudiante Zest pour le restaurant L’Étoile Blanche à Lausanne, repris par une nouvelle direction : refonte des cartes, campagne d’affichage pour l’afterwork, affichettes « anecdotes » et contenus pour les réseaux sociaux.',
-      challenges: [
-        'Marquer une rupture avec l’ancienne communication du restaurant.',
-        'Donner une identité cohérente à toutes les cartes et à tous les supports.',
-        'Faire connaître l’afterwork auprès des bureaux du quartier.'
-      ],
-      solutions: [
-        'Un message clé : « L’Étoile Blanche, l’endroit qui rassemble ».',
-        'Quatre cartes repensées dans un même univers graphique, dont une carte pliée en étoile.',
-        'Une campagne d’affichage libre et des contenus Instagram, TikTok et Facebook.'
-      ],
-      metrics: [
-        { label: 'Supports', value: 'Print & digital' },
-        { label: 'Cartes', value: '4 refaites' },
-        { label: 'Réseaux', value: 'Instagram, TikTok, Facebook' },
-        { label: 'Équipe', value: 'Agence de 5' }
-      ]
-    },
-    en: {
-      title: 'ÉTOILE BLANCHE',
-      subtitle: 'Communication for a Lausanne restaurant',
-      client: 'L’Étoile Blanche restaurant, Lausanne · Academic project',
-      category: 'Digital communication',
-      role: 'Overall vision and consistency',
-      team: 'Sacha Loskov, Romain Blanchard, Ryad Ait-Slimane and Cindy Demont.',
-      hook: 'New owners, a new image.',
-      badge: 'Project lead',
-      summary: 'A new communication for L’Étoile Blanche restaurant in Lausanne: menus, posters, anecdote cards and social media, built around one welcoming message.',
-      overview: 'A project by the student agency Zest for L’Étoile Blanche, a Lausanne restaurant taken over by new owners: redesigned menus, a poster campaign for the after-work, “anecdote” cards and social media content.',
-      challenges: [
-        'Make a clear break with the restaurant’s previous communication.',
-        'Give every menu and medium one consistent identity.',
-        'Make the after-work known to the offices nearby.'
-      ],
-      solutions: [
-        'One key message: “L’Étoile Blanche, the place that brings people together”.',
-        'Four menus redesigned in one visual world, including a star-folded card.',
-        'A free-poster campaign and content for Instagram, TikTok and Facebook.'
-      ],
-      metrics: [
-        { label: 'Media', value: 'Print & digital' },
-        { label: 'Menus', value: '4 redesigned' },
-        { label: 'Social', value: 'Instagram, TikTok, Facebook' },
-        { label: 'Team', value: 'Agency of 5' }
       ]
     }
   },
