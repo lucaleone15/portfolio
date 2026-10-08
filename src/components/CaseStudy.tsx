@@ -5,6 +5,7 @@ import { Icon } from './Icon';
 import { useLanguage } from '../context/LanguageContext';
 import { Project } from '../types';
 import { imageSrcSet } from '../data/images';
+import { PROJECT_KIND_LABEL } from '../data/portfolioData';
 import { projectMediaTransition } from '../viewTransitions';
 import type { CaseBlock, CaseFigure, CaseImage, CaseStep, CaseStudy as CaseStudyData } from '../data/caseStudies';
 
@@ -573,7 +574,10 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
       {/* Hero: the stake first, then the facts */}
       <header className="pb-10 sm:pb-14">
         <Reveal>
-          <p className="font-syne text-xs sm:text-sm font-bold uppercase tracking-widest" style={{ color: 'var(--pa-text)' }}>
+          <span className="inline-flex h-7 items-center rounded-full bg-black/[0.06] px-3 font-syne text-xs font-bold text-neutral-800 dark:bg-white/[0.1] dark:text-white">
+            {PROJECT_KIND_LABEL[project.kind][lang]}
+          </span>
+          <p className="mt-4 font-syne text-xs sm:text-sm font-bold uppercase tracking-widest" style={{ color: 'var(--pa-text)' }}>
             {study.kicker}
           </p>
           <h1 className="mt-4 text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.02] text-neutral-900 dark:text-white">

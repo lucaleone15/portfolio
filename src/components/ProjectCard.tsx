@@ -5,7 +5,7 @@ import { Icon } from './Icon';
 import { Project } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { Link, projectPath } from '../router';
-import { projectAccentVars } from '../data/portfolioData';
+import { PROJECT_KIND_LABEL, projectAccentVars } from '../data/portfolioData';
 import { imageSrcSet } from '../data/images';
 import { projectMediaTransition } from '../viewTransitions';
 
@@ -112,8 +112,15 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </div>
           )}
 
+          {/* How the project came about: real work, school project for a real client, or school project */}
+          <div className="absolute top-3.5 right-3.5 z-20">
+            <span className="glass-media font-syne h-7 px-3 rounded-full text-[11px] sm:text-xs font-bold inline-flex items-center tracking-wide whitespace-nowrap">
+              {PROJECT_KIND_LABEL[project.kind][lang]}
+            </span>
+          </div>
+
           {/* My role on the project (the category only drives the filter) */}
-          <div className="absolute top-3.5 left-3.5 z-20 max-w-[calc(100%-28px)]">
+          <div className="absolute top-3.5 left-3.5 z-20 max-w-[calc(50%-14px)]">
             <span
               className="font-syne h-7 px-3.5 rounded-full text-[11px] sm:text-xs font-extrabold inline-flex items-center tracking-wide truncate max-w-full shadow-[0_4px_12px_-2px_rgba(0,0,0,0.35)]"
               style={{ backgroundColor: 'var(--pa)', color: 'var(--pa-on)' }}
