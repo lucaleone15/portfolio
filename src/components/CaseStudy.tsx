@@ -623,7 +623,7 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
           sizes="(min-width: 1152px) 1088px, 100vw"
           alt={`${project.name} – ${project.subtitle}`}
           width={1920}
-          height={1080}
+          height={1200}
           fetchPriority="high"
           decoding="async"
           className="absolute inset-0 w-full h-full object-cover"
