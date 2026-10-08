@@ -70,10 +70,18 @@ function Prose({ text }: { text: string }) {
 
 /* ---------- Key figures: count up once in view ---------- */
 
+/** Keeps the value's decimals (5.4 stays 5.4) and uses the Swiss thousands mark (6’500) */
+function formatFigure(v: number, decimals: number) {
+  const [int, dec] = v.toFixed(decimals).split('.');
+  const grouped = int.replace(/\B(?=(\d{3})+(?!\d))/g, '’');
+  return dec ? `${grouped}.${dec}` : grouped;
+}
+
 function Counter({ figure }: { figure: CaseFigure }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
   const reduceMotion = useReducedMotion();
+  const decimals = (String(figure.value).split('.')[1] ?? '').length;
 
   useEffect(() => {
     const el = ref.current;
@@ -82,17 +90,17 @@ function Counter({ figure }: { figure: CaseFigure }) {
       duration: 1.2,
       ease: EASE_OUT,
       onUpdate: (v) => {
-        el.textContent = String(Math.round(v));
+        el.textContent = formatFigure(v, decimals);
       },
     });
     return () => controls.stop();
-  }, [inView, reduceMotion, figure.value]);
+  }, [inView, reduceMotion, figure.value, decimals]);
 
   return (
     <span className="tabular-nums">
       {figure.prefix}
       {/* Final value in the markup: right without JavaScript and for search engines */}
-      <span ref={ref}>{figure.value}</span>
+      <span ref={ref}>{formatFigure(figure.value, decimals)}</span>
       {figure.suffix}
     </span>
   );
