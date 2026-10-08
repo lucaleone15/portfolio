@@ -1,5 +1,6 @@
 import { Language } from './types';
 import { PROJECTS_EN, PROJECTS_FR, UNIFIED_PROJECTS, USER_INFO } from './data/portfolioData';
+import { getCaseStudy, type CaseBlock } from './data/caseStudies';
 import { homePath, pathFor, privacyPath, projectPath, Route, SECTION_IDS, SectionId, sectionPath } from './router';
 
 /**
@@ -262,13 +263,53 @@ function sectionHead(lang: Language, section: SectionId): HeadData {
   return { ...home, ...copy, url: abs(sectionPath(lang, section)), alternates: [] };
 }
 
+function blockImages(block: CaseBlock): string[] {
+  switch (block.type) {
+    case 'steps':
+      return block.steps.map((s) => s.image.src);
+    case 'compare':
+      return [block.before.src, block.after.src];
+    case 'pair':
+    case 'strip':
+    case 'gallery':
+      return block.items.map((i) => i.src);
+    case 'image':
+      return [block.image.src];
+    case 'video':
+      return [block.poster];
+    default:
+      return [];
+  }
+}
+
+/**
+ * Every image a project page shows, as site paths: the cover first, then the case study's
+ * images in reading order (or the project's own gallery when it has no case study).
+ */
+export function projectImagePaths(lang: Language, slug: string): string[] {
+  const project = projectsFor(lang).find((p) => p.id === slug);
+  if (!project) return [];
+  const study = getCaseStudy(slug, lang);
+  const paths = study
+    ? [
+        study.hero?.src ?? project.imageUrl,
+        ...study.sections.flatMap((section) =>
+          section.content.flatMap((item) => (typeof item === 'string' ? [] : blockImages(item))),
+        ),
+      ]
+    : project.images?.length
+      ? project.images
+      : [project.imageUrl];
+  return [...new Set(paths)];
+}
+
 function projectHead(lang: Language, slug: string): HeadData | null {
   const project = projectsFor(lang).find((p) => p.id === slug);
   if (!project) return null;
 
   const copy = HOME_COPY[lang];
   const url = abs(projectPath(lang, slug));
-  const images = (project.images?.length ? project.images : [project.imageUrl]).map(abs);
+  const images = projectImagePaths(lang, slug).map(abs);
   const meta = META[slug]?.[lang];
   const title = meta?.title ?? `${project.name} – ${project.subtitle} | Luca Leone`;
   const description = meta?.description ?? project.summary;
@@ -426,26 +467,41 @@ export function renderHeadTags(head: HeadData): string {
     .join('\n');
 }
 
-export function renderSitemap(lastmod: string): string {
-  // Only canonical pages: the section URLs point to the home page
+/**
+ * sitemap.xml: canonical pages only (the section URLs point to the home page), each with its
+ * FR/EN alternates and the images it shows (Google Images), plus the CV. `lastmod` comes
+ * from the caller (scripts/prerender.mjs: date of the page's last commit), so it only moves
+ * when the page really changes; Google ignores a lastmod that changes on every build.
+ */
+export function renderSitemap(lastmod: { page: (route: Route) => string; cv: string }): string {
+  const imageTags = (paths: string[]) => paths.map((p) => `    <image:image><image:loc>${abs(p)}</image:loc></image:image>`);
+
   const pages = getAllRoutes().filter((route) => !(route.name === 'home' && route.section)).map((route) => {
     const head = getHeadData(route);
-    const links = head.alternates
-      .map((a) => `    <xhtml:link rel="alternate" hreflang="${a.hreflang}" href="${a.href}" />`)
-      .join('\n');
-    const priority = route.name === 'home' ? '1.0' : route.name === 'privacy' ? '0.3' : '0.8';
-    return `  <url>\n    <loc>${head.canonical}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <priority>${priority}</priority>\n${links}\n  </url>`;
+    const links = head.alternates.map((a) => `    <xhtml:link rel="alternate" hreflang="${a.hreflang}" href="${a.href}" />`);
+    const images =
+      route.name === 'project'
+        ? projectImagePaths(route.lang, route.slug)
+        : route.name === 'home'
+          ? projectsFor(route.lang).map((p) => p.imageUrl)
+          : [];
+    return [
+      '  <url>',
+      `    <loc>${head.canonical}</loc>`,
+      `    <lastmod>${lastmod.page(route)}</lastmod>`,
+      ...links,
+      ...imageTags(images),
+      '  </url>',
+    ].join('\n');
   });
 
-  const pdfs = [USER_INFO.cv].map(
-    (pdf) => `  <url>\n    <loc>${abs(pdf)}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <priority>0.5</priority>\n  </url>`,
-  );
+  const cv = `  <url>\n    <loc>${abs(USER_INFO.cv)}</loc>\n    <lastmod>${lastmod.cv}</lastmod>\n  </url>`;
 
   return [
     '<?xml version="1.0" encoding="UTF-8"?>',
-    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">',
     ...pages,
-    ...pdfs,
+    cv,
     '</urlset>',
     '',
   ].join('\n');

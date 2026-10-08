@@ -2,6 +2,7 @@
 // the sitemap, so crawlers that don't run JavaScript still see real content,
 // per-page <head> metadata and structured data.
 // Runs after `vite build` (client) and `vite build --ssr` (dist-ssr).
+import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -10,7 +11,7 @@ const root = process.cwd();
 const dist = path.join(root, 'dist');
 const ssrEntry = path.join(root, 'dist-ssr', 'entry-server.js');
 
-const { render, getAllRoutes, getHeadData, renderHeadTags, renderSitemap, pathFor } = await import(
+const { render, getAllRoutes, getHeadData, renderHeadTags, renderSitemap, projectImagePaths, pathFor, USER_INFO } = await import(
   pathToFileURL(ssrEntry).href
 );
 
@@ -52,8 +53,56 @@ for (const route of getAllRoutes()) {
   console.log('prerendered 404.html');
 }
 
+// Sitemap lastmod = date of the last commit touching the files a page is made of, so it only
+// moves when the page's content does. Without git (or for files never committed): today.
 const today = new Date().toISOString().slice(0, 10);
-fs.writeFileSync(path.join(dist, 'sitemap.xml'), renderSitemap(today));
+const lastCommit = (paths) => {
+  try {
+    const date = execFileSync('git', ['log', '-1', '--format=%cs', '--', ...paths], {
+      cwd: root,
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim();
+    return date || today;
+  } catch {
+    return today;
+  }
+};
+
+// Case study file of each project (src/data/caseStudies/); a project missing here falls back
+// to the project data file
+const CASE_STUDY_FILES = {
+  hug: 'hug',
+  'karting-vuiteboeuf': 'karting',
+  oceansight: 'oceansight',
+  'etoile-blanche': 'etoileBlanche',
+  drivegear: 'drivegear',
+  'f1-pitwall': 'f1Pitwall',
+};
+const HOME_SOURCES = [
+  'src/data/portfolioData.ts',
+  'src/context/LanguageContext.tsx',
+  ...['Hero', 'HeroBandeau', 'SkillsSection', 'ProjectsSection', 'ProjectCard', 'AboutSection', 'ContactSection', 'ContactExtras'].map(
+    (name) => `src/components/${name}.tsx`,
+  ),
+  ':(glob)public/images/*.webp',
+];
+const sourcesFor = (route) => {
+  if (route.name === 'project') {
+    const file = CASE_STUDY_FILES[route.slug];
+    if (!file) return ['src/data/portfolioData.ts'];
+    const folders = new Set(projectImagePaths(route.lang, route.slug).map((src) => `public${path.posix.dirname(src)}`));
+    return [`src/data/caseStudies/${file}.ts`, ...folders];
+  }
+  if (route.name === 'privacy') return ['src/components/PrivacyPolicy.tsx'];
+  return HOME_SOURCES;
+};
+
+const sitemap = renderSitemap({
+  page: (route) => lastCommit(sourcesFor(route)),
+  cv: lastCommit([path.posix.join('public', USER_INFO.cv)]),
+});
+fs.writeFileSync(path.join(dist, 'sitemap.xml'), sitemap);
 console.log('wrote sitemap.xml');
 
 fs.rmSync(path.join(root, 'dist-ssr'), { recursive: true, force: true });

@@ -10,7 +10,7 @@ const DRIVEGEAR_FR: CaseStudy = {
     'Seul, j’ai créé DriveGear de A à Z : la marque, la boutique WooCommerce, les fiches produits, les contenus, la newsletter et les réseaux sociaux.',
   meta: [
     { label: 'Contexte', value: 'Cours E-commerce, HEIG-VD' },
-    { label: 'Année', value: '2025–2026' },
+    { label: 'Année', value: '2025' },
     { label: 'Durée', value: 'Un semestre' },
     { label: 'Mon rôle', value: 'Tout : stratégie, design, boutique, marketing' },
     { label: 'Équipe', value: 'Projet solo' },
@@ -132,7 +132,7 @@ const DRIVEGEAR_EN: CaseStudy = {
     'On my own, I built DriveGear from A to Z: the brand, the WooCommerce store, the product pages, the content, the newsletter and the social media.',
   meta: [
     { label: 'Context', value: 'E-commerce course, HEIG-VD' },
-    { label: 'Year', value: '2025–2026' },
+    { label: 'Year', value: '2025' },
     { label: 'Duration', value: 'One semester' },
     { label: 'My role', value: 'Everything: strategy, design, store, marketing' },
     { label: 'Team', value: 'Solo project' },

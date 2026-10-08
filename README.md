@@ -203,7 +203,7 @@ Après une modification de contenu : `npm run build` (le pré-rendu, les métado
 - **Sections avec leur propre URL** : `/projets`, `/a-propos`, `/contact` (`/en/projects`, `/en/about`, `/en/contact`). L'accueil reste une seule page qui défile : un lien partagé ouvre directement la section, les liens du menu défilent en douceur sans recharger, et l'URL (ainsi que le titre de l'onglet) suit la section lue. Ces URLs ont leur titre et leur description, mais leur URL canonique est l'accueil (même contenu) : elles ne figurent pas dans le sitemap.
 - **Pré-rendu** : au build, chaque page est rendue en HTML statique (`scripts/prerender.mjs`). Les moteurs de recherche et les réseaux sociaux voient le contenu complet sans exécuter de JavaScript.
 - **Métadonnées par page** (`src/seo.ts`, table `META`) : titre et description uniques, dans les limites d'affichage de Google (titres ≤ 60 caractères / 580 px, descriptions 120–160 caractères / 920 px ; score SEO Lighthouse 100), URL canonique, `hreflang` FR/EN, Open Graph, Twitter Card et données structurées JSON-LD (`Person`, `WebSite`, `ProfilePage`, `CreativeWork`, `BreadcrumbList`).
-- **Sitemap** généré automatiquement (pages canoniques FR/EN avec `hreflang` + CV).
+- **Sitemap** généré automatiquement : pages canoniques FR/EN avec `hreflang`, images affichées par chaque page (Google Images) et CV. Le `lastmod` de chaque page est la date du dernier commit de ses fichiers (étude de cas + images pour un projet), il ne bouge donc que si la page change.
 - **GEO** (assistants IA) : `llms.txt`, catalogues `ai-catalog.json`, et `robots.txt` qui autorise les robots des IA.
 - **404** : page dédiée, servie avec un vrai statut 404 et exclue de l'indexation.
 - **Suggestion de langue** (`src/components/LanguageHint.tsx`) : si le navigateur ne demande pas la langue de la page (par ex. un recruteur anglophone sur la version française), une petite pastille propose l'autre version. Jamais de redirection ; une fois fermée ou suivie, elle ne revient plus.
@@ -231,7 +231,7 @@ Statistiques internes et respectueuses de la vie privée (`server/analytics.ts`)
 - sert les pages pré-rendues (`/x` → `x.html` ou `x/index.html`) ;
 - compression **brotli / gzip** ;
 - cache : fichiers du build 1 an (`immutable`), HTML revalidé à chaque visite, le reste 30 jours ; `ETag` / 304 ;
-- redirections 301 : `www.` → domaine nu, anciennes URLs de projets ;
+- redirections 301 vers l'URL unique de chaque page : `www.` → domaine nu, `x.html`, `x/index.html`, `x/` → `x`, `/en` → `/en/`, anciennes URLs de projets ;
 - en-têtes de sécurité : **CSP stricte** (seuls les scripts du site + le script de thème, autorisé par son empreinte), `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, HSTS… ;
 - protection contre la lecture de fichiers hors de `dist/`.
 
