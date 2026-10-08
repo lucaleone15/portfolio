@@ -106,7 +106,6 @@ const HUG_FR: CaseStudy = {
     { label: 'Équipe', value: '7 étudiant·e·s' },
     { label: 'Outils', value: 'Laravel, Vue 3, MySQL, Figma' },
   ],
-  hero: img('hero', 1920, 1200, 'Ordinateur portable sur fond rouge affichant la page d’accueil « Les HUG mènent l’enquête »'),
   liveUrl: 'https://donnez-votre-sang.ch',
   liveLabel: 'Voir le site en ligne',
   brief: [
