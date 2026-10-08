@@ -1,7 +1,7 @@
 """Responsive variants of the project images: public/images/*.webp -> sm/ (640px) and md/ (1280px).
 
-Used where images are displayed small (hero image trail, thumbnails) and in srcset for
-phones. Run after adding or replacing a project image:  python3 scripts/make-image-variants.py
+Used in srcset for project cards and covers, so phones and small slots load lighter files.
+Run after adding or replacing a project image:  python3 scripts/make-image-variants.py
 """
 import io
 from pathlib import Path

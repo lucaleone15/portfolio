@@ -10,25 +10,31 @@
     {
       "id": "urn:ard:luca-leone:profile",
       "displayName": "Luca Leone - Profil & Réalisations",
-      "description": "Profil professionnel et réalisations de Luca Leone : communication numérique, design UI/UX, développement web et stratégie réseaux sociaux.",
+      "description": "Profil, parcours et six études de cas de Luca Leone (HUG, Karting de Vuiteboeuf, OceanSight, L'Étoile Blanche, DriveGear, F1 PitWall) : communication digitale, UX/UI design et développement web.",
       "mediaType": "text/markdown",
       "url": "https://luca-leone.ch/llms.txt",
       "representativeQueries": [
         "Luca Leone portfolio",
-        "ingénieur des médias HEIG-VD",
-        "UI UX designer Suisse",
-        "projets HUG OceanSight Karting Vuiteboeuf"
+        "Luca Leone HEIG-VD ingénierie des médias",
+        "étudiant ingénierie des médias Suisse travail de Bachelor",
+        "UX UI designer et développeur web Suisse romande",
+        "community manager Karting de Vuiteboeuf",
+        "projet HUG don du sang plateforme web",
+        "OceanSight application déchets marins",
+        "L'Étoile Blanche Lausanne communication restaurant",
+        "DriveGear boutique e-commerce WooCommerce",
+        "F1 PitWall application second écran Formule 1"
       ]
     },
     {
       "id": "urn:ard:luca-leone:sitemap",
       "displayName": "Sitemap des ressources et projets",
-      "description": "Plan complet du site et indexation des dossiers de projets PDF.",
+      "description": "Plan du site : accueil, six études de cas de projets et politique de confidentialité, en français et en anglais, plus le CV en PDF.",
       "mediaType": "application/xml",
       "url": "https://luca-leone.ch/sitemap.xml",
       "representativeQueries": [
-        "sitemap luca leone",
-        "dossiers PDF projets Luca Leone"
+        "sitemap luca-leone.ch",
+        "projets de Luca Leone"
       ]
     }
   ]
