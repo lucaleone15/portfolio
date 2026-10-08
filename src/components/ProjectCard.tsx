@@ -112,13 +112,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </div>
           )}
 
-          {/* Category Badge pinned at top-left of image */}
+          {/* My role on the project (the category only drives the filter) */}
           <div className="absolute top-3.5 left-3.5 z-20 max-w-[calc(100%-28px)]">
             <span
               className="font-syne h-7 px-3.5 rounded-full text-[11px] sm:text-xs font-extrabold inline-flex items-center tracking-wide truncate max-w-full shadow-[0_4px_12px_-2px_rgba(0,0,0,0.35)]"
               style={{ backgroundColor: 'var(--pa)', color: 'var(--pa-on)' }}
             >
-              {project.category}
+              {project.badge ?? project.category}
             </span>
           </div>
 
@@ -181,10 +181,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </div>
           </div>
 
-          {/* Mini Description */}
-          <p className="text-xs sm:text-sm text-neutral-600 dark:text-[#A1A1AA] leading-relaxed line-clamp-2">
-            {project.summary}
-          </p>
         </div>
       </div>
       </article>
