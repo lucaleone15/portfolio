@@ -15,7 +15,8 @@ import { createAnalyticsHandler } from './analytics';
  * - brotli / gzip for text files (cached in memory)
  * - Cache: hashed build assets 1 year (immutable), HTML always revalidated, the rest 30 days
  * - Security headers incl. a strict CSP (only own scripts + the inline theme script, by hash)
- * - www.* is redirected (301) to the bare domain
+ * - www.* is redirected (301) to the bare domain, and every other spelling of a page URL to
+ *   its canonical one (x.html, x/index.html, trailing slash, renamed projects)
  * - POST /api/contact (server/contact.ts) and first-party analytics (server/analytics.ts)
  *
  * Env (.env in the project root): PORT (default 3000), SMTP_* / CONTACT_TO, STATS_KEY.
@@ -148,6 +149,14 @@ function send(req: http.IncomingMessage, res: http.ServerResponse, file: string,
   res.end(req.method === 'HEAD' ? undefined : body);
 }
 
+/** The one spelling of a page path that the site links to and declares canonical */
+function canonicalPagePath(pathname: string) {
+  let p = pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
+  if (p === '/en') p = '/en/';
+  else if (p.length > 1 && p.endsWith('/') && p !== '/en/') p = p.slice(0, -1);
+  return p.replace(/^(\/(?:en\/)?(?:projets|projects)\/)hug-sangsationnel$/, '$1hug');
+}
+
 const contact = createContactHandler(env);
 const analytics = createAnalyticsHandler(env);
 
@@ -164,13 +173,17 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // Renamed project URLs: old links (shared, indexed) keep working
-  const renamed = (req.url ?? '').replace(/^(\/(?:en\/)?(?:projets|projects)\/)hug-sangsationnel(?=\/?(?:\?|$))/, '$1hug');
-  if (renamed !== req.url) {
-    res.statusCode = 301;
-    res.setHeader('Location', renamed);
-    res.end();
-    return;
+  // One URL per page (301, query kept): the other spellings of a page (x.html, x/index.html,
+  // x/, /en) and renamed project URLs (old links, shared or indexed, keep working)
+  if (req.method === 'GET' || req.method === 'HEAD') {
+    const { pathname, search } = new URL(req.url ?? '/', 'http://localhost');
+    const target = canonicalPagePath(pathname);
+    if (target !== pathname) {
+      res.statusCode = 301;
+      res.setHeader('Location', target + search);
+      res.end();
+      return;
+    }
   }
 
   const next404 = () => {

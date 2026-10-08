@@ -11,5 +11,6 @@ export function render(url: string): string {
   );
 }
 
-export { getAllRoutes, getHeadData, renderHeadTags, renderSitemap } from './seo';
+export { getAllRoutes, getHeadData, projectImagePaths, renderHeadTags, renderSitemap } from './seo';
+export { USER_INFO } from './data/portfolioData';
 export { pathFor } from './router';
