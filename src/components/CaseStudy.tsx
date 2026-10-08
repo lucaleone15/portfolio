@@ -100,7 +100,7 @@ function Counter({ figure }: { figure: CaseFigure }) {
   }, [inView, reduceMotion, figure.value, decimals]);
 
   return (
-    <span className="tabular-nums">
+    <span className="tabular-nums whitespace-nowrap">
       {figure.prefix}
       {/* Final value in the markup: right without JavaScript and for search engines */}
       <span ref={ref}>{formatFigure(figure.value, decimals)}</span>
@@ -118,7 +118,7 @@ function Figures({ items, source }: { items: CaseFigure[]; source?: string }) {
             <dt className="sr-only">{f.label}</dt>
             <dd>
               <span
-                className={`block font-serif font-extrabold tracking-tight leading-none ${items.length > 2 ? 'text-[clamp(3rem,6vw,5rem)]' : 'text-[clamp(3.5rem,9vw,7.5rem)]'}`}
+                className={`block font-serif font-extrabold tracking-tight leading-none ${items.length > 3 ? 'text-[clamp(2.4rem,4.4vw,3.8rem)]' : items.length > 2 ? 'text-[clamp(3rem,6vw,5rem)]' : 'text-[clamp(3.5rem,9vw,7.5rem)]'}`}
                 style={{ color: 'var(--pa-text)' }}
               >
                 <Counter figure={f} />
