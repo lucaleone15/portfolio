@@ -102,6 +102,16 @@ export function ProjectCard({ project }: ProjectCardProps) {
             />
           </div>
 
+          {/* Hook written over the image, on a dark fade so it reads on any visual. Outside
+              the morphing wrapper: only the photo flies to the project page. */}
+          {project.hook && (
+            <div className="pointer-events-none absolute inset-0 z-10 flex items-end overflow-hidden rounded-2xl bg-gradient-to-t from-black/75 via-black/25 via-35% to-transparent to-60% p-4 sm:p-6">
+              <p className="max-w-[85%] font-serif text-xl sm:text-2xl lg:text-[1.7rem] font-extrabold leading-[1.1] tracking-tight text-white [text-wrap:balance]">
+                {project.hook}
+              </p>
+            </div>
+          )}
+
           {/* Category Badge pinned at top-left of image */}
           <div className="absolute top-3.5 left-3.5 z-20 max-w-[calc(100%-28px)]">
             <span
@@ -171,9 +181,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </div>
           </div>
 
-          {/* Hook: the problem or the stake in one sentence (falls back to the summary) */}
-          <p className={project.hook ? 'text-sm sm:text-base font-medium text-neutral-800 dark:text-[#E4E4E7] leading-snug line-clamp-2' : 'text-xs sm:text-sm text-neutral-600 dark:text-[#A1A1AA] leading-relaxed line-clamp-2'}>
-            {project.hook ?? project.summary}
+          {/* Mini Description */}
+          <p className="text-xs sm:text-sm text-neutral-600 dark:text-[#A1A1AA] leading-relaxed line-clamp-2">
+            {project.summary}
           </p>
         </div>
       </div>
