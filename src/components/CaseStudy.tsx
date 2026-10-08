@@ -407,7 +407,7 @@ function Block({ block }: { block: CaseBlock; key?: string | number }) {
       );
     case 'gallery': {
       const cols = block.cols ?? 4;
-      const grid = { 1: 'grid-cols-1', 2: 'grid-cols-2', 3: 'grid-cols-2 sm:grid-cols-3', 4: 'grid-cols-2 lg:grid-cols-4' }[cols];
+      const grid = { 1: 'grid-cols-1', 2: 'grid-cols-2', 3: 'grid-cols-2 sm:grid-cols-3', 4: 'grid-cols-2 lg:grid-cols-4', 5: 'grid-cols-3 lg:grid-cols-5' }[cols];
       return (
         <figure className="py-6">
           <div className={`grid gap-4 ${grid} ${block.narrow ? 'max-w-xl' : ''}`}>
@@ -419,7 +419,7 @@ function Block({ block }: { block: CaseBlock; key?: string | number }) {
                     <Picture image={im} sizes="(min-width: 640px) 360px, 50vw" className="max-h-full w-auto object-contain shadow-[0_20px_40px_-20px_rgba(0,0,0,0.45)]" />
                   </div>
                 ) : (
-                  <Picture image={im} sizes={cols === 1 ? '(min-width: 1152px) 1088px, 100vw' : '(min-width: 1024px) 360px, 50vw'} className={`w-full h-auto ${block.narrow ? '' : 'rounded-xl shadow-[0_20px_40px_-20px_rgba(0,0,0,0.4)]'}`} />
+                  <Picture image={im} sizes={cols === 1 ? '(min-width: 1152px) 1088px, 100vw' : cols === 5 ? '(min-width: 1024px) 220px, 33vw' : '(min-width: 1024px) 360px, 50vw'} className={`w-full h-auto ${block.narrow ? '' : 'rounded-xl shadow-[0_20px_40px_-20px_rgba(0,0,0,0.4)]'}`} />
                 )}
                 {im.caption && <Caption>{im.caption}</Caption>}
               </Reveal>
