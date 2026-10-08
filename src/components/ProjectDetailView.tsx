@@ -8,6 +8,8 @@ import { useLanguage } from '../context/LanguageContext';
 import { Link, projectPath, useRouter } from '../router';
 import { projectMediaTransition } from '../viewTransitions';
 import { ProjectStory } from './ProjectStory';
+import { CaseStudy } from './CaseStudy';
+import { getCaseStudy } from '../data/caseStudies';
 import { imageSrcSet, smallImage } from '../data/images';
 
 interface ProjectDetailViewProps {
@@ -62,6 +64,8 @@ export function ProjectDetailView({
 
   const prevHref = projectPath(lang, prevProject.id);
   const nextHref = projectPath(lang, nextProject.id);
+
+  const caseStudy = getCaseStudy(project.id, lang);
 
   const projectImages: string[] = (project.images && project.images.length > 0)
     ? project.images
@@ -125,6 +129,12 @@ export function ProjectDetailView({
           </div>
         </div>
 
+        {/* Projects with a written case study get the scroll-story template; the others keep
+            the classic layout (header, gallery, story) until their case study is written */}
+        {caseStudy ? (
+          <CaseStudy key={`${project.id}-${lang}`} project={project} study={caseStudy} />
+        ) : (
+        <>
         {/* Project Meta Info Header */}
         <div className="space-y-4 mb-8 sm:mb-10">
           <div className="flex flex-wrap items-center gap-3">
@@ -281,6 +291,8 @@ export function ProjectDetailView({
 
         {/* Case study told while scrolling */}
         <ProjectStory key={`${project.id}-${lang}`} project={project} />
+        </>
+        )}
 
         {/* End of the case study: a preview of the next project (its image morphs into that
             project's main visual), then the way back */}
