@@ -31,7 +31,8 @@ En parallèle de ses études, il exerce le rôle de Community Manager pour le [K
 1. **[HUG – Sangsationnel](https://luca-leone.ch/projets/hug-sangsationnel)** (2026) :
    - *Type* : Projet académique 360° pour les Hôpitaux universitaires de Genève.
    - *Description* : Campagne de communication digitale et plateforme web gamifiée pour dynamiser les collectes de sang auprès des entreprises partenaires des HUG.
-   - *Rôle* : Conception 360° (UX/UI Design, Développement Web & Communication). Équipe : Marc Bridy, Romain Blanchard, Étienne Bergeon, Liliana Kolmakova, Christophe Cunha et Assya Mghirbi.
+   - *Rôle* : Développeur full-stack, participation au concept et à l'UX/UI. Équipe : Romain Blanchard, Étienne Bergeon, Christophe Cunha, Aissya M'Ghirbi, Liliana Kolmakova et Marc Bridy.
+   - *Site en ligne* : [donnez-votre-sang.ch](https://donnez-votre-sang.ch).
    - *Technologies* : Laravel, Vue.js, PHP, MySQL, Figma, Print, Intranet & Réseaux sociaux.
    - *Évaluation* : 6/6.
    - *Documentation* : [Voir le PDF Sangsationnel](https://luca-leone.ch/pdf/ProjInt1_HUG.pdf).
@@ -53,8 +54,21 @@ En parallèle de ses études, il exerce le rôle de Community Manager pour le [K
 4. **[DriveGear](https://luca-leone.ch/projets/drivegear)** (2025) :
    - *Type* : E-Commerce & Web Design (Projet académique HEIG-VD).
    - *Description* : Boutique e-commerce complète dédiée à l'univers automobile.
-   - *Rôle* : Conception ergonomique & intégration UI/UX. Évaluation : 5.9/6.
-   - *Technologies* : WordPress, WooCommerce, UI/UX Design, Web Design responsive.
+   - *Rôle* : Projet solo : stratégie, marque, boutique WooCommerce, SEO, newsletter, réseaux sociaux et campagne. Évaluation : 5.9/6.
+   - *Technologies* : WordPress, WooCommerce, Yoast SEO, Google Analytics 4, Notion.
+   - *Site en ligne* : [drivegear.ch](https://drivegear.ch).
+
+5. **[L'Étoile Blanche](https://luca-leone.ch/projets/etoile-blanche)** (2026) :
+   - *Type* : Communication print et digitale pour un restaurant lausannois (projet d'agence HEIG-VD, agence Zest).
+   - *Description* : Refonte des cartes, campagne d'affichage pour l'afterwork, affichettes « anecdotes » et contenus Instagram, TikTok et Facebook autour du message « L'Étoile Blanche, l'endroit qui rassemble ».
+   - *Rôle* : Vision globale et cohérence du projet. Équipe : Sacha Loskov, Romain Blanchard, Ryad Ait-Slimane et Cindy Demont.
+   - *Technologies* : Canva, Figma.
+
+6. **[F1 PitWall](https://luca-leone.ch/projets/f1-pitwall)** (2025) :
+   - *Type* : Concept d'application de second écran pour la Formule 1 (projet individuel, cours WebDon, HEIG-VD).
+   - *Description* : Classement détaillé, télémétrie, circuit en direct et prédictions de course (modèle hybride LightGBM et simulation Monte-Carlo) à partir de données Ergast, FastF1 et OpenF1.
+   - *Rôle* : Projet solo : concept, données et UI. Évaluation : 5.5/6.
+   - *Technologies* : Figma, JSON, Machine learning, Données ouvertes.
 
 ## Formation & Diplômes
 - **Bachelor of Science HES-SO en Ingénierie des Médias** : [HEIG-VD](https://heig-vd.ch), Yverdon-les-Bains, Suisse. Spécialisation en médias interactifs, gestion de projet et communication digitale.
