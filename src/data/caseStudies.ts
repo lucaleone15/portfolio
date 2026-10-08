@@ -162,35 +162,39 @@ const HUG_FR: CaseStudy = {
       content: [
         {
           type: 'compare',
-          before: img('avant-wireframe-entreprise', 1440, 1080, 'Wireframe en niveaux de gris du haut de la page d’une entreprise partenaire'),
-          after: img('apres-site-entreprise', 1440, 1080, 'Haut de la page d’une entreprise partenaire sur le site en ligne'),
+          before: img('avant-wireframe-entreprise', 1600, 1000, 'Wireframe en niveaux de gris du haut de la page d’une entreprise partenaire'),
+          after: img('apres-site-entreprise', 1600, 1000, 'Haut de la page d’une entreprise partenaire sur le site en ligne'),
           beforeLabel: 'Wireframe',
           afterLabel: 'Site en ligne',
           caption: 'La page d’une entreprise, du wireframe au site en ligne. Faites glisser pour comparer.',
         },
         {
           type: 'steps',
-          frame: 'mockup',
+          frame: 'screen',
           steps: [
             {
+              text: 'L’accueil s’adresse aux entreprises : « Les HUG mènent l’enquête ». On y découvre le programme et on inscrit son entreprise.',
+              image: img('site-accueil', 1600, 1000, 'Page d’accueil : « Les HUG mènent l’enquête », avec une loupe sur une goutte de sang'),
+            },
+            {
               text: 'Chaque entreprise reçoit sa propre page, à ses couleurs : un don sauve trois vies, une mission de sept minutes.',
-              image: img('site-1', 1600, 1200, 'Ordinateur portable affichant la page d’une entreprise : « Un don de sang sauve 3 vies. Une mission de 7 minutes. »'),
+              image: img('site-entreprise', 1600, 1000, 'Page de la Banque Cantonale de Genève, en rouge : « Un don de sang sauve 3 vies. Une mission de 7 minutes. »'),
             },
             {
-              text: 'L’enquête reprend les critères officiels du centre de transfusion, posés comme les questions d’un interrogatoire.',
-              image: img('site-2', 1600, 1200, 'Écran affichant une question de l’enquête : « Avez-vous entre 18 et 75 ans ? » sur un dossier en papier kraft'),
+              text: 'Sur la même page, un tableau d’indices répond aux questions qu’on n’ose pas poser : est-ce que ça fait mal, combien de temps ça dure.',
+              image: img('site-indices', 1600, 1000, 'Tableau de liège avec des fiches reliées par des fils rouges : « C’est quoi le don du sang ? »'),
             },
             {
-              text: 'Le verdict tombe tout de suite. Éligible : on prend rendez-vous. Sinon : on transmet l’enquête à un collègue.',
-              image: img('site-3', 1600, 1200, 'Dossier d’agent tamponné « Éligible », avec le bouton de prise de rendez-vous'),
+              text: 'L’enquête reprend les critères officiels, posés comme les questions d’un interrogatoire. À la fin, la personne éligible prend rendez-vous ; les autres transmettent l’enquête à un collègue.',
+              image: img('site-enquete', 1600, 1000, 'Question de l’enquête sur un dossier en papier kraft : « Avez-vous entre 18 et 75 ans ? »'),
             },
             {
-              text: 'Toutes les entreprises qui organisent une collecte reçoivent le Label 100 pour Sang ; le Trophée Sangsationnel récompense les trois plus engagées.',
-              image: img('site-4', 1600, 1200, 'Ordinateur portable affichant le classement 2026 du trophée avec un podium'),
+              text: 'Toutes les entreprises qui organisent une collecte reçoivent le Label 100 pour Sang ; le Trophée Sangsationnel classe les plus engagées.',
+              image: img('site-trophee', 1600, 1000, 'Classement 2026 du trophée avec un podium de trois entreprises'),
             },
             {
-              text: 'Le centre de transfusion suit chaque collecte depuis son administration et envoie un rapport à chaque entreprise.',
-              image: img('site-5', 1600, 1200, 'Deux tablettes affichant le tableau de bord de l’administration'),
+              text: 'Le centre de transfusion suit tout depuis son administration, jusqu’à la question où les gens abandonnent l’enquête.',
+              image: img('site-admin', 1600, 1000, 'Page Analytics de l’administration : entonnoir, abandons par question, appareils et sources'),
             },
           ],
         },
