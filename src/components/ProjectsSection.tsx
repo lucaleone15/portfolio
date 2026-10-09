@@ -69,7 +69,7 @@ export function ProjectsSection() {
           className="flex flex-wrap items-center justify-between gap-4 border-b border-black/[0.08] dark:border-white/[0.08] pb-6 mb-12"
         >
           <div className="flex items-baseline gap-3.5">
-            <span className="font-serif italic text-2xl sm:text-3xl text-neutral-500 dark:text-white/40 font-normal select-none">
+            <span className="index-number text-2xl sm:text-3xl text-neutral-500 dark:text-white/40">
               {t('projects.index')}
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl text-neutral-900 dark:text-white tracking-tight font-extrabold">

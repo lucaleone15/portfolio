@@ -208,7 +208,7 @@ function Steps({ steps, frame = 'plain' }: { steps: CaseStep[]; frame?: 'screen'
                     <Picture image={s.image} sizes="100vw" className="w-full h-auto rounded-lg" />
                   </div>
                 </figure>
-                <p className="font-syne text-sm font-bold tabular-nums" style={{ color: 'var(--pa-text)' }}>
+                <p className="index-number text-lg text-neutral-500 dark:text-white/40">
                   {String(i + 1).padStart(2, '0')} / {String(steps.length).padStart(2, '0')}
                 </p>
                 <p className="mt-3 text-lg sm:text-xl leading-relaxed text-neutral-800 dark:text-[#E4E4E7]">{s.text}</p>
@@ -296,7 +296,7 @@ function Architecture({ block }: { block: Extract<CaseBlock, { type: 'architectu
             className={`rounded-2xl p-5 ${n.highlight ? 'text-[var(--pa-on)]' : 'bg-black/[0.04] dark:bg-white/[0.06]'}`}
             style={n.highlight ? { backgroundColor: 'var(--pa)' } : undefined}
           >
-            <p className="font-syne text-xs font-bold uppercase tracking-widest opacity-70">{n.sub}</p>
+            <p className="eyebrow opacity-70">{n.sub}</p>
             <p className="mt-1 text-xl font-bold">{n.title}</p>
             <p className="mt-3 text-sm leading-relaxed opacity-85">{n.note}</p>
           </motion.div>,
@@ -577,7 +577,7 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
           <span className="inline-flex h-7 items-center rounded-full bg-black/[0.06] px-3 font-syne text-xs font-bold text-neutral-800 dark:bg-white/[0.1] dark:text-white">
             {PROJECT_KIND_LABEL[project.kind][lang]}
           </span>
-          <p className="mt-4 font-syne text-xs sm:text-sm font-bold uppercase tracking-widest" style={{ color: 'var(--pa-text)' }}>
+          <p className="mt-4 eyebrow sm:text-sm" style={{ color: 'var(--pa-text)' }}>
             {study.kicker}
           </p>
           <h1 className="mt-4 text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.02] text-neutral-900 dark:text-white">
@@ -611,7 +611,7 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
           <dl className="mt-12 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-black/10 dark:border-white/10 pt-8 md:grid-cols-3 lg:grid-cols-6">
             {study.meta.map((m) => (
               <div key={m.label}>
-                <dt className="font-syne text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-[#71717A]">{m.label}</dt>
+                <dt className="eyebrow text-neutral-500 dark:text-[#A1A1AA]">{m.label}</dt>
                 <dd className="mt-2 text-sm font-semibold leading-snug text-neutral-900 dark:text-white">{m.value}</dd>
               </div>
             ))}
@@ -653,7 +653,7 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
       <section aria-label={lang === 'fr' ? 'En bref' : 'In short'} className="mt-12 sm:mt-16 grid gap-px overflow-hidden rounded-2xl bg-black/[0.06] dark:bg-white/[0.08] md:grid-cols-3">
         {study.brief.map((b, i) => (
           <Reveal key={b.label} delay={i * 0.08} className="bg-[#F9F9FB] dark:bg-[#0A0A0C] p-6 sm:p-8">
-            <p className="font-syne text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--pa-text)' }}>{b.label}</p>
+            <p className="eyebrow" style={{ color: 'var(--pa-text)' }}>{b.label}</p>
             <p className="mt-3 text-lg font-semibold leading-snug text-neutral-900 dark:text-white">{b.text}</p>
           </Reveal>
         ))}
@@ -671,12 +671,15 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
           style={section.tone === 'accent' ? { backgroundColor: 'var(--pa)', color: 'var(--pa-on)' } : undefined}
         >
           <Reveal>
-            <p className="font-syne text-sm font-bold tabular-nums" style={{ color: 'var(--pa-text)' }}>
-              {String(s + 1).padStart(2, '0')}
-            </p>
-            <h2 id={`${section.id}-title`} className="mt-2 max-w-4xl text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.08] text-neutral-900 dark:text-white">
-              {section.title}
-            </h2>
+            {/* Number + title, the same header as the home sections ("01 Projets") */}
+            <div className="flex items-baseline gap-3 sm:gap-4">
+              <span className="index-number shrink-0 text-2xl sm:text-4xl text-neutral-500 dark:text-white/40" aria-hidden="true">
+                {String(s + 1).padStart(2, '0')}
+              </span>
+              <h2 id={`${section.id}-title`} className="max-w-4xl text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.08] text-neutral-900 dark:text-white">
+                {section.title}
+              </h2>
+            </div>
           </Reveal>
           <div className="mt-8 space-y-6">
             {section.content.map((item, i) =>
@@ -694,7 +697,7 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
 
       {/* Credits and links */}
       <section aria-labelledby="credits-title" className="mt-24 sm:mt-32 border-t border-black/10 dark:border-white/10 pt-10">
-        <h2 id="credits-title" className="font-syne text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-[#71717A]">
+        <h2 id="credits-title" className="eyebrow text-neutral-500 dark:text-[#A1A1AA]">
           {lang === 'fr' ? 'Crédits' : 'Credits'}
         </h2>
         <ul className="mt-5 grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">

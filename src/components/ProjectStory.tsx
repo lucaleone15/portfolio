@@ -240,7 +240,7 @@ export function ProjectStory({ project }: { project: Project; key?: string }) {
                     sizes="(min-width: 1024px) 55vw, 100vw" alt="" loading="lazy" decoding="async" className="w-full h-full object-cover" />
             </div>
             <div data-mobile-copy>
-            <p className="font-syne text-xs font-bold tracking-widest uppercase mb-3" style={{ color: 'var(--pa-text)' }}>
+            <p className="eyebrow mb-3" style={{ color: 'var(--pa-text)' }}>
               {String(i + 1).padStart(2, '0')} / {String(steps.length).padStart(2, '0')}
             </p>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-neutral-900 dark:text-white mb-5">{step.title}</h2>
@@ -282,7 +282,7 @@ export function ProjectStory({ project }: { project: Project; key?: string }) {
                       const score = metric.value.match(/^(\d+(?:\.\d+)?)(\s*\/\s*\d+)$/);
                       return (
                         <div key={metric.label} className="border-t border-black/10 dark:border-white/10 pt-3">
-                          <dt className="text-xs uppercase tracking-wider text-neutral-500 dark:text-[#A1A1AA] mb-1.5">{metric.label}</dt>
+                          <dt className="eyebrow text-neutral-500 dark:text-[#A1A1AA] mb-1.5">{metric.label}</dt>
                           <dd className={score ? 'text-3xl sm:text-4xl font-extrabold tracking-tight text-neutral-900 dark:text-white' : 'text-base font-semibold text-neutral-900 dark:text-white'}>
                             {score ? (
                               <>
@@ -300,7 +300,7 @@ export function ProjectStory({ project }: { project: Project; key?: string }) {
                 )}
 
                 <div className="space-y-3">
-                  <h3 className="text-xs font-bold text-neutral-500 dark:text-[#A1A1AA] uppercase tracking-wider">
+                  <h3 className="eyebrow text-neutral-500 dark:text-[#A1A1AA]">
                     {lang === 'fr' ? 'Technologies & Outils' : 'Technologies & Tools'}
                   </h3>
                   <div className="flex flex-wrap gap-2">

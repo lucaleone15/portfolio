@@ -9,7 +9,7 @@ export function NotFound() {
     <main id="main-content" className="relative z-10 min-h-[100dvh] flex items-center overflow-hidden">
       <NeonBackdrop fadeBottom={false} />
       <div className="relative max-w-7xl mx-auto px-6 sm:px-10 w-full py-32">
-        <p className="text-xs sm:text-sm font-bold uppercase tracking-widest text-[var(--accent)] mb-6">
+        <p className="eyebrow sm:text-sm text-[var(--accent)] mb-6">
           {lang === 'fr' ? 'Erreur 404' : 'Error 404'}
         </p>
         <h1 className="font-serif text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-[-0.035em] leading-[1.02] text-neutral-900 dark:text-white mb-6">

@@ -238,7 +238,7 @@ export function Header({ activeSection }: HeaderProps) {
                   onClick={closeMenu}
                   className="w-full text-left group flex items-baseline gap-4 cursor-pointer p-4 rounded-2xl hover:bg-black/5 dark:hover:bg-white/5 transition"
                 >
-                  <span className="font-serif italic text-2xl sm:text-3xl text-neutral-500 dark:text-white/40 group-hover:text-[var(--accent)] font-normal select-none transition-colors shrink-0">
+                  <span className="index-number text-2xl sm:text-3xl text-neutral-500 dark:text-white/40 group-hover:text-[var(--accent)] transition-colors shrink-0">
                     {item.index}
                   </span>
                   <span className="text-3xl sm:text-4xl font-extrabold text-neutral-900 dark:text-white group-hover:text-[var(--accent)] transition-colors">

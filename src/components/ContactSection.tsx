@@ -152,7 +152,7 @@ export function ContactSection() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="flex items-baseline gap-3.5 border-b border-white/20 pb-6 mb-12 sm:mb-16"
         >
-          <span className="font-serif italic text-2xl sm:text-3xl text-white/70 font-normal select-none">
+          <span className="index-number text-2xl sm:text-3xl text-white/70">
             {t('contact.index')}
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight font-extrabold">{t('contact.title')}</h2>
@@ -197,7 +197,7 @@ export function ContactSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-16">
           <form onSubmit={handleFormSubmit} className="contents">
             {/* Row 1 — label */}
-            <p id="contact-topic-label" className="lg:col-span-7 lg:row-start-1 mb-3 lg:mb-4 self-end text-xs font-bold uppercase tracking-[0.2em] text-white/70">
+            <p id="contact-topic-label" className="lg:col-span-7 lg:row-start-1 mb-3 lg:mb-4 self-end eyebrow text-white/70">
               {lang === 'fr' ? 'Votre demande concerne' : 'This is about'}
             </p>
 
@@ -344,7 +344,7 @@ export function ContactSection() {
           </form>
 
           {/* Direct contact rows (rows 1–4 of the right column) */}
-          <p className="mt-16 lg:mt-0 lg:col-start-8 lg:col-span-5 lg:row-start-1 mb-3 lg:mb-4 self-end text-xs font-bold uppercase tracking-[0.2em] text-white/70">
+          <p className="mt-16 lg:mt-0 lg:col-start-8 lg:col-span-5 lg:row-start-1 mb-3 lg:mb-4 self-end eyebrow text-white/70">
             {lang === 'fr' ? 'Ou directement' : 'Or directly'}
           </p>
           <ul role="list" className="contents">

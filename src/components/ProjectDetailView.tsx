@@ -325,7 +325,7 @@ export function ProjectDetailView({
             </div>
 
             <div className="px-3 pb-4 sm:p-0 sm:pr-8 min-w-0">
-              <p className="font-syne text-xs sm:text-sm font-bold uppercase tracking-widest" style={{ color: 'var(--pa-text)' }}>
+              <p className="eyebrow sm:text-sm" style={{ color: 'var(--pa-text)' }}>
                 {lang === 'fr' ? 'Projet suivant' : 'Next project'}
                 <span className="text-neutral-400 dark:text-white/40"> · {nextProject.number}</span>
               </p>
@@ -358,12 +358,12 @@ export function ProjectDetailView({
               <span className="font-bold uppercase text-neutral-900 dark:text-white">{prevProject.name}</span>
             </Link>
 
-            {/* Back to the list of projects (the card morphs back) */}
+            {/* Back to the list of projects (the card morphs back): same button as at the top */}
             <Link
               href={backHref}
-              className="font-syne group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-neutral-900 text-white hover:bg-[var(--accent)] hover:text-[var(--accent-contrast-text)] dark:bg-white dark:text-black dark:hover:bg-[var(--accent)] dark:hover:text-[var(--accent-contrast-text)] text-xs sm:text-sm font-bold transition active:scale-[0.97] cursor-pointer shadow-xs"
+              className="glass font-syne group inline-flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-full text-neutral-900 dark:text-white text-xs sm:text-sm font-bold cursor-pointer active:scale-[0.97]"
             >
-              <Icon icon={ArrowLeft02Icon} className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" />
+              <Icon icon={ArrowLeft02Icon} className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
               {lang === 'fr' ? 'Retour aux projets' : 'Back to projects'}
             </Link>
           </div>
