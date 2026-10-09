@@ -168,6 +168,7 @@ Après une mise en ligne qui change l'image d'aperçu, la rafraîchir sur Linked
 ├── scripts/
 │   ├── prerender.mjs          Génère les pages HTML, la 404 et le sitemap
 │   ├── make-image-variants.py Variantes 640 / 1280 px des couvertures (sRGB)
+│   ├── make-project-logos.py  Logos des projets, transparents, version claire et sombre
 │   └── og/                    Modèle de l'image d'aperçu (voir og/README.md)
 ├── matiere/                   Matière brute des projets (rapports, exports) : locale, ignorée par git
 └── vite.config.ts             Build + routes API en développement
@@ -182,7 +183,7 @@ Après une mise en ligne qui change l'image d'aperçu, la rafraîchir sur Linked
 | Ajouter / modifier un **projet** (carte) | `src/data/portfolioData.ts` → `UNIFIED_PROJECTS` (textes FR/EN, type, catégorie, phrase clé, rôle, couverture, couleur). L'`id` devient l'URL : `/projets/<id>` et `/en/projects/<id>` |
 | Écrire l'**étude de cas** d'un projet | `src/data/caseStudies/<projet>.ts` (FR + EN), puis l'enregistrer dans `src/data/caseStudies/index.ts`. Les images vont dans `public/images/case/<projet>/` |
 | Changer le **titre / la description Google** d'une page | `META` en haut de `src/seo.ts` (titres ≤ 60 caractères, descriptions 120–160) |
-| Changer le **logo** d'un projet | Pastille `.webp` (logo sur le fond de sa marque, 144 px de haut) dans `public/images/logos/`, puis `logo` du projet dans `src/data/portfolioData.ts` (affiché sur la carte et en tête de l'étude de cas) |
+| Changer le **logo** d'un projet | `python3 scripts/make-project-logos.py` (depuis les fichiers de `matiere/`) génère `public/images/logos/<id>.webp` et `<id>-dark.webp`, transparents ; puis `logo` du projet dans `src/data/portfolioData.ts`. Le logo remplace le nom sur la carte, en tête de l'étude de cas et dans « Projet suivant » |
 | Ajouter une **couverture** de projet | `.webp` 1920×1200 (16:10) dans `public/images/`, puis `npm run images` |
 | Modifier le **parcours** (expériences, formation) | `src/data/portfolioData.ts` (FR) et `src/components/AboutSection.tsx` (EN) |
 | Modifier la **bio** et les textes d'interface | `src/context/LanguageContext.tsx` |

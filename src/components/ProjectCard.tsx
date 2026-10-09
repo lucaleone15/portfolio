@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, MouseEvent } from 'react';
 import { motion, useMotionValue, useReducedMotion, useSpring } from 'motion/react';
 import { ArrowUpRight01Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
+import { ProjectLogo } from './ProjectLogo';
 import { Project } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { Link, projectPath } from '../router';
@@ -112,26 +113,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </div>
           )}
 
-          {/* My role on the project (the category only drives the filter), and the brand's logo */}
-          <div className="pointer-events-none absolute top-3.5 inset-x-3.5 z-20 flex items-center justify-between gap-2">
+          {/* My role on the project (the category only drives the filter) */}
+          <div className="absolute top-3.5 left-3.5 z-20 max-w-[calc(100%-28px)]">
             <span
-              className="font-syne h-7 px-3.5 rounded-full text-[11px] sm:text-xs font-extrabold inline-flex items-center tracking-wide truncate min-w-0 shadow-[0_4px_12px_-2px_rgba(0,0,0,0.35)]"
+              className="font-syne h-7 px-3.5 rounded-full text-[11px] sm:text-xs font-extrabold inline-flex items-center tracking-wide truncate max-w-full shadow-[0_4px_12px_-2px_rgba(0,0,0,0.35)]"
               style={{ backgroundColor: 'var(--pa)', color: 'var(--pa-on)' }}
             >
               {project.badge ?? project.category}
             </span>
-            {project.logo && (
-              // Decorative here: the project name is written under the image
-              <img
-                src={project.logo.src}
-                width={project.logo.width}
-                height={project.logo.height}
-                alt=""
-                loading="lazy"
-                decoding="async"
-                className="h-7 sm:h-9 w-auto shrink-0 rounded-lg shadow-[0_4px_12px_-2px_rgba(0,0,0,0.35)]"
-              />
-            )}
           </div>
 
           {/* Pointer replacement over the image: a lens of strong blur whose edge fades out
@@ -161,12 +150,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
           {/* Header Row: Title & Subtitle on Left, Circle Arrow Button on Right */}
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0 flex-1">
-              <h3
-                className="font-sans text-xl sm:text-2xl font-bold text-neutral-900 dark:text-white tracking-tight transition-colors truncate leading-snug uppercase"
-                style={isHovered ? { color: 'var(--pa-text)' } : undefined}
-              >
-                {/* Same name as the project page (proper case in the DOM, uppercase on screen) */}
-                {project.name}
+              {/* The brand's logo in place of the name (the name stays in the DOM) */}
+              <h3 className="flex h-8 sm:h-9 items-center font-sans text-xl sm:text-2xl font-bold text-neutral-900 dark:text-white tracking-tight truncate leading-snug uppercase">
+                <ProjectLogo project={project} />
               </h3>
               {/* Date directly below title with project's own accent */}
               <div className="mt-1.5 flex items-baseline gap-2.5">

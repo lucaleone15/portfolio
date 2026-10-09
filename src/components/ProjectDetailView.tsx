@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowLeft01Icon, ArrowLeft02Icon, ArrowRight01Icon, ArrowRight02Icon, Calendar03Icon, UserIcon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
+import { ProjectLogo } from './ProjectLogo';
 import { Project } from '../types';
 import { projectAccentVars } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
@@ -329,8 +330,8 @@ export function ProjectDetailView({
                 {lang === 'fr' ? 'Projet suivant' : 'Next project'}
                 <span className="text-neutral-400 dark:text-white/40"> · {nextProject.number}</span>
               </p>
-              <p className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-extrabold uppercase tracking-tight leading-[1.05] text-neutral-900 dark:text-white break-words">
-                {nextProject.name}
+              <p className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-extrabold uppercase tracking-tight leading-[1.05] text-neutral-900 dark:text-white break-words">
+                <ProjectLogo project={nextProject} scale={1.8} />
               </p>
               <p className="mt-3 text-sm sm:text-base text-neutral-600 dark:text-[#A1A1AA] leading-relaxed">
                 {nextProject.subtitle}
