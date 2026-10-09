@@ -1,5 +1,5 @@
 import type React from 'react';
-import { Project } from '../types';
+import { Project, ProjectLogo } from '../types';
 
 export const USER_INFO = {
   name: 'Luca Leone',
@@ -32,6 +32,9 @@ export interface UnifiedProjectDefinition {
   accentColor?: string;
   /** Same role on the dark theme, when the brand has a lighter variant that reads better there */
   accentColorDark?: string;
+  /** Brand logo on its own background (public/images/logos/, made from the project's files):
+      shown on the card and at the top of the case study */
+  logo?: ProjectLogo;
   fr: {
     title: string;
     subtitle: string;
@@ -125,6 +128,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     stackEn: ['Laravel & Vue.js', 'UI/UX Design', 'Digital Communication', 'Print & Social Media'],
     // HUG red, as in the project PDF
     accentColor: '#E62F2E',
+    logo: { src: '/images/logos/hug.webp', width: 374, height: 144 },
     fr: {
       title: 'HUG',
       subtitle: 'Campagne digitale & plateforme web',
@@ -212,6 +216,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     stackEn: ['Social Media Strategy', 'Instagram & TikTok', 'Photo & Video', 'Premiere Pro'],
     // Karting Vuiteboeuf red, as in the project PDF (underlines, italics)
     accentColor: '#EB1D3E',
+    logo: { src: '/images/logos/karting-vuiteboeuf.webp', width: 390, height: 144 },
     fr: {
       title: 'KARTING VUITEBOEUF',
       subtitle: 'Communication digitale & création de contenus',
@@ -289,6 +294,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     // OceanSight teal, as in the project PDF: the deep one on light, the bright one on dark
     accentColor: '#275F5F',
     accentColorDark: '#2EBBA6',
+    logo: { src: '/images/logos/oceansight.webp', width: 324, height: 144 },
     fr: {
       title: 'OCEANSIGHT',
       subtitle: 'Application mobile de signalement des déchets marins',
@@ -359,6 +365,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     // Étoile Blanche red, as on the printed menus
     accentColor: '#AB2328',
     accentColorDark: '#E0484E',
+    logo: { src: '/images/logos/etoile-blanche.webp', width: 287, height: 144 },
     fr: {
       title: 'ÉTOILE BLANCHE',
       subtitle: 'Communication d’un restaurant lausannois',
@@ -437,6 +444,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     // DriveGear navy and blue, as in the brand palette
     accentColor: '#2A2A72',
     accentColorDark: '#009FFD',
+    logo: { src: '/images/logos/drivegear.webp', width: 355, height: 144 },
     fr: {
       title: 'DRIVEGEAR',
       subtitle: 'Boutique e-commerce automobile',
@@ -505,6 +513,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     // The app's racing red
     accentColor: '#C8102E',
     accentColorDark: '#F23845',
+    logo: { src: '/images/logos/f1-pitwall.webp', width: 490, height: 144 },
     fr: {
       title: 'F1 PITWALL',
       subtitle: 'Application de second écran pour la Formule 1',
@@ -573,6 +582,7 @@ export const PROJECTS_FR: Project[] = UNIFIED_PROJECTS.map((item) => ({
   stack: item.stack,
   accentColor: item.accentColor,
   accentColorDark: item.accentColorDark,
+  logo: item.logo,
   ...item.fr
 }));
 
@@ -587,6 +597,7 @@ export const PROJECTS_EN: Project[] = UNIFIED_PROJECTS.map((item) => ({
   stack: item.stackEn,
   accentColor: item.accentColor,
   accentColorDark: item.accentColorDark,
+  logo: item.logo,
   ...item.en
 }));
 
