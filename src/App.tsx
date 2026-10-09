@@ -21,7 +21,9 @@ import { getCustomProjects } from './data/projectsStorage';
 import { homePath, RouterProvider, SECTION_IDS, sectionPath, useRouter } from './router';
 import { getHeadData } from './seo';
 
-/** Keeps <title>, description, canonical and <html lang> in sync on client-side navigation. */
+const ROBOTS_INDEX = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+
+/** Keeps <title>, description, robots, canonical and <html lang> in sync on client-side navigation. */
 function useDocumentHead() {
   const { route } = useRouter();
 
@@ -31,6 +33,7 @@ function useDocumentHead() {
     document.documentElement.lang = head.lang;
     document.querySelector('meta[name="description"]')?.setAttribute('content', head.description);
     document.querySelector('link[rel="canonical"]')?.setAttribute('href', head.canonical);
+    document.querySelector('meta[name="robots"]')?.setAttribute('content', head.noindex ? 'noindex, follow' : ROBOTS_INDEX);
   }, [route]);
 }
 

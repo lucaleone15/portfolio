@@ -29,7 +29,7 @@
     {
       "id": "urn:ard:luca-leone:sitemap",
       "displayName": "Sitemap des ressources et projets",
-      "description": "Plan du site : accueil, six études de cas de projets et politique de confidentialité, en français et en anglais, plus le CV en PDF.",
+      "description": "Plan du site : accueil et six études de cas de projets, en français et en anglais, plus le CV en PDF.",
       "mediaType": "application/xml",
       "url": "https://luca-leone.ch/sitemap.xml",
       "representativeQueries": [
