@@ -1,10 +1,13 @@
 export type Language = 'fr' | 'en';
 
-/** A project's logo chip: the logo on its brand background, fixed height, width following the logo */
+/** A project's logo, transparent, in a light-theme and a dark-theme version */
 export interface ProjectLogo {
   src: string;
+  srcDark: string;
   width: number;
   height: number;
+  /** Height in px on a project card, set per logo so that wide and compact logos weigh the same */
+  display: number;
 }
 
 export interface Project {
