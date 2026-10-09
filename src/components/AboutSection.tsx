@@ -142,7 +142,7 @@ export function AboutSection() {
           className="border-b border-black/[0.08] dark:border-white/[0.08] pb-6 mb-12 flex flex-wrap items-center justify-between gap-4"
         >
           <div className="flex items-baseline gap-3.5">
-            <span className="font-serif italic text-2xl sm:text-3xl text-neutral-500 dark:text-white/40 font-normal select-none">
+            <span className="index-number text-2xl sm:text-3xl text-neutral-500 dark:text-white/40">
               {t('about.index')}
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl text-neutral-900 dark:text-white tracking-tight font-extrabold">
@@ -199,7 +199,7 @@ export function AboutSection() {
             className="lg:col-span-7 space-y-6"
           >
             <div>
-              <div className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-500 dark:text-[#A1A1AA] pb-2 border-b border-black/[0.08] dark:border-white/[0.08] mb-3">
+              <div className="eyebrow text-neutral-500 dark:text-[#A1A1AA] pb-2 border-b border-black/[0.08] dark:border-white/[0.08] mb-3">
                 <span>{lang === 'fr' ? 'Profil & Vision' : 'Profile & Vision'}</span>
               </div>
               <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-neutral-900 dark:text-white tracking-tight">
@@ -225,17 +225,17 @@ export function AboutSection() {
             <div className="pt-4 border-t border-black/[0.08] dark:border-white/[0.08] grid grid-cols-1 sm:grid-cols-2 gap-6">
               {/* Langues: only language name by default, level revealed on hover */}
               <div className="space-y-3">
-                <div className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-500 dark:text-[#A1A1AA]">
+                <div className="eyebrow text-neutral-500 dark:text-[#A1A1AA]">
                   <span>{t('about.languagesTitle')}</span>
                 </div>
                 <div className="flex flex-wrap gap-2 sm:gap-2.5">
                   {languages.map((item, idx) => (
                     <div
                       key={`lang-${idx}`}
-                      className="h-8 px-3.5 rounded-full bg-neutral-900 text-white hover:bg-[var(--accent)] hover:text-[var(--accent-contrast-text)] dark:bg-white dark:text-black dark:hover:bg-[var(--accent)] dark:hover:text-[var(--accent-contrast-text)] text-xs font-bold inline-flex items-center gap-1.5 shadow-xs transition-colors duration-150 cursor-default select-none"
+                      className="h-8 px-3.5 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-black font-syne text-xs font-bold inline-flex items-center gap-1.5 shadow-xs select-none"
                     >
                       <span>{item.name}</span>
-                      <span className="text-white/60 dark:text-black/60 font-medium">· {item.level}</span>
+                      <span className="font-sans text-white/60 dark:text-black/60 font-medium">· {item.level}</span>
                     </div>
                   ))}
                 </div>
@@ -243,14 +243,14 @@ export function AboutSection() {
 
               {/* Passions */}
               <div className="space-y-3">
-                <div className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-500 dark:text-[#A1A1AA]">
+                <div className="eyebrow text-neutral-500 dark:text-[#A1A1AA]">
                   <span>{t('about.passionsTitle')}</span>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {passions.map((item, idx) => (
                     <span
                       key={`passion-${idx}`}
-                      className="h-8 px-3.5 rounded-full bg-neutral-900 text-white hover:bg-[var(--accent)] hover:text-[var(--accent-contrast-text)] dark:bg-white dark:text-black dark:hover:bg-[var(--accent)] dark:hover:text-[var(--accent-contrast-text)] text-xs font-bold inline-flex items-center shadow-xs transition-colors duration-150 select-none cursor-default"
+                      className="h-8 px-3.5 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-black font-syne text-xs font-bold inline-flex items-center shadow-xs select-none"
                     >
                       {item}
                     </span>
@@ -272,7 +272,7 @@ export function AboutSection() {
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className="lg:col-span-6 space-y-6"
             >
-              <div className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-500 dark:text-[#A1A1AA] pb-3 border-b border-black/[0.08] dark:border-white/[0.08]">
+              <div className="eyebrow text-neutral-500 dark:text-[#A1A1AA] pb-3 border-b border-black/[0.08] dark:border-white/[0.08]">
                 <span>{t('about.experienceTitle')}</span>
               </div>
 
@@ -334,7 +334,7 @@ export function AboutSection() {
               transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               className="lg:col-span-6 space-y-6"
             >
-              <div className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-500 dark:text-[#A1A1AA] pb-3 border-b border-black/[0.08] dark:border-white/[0.08]">
+              <div className="eyebrow text-neutral-500 dark:text-[#A1A1AA] pb-3 border-b border-black/[0.08] dark:border-white/[0.08]">
                 <span>{t('about.educationTitle')}</span>
               </div>
 

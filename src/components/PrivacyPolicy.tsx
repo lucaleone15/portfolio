@@ -196,7 +196,7 @@ export function PrivacyPolicy() {
   return (
     <main id="main-content" className="relative z-10 pt-28 sm:pt-36 pb-24 sm:pb-32">
       <article className="max-w-3xl mx-auto px-6 sm:px-10">
-        <p className="text-xs sm:text-sm font-bold uppercase tracking-widest text-[var(--accent)] mb-5">{c.label}</p>
+        <p className="eyebrow sm:text-sm text-[var(--accent)] mb-5">{c.label}</p>
         <h1 className="font-serif text-4xl sm:text-6xl font-extrabold tracking-[-0.035em] leading-[1.05] text-neutral-900 dark:text-white mb-6">
           {c.title}
           <span className="text-[var(--accent)]">.</span>
@@ -216,8 +216,8 @@ export function PrivacyPolicy() {
         <div className="space-y-12">
           {c.sections.map((section, i) => (
             <section key={section.title} aria-labelledby={`privacy-${i}`}>
-              <h2 id={`privacy-${i}`} className="flex items-baseline gap-4 text-xl sm:text-2xl font-extrabold text-neutral-900 dark:text-white mb-4">
-                <span className="font-syne text-sm font-bold text-[var(--accent)]">{String(i + 1).padStart(2, '0')}</span>
+              <h2 id={`privacy-${i}`} className="flex items-baseline gap-3 text-xl sm:text-2xl font-extrabold text-neutral-900 dark:text-white mb-4">
+                <span className="index-number text-lg sm:text-xl text-neutral-500 dark:text-white/40">{String(i + 1).padStart(2, '0')}</span>
                 {section.title}
               </h2>
               <div className="space-y-4 text-base sm:text-lg text-neutral-600 dark:text-[#A1A1AA] leading-relaxed">

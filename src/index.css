@@ -351,7 +351,29 @@
   color: var(--pa-on) !important;
 }
 .case-accent figcaption,
-.case-accent p.font-syne {
+.case-accent :is(.eyebrow, .index-number) {
   opacity: 0.8;
 }
 
+
+/* Small uppercase label over a title or a group: one style site-wide (body font; Syne is kept
+   for pills and buttons). Colour per use: muted inside a section, the accent above a page or
+   section title, which also gets sm:text-sm. */
+@utility eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+/* Running numbers (sections, list items, steps): the "01 Projets" style of the home sections */
+@utility index-number {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: var(--display-tracking);
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}

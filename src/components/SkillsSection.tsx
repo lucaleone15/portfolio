@@ -128,7 +128,7 @@ export function SkillsSection() {
           className="max-w-3xl mb-12 sm:mb-16"
         >
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-xs font-bold uppercase tracking-widest text-[var(--accent)]">
+            <span className="eyebrow sm:text-sm text-[var(--accent)]">
               {lang === 'fr' ? 'Compétences' : 'Skills & Capabilities'}
             </span>
           </div>
@@ -200,7 +200,7 @@ export function SkillsSection() {
                         className="flex items-baseline gap-4 sm:gap-6 text-left w-full cursor-pointer rounded-md"
                       >
                         <span
-                          className={`font-bold text-xs sm:text-sm transition-colors duration-200 select-none ${
+                          className={`index-number text-base sm:text-lg transition-colors duration-200 ${
                             isOpen
                               ? 'text-[var(--accent)]'
                               : 'text-neutral-500 dark:text-white/40 group-hover:text-[var(--accent)]'

@@ -76,7 +76,7 @@ export function Hero() {
           {/* The page's single <h1>: identity label + positioning statement. The name is visible
               in the logo, so it's only repeated for screen readers and search engines. */}
           {/* Identity line (same style as the section labels, e.g. "Compétences") */}
-          <p className="text-xs sm:text-sm font-bold uppercase tracking-widest text-neutral-900 dark:text-white" aria-hidden="true">
+          <p className="eyebrow sm:text-sm text-[var(--accent)]" aria-hidden="true">
             {lang === 'fr' ? 'Étudiant en ingénierie des médias · HEIG-VD' : 'Media Engineering student · HEIG-VD'}
           </p>
 
