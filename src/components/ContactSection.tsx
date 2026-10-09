@@ -5,7 +5,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { Link, privacyPath, sectionPath } from '../router';
 import { ArrowUpRight01Icon, Call02Icon, Copy01Icon, Linkedin02Icon, Loading03Icon, Mail01Icon, Tick02Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
-import { ContactRow, FloatingField, RevealHeading, RevealWords, Signature } from './ContactExtras';
+import { ContactRow, FloatingField, RevealHeadline, RevealWords, Signature } from './ContactExtras';
 
 const TOPICS = {
   fr: ['Projet', 'Collaboration', 'Travail de Bachelor', 'Stage / emploi', 'Autre'],
@@ -144,15 +144,29 @@ export function ContactSection() {
         </div>
       <div className="relative max-w-7xl mx-auto px-6 sm:px-10">
         
+        {/* Section header, same as Projects and About: index "03" + "Contact", in white on the accent */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="flex items-baseline gap-3.5 border-b border-white/20 pb-6 mb-12 sm:mb-16"
+        >
+          <span className="font-serif italic text-2xl sm:text-3xl text-white/70 font-normal select-none">
+            {t('contact.index')}
+          </span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight font-extrabold">{t('contact.title')}</h2>
+        </motion.div>
+
         {/* Headline: words rise out of their masks */}
-        <RevealHeading className="mb-6 sm:mb-8 text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.05] font-normal text-white/75">
+        <RevealHeadline className="mb-6 sm:mb-8 text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.05] font-normal text-white/75">
           <span className="block">
             <RevealWords text={t('contact.talkPrefix')} />
           </span>
           <span className="block">
             <RevealWords text={t('contact.talkHighlight')} delay={0.2} className="font-extrabold text-white" />
           </span>
-        </RevealHeading>
+        </RevealHeadline>
 
         {/* What I'm looking for, right where people decide to write */}
         <motion.p

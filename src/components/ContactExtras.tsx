@@ -6,7 +6,7 @@ import { Icon } from './Icon';
 /**
  * Words rise one by one out of their own mask. The trigger is NOT on the words: a word
  * hidden below its mask has no visible area, so it would never count as "in view". The
- * parent heading (see RevealHeading) owns the viewport trigger; words follow via variants.
+ * parent headline (see RevealHeadline) owns the viewport trigger; words follow via variants.
  */
 const wordVariants = {
   hidden: { y: '110%' },
@@ -36,13 +36,14 @@ export function RevealWords({ text, className = '', delay = 0 }: { text: string;
  * staying hidden forever. Any visible part counts (amount: "some"), which matters on phones
  * where a tall heading rarely shows 40% of itself at once.
  */
-export function RevealHeading({ className = '', children }: { className?: string; children: ReactNode }) {
-  const ref = useRef<HTMLHeadingElement>(null);
+export function RevealHeadline({ className = '', children }: { className?: string; children: ReactNode }) {
+  const ref = useRef<HTMLParagraphElement>(null);
   const seen = useInView(ref, { once: true, amount: 'some', margin: '0px 0px -10% 0px' });
+  // A paragraph: the section's h2 is the "03 Contact" header above it, as in the other sections
   return (
-    <motion.h2 ref={ref} initial="hidden" animate={seen ? 'shown' : 'hidden'} className={className}>
+    <motion.p ref={ref} initial="hidden" animate={seen ? 'shown' : 'hidden'} className={className}>
       {children}
-    </motion.h2>
+    </motion.p>
   );
 }
 
