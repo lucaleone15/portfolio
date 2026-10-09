@@ -31,7 +31,7 @@ export interface HeadData {
   image: string;
   imageAlt: string;
   jsonLd: object | null;
-  /** 404 page: keep it out of search results */
+  /** Kept out of search results (404, privacy policy): robots noindex, left out of the sitemap */
   noindex?: boolean;
 }
 
@@ -383,6 +383,8 @@ function privacyHead(lang: Language): HeadData {
     ogType: 'profile',
     image: OG_IMAGE_URL,
     imageAlt: 'Luca Leone',
+    // Useful to visitors, not a page anyone should land on from a search
+    noindex: true,
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
@@ -430,7 +432,8 @@ export function renderHeadTags(head: HeadData): string {
   // "</script>" inside JSON would close the tag early
   const jsonLd = JSON.stringify(head.jsonLd, null, 2).replace(/</g, '\\u003c');
 
-  if (head.noindex) {
+  // 404: no canonical, alternates or social tags
+  if (head.noindex && !head.alternates.length) {
     return [
       `<title>${escapeAttr(head.title)}</title>`,
       `<meta name="description" content="${escapeAttr(head.description)}" />`,
@@ -443,6 +446,7 @@ export function renderHeadTags(head: HeadData): string {
   return [
     `<title>${escapeAttr(head.title)}</title>`,
     `<meta name="description" content="${escapeAttr(head.description)}" />`,
+    ...(head.noindex ? [`<meta name="robots" content="noindex, follow" />`] : []),
     `<link rel="canonical" href="${head.canonical}" />`,
     ...head.alternates.map((a) => `<link rel="alternate" hreflang="${a.hreflang}" href="${a.href}" />`),
     `<meta property="og:type" content="${head.ogType}" />`,
@@ -468,7 +472,8 @@ export function renderHeadTags(head: HeadData): string {
 }
 
 /**
- * sitemap.xml: canonical pages only (the section URLs point to the home page), each with its
+ * sitemap.xml: indexable canonical pages only (the section URLs point to the home page, the
+ * privacy policy is noindex), each with its
  * FR/EN alternates and the images it shows (Google Images), plus the CV. `lastmod` comes
  * from the caller (scripts/prerender.mjs: date of the page's last commit), so it only moves
  * when the page really changes; Google ignores a lastmod that changes on every build.
@@ -476,24 +481,26 @@ export function renderHeadTags(head: HeadData): string {
 export function renderSitemap(lastmod: { page: (route: Route) => string; cv: string }): string {
   const imageTags = (paths: string[]) => paths.map((p) => `    <image:image><image:loc>${abs(p)}</image:loc></image:image>`);
 
-  const pages = getAllRoutes().filter((route) => !(route.name === 'home' && route.section)).map((route) => {
-    const head = getHeadData(route);
-    const links = head.alternates.map((a) => `    <xhtml:link rel="alternate" hreflang="${a.hreflang}" href="${a.href}" />`);
-    const images =
-      route.name === 'project'
-        ? projectImagePaths(route.lang, route.slug)
-        : route.name === 'home'
-          ? projectsFor(route.lang).map((p) => p.imageUrl)
-          : [];
-    return [
-      '  <url>',
-      `    <loc>${head.canonical}</loc>`,
-      `    <lastmod>${lastmod.page(route)}</lastmod>`,
-      ...links,
-      ...imageTags(images),
-      '  </url>',
-    ].join('\n');
-  });
+  const pages = getAllRoutes()
+    .filter((route) => !(route.name === 'home' && route.section) && !getHeadData(route).noindex)
+    .map((route) => {
+      const head = getHeadData(route);
+      const links = head.alternates.map((a) => `    <xhtml:link rel="alternate" hreflang="${a.hreflang}" href="${a.href}" />`);
+      const images =
+        route.name === 'project'
+          ? projectImagePaths(route.lang, route.slug)
+          : route.name === 'home'
+            ? projectsFor(route.lang).map((p) => p.imageUrl)
+            : [];
+      return [
+        '  <url>',
+        `    <loc>${head.canonical}</loc>`,
+        `    <lastmod>${lastmod.page(route)}</lastmod>`,
+        ...links,
+        ...imageTags(images),
+        '  </url>',
+      ].join('\n');
+    });
 
   const cv = `  <url>\n    <loc>${abs(USER_INFO.cv)}</loc>\n    <lastmod>${lastmod.cv}</lastmod>\n  </url>`;
 

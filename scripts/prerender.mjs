@@ -23,7 +23,10 @@ for (const route of getAllRoutes()) {
   const url = pathFor(route);
   const head = getHeadData(route);
 
-  const html = template
+  let page = template;
+  // noindex pages (privacy policy): their own robots tag replaces the template's generic one
+  if (head.noindex) page = page.replace(/\s*<meta name="robots"[^>]*>/, '');
+  const html = page
     .replace(/<html lang="[^"]*"/, `<html lang="${head.lang}"`)
     .replace(SEO_BLOCK, `<!--seo:start-->\n${renderHeadTags(head)}\n    <!--seo:end-->`)
     .replace('<div id="root"></div>', `<div id="root">${render(url)}</div>`);
@@ -94,7 +97,6 @@ const sourcesFor = (route) => {
     const folders = new Set(projectImagePaths(route.lang, route.slug).map((src) => `public${path.posix.dirname(src)}`));
     return [`src/data/caseStudies/${file}.ts`, ...folders];
   }
-  if (route.name === 'privacy') return ['src/components/PrivacyPolicy.tsx'];
   return HOME_SOURCES;
 };
 

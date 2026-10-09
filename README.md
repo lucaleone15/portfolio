@@ -206,6 +206,7 @@ Après une modification de contenu : `npm run build` (le pré-rendu, les métado
 - **Sitemap** généré automatiquement : pages canoniques FR/EN avec `hreflang`, images affichées par chaque page (Google Images) et CV. Le `lastmod` de chaque page est la date du dernier commit de ses fichiers (étude de cas + images pour un projet), il ne bouge donc que si la page change.
 - **GEO** (assistants IA) : `llms.txt`, catalogues `ai-catalog.json`, et `robots.txt` qui autorise les robots des IA.
 - **404** : page dédiée, servie avec un vrai statut 404 et exclue de l'indexation.
+- **Politique de confidentialité** : `noindex, follow` et hors du sitemap (utile aux visiteurs, pas une page à trouver dans Google).
 - **Suggestion de langue** (`src/components/LanguageHint.tsx`) : si le navigateur ne demande pas la langue de la page (par ex. un recruteur anglophone sur la version française), une petite pastille propose l'autre version. Jamais de redirection ; une fois fermée ou suivie, elle ne revient plus.
 - **Icônes** : `favicon.svg` (le « L. » en Syne, vectorisé : aucune police à charger), `apple-touch-icon.png`, `icon-192/512.png` et `site.webmanifest`.
 
