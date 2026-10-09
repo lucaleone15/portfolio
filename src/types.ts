@@ -1,5 +1,12 @@
 export type Language = 'fr' | 'en';
 
+/** A project's logo chip: the logo on its brand background, fixed height, width following the logo */
+export interface ProjectLogo {
+  src: string;
+  width: number;
+  height: number;
+}
+
 export interface Project {
   id: string;
   kind: 'pro' | 'school-client' | 'school';
@@ -24,4 +31,5 @@ export interface Project {
   stack: string[];
   accentColor?: string;
   accentColorDark?: string;
+  logo?: ProjectLogo;
 }

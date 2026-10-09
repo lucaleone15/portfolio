@@ -112,14 +112,26 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </div>
           )}
 
-          {/* My role on the project (the category only drives the filter) */}
-          <div className="absolute top-3.5 left-3.5 z-20 max-w-[calc(100%-28px)]">
+          {/* My role on the project (the category only drives the filter), and the brand's logo */}
+          <div className="pointer-events-none absolute top-3.5 inset-x-3.5 z-20 flex items-center justify-between gap-2">
             <span
-              className="font-syne h-7 px-3.5 rounded-full text-[11px] sm:text-xs font-extrabold inline-flex items-center tracking-wide truncate max-w-full shadow-[0_4px_12px_-2px_rgba(0,0,0,0.35)]"
+              className="font-syne h-7 px-3.5 rounded-full text-[11px] sm:text-xs font-extrabold inline-flex items-center tracking-wide truncate min-w-0 shadow-[0_4px_12px_-2px_rgba(0,0,0,0.35)]"
               style={{ backgroundColor: 'var(--pa)', color: 'var(--pa-on)' }}
             >
               {project.badge ?? project.category}
             </span>
+            {project.logo && (
+              // Decorative here: the project name is written under the image
+              <img
+                src={project.logo.src}
+                width={project.logo.width}
+                height={project.logo.height}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                className="h-7 sm:h-9 w-auto shrink-0 rounded-lg shadow-[0_4px_12px_-2px_rgba(0,0,0,0.35)]"
+              />
+            )}
           </div>
 
           {/* Pointer replacement over the image: a lens of strong blur whose edge fades out

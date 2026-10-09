@@ -574,9 +574,22 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
       {/* Hero: the stake first, then the facts */}
       <header className="pb-10 sm:pb-14">
         <Reveal>
-          <span className="inline-flex h-7 items-center rounded-full bg-black/[0.06] px-3 font-syne text-xs font-bold text-neutral-800 dark:bg-white/[0.1] dark:text-white">
-            {PROJECT_KIND_LABEL[project.kind][lang]}
-          </span>
+          {/* The brand's logo, then what kind of project it was */}
+          <div className="flex flex-wrap items-center gap-3">
+            {project.logo && (
+              <img
+                src={project.logo.src}
+                width={project.logo.width}
+                height={project.logo.height}
+                alt={`Logo ${project.name}`}
+                decoding="async"
+                className="h-10 sm:h-11 w-auto rounded-xl shadow-[0_6px_20px_-6px_rgba(0,0,0,0.3)]"
+              />
+            )}
+            <span className="inline-flex h-7 items-center rounded-full bg-black/[0.06] px-3 font-syne text-xs font-bold text-neutral-800 dark:bg-white/[0.1] dark:text-white">
+              {PROJECT_KIND_LABEL[project.kind][lang]}
+            </span>
+          </div>
           <p className="mt-4 eyebrow sm:text-sm" style={{ color: 'var(--pa-text)' }}>
             {study.kicker}
           </p>
