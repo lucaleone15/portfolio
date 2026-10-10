@@ -52,19 +52,19 @@ const ETOILE_FR: CaseStudy = {
           steps: [
             {
               text: 'Le menu sert aussi de set de table. Des titres massifs aux courbes rétro, une typographie classique pour les plats : l’héritage de la brasserie, en plus moderne.',
-              image: img('menu-terrasse', 1184, 864, 'Menu rouge et blanc posé en set de table, avec un café et un croissant'),
+              image: img('menu-terrasse-2', 1184, 864, 'Menu rouge et blanc posé en set de table, avec un café et un croissant'),
             },
             {
               text: 'La carte des boissons reprend les mêmes codes en inversant les couleurs.',
-              image: img('boissons', 864, 1184, 'Carte des boissons rouge et crème sur une table, avec un cocktail'),
+              image: img('boissons-2', 864, 1184, 'Carte des boissons rouge et crème sur une table, avec un cocktail'),
             },
             {
               text: 'Les suggestions changent chaque semaine : nous en avons fait un gabarit facile à mettre à jour, qui invite aussi les clients du midi à revenir pour l’afterwork.',
-              image: img('suggestions', 864, 1184, 'Carte des suggestions de la semaine, posée sur une table du restaurant'),
+              image: img('suggestions-2', 864, 1184, 'Carte des suggestions de la semaine, posée sur une table du restaurant'),
             },
             {
               text: 'La carte des bricoles se plie en étoile : fermée, elle montre les catégories ; ouverte, tout le menu de l’afterwork.',
-              image: img('bricoles-etoile', 992, 1072, 'Carte des bricoles pliée en étoile, fermée puis ouverte sur une table'),
+              image: img('bricoles-etoile-2', 992, 1072, 'Carte des bricoles pliée en étoile, fermée puis ouverte sur une table'),
             },
           ],
         },
@@ -211,19 +211,19 @@ const ETOILE_EN: CaseStudy = {
           steps: [
             {
               text: 'The menu doubles as a placemat. Bold retro titles, a classic typeface for the dishes: the brasserie heritage, made more modern.',
-              image: img('menu-terrasse', 1184, 864, 'Red and white menu used as a placemat, with a coffee and a croissant'),
+              image: img('menu-terrasse-2', 1184, 864, 'Red and white menu used as a placemat, with a coffee and a croissant'),
             },
             {
               text: 'The drinks menu uses the same codes with the colours reversed.',
-              image: img('boissons', 864, 1184, 'Red and cream drinks menu on a table, with a cocktail'),
+              image: img('boissons-2', 864, 1184, 'Red and cream drinks menu on a table, with a cocktail'),
             },
             {
               text: 'The specials change every week, so we made them an easy-to-update template that also invites lunch guests back for the after-work.',
-              image: img('suggestions', 864, 1184, 'Weekly specials menu on a restaurant table'),
+              image: img('suggestions-2', 864, 1184, 'Weekly specials menu on a restaurant table'),
             },
             {
               text: 'The bar-snacks menu folds into a star: closed, it shows the categories; open, the whole after-work menu.',
-              image: img('bricoles-etoile', 992, 1072, 'Star-folded bar-snacks menu, closed then open on a table'),
+              image: img('bricoles-etoile-2', 992, 1072, 'Star-folded bar-snacks menu, closed then open on a table'),
             },
           ],
         },
