@@ -1,13 +1,13 @@
 /*
  * Service worker, with one job: when a page can't load because there's no connection, show
- * the offline page (public/offline.html, "Red flag", with its little game) instead of the
+ * the offline page (public/offline.html, "Red flag", with its little game and its car) instead of the
  * browser's error. Nothing else is cached here, so the site itself is always fresh from the
  * server (no stale version after a deploy). Registered in src/main.tsx (production only).
  * Change VERSION when offline.html or offline-game.js change.
  */
-const VERSION = 'offline-v1';
+const VERSION = 'offline-v2';
 const OFFLINE_URL = '/offline';
-const FILES = [OFFLINE_URL, '/offline-game.js'];
+const FILES = [OFFLINE_URL, '/offline-game.js', '/offline-car.webp'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(

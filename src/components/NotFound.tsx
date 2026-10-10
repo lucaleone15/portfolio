@@ -4,72 +4,111 @@ import { homePath, Link, sectionPath } from '../router';
 import { NeonBackdrop } from './NeonBackdrop';
 
 /**
- * 404 (served with a real 404 status by server/index.ts): "off track". A kart has left the
- * circuit and stopped in the gravel trap; the buttons put the visitor back on track.
+ * 404 (served with a real 404 status by server/index.ts): "off track". An aerial view of a
+ * bend: a Formula 1 car has gone straight on and stopped in the gravel trap; the buttons
+ * put the visitor back on track. The car is a real photo, cut out: Ferrari 641 (1990) at
+ * MoMA, by Tony Hisgett, CC BY 2.0 (sponsor logos removed), credited under the picture.
  */
 
-// The circuit: one bend, drawn three times (kerbs white, then red dashes, then asphalt)
-const TRACK = 'M -20 70 C 140 60 220 90 250 170 S 220 330 90 400';
+// The bend, drawn as kerbs (white, then red dashes), asphalt, and the white edge lines
+const TRACK = 'M -60 110 C 170 90 320 150 350 270 S 320 490 150 580';
 
-function OffTrack() {
+function OffTrack({ fr }: { fr: boolean }) {
   return (
-    <svg viewBox="0 0 480 380" className="w-full h-auto" role="img" aria-hidden="true">
-      <defs>
-        <pattern id="gravel" width="14" height="14" patternUnits="userSpaceOnUse">
-          <circle cx="3" cy="4" r="1.6" className="fill-[#C9B994] dark:fill-[#5a5040]" />
-          <circle cx="10" cy="10" r="1.3" className="fill-[#C9B994] dark:fill-[#5a5040]" />
-          <circle cx="11" cy="3" r="0.9" className="fill-[#B8A57C] dark:fill-[#6b604c]" />
-        </pattern>
-      </defs>
+    <figure className="m-0">
+      <svg viewBox="0 0 640 460" className="w-full h-auto rounded-[28px] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.55)]" role="img" aria-label={fr ? 'Vue aérienne d’une Formule 1 sortie de piste, arrêtée dans le bac à gravier' : 'Aerial view of a Formula 1 car gone off track, stopped in the gravel trap'}>
+        <defs>
+          <clipPath id="frame">
+            <rect width="640" height="460" rx="28" />
+          </clipPath>
+          {/* Grass, asphalt and gravel grain */}
+          <filter id="grain" filterUnits="userSpaceOnUse" x="0" y="0" width="640" height="460">
+            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4" />
+            <feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0" />
+            <feComposite in2="SourceGraphic" operator="in" />
+            <feBlend in="SourceGraphic" mode="multiply" />
+          </filter>
+          <filter id="stones" filterUnits="userSpaceOnUse" x="0" y="0" width="640" height="460">
+            <feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="1" seed="9" />
+            <feColorMatrix values="0 0 0 0 0.35  0 0 0 0 0.3  0 0 0 0 0.24  0 0 0 1.4 -0.55" />
+            <feComposite in2="SourceGraphic" operator="in" />
+            <feMerge>
+              <feMergeNode in="SourceGraphic" />
+              <feMergeNode />
+            </feMerge>
+          </filter>
+          <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="8" dy="10" stdDeviation="7" floodColor="#000" floodOpacity="0.45" />
+          </filter>
+          <radialGradient id="light" cx="30%" cy="20%" r="90%">
+            <stop offset="0" stopColor="#fff" stopOpacity="0.14" />
+            <stop offset="1" stopColor="#000" stopOpacity="0.22" />
+          </radialGradient>
+        </defs>
 
-      {/* Gravel trap on the outside of the bend */}
-      <path d="M 300 60 C 420 70 470 160 470 250 C 470 330 420 370 330 372 C 300 300 330 220 300 60 Z" className="fill-[#EADFC6] dark:fill-[#3a3329]" />
-      <path d="M 300 60 C 420 70 470 160 470 250 C 470 330 420 370 330 372 C 300 300 330 220 300 60 Z" fill="url(#gravel)" />
+        <g clipPath="url(#frame)">
+          {/* Grass */}
+          <rect width="640" height="460" fill="#3E7A3A" filter="url(#grain)" />
 
-      {/* Circuit */}
-      <path d={TRACK} fill="none" stroke="#fff" strokeWidth="104" />
-      <path d={TRACK} fill="none" stroke="#E10600" strokeWidth="104" strokeDasharray="16 16" />
-      <path d={TRACK} fill="none" className="stroke-[#2C2C31]" strokeWidth="88" />
-      <path d={TRACK} fill="none" stroke="#fff" strokeOpacity="0.5" strokeWidth="2" strokeDasharray="18 22" />
+          {/* Gravel trap on the outside of the bend */}
+          <path
+            d="M 360 40 C 520 40 640 120 660 250 C 680 380 600 480 420 500 C 380 420 420 330 410 250 C 400 170 420 110 360 40 Z"
+            fill="#D8C9A3"
+            filter="url(#stones)"
+          />
 
-      {/* Tyre marks: off the asphalt and into the gravel */}
-      <motion.g
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5, duration: 0.6 }}
-        fill="none"
-        className="stroke-[#2C2C31]/50 dark:stroke-black/60"
-        strokeWidth="5"
-        strokeLinecap="round"
-      >
-        <path d="M 262 128 C 310 150 350 190 380 230" />
-        <path d="M 250 146 C 298 168 338 208 366 248" />
-      </motion.g>
+          {/* Track */}
+          <path d={TRACK} fill="none" stroke="#fff" strokeWidth="138" />
+          <path d={TRACK} fill="none" stroke="#D7141A" strokeWidth="138" strokeDasharray="18 18" />
+          <path d={TRACK} fill="none" stroke="#2B2B30" strokeWidth="120" filter="url(#grain)" />
+          {/* Racing line rubbered in */}
+          <path d="M -60 125 C 170 105 300 165 325 270 S 300 470 140 570" fill="none" stroke="#000" strokeOpacity="0.22" strokeWidth="26" strokeLinecap="round" />
 
-      {/* The kart, slid into the gravel, a little crooked */}
-      <motion.g
-        initial={{ x: -90, y: -100, rotate: -10, opacity: 0 }}
-        animate={{ x: 0, y: 0, rotate: 0, opacity: 1 }}
-        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <g transform="translate(392 262) rotate(58) scale(2.4) translate(-22 -14)">
-          <rect x="3" y="1" width="10" height="6" rx="2" fill="#111" />
-          <rect x="3" y="21" width="10" height="6" rx="2" fill="#111" />
-          <rect x="29" y="2" width="8" height="5" rx="2" fill="#111" />
-          <rect x="29" y="21" width="8" height="5" rx="2" fill="#111" />
-          <path d="M6 9h24l8 3v4l-8 3H6a3 3 0 0 1-3-3v-4a3 3 0 0 1 3-3z" style={{ fill: 'var(--accent)' }} />
-          <rect x="39" y="9" width="4" height="10" rx="1.5" fill="#111" />
-          <circle cx="17" cy="14" r="4.2" fill="#fff" stroke="#111" strokeWidth="1.2" />
-          <rect x="17.5" y="12.6" width="3.4" height="2.8" rx="1" fill="#111" />
+          {/* Tyre marks: straight on, off the asphalt and into the gravel */}
+          <motion.g
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.45, duration: 0.7 }}
+            fill="none"
+            stroke="#1a1a1a"
+            strokeOpacity="0.55"
+            strokeWidth="9"
+            strokeLinecap="round"
+          >
+            <path d="M 300 150 C 362 172 425 212 478 256" />
+            <path d="M 284 178 C 345 202 400 240 446 290" />
+          </motion.g>
+
+          {/* The car, slid into the gravel and stopped a little sideways */}
+          <motion.g
+            initial={{ x: -150, y: -130, opacity: 0 }}
+            animate={{ x: 0, y: 0, opacity: 1 }}
+            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <g transform="translate(522 312) rotate(128)">
+              <image href="/images/f1-ferrari-641.webp" x="-54" y="-115" width="108" height="230" filter="url(#shadow)" />
+            </g>
+            {/* Gravel thrown up */}
+            <g fill="#BFAE85">
+              <circle cx="574" cy="372" r="3.2" />
+              <circle cx="588" cy="356" r="2.2" />
+              <circle cx="562" cy="388" r="2.6" />
+              <circle cx="592" cy="380" r="1.8" />
+            </g>
+          </motion.g>
+
+          {/* Soft light over the whole scene */}
+          <rect width="640" height="460" fill="url(#light)" />
         </g>
-        {/* A little gravel thrown up */}
-        <g className="fill-[#C9B994] dark:fill-[#6b604c]">
-          <circle cx="432" cy="300" r="3" />
-          <circle cx="442" cy="284" r="2" />
-          <circle cx="422" cy="312" r="2.2" />
-        </g>
-      </motion.g>
-    </svg>
+      </svg>
+      <figcaption className="mt-3 text-[11px] text-neutral-500 dark:text-[#71717A]">
+        Ferrari 641 (1990) · {fr ? 'photo' : 'photo by'} Tony Hisgett,{' '}
+        <a href="https://creativecommons.org/licenses/by/2.0/" className="underline underline-offset-2" target="_blank" rel="noopener noreferrer">
+          CC BY 2.0
+        </a>
+        , {fr ? 'détourée' : 'cut out'}
+      </figcaption>
+    </figure>
   );
 }
 
@@ -107,7 +146,7 @@ export function NotFound() {
           </div>
         </div>
         <div className="max-w-md lg:max-w-none w-full mx-auto">
-          <OffTrack />
+          <OffTrack fr={fr} />
         </div>
       </div>
     </main>
