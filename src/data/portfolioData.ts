@@ -302,7 +302,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       role: 'UI/UX Design',
       team: 'Sacha Loskov et Romain Blanchard.',
       hook: '11 millions de tonnes de plastique par an.',
-      badge: 'UX/UI designer',
+      badge: 'Designer UX/UI',
       summary: "Conception d'une application mobile collaborative simplifiant le signalement des déchets marins et encourageant l'action collective.",
       overview: "Projet UI/UX réalisé dans le cadre d'un semestre à la HEIG-VD avec Sacha Loskov et Romain Blanchard. OceanSight propose une plateforme collaborative permettant de signaler des déchets marins, de rejoindre des missions de nettoyage, de découvrir les espèces menacées et de suivre son impact grâce à des statistiques et des achievements. Le projet s'est appuyé sur une démarche UX itérative intégrant prototypage, tests utilisateurs et amélioration continue de l'expérience.",
       challenges: [
@@ -451,7 +451,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       category: 'E-commerce',
       role: 'Projet solo : stratégie, design, boutique et marketing',
       hook: 'Une boutique pour passionnés, ouverte de A à Z.',
-      badge: 'E-commerce manager',
+      badge: 'Chef de projet e-commerce',
       summary: "Conception d'une boutique e-commerce spécialisée dans l'univers automobile, développée sur WordPress et WooCommerce.",
       overview: "Création de DriveGear, une boutique en ligne dédiée aux passionnés d'automobile. Le projet porte sur la conception de l'expérience utilisateur, la structuration du catalogue, l'identité visuelle et la mise en place de la boutique avec WordPress et WooCommerce. Une attention particulière a été portée à la clarté de la navigation, à la présentation des produits et à la cohérence de l'ensemble de l'expérience d'achat.",
       challenges: [
@@ -478,7 +478,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       category: 'E-commerce',
       role: 'Solo project: strategy, design, store and marketing',
       hook: 'A store for car lovers, built from A to Z.',
-      badge: 'E-commerce manager',
+      badge: 'E-commerce project lead',
       summary: 'Design of an e-commerce store dedicated to the automotive world, built with WordPress and WooCommerce.',
       overview: 'Creation of DriveGear, an online store dedicated to automotive enthusiasts. The project focused on user experience, catalogue structure, visual identity and the implementation of the online store using WordPress and WooCommerce. Particular attention was given to clear navigation, product presentation and a consistent purchasing experience.',
       challenges: [
@@ -520,7 +520,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       category: 'UX/UI design',
       role: 'Concept, données et UI (projet solo)',
       hook: 'Et si on regardait la course comme un ingénieur ?',
-      badge: 'Product designer',
+      badge: 'Designer produit',
       summary: 'Concept d’une application qui donne aux fans de Formule 1 les données et la stratégie du muret des stands, en direct.',
       overview: 'Projet individuel du cours WebDon : une app de second écran qui affiche le classement détaillé, la télémétrie, la position des pilotes sur le circuit, et des prédictions de course basées sur l’IA et la simulation.',
       challenges: [
