@@ -105,6 +105,7 @@ export function InvertedCursor() {
     // never fights the 1:1 position updates.
     <motion.div
       aria-hidden="true"
+      data-pointer-ui
       style={{ x, y }}
       className="[view-transition-name:cursor] pointer-events-none fixed left-0 top-0 z-[99999] mix-blend-difference will-change-transform"
     >

@@ -158,6 +158,7 @@ export function PointerHighlight() {
   return (
     <motion.div
       aria-hidden="true"
+      data-pointer-ui
       style={{
         x: reduceMotion ? x : springX,
         y: reduceMotion ? y : springY,

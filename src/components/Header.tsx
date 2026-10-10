@@ -70,7 +70,7 @@ export function Header({ activeSection }: HeaderProps) {
   return (
     <>
       {/* Floating liquid-glass bar: the page scrolls underneath it */}
-      <header className="[view-transition-name:site-header] fixed top-0 left-0 right-0 z-40 px-3 sm:px-6 pt-3 sm:pt-4 pointer-events-none">
+      <header data-chrome className="[view-transition-name:site-header] fixed top-0 left-0 right-0 z-40 px-3 sm:px-6 pt-3 sm:pt-4 pointer-events-none">
         <div className="glass-bar pointer-events-auto relative max-w-7xl mx-auto rounded-full pl-5 pr-2 sm:pl-7 sm:pr-2.5 h-14 sm:h-16 flex items-center justify-between overflow-hidden">
           {/* Sleek scroll line along the bottom edge */}
           <motion.div

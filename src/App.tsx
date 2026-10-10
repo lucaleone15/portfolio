@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { flushSync } from 'react-dom';
 import { MotionConfig } from 'motion/react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
@@ -14,6 +15,7 @@ import { LanguageHint } from './components/LanguageHint';
 import { IntroCurtain, skipIntro } from './components/IntroCurtain';
 import { NotFound } from './components/NotFound';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
+import { PrintSheet } from './components/PrintSheet';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { AccentProvider } from './context/AccentContext';
@@ -37,10 +39,79 @@ function useDocumentHead() {
   }, [route]);
 }
 
+// Easter egg: the tab calls you back while you look elsewhere
+function useAwayTitle(lang: 'fr' | 'en') {
+  useEffect(() => {
+    let title = '';
+    const onVisibility = () => {
+      if (document.hidden) {
+        title = document.title;
+        document.title = lang === 'fr' ? 'Reviens au stand 🏁' : 'Back to the pits 🏁';
+      } else if (title) {
+        document.title = title;
+        title = '';
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => document.removeEventListener('visibilitychange', onVisibility);
+  }, [lang]);
+}
+
+// Easter egg: the Konami code (↑ ↑ ↓ ↓ ← → ← → B A) starts karting mode (easter/kart.ts,
+// loaded then). Mouse/trackpad only; ignored while typing in a field.
+const KONAMI = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+function useKonami(lang: 'fr' | 'en') {
+  useEffect(() => {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    let at = 0;
+    const onKey = (e: KeyboardEvent) => {
+      const el = e.target as HTMLElement | null;
+      if (el?.closest('input, textarea, select, [contenteditable="true"]')) return;
+      const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      at = key === KONAMI[at] ? at + 1 : key === KONAMI[0] ? 1 : 0;
+      if (at === KONAMI.length) {
+        at = 0;
+        void import('./easter/kart').then((m) => m.toggleKart(lang));
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [lang]);
+}
+
+// Easter egg: printing the home page gives a clean one-page profile (PrintSheet), built
+// right before the print dialog and dropped after it
+function usePrinting() {
+  const [printing, setPrinting] = useState(false);
+  useEffect(() => {
+    // Paper is white: print in the light theme, then give the visitor's theme back
+    let wasDark = false;
+    const before = () => {
+      wasDark = document.documentElement.classList.contains('dark');
+      document.documentElement.classList.remove('dark');
+      flushSync(() => setPrinting(true));
+    };
+    const after = () => {
+      if (wasDark) document.documentElement.classList.add('dark');
+      setPrinting(false);
+    };
+    window.addEventListener('beforeprint', before);
+    window.addEventListener('afterprint', after);
+    return () => {
+      window.removeEventListener('beforeprint', before);
+      window.removeEventListener('afterprint', after);
+    };
+  }, []);
+  return printing;
+}
+
 function PortfolioApp() {
   const projectsData = getCustomProjects();
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
   const { route, syncPath } = useRouter();
+  useAwayTitle(lang);
+  useKonami(lang);
+  const printing = usePrinting();
 
   const allProjects = lang === 'fr' ? projectsData.fr : projectsData.en;
   const selectedProject =
@@ -144,6 +215,8 @@ function PortfolioApp() {
           <ContactSection />
         </main>
       )}
+
+      {printing && route.name === 'home' && <PrintSheet lang={lang} bio={t('about.bio')} />}
     </div>
   );
 }

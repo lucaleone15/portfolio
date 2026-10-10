@@ -205,7 +205,18 @@ export function Signature() {
         transition={{ duration: 0.9, ease: [0.23, 1, 0.32, 1] }}
         className="inline-block font-serif whitespace-nowrap font-black leading-[0.95] py-[0.14em] tracking-[-0.05em] bg-gradient-to-b from-white via-white/70 to-white/10 bg-clip-text text-transparent"
       >
-        Luca Leone<span className="text-[#0A0A0C]">.</span>
+        Luca Leone
+        {/* The full stop as a block of the glyph's exact size and place (Plus Jakarta Sans 900:
+            a 0.15em square on the baseline, 0.129em side bearings, minus the -0.05em tracking),
+            so that it can come loose: a click throws it around the screen (easter egg) */}
+        <span
+          role="button"
+          onClick={(e) => {
+            const dot = e.currentTarget;
+            void import('../easter/dotBall').then((m) => m.launchDot(dot));
+          }}
+          className="inline-block w-[0.155em] h-[0.155em] ml-[0.1265em] mr-[0.0765em] align-baseline bg-[#0A0A0C] cursor-pointer"
+        />
       </motion.p>
     </div>
   );

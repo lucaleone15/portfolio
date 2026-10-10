@@ -653,3 +653,57 @@ export const EXPERIENCE_TIMELINE = [
   }
 ];
 
+
+export const EDUCATION_TIMELINE_EN = [
+  {
+    period: '2024 - 2027',
+    title: 'Bachelor of Science in Media Engineering',
+    institution: 'HEIG-VD',
+    location: 'Yverdon-les-Bains, Switzerland',
+    details: "Digital strategy & innovation, web development, marketing, and user interface design (UX/UI)."
+  },
+  {
+    period: '2023 - 2024',
+    title: 'Specialized Baccalaureate in Communication & Information',
+    institution: 'ERACOM',
+    location: 'Lausanne, Switzerland',
+    details: "Visual communication, interactive media, print & digital content creation, audiovisual formats."
+  },
+  {
+    period: '2020 – 2023',
+    title: 'General Culture Certificate in Communication & Information',
+    institution: "Gymnase d'Yverdon",
+    location: 'Yverdon-les-Bains, Switzerland',
+    details: ''
+  }
+];
+
+export const EXPERIENCE_TIMELINE_EN = [
+  {
+    period: 'May 2026 - Present',
+    title: 'Digital Communication & Content Creation Manager',
+    company: 'Karting de Vuiteboeuf',
+    location: 'Vuitebœuf, Vaud, Switzerland · Hybrid',
+    description: 'Brand strategy & social media (Instagram, TikTok), on-track photo/video production, and event campaigns.'
+  },
+  {
+    period: 'July 2022 (1 month)',
+    title: 'Intern',
+    company: 'Groupe AFH Automobile',
+    location: 'Yverdon-les-Bains, Switzerland · On-site',
+    description: 'Customer relations, administrative support, and commercial digital communication management.'
+  }
+];
+
+export const LANGUAGES = {
+  fr: [
+    { name: 'Français', level: 'Langue maternelle' },
+    { name: 'Anglais', level: 'Niveau C1' },
+    { name: 'Italien', level: 'Niveau B2' },
+  ],
+  en: [
+    { name: 'French', level: 'Native language' },
+    { name: 'English', level: 'C1 Level' },
+    { name: 'Italian', level: 'B2 Level' },
+  ],
+};

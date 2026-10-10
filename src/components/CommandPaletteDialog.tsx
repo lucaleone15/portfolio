@@ -15,6 +15,10 @@ import { alternatePath, projectPath, SectionId, sectionPath, useRouter } from '.
 export default function CommandPaletteDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
   const setOpen = onOpenChange;
   const [copied, setCopied] = useState(false);
+  const [search, setSearch] = useState('');
+  // Easter egg: only shows up when the search looks like a race start
+  const query = search.trim().toLowerCase();
+  const raceStart = query.length >= 2 && ['lights out', 'lights', 'départ', 'depart', 'feux', 'f1', 'go go'].some((w) => w.startsWith(query) || query.startsWith(w));
   const { lang } = useLanguage();
   const { theme, toggleTheme } = useTheme();
   const { route, navigate } = useRouter();
@@ -62,6 +66,8 @@ export default function CommandPaletteDialog({ open, onOpenChange }: { open: boo
         <Icon icon={Search01Icon} className="w-[18px] h-[18px] text-neutral-400 dark:text-[#71717A]" />
         <Command.Input
           autoFocus
+          value={search}
+          onValueChange={setSearch}
           placeholder={lang === 'fr' ? 'Rechercher un projet, une action…' : 'Search a project, an action…'}
           className="flex-1 h-14 bg-transparent text-base text-neutral-900 dark:text-white placeholder:text-neutral-400 dark:placeholder:text-[#71717A] outline-none"
         />
@@ -74,6 +80,23 @@ export default function CommandPaletteDialog({ open, onOpenChange }: { open: boo
         <Command.Empty className="py-10 text-center text-sm text-neutral-500 dark:text-[#A1A1AA]">
           {lang === 'fr' ? 'Aucun résultat.' : 'No results.'}
         </Command.Empty>
+
+        {/* First when it shows: a fuzzy match ("lights" → OceanSight) must not take Enter */}
+        {raceStart && (
+          <Command.Group heading={lang === 'fr' ? 'Départ' : 'Race start'} className={group}>
+            <Command.Item
+              value={`lights out départ depart feux f1 go ${query}`}
+              onSelect={() =>
+                run(() => void import('../easter/lightsOut').then((m) => m.lightsOut(lang, () => navigate(sectionPath(lang, 'projets')))))
+              }
+              className={item}
+            >
+              <span className="w-4 text-center shrink-0" aria-hidden="true">🚦</span>
+              <span className="font-semibold">Lights out</span>
+              <span className="ml-auto text-xs text-neutral-400 dark:text-[#71717A]">{lang === 'fr' ? 'Départ vers les projets' : 'Race to the projects'}</span>
+            </Command.Item>
+          </Command.Group>
+        )}
 
         <Command.Group heading={lang === 'fr' ? 'Projets' : 'Projects'} className={group}>
           {projects.map((p) => (
