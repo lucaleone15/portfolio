@@ -19,3 +19,9 @@ const app = (
 // The dev server serves an empty #root: plain client render there.
 if (root.firstElementChild) hydrateRoot(root, app);
 else createRoot(root).render(app);
+
+// Offline page ("Red flag" mini-game) when a page can't load without a connection
+// (public/sw.js). Production only: in dev it would get in the way of hot reload.
+if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+  window.addEventListener('load', () => void navigator.serviceWorker.register('/sw.js').catch(() => {}));
+}

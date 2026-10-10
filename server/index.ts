@@ -117,6 +117,9 @@ function cacheControl(file: string): string {
   const rel = path.relative(DIST, file);
   if (rel.startsWith(`assets${path.sep}`)) return 'public, max-age=31536000, immutable';
   if (file.endsWith('.html')) return 'no-cache';
+  // The service worker and the offline page's script: checked at every visit, so an update
+  // reaches visitors at once
+  if (rel === 'sw.js' || rel === 'offline-game.js') return 'no-cache';
   return 'public, max-age=2592000'; // 30 days
 }
 
