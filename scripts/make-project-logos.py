@@ -64,28 +64,49 @@ def crop(im: Image.Image) -> Image.Image:
     return im.crop(im.getchannel('A').point(lambda v: 255 if v > 24 else 0).getbbox())
 
 
-def themed(im: Image.Image, theme: str, mono: bool = False) -> Image.Image:
-    """Neutral (unsaturated) pixels take the theme's ink colour, brand colours stay
-    (mono: the whole logo in the ink colour)"""
-    ink = INK[theme]
+def widest_gap(im: Image.Image) -> int:
+    """x where the widest run of empty columns starts (between a wordmark and its symbol)"""
+    alpha = im.getchannel('A')
+    empty = [alpha.crop((x, 0, x + 1, im.height)).getbbox() is None for x in range(im.width)]
+    best, start = (im.width, 0), None
+    for x, e in enumerate(empty + [False]):
+        if e and start is None:
+            start = x
+        if not e and start is not None:
+            if x - start > best[1]:
+                best = (start, x - start)
+            start = None
+    return best[0]
 
-    def pixel(p):
+
+def themed(im: Image.Image, theme: str, mono: bool = False, ink_before: int | None = None) -> Image.Image:
+    """Neutral (unsaturated) pixels take the theme's ink colour, brand colours stay
+    (mono: the whole logo in the ink colour; ink_before: only left of that x, so that the
+    white drawn inside a coloured symbol stays white)"""
+    ink = INK[theme]
+    width = im.width
+    limit = width if ink_before is None else ink_before
+
+    def pixel(i, p):
         r, g, b, a = p
+        if i % width >= limit:
+            return p
         mx, mn = max(r, g, b), min(r, g, b)
         saturation = (mx - mn) / mx if mx else 0
         return ink + (a,) if mono or saturation < 0.22 else p
 
     out = Image.new('RGBA', im.size)
-    out.putdata([pixel(p) for p in pixels(im)])
+    out.putdata([pixel(i, p) for i, p in enumerate(pixels(im))])
     return out
 
 
-def save(im: Image.Image, name: str, dark_mono: bool = False):
+def save(im: Image.Image, name: str, dark_mono: bool = False, symbol_right: bool = False):
     im = crop(im)
     im = im.resize((round(im.width * HEIGHT / im.height), HEIGHT), Image.LANCZOS)
+    ink_before = widest_gap(im) if symbol_right else None
     for theme in ('light', 'dark'):
         path = OUT / (f'{name}.webp' if theme == 'light' else f'{name}-dark.webp')
-        themed(im, theme, mono=dark_mono and theme == 'dark').save(path, 'WEBP', quality=92, method=6)
+        themed(im, theme, mono=dark_mono and theme == 'dark', ink_before=ink_before).save(path, 'WEBP', quality=92, method=6)
     print(f'{name}: {im.width}x{im.height}')
 
 
@@ -103,7 +124,8 @@ poster = Image.open(io.BytesIO(fitz.Pixmap(kit, 2593).tobytes('png'))).convert('
 save(unmix(poster.crop((150, 150, 1250, 520)), (255, 255, 255)), 'hug')
 
 # Karting de Vuiteboeuf: transparent logo file
-save(Image.open('matiere/kartingvuiteboeuf/LOGO/Logo-KartingVuiteboeuf.png').convert('RGBA'), 'karting-vuiteboeuf')
+# (the KV symbol on the right keeps its white letters in both themes)
+save(Image.open('matiere/kartingvuiteboeuf/LOGO/Logo-KartingVuiteboeuf.png').convert('RGBA'), 'karting-vuiteboeuf', symbol_right=True)
 
 # OceanSight: the logo on its green, from the case study image
 ocean = Image.open('public/images/case/oceansight/logo.webp').convert('RGB')
