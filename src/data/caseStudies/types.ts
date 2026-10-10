@@ -58,6 +58,7 @@ export interface CaseSection {
 }
 
 export interface CaseStudy {
+  /** Label over the title: discipline · subject (the context is in `meta`, the client in the logo) */
   kicker: string;
   title: string;
   hook: string;

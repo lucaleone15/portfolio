@@ -3,7 +3,7 @@ import { imagesIn, type CaseStudy } from './types';
 const img = imagesIn('drivegear');
 
 const DRIVEGEAR_FR: CaseStudy = {
-  kicker: 'Cours E-commerce · HEIG-VD',
+  kicker: 'E-commerce · Marque & boutique en ligne',
   title: 'DriveGear',
   hook: 'Une boutique auto suisse, du nom de domaine à la première campagne.',
   intro:
@@ -125,7 +125,7 @@ const DRIVEGEAR_FR: CaseStudy = {
 };
 
 const DRIVEGEAR_EN: CaseStudy = {
-  kicker: 'E-commerce course · HEIG-VD',
+  kicker: 'E-commerce · Brand & online store',
   title: 'DriveGear',
   hook: 'A Swiss car store, from the domain name to the first campaign.',
   intro:

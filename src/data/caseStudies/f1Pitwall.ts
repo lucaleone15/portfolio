@@ -3,7 +3,7 @@ import { imagesIn, type CaseStudy } from './types';
 const img = imagesIn('f1-pitwall');
 
 const F1_FR: CaseStudy = {
-  kicker: 'Projet individuel · Cours WebDon, HEIG-VD',
+  kicker: 'UX/UI design · Données & IA',
   title: 'F1 PitWall',
   hook: 'Ce que l’on voit d’une course dépend entièrement de ce que la réalisation TV décide de montrer.',
   intro:
@@ -139,7 +139,7 @@ const F1_FR: CaseStudy = {
 };
 
 const F1_EN: CaseStudy = {
-  kicker: 'Individual project · WebDon course, HEIG-VD',
+  kicker: 'UX/UI design · Data & AI',
   title: 'F1 PitWall',
   hook: 'What we see of a race depends entirely on what the TV director decides to show.',
   intro:

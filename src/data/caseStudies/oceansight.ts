@@ -3,7 +3,7 @@ import { imagesIn, type CaseStudy } from './types';
 const os = imagesIn('oceansight');
 
 const OCEANSIGHT_FR: CaseStudy = {
-  kicker: 'HEIG-VD · ODD 14, vie aquatique',
+  kicker: 'UX/UI design · Application mobile',
   title: 'OceanSight',
   hook: 'Les gens de la mer voient les déchets. Ils ne savent pas à qui les signaler.',
   intro:
@@ -148,7 +148,7 @@ const OCEANSIGHT_FR: CaseStudy = {
 
 
 const OCEANSIGHT_EN: CaseStudy = {
-  kicker: 'HEIG-VD · SDG 14, life below water',
+  kicker: 'UX/UI design · Mobile app',
   title: 'OceanSight',
   hook: 'People at sea see the waste. They don’t know who to report it to.',
   intro:
