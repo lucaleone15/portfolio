@@ -49,8 +49,8 @@
   ctx.scale(dpr, dpr);
 
   var ROAD_L = 58, ROAD_R = W - 58; // asphalt between the kerbs (grass wide enough to show its mown stripes)
-  var KART_W = 34, KART_H = 72, KART_Y = H - 96; // the car's size on the track
-  var HIT_W = 24, HIT_H = 60; // a little forgiving: wheels brushing a cone don't count
+  var KART_W = 27, KART_H = 76, KART_Y = H - 96; // the car's size on the track (its drawing is 200 × 560)
+  var HIT_W = 22, HIT_H = 62; // a little forgiving: wheels brushing a cone don't count
 
   // The car (kept by the service worker); until it loads, a simple shape stands in
   var car = new Image();
@@ -87,11 +87,11 @@
   $('best').textContent = best ? fmt(best) : '–';
 
   var state = 'idle'; // idle → racing → crashed
-  var x, speed, distance, cones, scroll, spawnIn, steer, target, newRecord, gap;
+  var x, speed, distance, cones, travel, spawnIn, steer, target, newRecord, gap;
 
   function reset() {
     x = W / 2; target = null; steer = 0;
-    speed = 320; distance = 0; cones = []; scroll = 0; spawnIn = 0.5; newRecord = false; gap = 2;
+    speed = 320; distance = 0; cones = []; travel = 0; spawnIn = 0.5; newRecord = false; gap = 2;
   }
   reset();
 
@@ -117,7 +117,7 @@
     if (state !== 'racing') return;
     speed = Math.min(920, speed + 16 * dt); // faster every second
     distance += speed * dt * 0.1; // 10 px = 1 m
-    scroll = (scroll + speed * dt) % 40;
+    travel += speed * dt; // px the ground has moved: grass, grain and kerbs all follow it
 
     // Steering: keys, or toward the finger / mouse
     var dir = (keys.arrowleft || keys.a ? -1 : 0) + (keys.arrowright || keys.d ? 1 : 0);
@@ -155,13 +155,15 @@
   }
 
   function drawTrack() {
-    var offset = (scroll * 2) % 160; // everything on the ground moves together
+    // Each texture shifts by the distance travelled, modulo its own period: no jump when it
+    // wraps, and the ground moves exactly as fast as the cones
+    var STRIPE_PERIOD = 90 / Math.sin((35 * Math.PI) / 180); // vertical repeat of the mown stripes
 
     // Grass with mown stripes (90 px apart, rotated like the 404's pattern)
     ctx.fillStyle = GRASS;
     ctx.fillRect(0, 0, W, H);
     ctx.save();
-    ctx.translate(W / 2, H / 2 + offset);
+    ctx.translate(W / 2, H / 2 + (travel % STRIPE_PERIOD));
     ctx.rotate((-35 * Math.PI) / 180);
     ctx.fillStyle = GRASS_MOWN;
     for (var sx = -H * 1.5; sx < H * 1.5; sx += 90) ctx.fillRect(sx, -H * 1.5, 45, H * 3);
@@ -177,13 +179,13 @@
 
     // Grain over grass and asphalt
     ctx.save();
-    ctx.translate(0, offset - 160);
+    ctx.translate(0, (travel % 160) - 160);
     ctx.fillStyle = grainPattern;
     ctx.fillRect(0, 0, W, H + 160);
     ctx.restore();
 
     // Kerbs: 16 px red and white blocks, outside the white lines
-    for (var k = -KERB * 2 + (scroll % (KERB * 2)); k < H; k += KERB * 2) {
+    for (var k = -KERB * 2 + (travel % (KERB * 2)); k < H; k += KERB * 2) {
       for (var side = 0; side < 2; side++) {
         var kx = side ? ROAD_R : ROAD_L - 14;
         ctx.fillStyle = KERB_RED;
