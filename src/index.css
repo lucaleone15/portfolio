@@ -379,3 +379,49 @@
   font-variant-numeric: tabular-nums;
   user-select: none;
 }
+
+/* Easter egg, karting mode (easter/kart.ts): the kart replaces the round cursor and the
+   link outline */
+.kart-mode [data-pointer-ui] {
+  display: none !important;
+}
+
+/* Print. The home page prints a one-page profile instead (PrintSheet, rendered next to #root
+   just before printing); other pages print their content without the site's chrome, every
+   scroll-revealed block visible. */
+@media screen {
+  .print-sheet {
+    display: none;
+  }
+}
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+  html,
+  body {
+    background: #fff !important;
+  }
+  body:has(> .print-sheet) > #root {
+    display: none !important;
+  }
+  .print-sheet {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  [data-chrome],
+  [data-pointer-ui],
+  video {
+    display: none !important;
+  }
+  [style*='opacity'] {
+    opacity: 1 !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

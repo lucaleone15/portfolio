@@ -94,6 +94,7 @@ export function LanguageHint() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } }}
           exit={{ opacity: 0, y: 10, transition: { duration: 0.2, ease: [0.4, 0, 1, 1] } }}
+          data-chrome
           className="glass-bar fixed z-50 bottom-4 left-4 sm:bottom-6 sm:left-6 flex items-center gap-1 pl-4 pr-1.5 py-1.5 rounded-full text-neutral-900 dark:text-white"
         >
           <Link

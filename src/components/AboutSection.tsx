@@ -1,63 +1,16 @@
 import { ArrowUpRight01Icon, Pdf02Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
 import { motion } from 'motion/react';
-import { EDUCATION_TIMELINE, EXPERIENCE_TIMELINE, USER_INFO } from '../data/portfolioData';
+import { EDUCATION_TIMELINE, EDUCATION_TIMELINE_EN, EXPERIENCE_TIMELINE, EXPERIENCE_TIMELINE_EN, LANGUAGES, USER_INFO } from '../data/portfolioData';
 import { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
 export function AboutSection() {
   const { lang, t } = useLanguage();
 
-  const education = lang === 'fr' ? EDUCATION_TIMELINE : [
-    {
-      period: '2024 - 2027',
-      title: 'Bachelor of Science in Media Engineering',
-      institution: 'HEIG-VD',
-      location: 'Yverdon-les-Bains, Switzerland',
-      details: "Digital strategy & innovation, web development, marketing, and user interface design (UX/UI)."
-    },
-    {
-      period: '2023 - 2024',
-      title: 'Specialized Baccalaureate in Communication & Information',
-      institution: 'ERACOM',
-      location: 'Lausanne, Switzerland',
-      details: "Visual communication, interactive media, print & digital content creation, audiovisual formats."
-    },
-    {
-      period: '2020 – 2023',
-      title: 'General Culture Certificate in Communication & Information',
-      institution: "Gymnase d'Yverdon",
-      location: 'Yverdon-les-Bains, Switzerland',
-      details: ''
-    }
-  ];
-
-  const experience = lang === 'fr' ? EXPERIENCE_TIMELINE : [
-    {
-      period: 'May 2026 - Present',
-      title: 'Digital Communication & Content Creation Manager',
-      company: 'Karting de Vuiteboeuf',
-      location: 'Vuitebœuf, Vaud, Switzerland · Hybrid',
-      description: 'Brand strategy & social media (Instagram, TikTok), on-track photo/video production, and event campaigns.'
-    },
-    {
-      period: 'July 2022 (1 month)',
-      title: 'Intern',
-      company: 'Groupe AFH Automobile',
-      location: 'Yverdon-les-Bains, Switzerland · On-site',
-      description: 'Customer relations, administrative support, and commercial digital communication management.'
-    }
-  ];
-
-  const languages = lang === 'fr' ? [
-    { name: 'Français', level: 'Langue maternelle' },
-    { name: 'Anglais', level: 'Niveau C1' },
-    { name: 'Italien', level: 'Niveau B2' }
-  ] : [
-    { name: 'French', level: 'Native language' },
-    { name: 'English', level: 'C1 Level' },
-    { name: 'Italian', level: 'B2 Level' }
-  ];
+  const education = lang === 'fr' ? EDUCATION_TIMELINE : EDUCATION_TIMELINE_EN;
+  const experience = lang === 'fr' ? EXPERIENCE_TIMELINE : EXPERIENCE_TIMELINE_EN;
+  const languages = LANGUAGES[lang];
 
   const passions = lang === 'fr'
     ? ['Automobile', 'Sport', 'Voyage', 'Technologies']

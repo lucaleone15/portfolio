@@ -258,6 +258,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               Follows the pointer 1:1 (a cursor must never lag); grows in from a dot like the
               round cursor it takes over from. Mouse/trackpad only. */}
           <motion.div
+            data-pointer-ui
             className="pointer-events-none absolute left-0 top-0 z-50 hidden [@media(hover:hover)_and_(pointer:fine)]:block"
             style={{ x: pointerX, y: pointerY }}
             aria-hidden="true"
