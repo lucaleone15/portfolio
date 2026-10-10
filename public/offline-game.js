@@ -1,7 +1,8 @@
 /*
  * "Red flag": the game of the offline page (public/offline.html, served by public/sw.js).
- * A Formula 1 car seen from above on a track that scrolls by, faster and faster; dodge the
- * cones. The car is a photo, cut out: Ferrari 641 (1990) at MoMA by Tony Hisgett, CC BY 2.0.
+ * A Formula 1 car seen from above (public/images/f1-car.svg) on a track that scrolls by,
+ * faster and faster; dodge the cones. Rows of cones leave one gap, which wanders across the
+ * track: always reachable, never for long in the same place.
  * Arrow keys (or A/D), a finger or the mouse steer; Space or a tap starts. Best distance
  * kept in this browser. When the connection comes back, a banner offers to resume.
  * Plain script, no dependency: there is no network.
@@ -53,7 +54,7 @@
 
   // The car (kept by the service worker); until it loads, a simple shape stands in
   var car = new Image();
-  car.src = '/offline-car.webp';
+  car.src = '/images/f1-car.svg';
 
   // Textures, drawn once: asphalt grain and grass blades
   function texture(w, h, base, specks, size, alpha) {
@@ -80,11 +81,11 @@
   $('best').textContent = best ? fmt(best) : '–';
 
   var state = 'idle'; // idle → racing → crashed
-  var x, speed, distance, cones, scroll, spawnIn, steer, target, newRecord;
+  var x, speed, distance, cones, scroll, spawnIn, steer, target, newRecord, gap;
 
   function reset() {
     x = W / 2; target = null; steer = 0;
-    speed = 220; distance = 0; cones = []; scroll = 0; spawnIn = 0.6; newRecord = false;
+    speed = 320; distance = 0; cones = []; scroll = 0; spawnIn = 0.5; newRecord = false; gap = 2;
   }
   reset();
 
@@ -108,7 +109,7 @@
 
   function update(dt) {
     if (state !== 'racing') return;
-    speed = Math.min(620, speed + 9 * dt); // a little faster every second
+    speed = Math.min(920, speed + 16 * dt); // faster every second
     distance += speed * dt * 0.1; // 10 px = 1 m
     scroll = (scroll + speed * dt) % 40;
 
@@ -117,21 +118,21 @@
     if (dir) target = null;
     if (target !== null) dir = Math.max(-1, Math.min(1, (target - x) / 40));
     steer += (dir - steer) * Math.min(1, dt * 10);
-    x = Math.max(ROAD_L + KART_W / 2 + 4, Math.min(ROAD_R - KART_W / 2 - 4, x + steer * 360 * dt));
+    x = Math.max(ROAD_L + KART_W / 2 + 4, Math.min(ROAD_R - KART_W / 2 - 4, x + steer * 400 * dt));
 
-    // Cones, in small groups; never a full wall
+    // Rows of cones with one gap; the gap moves one or two lanes from row to row (reachable
+    // in time even at full speed), and rows get fuller and closer as the distance grows
     spawnIn -= dt;
     if (spawnIn <= 0) {
-      var lanes = [0, 1, 2, 3, 4];
-      var gap = Math.floor(Math.random() * 5);
-      var count = 1 + Math.floor(Math.random() * Math.min(3, 1 + distance / 400));
-      for (var i = 0; i < count; i++) {
-        var lane = lanes[Math.floor(Math.random() * lanes.length)];
+      var shift = Math.random() < 0.5 ? 1 : 2;
+      gap = Math.max(0, Math.min(4, gap + (Math.random() < 0.5 ? -shift : shift)));
+      var full = Math.random() < Math.min(0.85, 0.25 + distance / 1500); // every lane but the gap
+      for (var lane = 0; lane < 5; lane++) {
         if (lane === gap) continue;
-        lanes.splice(lanes.indexOf(lane), 1);
-        cones.push({ x: ROAD_L + 22 + lane * ((ROAD_R - ROAD_L - 44) / 4), y: -30 });
+        if (!full && Math.random() < 0.45) continue;
+        cones.push({ x: ROAD_L + 30 + lane * ((ROAD_R - ROAD_L - 60) / 4), y: -30 });
       }
-      spawnIn = Math.max(0.45, 1.1 - distance / 2500);
+      spawnIn = Math.max(0.36, 0.85 - distance / 3000);
     }
     for (var j = cones.length - 1; j >= 0; j--) {
       var c = cones[j];
