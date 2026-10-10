@@ -1,6 +1,7 @@
 /*
  * "Red flag": the game of the offline page (public/offline.html, served by public/sw.js).
- * A kart seen from above on a track that scrolls by, faster and faster; dodge the cones.
+ * A Formula 1 car seen from above on a track that scrolls by, faster and faster; dodge the
+ * cones. The car is a photo, cut out: Ferrari 641 (1990) at MoMA by Tony Hisgett, CC BY 2.0.
  * Arrow keys (or A/D), a finger or the mouse steer; Space or a tap starts. Best distance
  * kept in this browser. When the connection comes back, a banner offers to resume.
  * Plain script, no dependency: there is no network.
@@ -11,12 +12,12 @@
     ? {
         lang: 'en', flag: 'Red flag', title: 'Race neutralised', lead: 'No connection right now. While the network comes back, fancy a lap? Dodge the cones.',
         back: 'The connection is back.', resume: 'Resume the race', best: 'Best', hint: '← → or drag your finger · Space or tap to start',
-        start: 'Tap or press Space', crash: 'Into the cones!', again: 'Tap or Space to go again', record: 'New record!', aria: 'Karting mini-game', page: 'Red flag · Luca Leone',
+        start: 'Tap or press Space', crash: 'Into the cones!', again: 'Tap or Space to go again', record: 'New record!', aria: 'Racing mini-game', page: 'Red flag · Luca Leone',
       }
     : {
         lang: 'fr', flag: 'Drapeau rouge', title: 'Course neutralisée', lead: 'Pas de connexion pour le moment. En attendant le retour du réseau, un petit tour de piste ? Évitez les cônes.',
         back: 'La connexion est revenue.', resume: 'Reprendre la course', best: 'Record', hint: '← → ou glisser le doigt · Espace ou toucher pour démarrer',
-        start: 'Touchez ou appuyez sur Espace', crash: 'Dans les cônes !', again: 'Touchez ou Espace pour repartir', record: 'Nouveau record !', aria: 'Mini-jeu de karting', page: 'Drapeau rouge · Luca Leone',
+        start: 'Touchez ou appuyez sur Espace', crash: 'Dans les cônes !', again: 'Touchez ou Espace pour repartir', record: 'Nouveau record !', aria: 'Mini-jeu de course', page: 'Drapeau rouge · Luca Leone',
       };
   var $ = function (id) { return document.getElementById(id); };
   document.documentElement.lang = T.lang;
@@ -47,7 +48,29 @@
   ctx.scale(dpr, dpr);
 
   var ROAD_L = 40, ROAD_R = W - 40; // asphalt between the kerbs
-  var KART_W = 30, KART_H = 48, KART_Y = H - 90;
+  var KART_W = 34, KART_H = 72, KART_Y = H - 96; // the car's size on the track
+  var HIT_W = 24, HIT_H = 60; // a little forgiving: wheels brushing a cone don't count
+
+  // The car (kept by the service worker); until it loads, a simple shape stands in
+  var car = new Image();
+  car.src = '/offline-car.webp';
+
+  // Textures, drawn once: asphalt grain and grass blades
+  function texture(w, h, base, specks, size, alpha) {
+    var c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    var g = c.getContext('2d');
+    g.fillStyle = base; g.fillRect(0, 0, w, h);
+    for (var i = 0; i < w * h / 6; i++) {
+      g.fillStyle = specks[i % specks.length];
+      g.globalAlpha = Math.random() * alpha;
+      g.fillRect(Math.random() * w, Math.random() * h, size, size * (1 + Math.random()));
+    }
+    g.globalAlpha = 1;
+    return c;
+  }
+  var asphalt = texture(W, 80, '#2b2b30', ['#3a3a40', '#1d1d21', '#47474d'], 1.4, 0.7);
+  var grass = texture(40, 80, '#3e7a3a', ['#4d8a45', '#326730', '#5a9850'], 1.6, 0.8);
   var BEST_KEY = 'offline-kart-best';
 
   var readBest = function () { try { return Number(localStorage.getItem(BEST_KEY)) || 0; } catch (e) { return 0; } };
@@ -114,7 +137,7 @@
       var c = cones[j];
       c.y += speed * dt;
       if (c.y > H + 30) { cones.splice(j, 1); continue; }
-      if (Math.abs(c.x - x) < KART_W / 2 + 9 && Math.abs(c.y - KART_Y) < KART_H / 2 + 8) crash();
+      if (Math.abs(c.x - x) < HIT_W / 2 + 8 && Math.abs(c.y - KART_Y) < HIT_H / 2 + 8) crash();
     }
     $('distance').textContent = fmt(distance);
   }
@@ -125,25 +148,32 @@
   }
 
   function drawTrack() {
-    ctx.fillStyle = '#2c2c31';
-    ctx.fillRect(0, 0, W, H);
-    // Kerbs: red and white blocks scrolling down
-    for (var y = -40 + scroll; y < H; y += 40) {
+    // Asphalt and grass, textured, scrolling with the race
+    for (var y = -80 + (scroll * 2) % 80; y < H; y += 80) {
+      ctx.drawImage(asphalt, 0, y);
+      ctx.drawImage(grass, 0, y, ROAD_L - 14, 80);
+      ctx.drawImage(grass, ROAD_R + 14, y, W - ROAD_R - 14, 80);
+    }
+    // Kerbs: red and white blocks
+    for (var k = -40 + scroll; k < H; k += 40) {
       for (var side = 0; side < 2; side++) {
         var kx = side ? ROAD_R : ROAD_L - 14;
-        ctx.fillStyle = '#e10600';
-        ctx.fillRect(kx, y, 14, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(kx, y + 20, 14, 20);
+        ctx.fillStyle = '#d7141a';
+        ctx.fillRect(kx, k, 14, 20);
+        ctx.fillStyle = '#f4f4f4';
+        ctx.fillRect(kx, k + 20, 14, 20);
       }
     }
-    // Grass beyond the kerbs
-    ctx.fillStyle = '#2f6b3a';
-    ctx.fillRect(0, 0, ROAD_L - 14, H);
-    ctx.fillRect(ROAD_R + 14, 0, W - ROAD_R - 14, H);
-    // Centre line
-    ctx.fillStyle = 'rgba(255,255,255,0.35)';
-    for (var yy = -40 + scroll; yy < H; yy += 40) ctx.fillRect(W / 2 - 2, yy, 4, 20);
+    // White edge lines inside the kerbs, and the rubbered racing line
+    ctx.fillStyle = 'rgba(255,255,255,0.85)';
+    ctx.fillRect(ROAD_L + 4, 0, 3, H);
+    ctx.fillRect(ROAD_R - 7, 0, 3, H);
+    var rubber = ctx.createLinearGradient(W / 2 - 60, 0, W / 2 + 60, 0);
+    rubber.addColorStop(0, 'rgba(0,0,0,0)');
+    rubber.addColorStop(0.5, 'rgba(0,0,0,0.22)');
+    rubber.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = rubber;
+    ctx.fillRect(W / 2 - 60, 0, 120, H);
   }
 
   function drawCone(c) {
@@ -158,25 +188,17 @@
   function drawKart() {
     ctx.save();
     ctx.translate(x, KART_Y);
-    ctx.rotate(steer * 0.18);
-    ctx.fillStyle = '#111';
-    ctx.fillRect(-KART_W / 2 - 4, -KART_H / 2 + 4, 8, 12); // front tyres
-    ctx.fillRect(KART_W / 2 - 4, -KART_H / 2 + 4, 8, 12);
-    ctx.fillRect(-KART_W / 2 - 5, KART_H / 2 - 16, 10, 14); // rear tyres
-    ctx.fillRect(KART_W / 2 - 5, KART_H / 2 - 16, 10, 14);
-    ctx.fillStyle = '#c50e36';
-    ctx.beginPath();
-    ctx.moveTo(-KART_W / 2 + 4, KART_H / 2 - 4);
-    ctx.lineTo(KART_W / 2 - 4, KART_H / 2 - 4);
-    ctx.lineTo(KART_W / 2 - 6, -KART_H / 2 + 6);
-    ctx.lineTo(0, -KART_H / 2);
-    ctx.lineTo(-KART_W / 2 + 6, -KART_H / 2 + 6);
-    ctx.closePath();
-    ctx.fill();
-    ctx.fillStyle = '#fff';
-    ctx.beginPath(); ctx.arc(0, 4, 7, 0, Math.PI * 2); ctx.fill(); // helmet
-    ctx.fillStyle = '#111';
-    ctx.fillRect(-5, -1, 10, 4); // visor
+    ctx.rotate(steer * 0.14);
+    if (car.complete && car.naturalWidth) {
+      ctx.shadowColor = 'rgba(0,0,0,0.5)';
+      ctx.shadowBlur = 10;
+      ctx.shadowOffsetX = 4;
+      ctx.shadowOffsetY = 6;
+      ctx.drawImage(car, -KART_W / 2, -KART_H / 2, KART_W, KART_H);
+    } else {
+      ctx.fillStyle = '#c50e36';
+      ctx.fillRect(-KART_W / 4, -KART_H / 2, KART_W / 2, KART_H);
+    }
     ctx.restore();
   }
 
