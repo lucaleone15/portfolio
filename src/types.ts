@@ -6,7 +6,8 @@ export interface ProjectLogo {
   srcDark: string;
   width: number;
   height: number;
-  /** Height in px on a project card, set per logo so that wide and compact logos weigh the same */
+  /** Height in px on a project card: the logo fitted in a 150 × 40 px frame, so compact and wide
+      logos take the same room */
   display: number;
 }
 

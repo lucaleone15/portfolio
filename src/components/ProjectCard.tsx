@@ -151,7 +151,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0 flex-1">
               {/* The brand's logo in place of the name (the name stays in the DOM) */}
-              <h3 className="flex h-8 sm:h-9 items-center font-sans text-xl sm:text-2xl font-bold text-neutral-900 dark:text-white tracking-tight truncate leading-snug uppercase">
+              <h3 className="flex min-h-9 sm:min-h-10 items-center font-sans text-xl sm:text-2xl font-bold text-neutral-900 dark:text-white tracking-tight truncate leading-snug uppercase">
                 <ProjectLogo project={project} />
               </h3>
               {/* Date directly below title with project's own accent */}
