@@ -37,7 +37,12 @@
   window.addEventListener('online', showBack);
   window.addEventListener('offline', showBack);
   showBack();
-  $('resume').addEventListener('click', function () { location.reload(); });
+  // Reload the page the visitor wanted (the service worker shows this game at its address);
+  // opened directly, the game has no page behind it: back to the portfolio's home
+  $('resume').addEventListener('click', function () {
+    if (/^\/offline(\.html)?$/.test(location.pathname)) location.href = en ? '/en/' : '/';
+    else location.reload();
+  });
 
   var canvas = $('track');
   canvas.setAttribute('aria-label', T.aria);
