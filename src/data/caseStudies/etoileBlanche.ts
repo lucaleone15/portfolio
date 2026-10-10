@@ -4,7 +4,7 @@ const img = imagesIn('etoile-blanche');
 const DIR = '/images/case/etoile-blanche/';
 
 const ETOILE_FR: CaseStudy = {
-  kicker: 'Agence Zest · Restaurant L’Étoile Blanche, Lausanne',
+  kicker: 'Communication digitale · Print & réseaux sociaux',
   title: 'L’Étoile Blanche',
   hook: 'Un restaurant repris par une nouvelle direction, et une image à réinventer.',
   intro:
@@ -163,7 +163,7 @@ const ETOILE_FR: CaseStudy = {
 };
 
 const ETOILE_EN: CaseStudy = {
-  kicker: 'Zest agency · L’Étoile Blanche restaurant, Lausanne',
+  kicker: 'Digital communication · Print & social media',
   title: 'L’Étoile Blanche',
   hook: 'A restaurant under new management, and an image to reinvent.',
   intro:

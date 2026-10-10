@@ -14,7 +14,7 @@ const HUG_TEAM = [
 ];
 
 const HUG_FR: CaseStudy = {
-  kicker: 'Hôpitaux universitaires de Genève · Don du sang',
+  kicker: 'Développement web · Don du sang',
   title: 'Les HUG mènent l’enquête',
   hook: 'Sur dix inscrits à une collecte de sang, trois repartaient sans avoir pu donner.',
   intro: 'Nous avons transformé le questionnaire d’éligibilité en enquête policière, pour que chacun sache avant de s’inscrire s’il peut donner.',
@@ -246,7 +246,7 @@ const HUG_TEAM_EN = [
 ];
 
 const HUG_EN: CaseStudy = {
-  kicker: 'Geneva University Hospitals · Blood donation',
+  kicker: 'Web development · Blood donation',
   title: 'The HUG are investigating',
   hook: 'Three in ten people booked for a blood drive were leaving without being able to give.',
   intro: 'We turned the eligibility questionnaire into a detective investigation, so that everyone knows whether they can give before they book.',

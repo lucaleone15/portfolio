@@ -3,7 +3,7 @@ import { imagesIn, type CaseStudy } from './types';
 const img = imagesIn('karting');
 
 const KARTING_FR: CaseStudy = {
-  kicker: 'Karting de Vuiteboeuf · Community management',
+  kicker: 'Communication digitale · Photo & vidéo',
   title: 'Karting de Vuiteboeuf',
   hook: 'Faire ressentir la vitesse d’un circuit à travers l’écran d’un téléphone.',
   intro:
@@ -162,7 +162,7 @@ const KARTING_FR: CaseStudy = {
 };
 
 const KARTING_EN: CaseStudy = {
-  kicker: 'Karting de Vuiteboeuf · Community management',
+  kicker: 'Digital communication · Photo & video',
   title: 'Karting de Vuiteboeuf',
   hook: 'Making people feel the speed of a race track through a phone screen.',
   intro:
