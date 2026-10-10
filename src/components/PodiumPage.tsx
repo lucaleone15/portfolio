@@ -14,7 +14,7 @@ interface Entry {
   date: string;
 }
 
-export const formatStart = (ms: number, lang: 'fr' | 'en') => {
+const formatStart = (ms: number, lang: 'fr' | 'en') => {
   const s = (ms / 1000).toFixed(3);
   return `${lang === 'fr' ? s.replace('.', ',') : s} s`;
 };

@@ -286,22 +286,18 @@ function blockImages(block: CaseBlock): string[] {
 
 /**
  * Every image a project page shows, as site paths: the cover first, then the case study's
- * images in reading order (or the project's own gallery when it has no case study).
+ * images in reading order.
  */
 export function projectImagePaths(lang: Language, slug: string): string[] {
   const project = projectsFor(lang).find((p) => p.id === slug);
   if (!project) return [];
   const study = getCaseStudy(slug, lang);
-  const paths = study
-    ? [
-        study.hero?.src ?? project.imageUrl,
-        ...study.sections.flatMap((section) =>
-          section.content.flatMap((item) => (typeof item === 'string' ? [] : blockImages(item))),
-        ),
-      ]
-    : project.images?.length
-      ? project.images
-      : [project.imageUrl];
+  const paths = [
+    study?.hero?.src ?? project.imageUrl,
+    ...(study?.sections ?? []).flatMap((section) =>
+      section.content.flatMap((item) => (typeof item === 'string' ? [] : blockImages(item))),
+    ),
+  ];
   return [...new Set(paths)];
 }
 
