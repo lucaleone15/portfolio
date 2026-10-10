@@ -24,21 +24,39 @@ function OffTrack({ fr }: { fr: boolean }) {
   return (
     <svg
       viewBox="0 0 640 460"
-      className="w-full h-auto rounded-[28px] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.55)]"
+      className="block w-full h-auto"
       role="img"
       aria-label={fr ? 'Vue aérienne d’une Formule 1 sortie de piste, arrêtée dans le bac à gravier' : 'Aerial view of a Formula 1 car gone off track, stopped in the gravel trap'}
     >
       <defs>
-        <clipPath id="ot-frame">
-          <rect width="640" height="460" rx="28" />
-        </clipPath>
+        {/* Soft edges on every side: two masks, one fading left and right, one top and bottom,
+            nested, so the scene dissolves into the page while the middle, car included,
+            stays fully visible */}
+        <linearGradient id="ot-fade-x" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" stopColor="#fff" stopOpacity="0" />
+          <stop offset="0.22" stopColor="#fff" />
+          <stop offset="0.8" stopColor="#fff" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
+        </linearGradient>
+        <linearGradient id="ot-fade-y" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stopColor="#fff" stopOpacity="0" />
+          <stop offset="0.24" stopColor="#fff" />
+          <stop offset="0.78" stopColor="#fff" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
+        </linearGradient>
+        <mask id="ot-mask-x" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="460">
+          <rect width="640" height="460" fill="url(#ot-fade-x)" />
+        </mask>
+        <mask id="ot-mask-y" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="460">
+          <rect width="640" height="460" fill="url(#ot-fade-y)" />
+        </mask>
         {/* Mown grass: wide diagonal stripes */}
         <pattern id="ot-mown" width="90" height="90" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
           <rect width="90" height="90" fill="#3f7d3a" />
           <rect width="45" height="90" fill="#478a41" />
         </pattern>
         {/* Fine grain on grass and asphalt; small stones on the gravel */}
-        <filter id="ot-grain" filterUnits="userSpaceOnUse" x="0" y="0" width="640" height="460">
+        <filter id="ot-grain" filterUnits="userSpaceOnUse" x="-160" y="-160" width="960" height="760">
           <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3" result="n" />
           <feColorMatrix in="n" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.35 0" result="dots" />
           <feComposite in="dots" in2="SourceGraphic" operator="in" result="grain" />
@@ -47,7 +65,7 @@ function OffTrack({ fr }: { fr: boolean }) {
             <feMergeNode in="grain" />
           </feMerge>
         </filter>
-        <filter id="ot-stones" filterUnits="userSpaceOnUse" x="0" y="0" width="640" height="460">
+        <filter id="ot-stones" filterUnits="userSpaceOnUse" x="-160" y="-160" width="960" height="760">
           <feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="1" seed="11" result="n" />
           <feColorMatrix in="n" values="0 0 0 0 0.42  0 0 0 0 0.36  0 0 0 0 0.27  0 0 0 2.2 -1.1" result="dots" />
           <feComposite in="dots" in2="SourceGraphic" operator="in" result="stones" />
@@ -68,12 +86,15 @@ function OffTrack({ fr }: { fr: boolean }) {
         </radialGradient>
       </defs>
 
-      <g clipPath="url(#ot-frame)">
+      <g mask="url(#ot-mask-y)">
+      <g mask="url(#ot-mask-x)">
+      {/* The whole ground, shifted so the car sits away from the faded edges */}
+      <g transform="translate(80 70)">
         {/* Grass */}
-        <rect width="640" height="460" fill="url(#ot-mown)" filter="url(#ot-grain)" />
+        <rect x="-160" y="-160" width="960" height="760" fill="url(#ot-mown)" filter="url(#ot-grain)" />
 
         {/* Gravel trap on the outside of the bend */}
-        <path d="M -20 -20 H 520 C 522 40 470 72 365 74 C 232 76 98 160 98 300 C 98 352 72 398 -20 420 Z" fill="#d9caa4" filter="url(#ot-stones)" />
+        <path d="M -160 -160 H 520 C 522 40 470 72 365 74 C 232 76 98 160 98 300 C 98 352 72 398 -160 440 Z" fill="#d9caa4" filter="url(#ot-stones)" />
 
         {/* Tyre wall */}
         <g>
@@ -118,7 +139,9 @@ function OffTrack({ fr }: { fr: boolean }) {
           </g>
         </motion.g>
 
+      </g>
         <rect width="640" height="460" fill="url(#ot-light)" />
+      </g>
       </g>
     </svg>
   );
@@ -157,7 +180,11 @@ export function NotFound() {
             </Link>
           </div>
         </div>
-        <div className="max-w-md lg:max-w-none w-full mx-auto">
+        {/* No card: the scene fades into the page on every side, and bleeds off the right edge
+            on large screens, like a view through the page rather than a pasted picture */}
+        <div
+          className="-mx-6 sm:-mx-10 lg:mx-0 lg:-mr-[max(2.5rem,calc((100vw-80rem)/2+2.5rem))] lg:scale-110 lg:origin-left"
+        >
           <OffTrack fr={fr} />
         </div>
       </div>
