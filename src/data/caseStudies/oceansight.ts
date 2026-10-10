@@ -68,7 +68,7 @@ const OCEANSIGHT_FR: CaseStudy = {
           steps: [
             {
               text: 'Rejoindre la communauté : un compte suffit pour signaler et participer.',
-              image: os('app-1-accueil', 1600, 1200, 'Écran d’accueil « Join us » sur une photo de déchets plastiques en mer'),
+              image: os('app-1-accueil-2', 1600, 1200, 'Écran d’accueil « Join us » sur une photo de déchets plastiques en mer'),
             },
             {
               text: 'Trouver une mission sur la carte ou dans une liste, filtrée par région, type de déchet ou difficulté.',
@@ -213,7 +213,7 @@ const OCEANSIGHT_EN: CaseStudy = {
           steps: [
             {
               text: 'Join the community: one account is enough to report and take part.',
-              image: os('app-1-accueil', 1600, 1200, '“Join us” welcome screen over a photo of plastic waste at sea'),
+              image: os('app-1-accueil-2', 1600, 1200, '“Join us” welcome screen over a photo of plastic waste at sea'),
             },
             {
               text: 'Find a mission on the map or in a list, filtered by region, type of waste or difficulty.',
