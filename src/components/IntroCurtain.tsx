@@ -4,7 +4,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { NeonBackdrop } from './NeonBackdrop';
 
 /** How long the curtain stays down before lifting (seconds) */
-export const INTRO_HOLD = 1.7;
+const INTRO_HOLD = 1.7;
 
 // The curtain plays once per page load. Components that mount later (e.g. the Hero when
 // coming back from a project page) must not wait for it: they ask introPending().

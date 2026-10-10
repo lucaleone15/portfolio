@@ -9,7 +9,7 @@ import { useLanguage } from '../context/LanguageContext';
  * (cmdk) is downloaded the first time it opens. Keyboard-opened, so no open animation.
  */
 
-export const OPEN_COMMAND_PALETTE = 'open-command-palette';
+const OPEN_COMMAND_PALETTE = 'open-command-palette';
 
 const CommandPaletteDialog = lazy(() => import('./CommandPaletteDialog'));
 

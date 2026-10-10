@@ -5,7 +5,7 @@
  */
 export const smallImage = (src: string) => src.replace('/images/', '/images/sm/');
 
-export const mediumImage = (src: string) => src.replace('/images/', '/images/md/');
+const mediumImage = (src: string) => src.replace('/images/', '/images/md/');
 
 /** srcset offering 640 / 1280 px variants and the full image; the browser picks per screen */
 export const imageSrcSet = (src: string) => `${smallImage(src)} 640w, ${mediumImage(src)} 1280w, ${src} 1920w`;

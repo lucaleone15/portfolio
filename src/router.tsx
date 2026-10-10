@@ -80,7 +80,7 @@ export function alternatePath(route: Route, lang: Language): string {
   return pathFor({ ...route, lang } as Route);
 }
 
-export function parsePath(pathname: string): Route {
+function parsePath(pathname: string): Route {
   const clean = pathname.replace(/\/+$/, '') || '/';
   const isEn = clean === '/en' || clean.startsWith('/en/');
   const lang: Language = isEn ? 'en' : 'fr';

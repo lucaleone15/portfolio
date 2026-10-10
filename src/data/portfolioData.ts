@@ -24,7 +24,6 @@ export interface UnifiedProjectDefinition {
   number: string;
   year: string;
   imageUrl: string;
-  images: string[];
   stack: string[];
   /** English labels of `stack` (same order) */
   stackEn: string[];
@@ -38,38 +37,24 @@ export interface UnifiedProjectDefinition {
       Its first frame is the cover (`imageUrl`, same framing and colours): no shift when it starts */
   video?: string;
   fr: {
-    title: string;
     subtitle: string;
-    client: string;
     category: string;
-    role: string;
-    team?: string;
     /** A few words written over the card image: the problem or the stake */
     hook?: string;
     /** My role, in a few words, on the card badge ("Projet solo" when I worked alone) */
     badge?: string;
     summary: string;
     overview: string;
-    challenges: string[];
-    solutions: string[];
-    metrics: { label: string; value: string }[];
   };
   en: {
-    title: string;
     subtitle: string;
-    client: string;
     category: string;
-    role: string;
-    team?: string;
     /** A few words written over the card image: the problem or the stake */
     hook?: string;
     /** My role, in a few words, on the card badge ("Projet solo" when I worked alone) */
     badge?: string;
     summary: string;
     overview: string;
-    challenges: string[];
-    solutions: string[];
-    metrics: { label: string; value: string }[];
   };
 }
 
@@ -112,15 +97,6 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     number: '01',
     year: '2026',
     imageUrl: '/images/hug-apercu.webp',
-    images: [
-      '/images/hug-apercu.webp',
-      '/images/HUG-02.webp',
-      '/images/HUG-03.webp',
-      '/images/HUG-04.webp',
-      '/images/HUG-05.webp',
-      '/images/HUG-06.webp',
-      '/images/HUG-07.webp'
-    ],
     stack: [
       'Laravel & Vue.js',
       'UI/UX Design',
@@ -133,66 +109,20 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     logo: { src: '/images/logos/hug.webp', srcDark: '/images/logos/hug-dark.webp', width: 705, height: 160, display: 34 },
     video: '/videos/hug-dive.mp4',
     fr: {
-      title: 'HUG',
       subtitle: 'Campagne digitale & plateforme web',
-      client: 'Hôpitaux universitaires de Genève · Projet académique',
       category: 'Développement web',
-      role: 'Conception 360° (UX/UI, Dév & Com)',
-      team: 'Marc Bridy, Romain Blanchard, Étienne Bergeon, Liliana Kolmakova, Christophe Cunha et Aissya M’Ghirbi.',
       hook: '3 inscrits sur 10 repartaient sans donner.',
       badge: 'Développeur full-stack',
       summary: 'Conception d’une campagne de communication et d’une plateforme digitale gamifiée pour dynamiser les collectes de sang au sein des entreprises partenaires des HUG.',
       overview: 'Projet 360° réalisé dans le cadre d’un projet académique pour les Hôpitaux universitaires de Genève. Sangsationnel transforme le don du sang en une enquête interactive afin de rendre la participation plus engageante. Le projet couvre l’ensemble de l’expérience : conception UX/UI, identité et direction artistique, plateforme web full-stack, contenus pour les réseaux sociaux, affiches, bannières intranet et supports promotionnels. La plateforme permet notamment aux collaborateurs de créer leur profil, de passer un quiz d’éligibilité, d’accéder aux informations de leur collecte et de suivre leur impact. Un dashboard administrateur permet aux entreprises de suivre les statistiques de leurs campagnes.',
-      challenges: [
-        'Dynamiser les collectes de sang au sein des entreprises partenaires et favoriser la participation.',
-        'Transformer un sujet institutionnel en une expérience de communication engageante et mémorable.',
-        'Décliner un même concept sur différents supports tout en conservant une identité visuelle cohérente.',
-        'Concevoir une expérience digitale complète, de l’interface utilisateur à l’administration des campagnes.'
-      ],
-      solutions: [
-        'Création d’un univers d’investigation dans lequel chaque participant devient un agent et doit établir son profil avant de rejoindre une mission.',
-        'Conception d’une plateforme web co-brandée adaptée à chaque entreprise partenaire, avec couleurs, logos et informations personnalisées.',
-        'Développement full-stack avec Laravel, Vue.js et MySQL, incluant le parcours utilisateur et le dashboard administrateur.',
-        'Création de contenus de communication pour les réseaux sociaux, affiches, bannières intranet et supports promotionnels.',
-        'Mise en place d’un système de reconnaissance avec un label automatique et un trophée annuel récompensant l’engagement des entreprises.'
-      ],
-      metrics: [
-        { label: 'Type', value: 'Projet 360°' },
-        { label: 'Digital', value: 'Web Full-Stack' },
-        { label: 'Communication', value: 'Print & Social Media' },
-        { label: 'Évaluation', value: '6 / 6' }
-      ]
     },
     en: {
-      title: 'HUG',
       subtitle: 'Digital campaign & web platform',
-      client: 'Geneva University Hospitals · Academic project',
       category: 'Web development',
-      role: '360° Lead (UX/UI, Dev & Com)',
-      team: 'Marc Bridy, Romain Blanchard, Étienne Bergeon, Liliana Kolmakova, Christophe Cunha and Aissya M’Ghirbi.',
       hook: '3 in 10 donors left without giving.',
       badge: 'Full-stack developer',
       summary: 'Design of a communication campaign and gamified digital platform to increase blood donation participation within partner companies of the Geneva University Hospitals.',
       overview: 'A 360° academic project developed for the Geneva University Hospitals. Sangsationnel transforms blood donation into an interactive investigation to make participation more engaging. The project covers the entire experience: UX/UI design, visual identity and art direction, a full-stack web platform, social media content, posters, intranet banners and promotional materials. The platform allows employees to create their profile, complete an eligibility quiz, access information about their company’s blood drive and track their impact. An administrative dashboard allows companies to monitor campaign statistics.',
-      challenges: [
-        'Increase participation in blood drives within partner companies.',
-        'Transform an institutional topic into an engaging and memorable communication experience.',
-        'Adapt the same concept across multiple communication channels while maintaining a consistent visual identity.',
-        'Design a complete digital experience, from the user interface to campaign administration.'
-      ],
-      solutions: [
-        'Creation of an investigation universe in which each participant becomes an agent and establishes their profile before joining a mission.',
-        'Design of a co-branded web experience adapted to each partner company, with personalized colors, logos and information.',
-        'Full-stack development using Laravel, Vue.js and MySQL, including the user journey and administrative dashboard.',
-        'Creation of communication content for social media, posters, intranet banners and promotional materials.',
-        'Implementation of a recognition system combining an automatic label and an annual trophy rewarding company engagement.'
-      ],
-      metrics: [
-        { label: 'Type', value: '360° Project' },
-        { label: 'Digital', value: 'Full-Stack Web' },
-        { label: 'Communication', value: 'Print & Social Media' },
-        { label: 'Evaluation', value: '6 / 6' }
-      ]
     }
   },
   {
@@ -202,14 +132,6 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     number: '02',
     year: '2026',
     imageUrl: '/images/karting-vuiteboeuf-apercu.webp',
-    images: [
-      '/images/karting-vuiteboeuf-apercu.webp',
-      '/images/KV-03.webp',
-      '/images/KV-04.webp',
-      '/images/KV-05.webp',
-      '/images/KV-06.webp',
-      '/images/KV-07.webp'
-    ],
     stack: [
       'Stratégie Social Media',
       'Instagram & TikTok',
@@ -223,58 +145,20 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     logo: { src: '/images/logos/karting-vuiteboeuf.webp', srcDark: '/images/logos/karting-vuiteboeuf-dark.webp', width: 709, height: 160, display: 34 },
     video: '/videos/karting-vuiteboeuf-dive.mp4',
     fr: {
-      title: 'KARTING VUITEBOEUF',
       subtitle: 'Communication digitale & création de contenus',
-      client: 'Karting de Vuiteboeuf',
       category: 'Communication digitale',
-      role: 'Responsable communication digitale',
       hook: 'De la piste à 329’000 vues.',
       badge: 'Community manager',
       summary: 'Développement de la présence digitale du Karting de Vuiteboeuf à travers la création de contenus, la gestion des réseaux sociaux et la promotion des offres et événements.',
       overview: "Accompagnement du Karting de Vuiteboeuf dans le développement de son image et de sa présence en ligne. De la conception à la publication, je prends en charge la création de contenus photo et vidéo, l'animation d'Instagram et TikTok ainsi que la communication autour des offres, événements, compétitions et activités du circuit.",
-      challenges: [
-        'Moderniser et dynamiser la présence du karting sur les réseaux sociaux.',
-        'Créer des contenus capables de transmettre les sensations et l’expérience vécue sur le circuit.',
-        'Communiquer efficacement sur les offres, événements, compétitions et activités auprès des publics loisirs et compétition.'
-      ],
-      solutions: [
-        'Production de contenus photo et vidéo directement sur le circuit, de la captation à la publication.',
-        'Création de formats adaptés à Instagram et TikTok : Reels, vidéos courtes, stories, carrousels et visuels.',
-        'Mise en place de contenus récurrents autour des courses, résultats, meilleurs chronos, offres et activités du karting.'
-      ],
-      metrics: [
-        { label: 'Plateformes', value: 'Instagram & TikTok' },
-        { label: 'Formats', value: 'Photo, Vidéo & Reels' },
-        { label: 'Communication', value: 'Web & Réseaux sociaux' },
-        { label: 'Secteur', value: 'Sport & Loisirs' }
-      ]
     },
     en: {
-      title: 'KARTING VUITEBOEUF',
       subtitle: 'Digital communication & content creation',
-      client: 'Karting de Vuiteboeuf',
       category: 'Digital communication',
-      role: 'Digital Communications Manager',
       hook: 'From the track to 329,000 views.',
       badge: 'Community manager',
       summary: "Developing Karting de Vuiteboeuf's digital presence through content creation, social media management and the promotion of offers and events.",
       overview: 'Supporting Karting de Vuiteboeuf in developing its digital image and online presence. From concept to publication, I manage photo and video content creation, Instagram and TikTok activity, as well as communication around offers, events, competitions and activities at the circuit.',
-      challenges: [
-        'Modernize and strengthen the karting center’s presence on social media.',
-        'Create content that communicates the sensations and experience of being on the track.',
-        'Effectively communicate offers, events, competitions and activities to both leisure and competitive audiences.'
-      ],
-      solutions: [
-        'Production of photo and video content directly at the circuit, from shooting to publication.',
-        'Creation of formats adapted to Instagram and TikTok: Reels, short-form videos, stories, carousels and visuals.',
-        'Development of recurring content around races, results, fastest lap times, offers and karting activities.'
-      ],
-      metrics: [
-        { label: 'Platforms', value: 'Instagram & TikTok' },
-        { label: 'Formats', value: 'Photo, Video & Reels' },
-        { label: 'Communication', value: 'Web & Social Media' },
-        { label: 'Industry', value: 'Motorsport & Leisure' }
-      ]
     }
   },
   {
@@ -284,11 +168,6 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     number: '03',
     year: '2026',
     imageUrl: '/images/oceansight-apercu.webp',
-    images: [
-      '/images/oceansight-apercu.webp',
-      '/images/OceanSight-02.webp',
-      '/images/OceanSight-03.webp'
-    ],
     stack: [
       'UI/UX Design',
       'Figma & Prototypage',
@@ -302,60 +181,20 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     logo: { src: '/images/logos/oceansight.webp', srcDark: '/images/logos/oceansight-dark.webp', width: 482, height: 160, display: 40 },
     video: '/videos/oceansight-dive.mp4',
     fr: {
-      title: 'OCEANSIGHT',
       subtitle: 'Application mobile de signalement des déchets marins',
-      client: 'Projet académique · HEIG-VD',
       category: 'UX/UI design',
-      role: 'UI/UX Design',
-      team: 'Sacha Loskov et Romain Blanchard.',
       hook: '11 millions de tonnes de plastique par an.',
       badge: 'Designer UX/UI',
       summary: "Conception d'une application mobile collaborative simplifiant le signalement des déchets marins et encourageant l'action collective.",
       overview: "Projet UI/UX réalisé dans le cadre d'un semestre à la HEIG-VD avec Sacha Loskov et Romain Blanchard. OceanSight propose une plateforme collaborative permettant de signaler des déchets marins, de rejoindre des missions de nettoyage, de découvrir les espèces menacées et de suivre son impact grâce à des statistiques et des achievements. Le projet s'est appuyé sur une démarche UX itérative intégrant prototypage, tests utilisateurs et amélioration continue de l'expérience.",
-      challenges: [
-        'Simplifier le signalement des déchets marins pour des utilisateurs aux profils variés.',
-        "Concevoir une expérience suffisamment intuitive pour transformer l'identification d'un problème en action concrète.",
-        "Organiser de nombreuses fonctionnalités — carte, galerie, filtres, missions et suivi de l'impact — sans complexifier la navigation."
-      ],
-      solutions: [
-        'Conception d’une plateforme mobile collaborative permettant de signaler des filets fantômes et des accumulations de plastique.',
-        'Création d’un parcours utilisateur combinant carte interactive, galerie, filtres, missions de nettoyage et suivi de l’impact.',
-        'Prototypage, tests utilisateurs et itérations successives pour identifier et corriger les frictions de navigation et d’interaction.'
-      ],
-      metrics: [
-        { label: 'Type', value: 'Application mobile' },
-        { label: 'Démarche', value: 'UX & Prototypage' },
-        { label: 'Évaluation UI', value: '5.4 / 6' },
-        { label: 'Évaluation UX', value: '6 / 6' }
-      ]
     },
     en: {
-      title: 'OCEANSIGHT',
       subtitle: 'Mobile app for marine waste reporting',
-      client: 'Academic project · HEIG-VD',
       category: 'UX/UI design',
-      role: 'UI/UX Design',
-      team: 'Sacha Loskov and Romain Blanchard.',
       hook: '11 million tonnes of plastic a year.',
       badge: 'UX/UI designer',
       summary: 'Design of a collaborative mobile application that simplifies marine waste reporting and encourages collective action.',
       overview: 'UI/UX project developed over a semester at HEIG-VD with Sacha Loskov and Romain Blanchard. OceanSight is a collaborative platform designed to report marine waste, join clean-up missions, discover endangered species and track personal impact through statistics and achievements. The project followed an iterative UX approach combining prototyping, user testing and continuous improvements to the experience.',
-      challenges: [
-        'Simplify marine waste reporting for users with different profiles and levels of engagement.',
-        'Design an intuitive experience that turns identifying a problem into concrete action.',
-        'Organize multiple features — map, gallery, filters, missions and impact tracking — without making navigation more complex.'
-      ],
-      solutions: [
-        'Design of a collaborative mobile platform for reporting ghost fishing nets and plastic waste accumulation.',
-        'Creation of a user journey combining an interactive map, gallery, filters, clean-up missions and impact tracking.',
-        'Prototyping, user testing and iterative improvements to identify and resolve navigation and interaction issues.'
-      ],
-      metrics: [
-        { label: 'Type', value: 'Mobile Application' },
-        { label: 'Approach', value: 'UX & Prototyping' },
-        { label: 'UI Score', value: '5.4 / 6' },
-        { label: 'UX Score', value: '6 / 6' }
-      ]
     }
   },
   {
@@ -365,7 +204,6 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     number: '04',
     year: '2026',
     imageUrl: '/images/etoile-blanche-apercu.webp',
-    images: ['/images/etoile-blanche-apercu.webp'],
     stack: ['Identité & print', 'Réseaux sociaux', 'Campagne d’affichage', 'Canva & Figma'],
     stackEn: ['Identity & print', 'Social media', 'Poster campaign', 'Canva & Figma'],
     // Étoile Blanche red, as on the printed menus
@@ -374,60 +212,20 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     logo: { src: '/images/logos/etoile-blanche.webp', srcDark: '/images/logos/etoile-blanche-dark.webp', width: 705, height: 160, display: 34 },
     video: '/videos/etoile-blanche-dive.mp4',
     fr: {
-      title: 'ÉTOILE BLANCHE',
       subtitle: 'Communication d’un restaurant lausannois',
-      client: 'Restaurant L’Étoile Blanche, Lausanne · Projet académique',
       category: 'Communication digitale',
-      role: 'Vision globale et cohérence du projet',
-      team: 'Sacha Loskov, Romain Blanchard, Ryad Ait-Slimane et Cindy Demont.',
       hook: 'Une nouvelle direction, une nouvelle image.',
       badge: 'Chef de projet',
       summary: 'Refonte de la communication du restaurant L’Étoile Blanche à Lausanne : cartes, affichage, anecdotes et réseaux sociaux, autour d’un message rassembleur.',
       overview: 'Projet de l’agence étudiante Zest pour le restaurant L’Étoile Blanche à Lausanne, repris par une nouvelle direction : refonte des cartes, campagne d’affichage pour l’afterwork, affichettes « anecdotes » et contenus pour les réseaux sociaux.',
-      challenges: [
-        'Marquer une rupture avec l’ancienne communication du restaurant.',
-        'Donner une identité cohérente à toutes les cartes et à tous les supports.',
-        'Faire connaître l’afterwork auprès des bureaux du quartier.'
-      ],
-      solutions: [
-        'Un message clé : « L’Étoile Blanche, l’endroit qui rassemble ».',
-        'Quatre cartes repensées dans un même univers graphique, dont une carte pliée en étoile.',
-        'Une campagne d’affichage libre et des contenus Instagram, TikTok et Facebook.'
-      ],
-      metrics: [
-        { label: 'Supports', value: 'Print & digital' },
-        { label: 'Cartes', value: '4 refaites' },
-        { label: 'Réseaux', value: 'Instagram, TikTok, Facebook' },
-        { label: 'Équipe', value: 'Agence de 5' }
-      ]
     },
     en: {
-      title: 'ÉTOILE BLANCHE',
       subtitle: 'Communication for a Lausanne restaurant',
-      client: 'L’Étoile Blanche restaurant, Lausanne · Academic project',
       category: 'Digital communication',
-      role: 'Overall vision and consistency',
-      team: 'Sacha Loskov, Romain Blanchard, Ryad Ait-Slimane and Cindy Demont.',
       hook: 'New owners, a new image.',
       badge: 'Project lead',
       summary: 'A new communication for L’Étoile Blanche restaurant in Lausanne: menus, posters, anecdote cards and social media, built around one welcoming message.',
       overview: 'A project by the student agency Zest for L’Étoile Blanche, a Lausanne restaurant taken over by new owners: redesigned menus, a poster campaign for the after-work, “anecdote” cards and social media content.',
-      challenges: [
-        'Make a clear break with the restaurant’s previous communication.',
-        'Give every menu and medium one consistent identity.',
-        'Make the after-work known to the offices nearby.'
-      ],
-      solutions: [
-        'One key message: “L’Étoile Blanche, the place that brings people together”.',
-        'Four menus redesigned in one visual world, including a star-folded card.',
-        'A free-poster campaign and content for Instagram, TikTok and Facebook.'
-      ],
-      metrics: [
-        { label: 'Media', value: 'Print & digital' },
-        { label: 'Menus', value: '4 redesigned' },
-        { label: 'Social', value: 'Instagram, TikTok, Facebook' },
-        { label: 'Team', value: 'Agency of 5' }
-      ]
     }
   },
   {
@@ -437,11 +235,6 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     number: '05',
     year: '2025',
     imageUrl: '/images/drivegear-apercu.webp',
-    images: [
-      '/images/drivegear-apercu.webp',
-      '/images/DriveGear-03.webp',
-      '/images/DriveGear-04.webp'
-    ],
     stack: [
       'E-Commerce',
       'WordPress & WooCommerce',
@@ -454,58 +247,20 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     logo: { src: '/images/logos/drivegear.webp', srcDark: '/images/logos/drivegear-dark.webp', width: 1111, height: 160, display: 22 },
     video: '/videos/drivegear-dive.mp4',
     fr: {
-      title: 'DRIVEGEAR',
       subtitle: 'Boutique e-commerce automobile',
-      client: 'Cours E-commerce · HEIG-VD',
       category: 'E-commerce',
-      role: 'Projet solo : stratégie, design, boutique et marketing',
       hook: 'Du logo au premier panier.',
       badge: 'Projet solo',
       summary: "Conception d'une boutique e-commerce spécialisée dans l'univers automobile, développée sur WordPress et WooCommerce.",
       overview: "Création de DriveGear, une boutique en ligne dédiée aux passionnés d'automobile. Le projet porte sur la conception de l'expérience utilisateur, la structuration du catalogue, l'identité visuelle et la mise en place de la boutique avec WordPress et WooCommerce. Une attention particulière a été portée à la clarté de la navigation, à la présentation des produits et à la cohérence de l'ensemble de l'expérience d'achat.",
-      challenges: [
-        'Structurer une boutique automobile avec une navigation claire et intuitive.',
-        'Créer une identité visuelle cohérente avec l’univers automobile.',
-        'Présenter efficacement les produits et leurs informations tout au long du parcours d’achat.'
-      ],
-      solutions: [
-        'Conception de l’interface et de l’expérience utilisateur de la boutique.',
-        'Structuration du catalogue et des différentes catégories de produits.',
-        'Création d’une identité visuelle distinctive et intégration de la boutique avec WordPress et WooCommerce.'
-      ],
-      metrics: [
-        { label: 'Type', value: 'E-Commerce' },
-        { label: 'CMS', value: 'WordPress' },
-        { label: 'Plateforme', value: 'WooCommerce' },
-        { label: 'Évaluation', value: '5.9 / 6' }
-      ]
     },
     en: {
-      title: 'DRIVEGEAR',
       subtitle: 'Automotive e-commerce store',
-      client: 'E-commerce course · HEIG-VD',
       category: 'E-commerce',
-      role: 'Solo project: strategy, design, store and marketing',
       hook: 'From logo to first checkout.',
       badge: 'Solo project',
       summary: 'Design of an e-commerce store dedicated to the automotive world, built with WordPress and WooCommerce.',
       overview: 'Creation of DriveGear, an online store dedicated to automotive enthusiasts. The project focused on user experience, catalogue structure, visual identity and the implementation of the online store using WordPress and WooCommerce. Particular attention was given to clear navigation, product presentation and a consistent purchasing experience.',
-      challenges: [
-        'Structure an automotive store with clear and intuitive navigation.',
-        'Create a visual identity consistent with the automotive world.',
-        'Present products and their information effectively throughout the purchasing journey.'
-      ],
-      solutions: [
-        'Design of the store interface and overall user experience.',
-        'Structuring of the product catalogue and its different categories.',
-        'Creation of a distinctive visual identity and implementation of the store with WordPress and WooCommerce.'
-      ],
-      metrics: [
-        { label: 'Type', value: 'E-Commerce' },
-        { label: 'CMS', value: 'WordPress' },
-        { label: 'Platform', value: 'WooCommerce' },
-        { label: 'Evaluation', value: '5.9 / 6' }
-      ]
     }
   },
   {
@@ -515,7 +270,6 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     number: '06',
     year: '2025',
     imageUrl: '/images/f1-pitwall-apercu.webp',
-    images: ['/images/f1-pitwall-apercu.webp'],
     stack: ['Concept produit', 'UI design', 'Données & IA', 'Figma'],
     stackEn: ['Product concept', 'UI design', 'Data & AI', 'Figma'],
     // The app's racing red
@@ -524,58 +278,20 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     logo: { src: '/images/logos/f1-pitwall.webp', srcDark: '/images/logos/f1-pitwall-dark.webp', width: 1792, height: 160, display: 18 },
     video: '/videos/f1-pitwall-dive.mp4',
     fr: {
-      title: 'F1 PITWALL',
       subtitle: 'Application de second écran pour la Formule 1',
-      client: 'Projet personnel de cours · HEIG-VD',
       category: 'UX/UI design',
-      role: 'Concept, données et UI (projet solo)',
       hook: 'Et si on regardait la course comme un ingénieur ?',
       badge: 'Projet solo',
       summary: 'Concept d’une application qui donne aux fans de Formule 1 les données et la stratégie du muret des stands, en direct.',
       overview: 'Projet individuel du cours WebDon : une app de second écran qui affiche le classement détaillé, la télémétrie, la position des pilotes sur le circuit, et des prédictions de course basées sur l’IA et la simulation.',
-      challenges: [
-        'Les fans ne voient que ce que la réalisation TV décide de montrer.',
-        'Les données de course sont difficiles à lire en temps réel.',
-        'Les prédictions et simulations de stratégie restent réservées aux équipes.'
-      ],
-      solutions: [
-        'Un classement détaillé, la carte du circuit en direct et la télémétrie des pilotes.',
-        'Un modèle hybride LightGBM et Monte-Carlo pour prédire le classement et les fenêtres d’arrêt.',
-        'Un simulateur de stratégie où l’on teste son propre scénario.'
-      ],
-      metrics: [
-        { label: 'Type', value: 'Application mobile' },
-        { label: 'Données', value: 'Ergast, FastF1, OpenF1' },
-        { label: 'IA', value: 'LightGBM & Monte-Carlo' },
-        { label: 'Évaluation', value: '5.5 / 6' }
-      ]
     },
     en: {
-      title: 'F1 PITWALL',
       subtitle: 'A second-screen app for Formula 1',
-      client: 'Individual course project · HEIG-VD',
       category: 'UX/UI design',
-      role: 'Concept, data and UI (solo project)',
       hook: 'What if you watched the race like an engineer?',
       badge: 'Solo project',
       summary: 'Concept for an app that brings the pit wall’s data and strategy to Formula 1 fans, live.',
       overview: 'Individual project for the WebDon course: a second-screen app showing detailed standings, telemetry, drivers’ positions on track, and race predictions powered by AI and simulation.',
-      challenges: [
-        'Fans only see what the TV director decides to show.',
-        'Race data is hard to read in real time.',
-        'Predictions and strategy simulations are kept for the teams.'
-      ],
-      solutions: [
-        'Detailed standings, a live track map and driver telemetry.',
-        'A hybrid LightGBM and Monte-Carlo model to predict standings and pit windows.',
-        'A strategy simulator to test your own scenario.'
-      ],
-      metrics: [
-        { label: 'Type', value: 'Mobile app' },
-        { label: 'Data', value: 'Ergast, FastF1, OpenF1' },
-        { label: 'AI', value: 'LightGBM & Monte-Carlo' },
-        { label: 'Evaluation', value: '5.5 / 6' }
-      ]
     }
   }
 ];
@@ -587,7 +303,6 @@ export const PROJECTS_FR: Project[] = UNIFIED_PROJECTS.map((item) => ({
   number: item.number,
   year: item.year,
   imageUrl: item.imageUrl,
-  images: item.images,
   stack: item.stack,
   accentColor: item.accentColor,
   accentColorDark: item.accentColorDark,
@@ -603,7 +318,6 @@ export const PROJECTS_EN: Project[] = UNIFIED_PROJECTS.map((item) => ({
   number: item.number,
   year: item.year,
   imageUrl: item.imageUrl,
-  images: item.images,
   stack: item.stackEn,
   accentColor: item.accentColor,
   accentColorDark: item.accentColorDark,

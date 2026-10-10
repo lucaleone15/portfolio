@@ -23,6 +23,7 @@ import { AccentProvider } from './context/AccentContext';
 import { getCustomProjects } from './data/projectsStorage';
 import { homePath, RouterProvider, SECTION_IDS, sectionPath, useRouter } from './router';
 import { getHeadData } from './seo';
+import { getCaseStudy } from './data/caseStudies';
 
 const ROBOTS_INDEX = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
 
@@ -61,7 +62,7 @@ function PortfolioApp() {
   }, [view]);
 
   // Unknown URLs (or a removed project slug) get a real 404 page
-  const notFound = route.name === 'notFound' || (route.name === 'project' && !selectedProject);
+  const notFound = route.name === 'notFound' || (route.name === 'project' && (!selectedProject || !getCaseStudy(selectedProject.id, lang)));
 
   // The intro curtain only plays when the visit starts on the home page: someone opening a
   // shared project link shouldn't wait for it. Decided once, on first render.

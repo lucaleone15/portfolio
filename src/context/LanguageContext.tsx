@@ -2,7 +2,6 @@ import React, { createContext, useContext } from 'react';
 import { Language } from '../types';
 import { alternatePath, useRouter } from '../router';
 
-export type { Language };
 
 interface LanguageContextType {
   lang: Language;
@@ -10,10 +9,9 @@ interface LanguageContextType {
   t: (key: string) => string;
 }
 
-export const translations = {
+const translations = {
   fr: {
     // Navigation
-    'nav.skills': 'Compétences',
     'nav.projects': 'Projets',
     'nav.about': 'À propos',
     'nav.contact': 'Contact',
@@ -21,29 +19,14 @@ export const translations = {
     'nav.close': 'Fermer',
 
     // Hero
-    'hero.greeting': 'Luca Leone',
     'hero.ctaProjects': 'Découvrir les projets',
     'hero.ctaContact': 'Me contacter',
 
-    // Marquee
-    'marquee.competencies': [
-      'UI / UX DESIGN',
-      'DÉVELOPPEMENT WEB',
-      'COMMUNICATION DIGITALE',
-      'STRATÉGIE DE MARQUE & BRANDING',
-      'CRÉATION DE CONTENUS & SOCIAL MEDIA',
-      'PRODUCTION VIDÉO & MONTAGE',
-      'PHOTOGRAPHIE & RETOUCHE',
-      'DESIGN SYSTEM & PROTOTYPAGE',
-      'COMMUNITY MANAGEMENT'
-    ],
 
     // Projects Section
     'projects.index': '01',
     'projects.title': 'Projets',
     'projects.seeAll': 'Filtrer les projets',
-    'projects.allFilter': 'Tous',
-    'projects.open': 'Ouvrir le projet',
     'projects.viewProject': 'Voir le projet',
 
     // About Section
@@ -60,23 +43,10 @@ export const translations = {
     'contact.title': 'Contact',
     'contact.talkPrefix': 'Parlons de votre',
     'contact.talkHighlight': 'prochain projet.',
-    'contact.namePlaceholder': 'Votre Nom',
-    'contact.emailPlaceholder': 'Votre Adresse Email',
-    'contact.subjectPlaceholder': 'Sujet de votre demande',
-    'contact.messagePlaceholder': 'Parlez-moi de votre projet...',
     'contact.sendBtn': 'Envoyer le message',
-    'contact.directEmailLabel': 'EMAIL DIRECT',
-    'contact.directPhoneLabel': 'TÉLÉPHONE DIRECT',
-    'contact.socialLabel': 'RÉSEAUX SOCIAUX',
-    'contact.sentSuccess': 'Message préparé avec succès ! Votre boîte mail va s’ouvrir.',
-
-    // Modal
-    'modal.overview': 'Présentation détaillée',
-    'modal.close': 'Fermer'
   },
   en: {
     // Navigation
-    'nav.skills': 'Skills',
     'nav.projects': 'Projects',
     'nav.about': 'About me',
     'nav.contact': 'Contact',
@@ -84,29 +54,14 @@ export const translations = {
     'nav.close': 'Close',
 
     // Hero
-    'hero.greeting': 'Luca Leone',
     'hero.ctaProjects': 'Explore projects',
     'hero.ctaContact': 'Get in touch',
 
-    // Marquee
-    'marquee.competencies': [
-      'UI / UX DESIGN',
-      'WEB DEVELOPMENT',
-      'DIGITAL COMMUNICATION',
-      'BRAND IDENTITY & STRATEGY',
-      'CONTENT CREATION & SOCIAL MEDIA',
-      'VIDEO PRODUCTION & EDITING',
-      'PHOTOGRAPHY & RETOUCHING',
-      'DESIGN SYSTEMS & PROTOTYPING',
-      'COMMUNITY MANAGEMENT'
-    ],
 
     // Projects Section
     'projects.index': '01',
     'projects.title': 'Projects',
     'projects.seeAll': 'Filter projects',
-    'projects.allFilter': 'All',
-    'projects.open': 'Open project',
     'projects.viewProject': 'View project',
 
     // About Section
@@ -123,19 +78,7 @@ export const translations = {
     'contact.title': 'Contact',
     'contact.talkPrefix': "Let's talk about your",
     'contact.talkHighlight': 'next project.',
-    'contact.namePlaceholder': 'Your Name',
-    'contact.emailPlaceholder': 'Your Email Address',
-    'contact.subjectPlaceholder': 'Subject of your request',
-    'contact.messagePlaceholder': 'Tell me about your project...',
     'contact.sendBtn': 'Send message',
-    'contact.directEmailLabel': 'DIRECT EMAIL',
-    'contact.directPhoneLabel': 'DIRECT PHONE',
-    'contact.socialLabel': 'SOCIAL NETWORKS',
-    'contact.sentSuccess': 'Message prepared successfully! Your email client will open.',
-
-    // Modal
-    'modal.overview': 'Detailed Overview',
-    'modal.close': 'Close'
   }
 };
 

@@ -119,8 +119,6 @@ export type AccentPresetId =
  */
 export const ACTIVE_ACCENT_ID: AccentPresetId = 'hot-crimson';
 
-// Rétrocompatibilité
-export const DEFAULT_ACCENT_ID = ACTIVE_ACCENT_ID;
 
 export interface AccentColorDefinition {
   id: AccentPresetId;

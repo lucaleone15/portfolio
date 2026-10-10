@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { ArrowLeft01Icon, ArrowLeft02Icon, ArrowRight01Icon, ArrowRight02Icon, Calendar03Icon, UserIcon } from '@hugeicons/core-free-icons';
+import { useEffect } from 'react';
+import { ArrowLeft01Icon, ArrowLeft02Icon, ArrowRight01Icon, ArrowRight02Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
 import { ProjectLogo } from './ProjectLogo';
 import { Project } from '../types';
@@ -8,7 +7,6 @@ import { projectAccentVars } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
 import { Link, projectPath, useRouter } from '../router';
 import { projectMediaTransition } from '../viewTransitions';
-import { ProjectStory } from './ProjectStory';
 import { CaseStudy } from './CaseStudy';
 import { getCaseStudy } from '../data/caseStudies';
 import { imageSrcSet, smallImage } from '../data/images';
@@ -27,25 +25,13 @@ export function ProjectDetailView({
 }: ProjectDetailViewProps) {
   const { lang } = useLanguage();
   const { navigate } = useRouter();
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Reset the gallery when switching project (the router handles scrolling)
-  useEffect(() => {
-    setCurrentImageIndex(0);
-  }, [project?.id]);
-
-  const imageCount = project?.images?.length || 1;
-
-  // Keyboard: ←/→ browse the gallery, Alt+←/→ switch project, Escape goes back
+  // Keyboard: Alt+←/→ switch project, Escape goes back
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!project) return;
       if (e.key === 'Escape') {
         navigate(backHref);
-      } else if (e.key === 'ArrowLeft' && !e.altKey && !e.metaKey && !e.ctrlKey) {
-        setCurrentImageIndex((i) => (i === 0 ? imageCount - 1 : i - 1));
-      } else if (e.key === 'ArrowRight' && !e.altKey && !e.metaKey && !e.ctrlKey) {
-        setCurrentImageIndex((i) => (i === imageCount - 1 ? 0 : i + 1));
       } else if (e.key === 'ArrowLeft' && e.altKey) {
         navigate(prevHref);
       } else if (e.key === 'ArrowRight' && e.altKey) {
@@ -66,19 +52,9 @@ export function ProjectDetailView({
   const prevHref = projectPath(lang, prevProject.id);
   const nextHref = projectPath(lang, nextProject.id);
 
+  // Every project has one (App treats a project without a case study as not found)
   const caseStudy = getCaseStudy(project.id, lang);
-
-  const projectImages: string[] = (project.images && project.images.length > 0)
-    ? project.images
-    : [project.imageUrl];
-
-  const handlePrevImage = () => {
-    setCurrentImageIndex((prev) => (prev === 0 ? projectImages.length - 1 : prev - 1));
-  };
-
-  const handleNextImage = () => {
-    setCurrentImageIndex((prev) => (prev === projectImages.length - 1 ? 0 : prev + 1));
-  };
+  if (!caseStudy) return null;
 
   return (
     <div
@@ -130,170 +106,7 @@ export function ProjectDetailView({
           </div>
         </div>
 
-        {/* Projects with a written case study get the scroll-story template; the others keep
-            the classic layout (header, gallery, story) until their case study is written */}
-        {caseStudy ? (
-          <CaseStudy key={`${project.id}-${lang}`} project={project} study={caseStudy} />
-        ) : (
-        <>
-        {/* Project Meta Info Header */}
-        <div className="space-y-4 mb-8 sm:mb-10">
-          <div className="flex flex-wrap items-center gap-3">
-            <span
-              className="font-syne font-bold px-4 py-1.5 rounded-full text-xs tracking-wide shadow-xs transition-colors"
-              style={{ backgroundColor: 'var(--pa)', color: 'var(--pa-on)' }}
-            >
-              {project.category}
-            </span>
-            {project.role && (
-              <span className="font-semibold px-3 py-1 rounded-full text-xs tracking-wide bg-neutral-100 dark:bg-white/10 text-neutral-800 dark:text-[#E4E4E7]">
-                {project.role}
-              </span>
-            )}
-            <span
-              className="flex items-center gap-1.5 text-xs font-bold"
-              style={{ color: 'var(--pa-text)' }}
-            >
-              <Icon icon={Calendar03Icon} className="w-3.5 h-3.5" />
-              {project.year}
-            </span>
-            {project.client && (
-              <span className="flex items-center gap-1.5 text-xs text-neutral-500 dark:text-[#A1A1AA] font-medium">
-                <Icon icon={UserIcon} className="w-3.5 h-3.5 text-neutral-400 dark:text-white/50" />
-                {project.client}
-              </span>
-            )}
-          </div>
-
-          {/* Proper-case name in the DOM (what search engines read), uppercase on screen */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-neutral-900 dark:text-white tracking-tight leading-tight uppercase">
-            {project.name}
-          </h1>
-
-          <p className="text-lg sm:text-xl text-neutral-600 dark:text-[#A1A1AA] font-normal max-w-4xl">
-            {project.subtitle}
-          </p>
-
-          {/* Fait avec / Collaborateurs - Sans cadre ni icône, sobre et aéré */}
-          {project.team && (
-            <p className="text-sm sm:text-base text-neutral-600 dark:text-[#A1A1AA] pt-1">
-              <span className="font-bold text-neutral-900 dark:text-white">
-                {lang === 'fr' ? 'Fait avec :' : 'Made with:'}{' '}
-              </span>
-              <span className="font-medium text-neutral-700 dark:text-[#E4E4E7]">
-                {project.team.replace(/^Fait avec\s*:\s*/i, '').replace(/^Made with\s*:\s*/i, '')}
-              </span>
-            </p>
-          )}
-        </div>
-
-        {/* Main Gallery Showcase (16/9 ratio, Carousel & Thumbnails) */}
-        <div className="space-y-4 mb-12 sm:mb-16">
-          {/* Shares its view-transition name with this project's card: the card image morphs into it */}
-          <div
-            style={projectMediaTransition(project.id)}
-            className="relative aspect-[16/9] w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-neutral-200 dark:bg-[#141418] shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.8)] group"
-          >
-            {/* Crossfade: old and new image overlap (no blank gap between them) */}
-            <AnimatePresence initial={false}>
-              <motion.img
-                key={projectImages[currentImageIndex]}
-                src={projectImages[currentImageIndex]}
-                srcSet={imageSrcSet(projectImages[currentImageIndex])}
-                sizes="(min-width: 1152px) 1088px, 100vw"
-                fetchPriority={currentImageIndex === 0 ? 'high' : 'auto'}
-                alt={`${project.name} – ${lang === 'fr' ? 'visuel' : 'image'} ${currentImageIndex + 1}`}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2, ease: 'easeOut' }}
-                decoding="async"
-                className="absolute inset-0 w-full h-full object-cover object-center select-none"
-              />
-            </AnimatePresence>
-
-            {/* Gallery Arrows if multiple images */}
-            {projectImages.length > 1 && (
-              <>
-                <button
-                  onClick={handlePrevImage}
-                  className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 glass-media p-3 rounded-full transition cursor-pointer active:scale-[0.97]"
-                  aria-label={lang === 'fr' ? 'Image précédente' : 'Previous image'}
-                >
-                  <Icon icon={ArrowLeft01Icon} className="w-5 h-5 sm:w-6 sm:h-6" />
-                </button>
-
-                <button
-                  onClick={handleNextImage}
-                  className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 glass-media p-3 rounded-full transition cursor-pointer active:scale-[0.97]"
-                  aria-label={lang === 'fr' ? 'Image suivante' : 'Next image'}
-                >
-                  <Icon icon={ArrowRight01Icon} className="w-5 h-5 sm:w-6 sm:h-6" />
-                </button>
-
-                {/* Counter Pill */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 glass-media flex items-center gap-0.5 pl-2 pr-3.5 py-0.5 rounded-full">
-                  {projectImages.map((_, idx) => (
-                    // 24px touch target (buttons side by side, no overlap); the dot is the inner span
-                    <button
-                      key={idx}
-                      onClick={() => setCurrentImageIndex(idx)}
-                      className="group/dot w-6 h-6 shrink-0 cursor-pointer inline-flex items-center justify-center"
-                      aria-label={lang === 'fr' ? `Aller à l'image ${idx + 1}` : `Go to image ${idx + 1}`}
-                      aria-current={currentImageIndex === idx ? 'true' : undefined}
-                    >
-                      <span
-                        className={`block transition-all rounded-full ${
-                          currentImageIndex === idx ? 'w-6 h-1.5' : 'w-1.5 h-1.5 bg-white/40 group-hover/dot:bg-white/80'
-                        }`}
-                        style={currentImageIndex === idx ? { backgroundColor: 'var(--pa)' } : undefined}
-                      />
-                    </button>
-                  ))}
-                  <span className="text-xs font-sans font-medium text-white/80 ml-1.5">
-                    {currentImageIndex + 1}/{projectImages.length}
-                  </span>
-                </div>
-              </>
-            )}
-          </div>
-
-          {/* Thumbnails row */}
-          {projectImages.length > 1 && (
-            <div className="flex items-center gap-3 overflow-x-auto py-2 px-1">
-              {projectImages.map((img, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => setCurrentImageIndex(idx)}
-                  className={`relative w-24 sm:w-32 h-16 sm:h-20 rounded-xl overflow-hidden shrink-0 transition duration-200 cursor-pointer ${
-                    currentImageIndex === idx
-                      ? 'opacity-100'
-                      : 'opacity-60 hover:opacity-100'
-                  }`}
-                  style={currentImageIndex === idx ? {
-                    boxShadow: '0 0 14px color-mix(in srgb, var(--pa-text) 40%, transparent)'
-                  } : undefined}
-                >
-                  <img
-                    src={smallImage(img)}
-                    alt={`${project.name} – ${lang === 'fr' ? 'miniature' : 'thumbnail'} ${idx + 1}`}
-                    width="128"
-                    height="80"
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover"
-                  />
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Case study told while scrolling */}
-        <ProjectStory key={`${project.id}-${lang}`} project={project} />
-        </>
-        )}
+        <CaseStudy key={`${project.id}-${lang}`} project={project} study={caseStudy} />
 
         {/* End of the case study: a preview of the next project (its image morphs into that
             project's main visual), then the way back */}
