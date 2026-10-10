@@ -38,6 +38,7 @@ export function InvertedCursor() {
     let shrinkTimer: number | undefined;
 
     const onMove = (e: PointerEvent) => {
+      last = { x: e.clientX, y: e.clientY };
       x.set(e.clientX);
       y.set(e.clientY);
       if (!visibleRef.current) {
@@ -46,8 +47,10 @@ export function InvertedCursor() {
       }
     };
 
-    const onOver = (e: PointerEvent) => {
-      const target = e.target as HTMLElement | null;
+    let last = { x: 0, y: 0 };
+    let recheckTimer: number | undefined;
+
+    const evaluate = (target: Element | null) => {
       if (!target) return;
       setOverField(!!target.closest(FIELD) || !!target.closest(HIDDEN));
       window.clearTimeout(shrinkTimer);
@@ -58,9 +61,17 @@ export function InvertedCursor() {
         shrinkTimer = window.setTimeout(() => setHovering(false), 80);
       }
     };
+    const onOver = (e: PointerEvent) => evaluate(e.target as Element | null);
+    // After a click the page can change under a still pointer (filters, menus): look again
+    const recheck = () => evaluate(document.elementFromPoint(last.x, last.y));
 
     const onDown = () => setPressed(true);
-    const onUp = () => setPressed(false);
+    const onUp = () => {
+      setPressed(false);
+      requestAnimationFrame(() => requestAnimationFrame(recheck));
+      window.clearTimeout(recheckTimer);
+      recheckTimer = window.setTimeout(recheck, 400);
+    };
     const onOut = (e: PointerEvent) => {
       if (!e.relatedTarget) {
         visibleRef.current = false;
@@ -75,6 +86,7 @@ export function InvertedCursor() {
     document.addEventListener('pointerout', onOut, { passive: true });
     return () => {
       window.clearTimeout(shrinkTimer);
+      window.clearTimeout(recheckTimer);
       root.classList.remove('has-custom-cursor');
       window.removeEventListener('pointermove', onMove);
       window.removeEventListener('pointerover', onOver);

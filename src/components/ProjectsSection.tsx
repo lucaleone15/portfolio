@@ -84,7 +84,8 @@ export function ProjectsSection() {
               className="glass font-syne px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-neutral-900 dark:text-white inline-flex items-center gap-2 cursor-pointer active:scale-[0.97]"
             >
               <Icon icon={FilterHorizontalIcon} className="w-4 h-4" />
-              <span>{selectedFilter === 'all' ? t('projects.seeAll') : t('projects.reset')}</span>
+              {/* The active filter's name: says what is shown (the button only opens the list) */}
+              <span>{selectedFilter === 'all' ? t('projects.seeAll') : categories.find((c) => c.id === selectedFilter)?.label}</span>
               <Icon icon={ArrowDown01Icon} className={`w-3.5 h-3.5 transition-transform duration-200 ${showAllFilterPills ? 'rotate-180' : ''}`} />
             </button>
           </div>
@@ -93,11 +94,14 @@ export function ProjectsSection() {
         {/* Optional Filter Pills */}
         {showAllFilterPills && (
           <div className="flex flex-wrap gap-2 mb-10 py-2">
+            {/* No generic `transition` here: it would also fade the glass blur when a pill gets
+                selected (.glass brings its own transitions) */}
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setSelectedFilter(cat.id)}
-                className={`font-syne text-xs px-4 py-2 rounded-full transition cursor-pointer font-bold active:scale-[0.97] ${
+                aria-pressed={selectedFilter === cat.id}
+                className={`font-syne text-xs px-4 py-2 rounded-full cursor-pointer font-bold active:scale-[0.97] ${
                   selectedFilter === cat.id
                     ? 'bg-neutral-900 text-white dark:bg-white dark:text-black shadow-xs'
                     : 'glass text-neutral-700 dark:text-[#D4D4D8]'
