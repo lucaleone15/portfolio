@@ -184,6 +184,7 @@ Après une mise en ligne qui change l'image d'aperçu, la rafraîchir sur Linked
 | Écrire l'**étude de cas** d'un projet | `src/data/caseStudies/<projet>.ts` (FR + EN), puis l'enregistrer dans `src/data/caseStudies/index.ts`. Les images vont dans `public/images/case/<projet>/` |
 | Changer le **titre / la description Google** d'une page | `META` en haut de `src/seo.ts` (titres ≤ 60 caractères, descriptions 120–160) |
 | Changer le **logo** d'un projet | `python3 scripts/make-project-logos.py` (depuis les fichiers de `matiere/`) génère `public/images/logos/<id>.webp` et `<id>-dark.webp`, transparents ; puis `logo` du projet dans `src/data/portfolioData.ts`. Le logo remplace le nom sur la carte, en tête de l'étude de cas et dans « Projet suivant » |
+| Changer la **vidéo de survol** d'une carte | Encoder la vidéo pour le web (16:10, 1152×720, sans son, une image clé par image pour que le retour en arrière soit fluide), par ex. `ffmpeg -i source.mp4 -an -vf "crop=1728:1080,scale=1152:720,setpts=0.5*PTS" -c:v libx264 -crf 27 -g 1 -movflags +faststart public/videos/<id>-dive.mp4`, puis `video` du projet dans `src/data/portfolioData.ts` |
 | Ajouter une **couverture** de projet | `.webp` 1920×1200 (16:10) dans `public/images/`, puis `npm run images` |
 | Modifier le **parcours** (expériences, formation) | `src/data/portfolioData.ts` (FR) et `src/components/AboutSection.tsx` (EN) |
 | Modifier la **bio** et les textes d'interface | `src/context/LanguageContext.tsx` |
@@ -233,6 +234,7 @@ Statistiques internes et respectueuses de la vie privée (`server/analytics.ts`)
 
 - sert les pages pré-rendues (`/x` → `x.html` ou `x/index.html`) ;
 - compression **brotli / gzip** ;
+- requêtes partielles (`Range`) pour les fichiers non compressés, nécessaires aux vidéos ;
 - cache : fichiers du build 1 an (`immutable`), HTML revalidé à chaque visite, le reste 30 jours ; `ETag` / 304 ;
 - redirections 301 vers l'URL unique de chaque page : `www.` → domaine nu, `x.html`, `x/index.html`, `x/` → `x`, `/en` → `/en/`, anciennes URLs de projets ;
 - en-têtes de sécurité : **CSP stricte** (seuls les scripts du site + le script de thème, autorisé par son empreinte), `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, HSTS… ;
@@ -246,7 +248,7 @@ Statistiques internes et respectueuses de la vie privée (`server/analytics.ts`)
 | --- | --- |
 | Carte → page projet | API **View Transitions** : l'image de la carte se transforme en visuel de la page |
 | Études de cas | **IntersectionObserver + CSS sticky** : visuel fixe pendant que le texte défile, chiffres qui comptent, comparateur avant / après, sommaire qui suit la lecture |
-| Cartes de projets | Inclinaison douce au survol, pastille floutée « Voir le projet » qui remplace le curseur |
+| Cartes de projets | Inclinaison douce au survol, pastille floutée « Voir le projet » qui remplace le curseur ; vidéo qui plonge dans l'écran au survol (appui long sur mobile), garde la dernière image, puis se rembobine à l'envers |
 | Curseur | Rond en couleurs inversées + contour rouge qui épouse liens et boutons |
 | Recherche | **cmdk**, ouverture instantanée (loupe ou ⌘K / Ctrl+K) |
 

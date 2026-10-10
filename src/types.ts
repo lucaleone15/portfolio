@@ -36,4 +36,5 @@ export interface Project {
   accentColor?: string;
   accentColorDark?: string;
   logo?: ProjectLogo;
+  video?: string;
 }
