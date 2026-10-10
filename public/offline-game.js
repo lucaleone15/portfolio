@@ -48,7 +48,7 @@
   canvas.height = H * dpr;
   ctx.scale(dpr, dpr);
 
-  var ROAD_L = 40, ROAD_R = W - 40; // asphalt between the kerbs
+  var ROAD_L = 58, ROAD_R = W - 58; // asphalt between the kerbs (grass wide enough to show its mown stripes)
   var KART_W = 34, KART_H = 72, KART_Y = H - 96; // the car's size on the track
   var HIT_W = 24, HIT_H = 60; // a little forgiving: wheels brushing a cone don't count
 
@@ -56,22 +56,28 @@
   var car = new Image();
   car.src = '/images/f1-car.svg';
 
-  // Textures, drawn once: asphalt grain and grass blades
-  function texture(w, h, base, specks, size, alpha) {
-    var c = document.createElement('canvas');
-    c.width = w; c.height = h;
-    var g = c.getContext('2d');
-    g.fillStyle = base; g.fillRect(0, 0, w, h);
-    for (var i = 0; i < w * h / 6; i++) {
-      g.fillStyle = specks[i % specks.length];
-      g.globalAlpha = Math.random() * alpha;
-      g.fillRect(Math.random() * w, Math.random() * h, size, size * (1 + Math.random()));
+  // Same materials as the 404 scene (src/components/NotFound.tsx): mown grass in diagonal
+  // stripes, asphalt, a fine dark grain over both, kerbs, white edge lines, rubbered line
+  var GRASS = '#3f7d3a', GRASS_MOWN = '#478a41', ASPHALT = '#2b2b30';
+  var KERB_RED = '#d7141a', KERB_WHITE = '#f2f2f2', KERB = 16;
+
+  // Grain: dark specks with varying opacity, tiled (like the 404's fractal noise)
+  var grain = document.createElement('canvas');
+  grain.width = 160; grain.height = 160;
+  (function () {
+    var g = grain.getContext('2d');
+    var data = g.createImageData(160, 160);
+    for (var i = 0; i < data.data.length; i += 4) {
+      data.data[i + 3] = Math.random() < 0.5 ? Math.round(Math.random() * 34) : 0;
     }
-    g.globalAlpha = 1;
-    return c;
-  }
-  var asphalt = texture(W, 80, '#2b2b30', ['#3a3a40', '#1d1d21', '#47474d'], 1.4, 0.7);
-  var grass = texture(40, 80, '#3e7a3a', ['#4d8a45', '#326730', '#5a9850'], 1.6, 0.8);
+    g.putImageData(data, 0, 0);
+  })();
+  var grainPattern = ctx.createPattern(grain, 'repeat');
+
+  // Light over the whole scene, as on the 404: brighter top-left, darker bottom-right
+  var light = ctx.createRadialGradient(W * 0.25, H * 0.15, 0, W * 0.25, H * 0.15, Math.hypot(W, H) * 0.95);
+  light.addColorStop(0, 'rgba(255,255,255,0.12)');
+  light.addColorStop(1, 'rgba(0,0,0,0.2)');
   var BEST_KEY = 'offline-kart-best';
 
   var readBest = function () { try { return Number(localStorage.getItem(BEST_KEY)) || 0; } catch (e) { return 0; } };
@@ -149,32 +155,43 @@
   }
 
   function drawTrack() {
-    // Asphalt and grass, textured, scrolling with the race
-    for (var y = -80 + (scroll * 2) % 80; y < H; y += 80) {
-      ctx.drawImage(asphalt, 0, y);
-      ctx.drawImage(grass, 0, y, ROAD_L - 14, 80);
-      ctx.drawImage(grass, ROAD_R + 14, y, W - ROAD_R - 14, 80);
-    }
-    // Kerbs: red and white blocks
-    for (var k = -40 + scroll; k < H; k += 40) {
+    var offset = (scroll * 2) % 160; // everything on the ground moves together
+
+    // Grass with mown stripes (90 px apart, rotated like the 404's pattern)
+    ctx.fillStyle = GRASS;
+    ctx.fillRect(0, 0, W, H);
+    ctx.save();
+    ctx.translate(W / 2, H / 2 + offset);
+    ctx.rotate((-35 * Math.PI) / 180);
+    ctx.fillStyle = GRASS_MOWN;
+    for (var sx = -H * 1.5; sx < H * 1.5; sx += 90) ctx.fillRect(sx, -H * 1.5, 45, H * 3);
+    ctx.restore();
+
+    // Asphalt, its white edge lines, the rubbered racing line
+    ctx.fillStyle = KERB_WHITE;
+    ctx.fillRect(ROAD_L, 0, ROAD_R - ROAD_L, H);
+    ctx.fillStyle = ASPHALT;
+    ctx.fillRect(ROAD_L + 4, 0, ROAD_R - ROAD_L - 8, H);
+    ctx.fillStyle = 'rgba(0,0,0,0.2)';
+    ctx.fillRect(W / 2 - 40, 0, 80, H);
+
+    // Grain over grass and asphalt
+    ctx.save();
+    ctx.translate(0, offset - 160);
+    ctx.fillStyle = grainPattern;
+    ctx.fillRect(0, 0, W, H + 160);
+    ctx.restore();
+
+    // Kerbs: 16 px red and white blocks, outside the white lines
+    for (var k = -KERB * 2 + (scroll % (KERB * 2)); k < H; k += KERB * 2) {
       for (var side = 0; side < 2; side++) {
         var kx = side ? ROAD_R : ROAD_L - 14;
-        ctx.fillStyle = '#d7141a';
-        ctx.fillRect(kx, k, 14, 20);
-        ctx.fillStyle = '#f4f4f4';
-        ctx.fillRect(kx, k + 20, 14, 20);
+        ctx.fillStyle = KERB_RED;
+        ctx.fillRect(kx, k, 14, KERB);
+        ctx.fillStyle = KERB_WHITE;
+        ctx.fillRect(kx, k + KERB, 14, KERB);
       }
     }
-    // White edge lines inside the kerbs, and the rubbered racing line
-    ctx.fillStyle = 'rgba(255,255,255,0.85)';
-    ctx.fillRect(ROAD_L + 4, 0, 3, H);
-    ctx.fillRect(ROAD_R - 7, 0, 3, H);
-    var rubber = ctx.createLinearGradient(W / 2 - 60, 0, W / 2 + 60, 0);
-    rubber.addColorStop(0, 'rgba(0,0,0,0)');
-    rubber.addColorStop(0.5, 'rgba(0,0,0,0.22)');
-    rubber.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = rubber;
-    ctx.fillRect(W / 2 - 60, 0, 120, H);
   }
 
   function drawCone(c) {
@@ -219,6 +236,8 @@
     drawTrack();
     cones.forEach(drawCone);
     drawKart();
+    ctx.fillStyle = light;
+    ctx.fillRect(0, 0, W, H);
     if (state === 'idle') banner('🏁', T.start);
     if (state === 'crashed') banner(newRecord ? T.record : T.crash, fmt(distance) + ' · ' + T.again);
   }
