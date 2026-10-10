@@ -43,7 +43,7 @@ export interface UnifiedProjectDefinition {
     team?: string;
     /** A few words written over the card image: the problem or the stake */
     hook?: string;
-    /** My role, in a few words, on the card badge */
+    /** My role, in a few words, on the card badge ("Projet solo" when I worked alone) */
     badge?: string;
     summary: string;
     overview: string;
@@ -60,7 +60,7 @@ export interface UnifiedProjectDefinition {
     team?: string;
     /** A few words written over the card image: the problem or the stake */
     hook?: string;
-    /** My role, in a few words, on the card badge */
+    /** My role, in a few words, on the card badge ("Projet solo" when I worked alone) */
     badge?: string;
     summary: string;
     overview: string;
@@ -451,7 +451,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       category: 'E-commerce',
       role: 'Projet solo : stratégie, design, boutique et marketing',
       hook: 'Une boutique pour passionnés, ouverte de A à Z.',
-      badge: 'Chef de projet e-commerce',
+      badge: 'Projet solo',
       summary: "Conception d'une boutique e-commerce spécialisée dans l'univers automobile, développée sur WordPress et WooCommerce.",
       overview: "Création de DriveGear, une boutique en ligne dédiée aux passionnés d'automobile. Le projet porte sur la conception de l'expérience utilisateur, la structuration du catalogue, l'identité visuelle et la mise en place de la boutique avec WordPress et WooCommerce. Une attention particulière a été portée à la clarté de la navigation, à la présentation des produits et à la cohérence de l'ensemble de l'expérience d'achat.",
       challenges: [
@@ -478,7 +478,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       category: 'E-commerce',
       role: 'Solo project: strategy, design, store and marketing',
       hook: 'A store for car lovers, built from A to Z.',
-      badge: 'E-commerce project lead',
+      badge: 'Solo project',
       summary: 'Design of an e-commerce store dedicated to the automotive world, built with WordPress and WooCommerce.',
       overview: 'Creation of DriveGear, an online store dedicated to automotive enthusiasts. The project focused on user experience, catalogue structure, visual identity and the implementation of the online store using WordPress and WooCommerce. Particular attention was given to clear navigation, product presentation and a consistent purchasing experience.',
       challenges: [
@@ -520,7 +520,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       category: 'UX/UI design',
       role: 'Concept, données et UI (projet solo)',
       hook: 'Et si on regardait la course comme un ingénieur ?',
-      badge: 'Designer produit',
+      badge: 'Projet solo',
       summary: 'Concept d’une application qui donne aux fans de Formule 1 les données et la stratégie du muret des stands, en direct.',
       overview: 'Projet individuel du cours WebDon : une app de second écran qui affiche le classement détaillé, la télémétrie, la position des pilotes sur le circuit, et des prédictions de course basées sur l’IA et la simulation.',
       challenges: [
@@ -547,7 +547,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       category: 'UX/UI design',
       role: 'Concept, data and UI (solo project)',
       hook: 'What if you watched the race like an engineer?',
-      badge: 'Product designer',
+      badge: 'Solo project',
       summary: 'Concept for an app that brings the pit wall’s data and strategy to Formula 1 fans, live.',
       overview: 'Individual project for the WebDon course: a second-screen app showing detailed standings, telemetry, drivers’ positions on track, and race predictions powered by AI and simulation.',
       challenges: [
