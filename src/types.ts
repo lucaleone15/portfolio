@@ -7,7 +7,7 @@ export interface ProjectLogo {
   width: number;
   height: number;
   /** Height in px on a project card: the logo fitted in a 150 × 40 px frame, so compact and wide
-      logos take the same room */
+      logos take the same room; at least 18 px, so that the very long ones stay readable */
   display: number;
 }
 
