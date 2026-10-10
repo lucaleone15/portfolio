@@ -41,8 +41,22 @@ export function PointerHighlight() {
     let target: HTMLElement | null = null;
     let hiddenAt = 0;
     let pointer = { x: 0, y: 0 };
+    let recheckTimer: number | undefined;
+
+    // The element to outline under a given node: links and buttons, except where a component
+    // draws its own pointer (project images)
+    const resolve = (over: Element | null) =>
+      over?.closest('[data-cursor-hidden]') ? null : (over?.closest<HTMLElement>(INTERACTIVE) ?? null);
+
+    // The outlined element can change size (a label that changes) without the pointer moving
+    const resizeObserver = new ResizeObserver(() => target && place(target, false));
 
     const place = (el: HTMLElement, instant: boolean) => {
+      // Removed from the page (filtered card, closed menu): its box would be 0,0 → hide instead
+      if (!el.isConnected) {
+        update(null);
+        return;
+      }
       const rect = el.getBoundingClientRect();
       const cornerRadius = parseFloat(getComputedStyle(el).borderTopLeftRadius) || 6;
       const dx = (pointer.x - (rect.left + rect.width / 2)) * MAGNET;
@@ -69,15 +83,14 @@ export function PointerHighlight() {
       radius.set(next.r);
     };
 
-    const onPointerOver = (e: PointerEvent) => {
-      const over = e.target as HTMLElement | null;
-      // Areas drawing their own pointer (project images) get no outline
-      const el = over?.closest('[data-cursor-hidden]') ? null : (over?.closest<HTMLElement>(INTERACTIVE) ?? null);
+    const update = (el: HTMLElement | null) => {
       if (el === target) return;
+      resizeObserver.disconnect();
       if (el) {
         // Glide between neighbours; snap if the outline has been hidden for a while
         const instant = !target && performance.now() - hiddenAt > 120;
         target = el;
+        resizeObserver.observe(el);
         setOnAccent(!!el.closest('[data-on-accent]'));
         place(el, instant);
         animate(opacity, 1, { duration: 0.18, ease: 'easeOut' });
@@ -88,9 +101,21 @@ export function PointerHighlight() {
       }
     };
 
+    // What is under the pointer now: after a click the page often changes under a still
+    // pointer (filters, menus, cards that leave), and no pointerover event says so
+    const recheck = () => {
+      const el = resolve(document.elementFromPoint(pointer.x, pointer.y));
+      if (el !== target) update(el);
+      else if (target) place(target, false);
+    };
+
+    const onPointerOver = (e: PointerEvent) => update(resolve(e.target as Element | null));
+
     const onPointerMove = (e: PointerEvent) => {
       pointer = { x: e.clientX, y: e.clientY };
-      if (target) place(target, false);
+      const el = resolve(e.target as Element | null);
+      if (el !== target) update(el);
+      else if (target) place(target, false);
     };
 
     // Elements move under a still pointer while scrolling: follow them
@@ -99,12 +124,15 @@ export function PointerHighlight() {
     };
 
     const onPointerDown = () => target && animate(scale, 0.96, { duration: 0.1, ease: 'easeOut' });
-    const onPointerUp = () => animate(scale, 1, { duration: 0.2, ease: 'easeOut' });
+    const onPointerUp = () => {
+      animate(scale, 1, { duration: 0.2, ease: 'easeOut' });
+      // Once right after the click, once the layout animations have settled
+      requestAnimationFrame(() => requestAnimationFrame(recheck));
+      window.clearTimeout(recheckTimer);
+      recheckTimer = window.setTimeout(recheck, 400);
+    };
     const onLeaveWindow = (e: PointerEvent) => {
-      if (!e.relatedTarget) {
-        target = null;
-        animate(opacity, 0, { duration: 0.15 });
-      }
+      if (!e.relatedTarget) update(null);
     };
 
     window.addEventListener('pointerover', onPointerOver, { passive: true });
@@ -114,6 +142,8 @@ export function PointerHighlight() {
     window.addEventListener('pointerup', onPointerUp, { passive: true });
     document.addEventListener('pointerout', onLeaveWindow, { passive: true });
     return () => {
+      window.clearTimeout(recheckTimer);
+      resizeObserver.disconnect();
       window.removeEventListener('pointerover', onPointerOver);
       window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('scroll', onScroll);
