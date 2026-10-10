@@ -37,5 +37,4 @@ export interface Project {
   accentColorDark?: string;
   logo?: ProjectLogo;
   video?: string;
-  poster?: string;
 }
