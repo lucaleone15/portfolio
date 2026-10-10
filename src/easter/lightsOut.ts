@@ -2,7 +2,8 @@
  * Easter egg (⌘K → "lights out"): a Formula 1 start to win. Five pairs of red lights come
  * on one by one, hold for a random moment and go out; the visitor clicks (or presses
  * Space) as soon as they do. Result: the reaction time, a verdict and the best start so far
- * (kept in this browser). Too early is a jump start. Then: race again, or go to the
+ * (kept in this browser). Too early is a jump start. A real start can go on the podium
+ * (/podium, server/podium.ts) under a pseudo. Then: race again, the podium, or the
  * projects. Plain DOM, loaded on demand. Escape closes.
  */
 
@@ -13,6 +14,7 @@ const HOLD_MIN_MS = 400;
 const HOLD_MAX_MS = 2600;
 const TOO_SLOW_MS = 4000;
 const BEST_KEY = 'lights-out-best';
+const NAME_KEY = 'lights-out-name';
 
 const COPY = {
   fr: {
@@ -27,6 +29,13 @@ const COPY = {
     record: 'Nouveau record !',
     again: 'Rejouer',
     projects: 'Voir les projets',
+    podium: 'Voir le podium',
+    pseudo: 'Ton pseudo',
+    submit: 'Inscrire au podium',
+    rank: (r: number) => (r === 1 ? 'Tu es 1er au podium !' : `Tu es ${r}e au podium.`),
+    badName: 'Pseudo refusé : 2 à 16 lettres ou chiffres, sans lien ni insulte.',
+    badTime: 'Ce temps ne peut pas aller au podium (moins de 0,1 s, c’est de l’anticipation).',
+    offline: 'Le podium est indisponible pour le moment.',
     verdict: (ms: number) =>
       ms < 200 ? 'Réflexes de pilote de F1.' : ms < 280 ? 'Excellent départ.' : ms < 400 ? 'Bon départ.' : 'Départ un peu lent.',
     format: (ms: number) => `${(ms / 1000).toFixed(3).replace('.', ',')} s`,
@@ -43,6 +52,13 @@ const COPY = {
     record: 'New record!',
     again: 'Race again',
     projects: 'See the projects',
+    podium: 'See the podium',
+    pseudo: 'Your nickname',
+    submit: 'Put me on the podium',
+    rank: (r: number) => (r === 1 ? 'You’re first on the podium!' : `You’re number ${r} on the podium.`),
+    badName: 'Nickname refused: 2 to 16 letters or digits, no link, no insult.',
+    badTime: 'This time can’t go on the podium (under 0.1 s is anticipation).',
+    offline: 'The podium is unavailable right now.',
     verdict: (ms: number) =>
       ms < 200 ? 'Formula 1 reflexes.' : ms < 280 ? 'Excellent start.' : ms < 400 ? 'Good start.' : 'A slow getaway.',
     format: (ms: number) => `${(ms / 1000).toFixed(3)} s`,
@@ -65,7 +81,7 @@ const saveBest = (ms: number) => {
   }
 };
 
-export function lightsOut(lang: Lang, goToProjects: () => void) {
+export function lightsOut(lang: Lang, go: { goToProjects: () => void; goToPodium: () => void }) {
   const t = COPY[lang];
 
   const overlay = document.createElement('div');
@@ -132,13 +148,62 @@ export function lightsOut(lang: Lang, goToProjects: () => void) {
     timers = [];
   };
 
-  const showResult = (heading: string, text: string) => {
+  const endButtons = () => [button(t.again, true, race), button(t.podium, false, () => close('podium')), button(t.projects, false, () => close('projects'))];
+
+  const showResult = (heading: string, text: string, ms?: number) => {
     phase = 'result';
     clear();
     title.textContent = heading;
     note.textContent = text;
-    actions.replaceChildren(button(t.again, true, race), button(t.projects, false, () => close(true)));
-    (actions.firstChild as HTMLButtonElement).focus();
+    actions.replaceChildren(...(ms === undefined ? [] : [podiumForm(ms)]), ...endButtons());
+    (actions.querySelector('input, button') as HTMLElement | null)?.focus();
+  };
+
+  // A real start can go on the podium under a pseudo (remembered for next time)
+  const podiumForm = (ms: number) => {
+    const form = document.createElement('form');
+    form.style.cssText = 'display:flex;gap:8px;flex-basis:100%;justify-content:center;margin-bottom:6px';
+    const input = document.createElement('input');
+    input.maxLength = 16;
+    input.placeholder = t.pseudo;
+    input.setAttribute('aria-label', t.pseudo);
+    try {
+      input.value = localStorage.getItem(NAME_KEY) ?? '';
+    } catch {
+      /* storage blocked */
+    }
+    input.style.cssText =
+      "font-family:'Plus Jakarta Sans Variable',system-ui,sans-serif;font-size:15px;padding:12px 18px;border-radius:999px;border:0;outline:none;width:min(220px,50vw);background:rgba(255,255,255,0.12);color:#fff";
+    const send = button(t.submit, true, () => form.requestSubmit());
+    send.type = 'submit';
+    form.append(input, send);
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      send.disabled = true;
+      try {
+        const r = await fetch('/api/podium', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: input.value, ms: Math.round(ms) }),
+        });
+        const data = await r.json().catch(() => ({}));
+        if (r.ok && data.rank) {
+          try {
+            localStorage.setItem(NAME_KEY, input.value.trim());
+          } catch {
+            /* storage blocked */
+          }
+          note.textContent = t.rank(data.rank);
+          actions.replaceChildren(...endButtons());
+          return;
+        }
+        note.textContent = data.error === 'invalid_name' ? t.badName : data.error === 'invalid_time' ? t.badTime : t.offline;
+      } catch {
+        note.textContent = t.offline;
+      }
+      send.disabled = false;
+    });
+    return form;
   };
 
   function race() {
@@ -171,33 +236,34 @@ export function lightsOut(lang: Lang, goToProjects: () => void) {
       const record = best === null || ms < best;
       if (record) saveBest(ms);
       const bestNow = record ? ms : best!;
-      showResult(t.format(ms), `${t.verdict(ms)} ${record ? t.record : `${t.best}${t.colon}${t.format(bestNow)}`}`);
+      showResult(t.format(ms), `${t.verdict(ms)} ${record ? t.record : `${t.best}${t.colon}${t.format(bestNow)}`}`, ms);
     }
   };
 
   const onKey = (e: KeyboardEvent) => {
     if (e.key === 'Escape') close(false);
-    else if (e.key === ' ' && phase !== 'result') {
+    else if (e.key === ' ' && phase !== 'result' && !(e.target as HTMLElement).closest?.('input')) {
       e.preventDefault();
       react();
     }
   };
   // pointerdown, not click: a click only fires on release, which would add to the reaction time
   overlay.addEventListener('pointerdown', (e) => {
-    if ((e.target as HTMLElement).closest('button')) return;
+    if ((e.target as HTMLElement).closest('button, input, form')) return;
     react();
   });
   window.addEventListener('keydown', onKey);
 
   let closed = false;
-  function close(toProjects: boolean) {
+  function close(then: 'projects' | 'podium' | false) {
     if (closed) return;
     closed = true;
     clear();
     window.removeEventListener('keydown', onKey);
     overlay.style.opacity = '0';
     setTimeout(() => overlay.remove(), 220);
-    if (toProjects) goToProjects();
+    if (then === 'projects') go.goToProjects();
+    if (then === 'podium') go.goToPodium();
   }
 
   race();

@@ -6,7 +6,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { getCustomProjects } from '../data/projectsStorage';
 import { USER_INFO } from '../data/portfolioData';
-import { alternatePath, projectPath, SectionId, sectionPath, useRouter } from '../router';
+import { alternatePath, hiddenPath, projectPath, SectionId, sectionPath, useRouter } from '../router';
 
 /**
  * The ⌘K dialog itself (cmdk). Loaded on first open by CommandPalette, so cmdk and its
@@ -18,6 +18,7 @@ export default function CommandPaletteDialog({ open, onOpenChange }: { open: boo
   const [search, setSearch] = useState('');
   // Easter egg: only shows up when the search looks like a race start
   const query = search.trim().toLowerCase();
+  const pits = query.length >= 3 && ['stand', 'garage', 'coulisses', 'pits', 'behind', 'podium'].some((w) => w.startsWith(query) || query.startsWith(w));
   const raceStart = query.length >= 2 && ['lights out', 'lights', 'départ', 'depart', 'feux', 'f1', 'go go'].some((w) => w.startsWith(query) || query.startsWith(w));
   const { lang } = useLanguage();
   const { theme, toggleTheme } = useTheme();
@@ -81,13 +82,35 @@ export default function CommandPaletteDialog({ open, onOpenChange }: { open: boo
           {lang === 'fr' ? 'Aucun résultat.' : 'No results.'}
         </Command.Empty>
 
+        {pits && (
+          <Command.Group heading={lang === 'fr' ? 'Pages cachées' : 'Hidden pages'} className={group}>
+            <Command.Item value={`stand garage coulisses pits behind ${query}`} onSelect={() => run(() => navigate(hiddenPath(lang, 'stand')))} className={item}>
+              <span className="w-4 text-center shrink-0" aria-hidden="true">🔧</span>
+              <span className="font-semibold">{lang === 'fr' ? 'Au stand' : 'In the pits'}</span>
+              <span className="ml-auto text-xs text-neutral-400 dark:text-[#71717A]">{lang === 'fr' ? 'Les coulisses du site' : 'Behind the site'}</span>
+            </Command.Item>
+            <Command.Item value={`podium classement leaderboard ${query}`} onSelect={() => run(() => navigate(hiddenPath(lang, 'podium')))} className={item}>
+              <span className="w-4 text-center shrink-0" aria-hidden="true">🏆</span>
+              <span className="font-semibold">Podium</span>
+              <span className="ml-auto text-xs text-neutral-400 dark:text-[#71717A]">{lang === 'fr' ? 'Les meilleurs départs' : 'The best starts'}</span>
+            </Command.Item>
+          </Command.Group>
+        )}
+
         {/* First when it shows: a fuzzy match ("lights" → OceanSight) must not take Enter */}
         {raceStart && (
           <Command.Group heading={lang === 'fr' ? 'Départ' : 'Race start'} className={group}>
             <Command.Item
               value={`lights out départ depart feux f1 go ${query}`}
               onSelect={() =>
-                run(() => void import('../easter/lightsOut').then((m) => m.lightsOut(lang, () => navigate(sectionPath(lang, 'projets')))))
+                run(() =>
+                  void import('../easter/lightsOut').then((m) =>
+                    m.lightsOut(lang, {
+                      goToProjects: () => navigate(sectionPath(lang, 'projets')),
+                      goToPodium: () => navigate(hiddenPath(lang, 'podium')),
+                    }),
+                  ),
+                )
               }
               className={item}
             >

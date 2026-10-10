@@ -42,6 +42,8 @@ export function getAllRoutes(): Route[] {
     ...SECTION_IDS.map((section) => ({ name: 'home', lang, section }) as Route),
     ...UNIFIED_PROJECTS.map((p) => ({ name: 'project', lang, slug: p.id }) as Route),
     { name: 'privacy', lang } as Route,
+    { name: 'stand', lang } as Route,
+    { name: 'podium', lang } as Route,
   ]);
 }
 
@@ -398,6 +400,33 @@ function privacyHead(lang: Language): HeadData {
   };
 }
 
+const HIDDEN_META: Record<'stand' | 'podium', Record<Language, { title: string; description: string }>> = {
+  stand: {
+    fr: { title: 'Au stand · Les coulisses du portfolio | Luca Leone', description: 'Les coulisses du portfolio de Luca Leone : la stack, les chiffres du site, ce que ce chargement a coûté, et les secrets cachés dans les pages.' },
+    en: { title: 'In the pits · Behind Luca Leone’s portfolio', description: 'Behind the scenes of Luca Leone’s portfolio: the stack, the site in numbers, what this page load cost, and the secrets hidden in its pages.' },
+  },
+  podium: {
+    fr: { title: 'Podium · Les meilleurs départs | Luca Leone', description: 'Le classement des meilleurs temps de réaction au départ « Lights out » caché dans le portfolio de Luca Leone. Saurez-vous faire mieux ?' },
+    en: { title: 'Podium · The best starts | Luca Leone', description: 'The leaderboard of the best reaction times at the “Lights out” start hidden in Luca Leone’s portfolio. Can you beat them?' },
+  },
+};
+
+/** Hidden pages (easter eggs): reachable by link, kept out of search results */
+function hiddenHead(lang: Language, name: 'stand' | 'podium'): HeadData {
+  const url = abs(pathFor({ name, lang }));
+  return {
+    lang,
+    ...HIDDEN_META[name][lang],
+    canonical: url,
+    alternates: alternatesFor({ name, lang }),
+    ogType: 'profile',
+    image: OG_IMAGE_URL,
+    imageAlt: 'Luca Leone',
+    jsonLd: null,
+    noindex: true,
+  };
+}
+
 function notFoundHead(lang: Language): HeadData {
   return {
     lang,
@@ -419,6 +448,7 @@ export function getHeadData(route: Route): HeadData {
   }
   if (route.name === 'notFound') return notFoundHead(route.lang);
   if (route.name === 'privacy') return privacyHead(route.lang);
+  if (route.name === 'stand' || route.name === 'podium') return hiddenHead(route.lang, route.name);
   if (route.section) return sectionHead(route.lang, route.section);
   return homeHead(route.lang);
 }
@@ -465,7 +495,7 @@ export function renderHeadTags(head: HeadData): string {
     `<meta name="twitter:title" content="${escapeAttr(head.title)}" />`,
     `<meta name="twitter:description" content="${escapeAttr(head.description)}" />`,
     `<meta name="twitter:image" content="${head.image}" />`,
-    `<script type="application/ld+json">\n${jsonLd}\n</script>`,
+    ...(head.jsonLd ? [`<script type="application/ld+json">\n${jsonLd}\n</script>`] : []),
   ]
     .map((line) => `    ${line}`)
     .join('\n');

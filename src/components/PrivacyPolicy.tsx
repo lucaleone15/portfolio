@@ -7,11 +7,12 @@ import { USER_INFO } from '../data/portfolioData';
  * It must describe what the site actually does — keep it in sync with:
  *   server/contact.ts    (contact form: fields, IP used in memory for rate limiting only)
  *   server/analytics.ts  (page views: path, referrer host, date; no IP, no cookie; 13 months)
+ *   server/podium.ts     (Lights out leaderboard: pseudo, time, date, only if the visitor asks)
  *   ThemeContext / index.html (theme preference in localStorage)
  *   LanguageHint (dismissed language suggestion in localStorage)
  */
 
-const LAST_UPDATED = { fr: '2 octobre 2026', en: 'October 2, 2026' };
+const LAST_UPDATED = { fr: '10 octobre 2026', en: 'October 10, 2026' };
 
 interface Section {
   title: string;
@@ -67,6 +68,13 @@ const CONTENT: Record<'fr' | 'en', { label: string; title: string; intro: string
         body: [
           'Si vous choisissez un thème (clair ou sombre), ce choix est mémorisé dans le stockage local de votre navigateur (localStorage) pour être réappliqué à votre prochaine visite. De même, si le site vous suggère l’autre langue et que vous fermez ou suivez cette suggestion, ce choix est mémorisé pour ne plus vous la proposer. Ces informations restent sur votre appareil et ne sont jamais transmises. Vous pouvez les supprimer en effaçant les données du site dans votre navigateur.',
           'Le site n’utilise aucun cookie.',
+        ],
+      },
+      {
+        title: 'Jeu « Lights out » et podium',
+        body: [
+          'Le site cache un petit jeu de départ de course. Votre meilleur temps et le dernier pseudo utilisé sont mémorisés dans votre navigateur (localStorage), sur votre appareil uniquement.',
+          'Si vous choisissez d’inscrire votre temps au podium, le serveur enregistre le pseudo que vous saisissez, votre temps et la date, et les affiche publiquement sur la page du podium. Rien d’autre n’est enregistré : ni adresse IP, ni identifiant. Choisissez un pseudo qui ne permet pas de vous identifier si vous le préférez. Pour faire retirer un pseudo du podium, écrivez à l’adresse indiquée plus haut.',
         ],
       },
       {
@@ -151,6 +159,13 @@ const CONTENT: Record<'fr' | 'en', { label: string; title: string; intro: string
         body: [
           'If you choose a theme (light or dark), your choice is remembered in your browser’s local storage (localStorage) so it applies on your next visit. Likewise, if the site suggests the other language and you close or follow that suggestion, this is remembered so it isn’t shown again. This information stays on your device and is never sent anywhere. You can remove it by clearing the site’s data in your browser.',
           'The site uses no cookies.',
+        ],
+      },
+      {
+        title: '“Lights out” game and podium',
+        body: [
+          'The site hides a small race-start game. Your best time and the last nickname you used are remembered in your browser (localStorage), on your device only.',
+          'If you choose to put your time on the podium, the server records the nickname you type, your time and the date, and shows them publicly on the podium page. Nothing else is recorded: no IP address, no identifier. Pick a nickname that doesn’t identify you if you prefer. To have a nickname removed from the podium, write to the address given above.',
         ],
       },
       {
