@@ -67,6 +67,7 @@ const CONTENT: Record<'fr' | 'en', { label: string; title: string; intro: string
         title: 'Stockage dans votre navigateur',
         body: [
           'Si vous choisissez un thème (clair ou sombre), ce choix est mémorisé dans le stockage local de votre navigateur (localStorage) pour être réappliqué à votre prochaine visite. De même, si le site vous suggère l’autre langue et que vous fermez ou suivez cette suggestion, ce choix est mémorisé pour ne plus vous la proposer. Ces informations restent sur votre appareil et ne sont jamais transmises. Vous pouvez les supprimer en effaçant les données du site dans votre navigateur.',
+          'Pour afficher une page de remplacement quand vous n’avez plus de connexion, votre navigateur garde aussi une copie de cette seule page (un « service worker »). Elle ne contient aucune donnée vous concernant.',
           'Le site n’utilise aucun cookie.',
         ],
       },
@@ -158,6 +159,7 @@ const CONTENT: Record<'fr' | 'en', { label: string; title: string; intro: string
         title: 'Storage in your browser',
         body: [
           'If you choose a theme (light or dark), your choice is remembered in your browser’s local storage (localStorage) so it applies on your next visit. Likewise, if the site suggests the other language and you close or follow that suggestion, this is remembered so it isn’t shown again. This information stays on your device and is never sent anywhere. You can remove it by clearing the site’s data in your browser.',
+          'To show a stand-in page when you lose your connection, your browser also keeps a copy of that one page (a “service worker”). It contains no data about you.',
           'The site uses no cookies.',
         ],
       },
