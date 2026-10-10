@@ -205,9 +205,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
             className="absolute inset-0 overflow-hidden rounded-2xl"
             style={projectMediaTransition(project.id)}
           >
+            {/* Still image: the hover clip's first frame when there is one, so nothing shifts
+                when the clip takes over */}
             <img
-              src={project.imageUrl}
-              srcSet={imageSrcSet(project.imageUrl)}
+              src={project.poster ?? project.imageUrl}
+              srcSet={imageSrcSet(project.poster ?? project.imageUrl)}
               sizes="(min-width: 768px) 46vw, 100vw"
               alt={`${project.name} – ${project.subtitle}`}
               width={600}
@@ -220,6 +222,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               <video
                 ref={dive.videoRef}
                 src={project.video}
+                poster={project.poster}
                 muted
                 playsInline
                 preload="none"
