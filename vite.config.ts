@@ -4,6 +4,9 @@ import path from 'path';
 import {defineConfig, loadEnv, type Plugin} from 'vite';
 import {createContactHandler} from './server/contact';
 import {createAnalyticsHandler} from './server/analytics';
+import {createPodiumHandler} from './server/podium';
+import {execSync} from 'node:child_process';
+import {readFileSync} from 'node:fs';
 
 /**
  * The site's own endpoints during `npm run dev` / `vite preview` (production uses
@@ -12,11 +15,32 @@ import {createAnalyticsHandler} from './server/analytics';
 function siteApi(env: Record<string, string>): Plugin {
   const contact = createContactHandler(env);
   const analytics = createAnalyticsHandler(env);
+  const podium = createPodiumHandler();
   const mount = (server: { middlewares: { use: (fn: never) => void } }) => {
     server.middlewares.use(contact as never);
     server.middlewares.use(analytics as never);
+    server.middlewares.use(podium as never);
   };
   return { name: 'site-api', configureServer: mount, configurePreviewServer: mount };
+}
+
+/** Facts shown on the hidden /stand page, read at build time (git may be missing: then empty) */
+function buildInfo() {
+  const git = (cmd: string) => {
+    try {
+      return execSync(cmd, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    } catch {
+      return '';
+    }
+  };
+  const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
+  const version = (name: string) => String(pkg.dependencies?.[name] ?? pkg.devDependencies?.[name] ?? '').replace(/^[\^~]/, '');
+  return {
+    commits: Number(git('git rev-list --count HEAD')) || 0,
+    firstCommit: git('git log --reverse --format=%cs | head -1'),
+    builtAt: new Date().toISOString().slice(0, 10),
+    versions: Object.fromEntries(['react', 'vite', 'tailwindcss', 'typescript', 'motion', 'gsap', 'nodemailer'].map((n) => [n, version(n)])),
+  };
 }
 
 export default defineConfig(({ isSsrBuild, mode }) => {
@@ -24,6 +48,7 @@ export default defineConfig(({ isSsrBuild, mode }) => {
   const env = { ...loadEnv(mode, process.cwd(), ''), ...process.env } as Record<string, string>;
   return {
     plugins: [react(), tailwindcss(), siteApi(env)],
+    define: { __BUILD_INFO__: JSON.stringify(buildInfo()) },
     build: {
       // The SSR bundle (dist-ssr) is only used by scripts/prerender.mjs: no need to copy public/
       copyPublicDir: !isSsrBuild,

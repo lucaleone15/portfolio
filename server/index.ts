@@ -5,6 +5,7 @@ import path from 'node:path';
 import zlib from 'node:zlib';
 import { createContactHandler } from './contact';
 import { createAnalyticsHandler } from './analytics';
+import { createPodiumHandler } from './podium';
 
 /**
  * Production server (replaces `vite preview`, which Vite says isn't meant for production).
@@ -189,6 +190,7 @@ function canonicalPagePath(pathname: string) {
 
 const contact = createContactHandler(env);
 const analytics = createAnalyticsHandler(env);
+const podium = createPodiumHandler();
 
 const server = http.createServer((req, res) => {
   for (const [name, value] of Object.entries(SECURITY_HEADERS)) res.setHeader(name, value);
@@ -234,7 +236,7 @@ const server = http.createServer((req, res) => {
     send(req, res, path.join(DIST, '404.html'), 404);
   };
 
-  analytics(req, res, () => contact(req, res, next404));
+  analytics(req, res, () => contact(req, res, () => podium(req, res, next404)));
 });
 
 const port = Number(env.PORT || 3000);

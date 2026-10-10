@@ -14,6 +14,8 @@ import { LanguageHint } from './components/LanguageHint';
 import { IntroCurtain, skipIntro } from './components/IntroCurtain';
 import { NotFound } from './components/NotFound';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
+import { StandPage } from './components/StandPage';
+import { PodiumPage } from './components/PodiumPage';
 import { watchPrinting } from './print';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { ThemeProvider } from './context/ThemeContext';
@@ -38,29 +40,10 @@ function useDocumentHead() {
   }, [route]);
 }
 
-// Easter egg: the tab calls you back while you look elsewhere
-function useAwayTitle(lang: 'fr' | 'en') {
-  useEffect(() => {
-    let title = '';
-    const onVisibility = () => {
-      if (document.hidden) {
-        title = document.title;
-        document.title = lang === 'fr' ? 'Reviens au stand 🏁 · Portfolio de Luca Leone' : 'Back to the pits 🏁 · Luca Leone’s portfolio';
-      } else if (title) {
-        document.title = title;
-        title = '';
-      }
-    };
-    document.addEventListener('visibilitychange', onVisibility);
-    return () => document.removeEventListener('visibilitychange', onVisibility);
-  }, [lang]);
-}
-
 function PortfolioApp() {
   const projectsData = getCustomProjects();
   const { lang } = useLanguage();
   const { route, syncPath } = useRouter();
-  useAwayTitle(lang);
   useEffect(watchPrinting, []);
 
   const allProjects = lang === 'fr' ? projectsData.fr : projectsData.en;
@@ -150,6 +133,10 @@ function PortfolioApp() {
         <NotFound />
       ) : route.name === 'privacy' ? (
         <PrivacyPolicy />
+      ) : route.name === 'stand' ? (
+        <StandPage />
+      ) : route.name === 'podium' ? (
+        <PodiumPage />
       ) : selectedProject ? (
         <ProjectDetailView
           project={selectedProject}

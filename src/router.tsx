@@ -20,6 +20,7 @@ import { Language } from './types';
  *   /                    FR home        /en/                   EN home
  *   /projets/:slug       FR project     /en/projects/:slug     EN project
  *   /confidentialite     FR privacy     /en/privacy            EN privacy
+ *   /stand  /podium      hidden pages (easter eggs), same slugs in English under /en
  *
  * The home page is one long scrolling page, but each of its sections has its own URL:
  *   /projets  /a-propos  /contact        /en/projects  /en/about  /en/contact
@@ -40,7 +41,14 @@ export type Route =
   | { name: 'home'; lang: Language; section?: SectionId }
   | { name: 'project'; lang: Language; slug: string }
   | { name: 'privacy'; lang: Language }
+  | { name: 'stand'; lang: Language }
+  | { name: 'podium'; lang: Language }
   | { name: 'notFound'; lang: Language };
+
+/** Hidden pages (easter eggs): not in the menus, noindex, out of the sitemap */
+export function hiddenPath(lang: Language, name: 'stand' | 'podium'): string {
+  return `${lang === 'fr' ? '' : '/en'}/${name}`;
+}
 
 export function homePath(lang: Language): string {
   return lang === 'fr' ? '/' : '/en/';
@@ -62,6 +70,7 @@ export function sectionPath(lang: Language, section: SectionId): string {
 export function pathFor(route: Route): string {
   if (route.name === 'project') return projectPath(route.lang, route.slug);
   if (route.name === 'privacy') return privacyPath(route.lang);
+  if (route.name === 'stand' || route.name === 'podium') return hiddenPath(route.lang, route.name);
   if (route.name === 'home' && route.section) return sectionPath(route.lang, route.section);
   return homePath(route.lang);
 }
@@ -81,6 +90,8 @@ export function parsePath(pathname: string): Route {
   const section = SECTION_IDS.find((id) => rest === `/${SECTION_SLUGS[lang][id]}`);
   if (section) return { name: 'home', lang, section };
   if (rest === (isEn ? '/privacy' : '/confidentialite')) return { name: 'privacy', lang };
+  if (rest === '/stand') return { name: 'stand', lang };
+  if (rest === '/podium') return { name: 'podium', lang };
 
   const match = rest.match(isEn ? /^\/projects\/([a-z0-9-]+)$/ : /^\/projets\/([a-z0-9-]+)$/);
   if (match) return { name: 'project', lang, slug: match[1] };
