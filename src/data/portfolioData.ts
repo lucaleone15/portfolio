@@ -127,7 +127,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     stackEn: ['Laravel & Vue.js', 'UI/UX Design', 'Digital Communication', 'Print & Social Media'],
     // HUG red, as in the project PDF
     accentColor: '#E62F2E',
-    logo: { src: '/images/logos/hug.webp', srcDark: '/images/logos/hug-dark.webp', width: 344, height: 160, display: 32 },
+    logo: { src: '/images/logos/hug.webp', srcDark: '/images/logos/hug-dark.webp', width: 705, height: 160, display: 34 },
     fr: {
       title: 'HUG',
       subtitle: 'Campagne digitale & plateforme web',
@@ -215,7 +215,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     stackEn: ['Social Media Strategy', 'Instagram & TikTok', 'Photo & Video', 'Premiere Pro'],
     // Karting Vuiteboeuf red, as in the project PDF (underlines, italics)
     accentColor: '#EB1D3E',
-    logo: { src: '/images/logos/karting-vuiteboeuf.webp', srcDark: '/images/logos/karting-vuiteboeuf-dark.webp', width: 709, height: 160, display: 25 },
+    logo: { src: '/images/logos/karting-vuiteboeuf.webp', srcDark: '/images/logos/karting-vuiteboeuf-dark.webp', width: 709, height: 160, display: 34 },
     fr: {
       title: 'KARTING VUITEBOEUF',
       subtitle: 'Communication digitale & création de contenus',
@@ -293,7 +293,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     // OceanSight teal, as in the project PDF: the deep one on light, the bright one on dark
     accentColor: '#275F5F',
     accentColorDark: '#2EBBA6',
-    logo: { src: '/images/logos/oceansight.webp', srcDark: '/images/logos/oceansight-dark.webp', width: 482, height: 160, display: 28 },
+    logo: { src: '/images/logos/oceansight.webp', srcDark: '/images/logos/oceansight-dark.webp', width: 482, height: 160, display: 40 },
     fr: {
       title: 'OCEANSIGHT',
       subtitle: 'Application mobile de signalement des déchets marins',
@@ -364,7 +364,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     // Étoile Blanche red, as on the printed menus
     accentColor: '#AB2328',
     accentColorDark: '#E0484E',
-    logo: { src: '/images/logos/etoile-blanche.webp', srcDark: '/images/logos/etoile-blanche-dark.webp', width: 705, height: 160, display: 25 },
+    logo: { src: '/images/logos/etoile-blanche.webp', srcDark: '/images/logos/etoile-blanche-dark.webp', width: 705, height: 160, display: 34 },
     fr: {
       title: 'ÉTOILE BLANCHE',
       subtitle: 'Communication d’un restaurant lausannois',
@@ -443,7 +443,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     // DriveGear navy and blue, as in the brand palette
     accentColor: '#2A2A72',
     accentColorDark: '#009FFD',
-    logo: { src: '/images/logos/drivegear.webp', srcDark: '/images/logos/drivegear-dark.webp', width: 1111, height: 160, display: 21 },
+    logo: { src: '/images/logos/drivegear.webp', srcDark: '/images/logos/drivegear-dark.webp', width: 286, height: 160, display: 40 },
     fr: {
       title: 'DRIVEGEAR',
       subtitle: 'Boutique e-commerce automobile',
@@ -512,7 +512,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     // The app's racing red
     accentColor: '#C8102E',
     accentColorDark: '#F23845',
-    logo: { src: '/images/logos/f1-pitwall.webp', srcDark: '/images/logos/f1-pitwall-dark.webp', width: 1792, height: 160, display: 18 },
+    logo: { src: '/images/logos/f1-pitwall.webp', srcDark: '/images/logos/f1-pitwall-dark.webp', width: 477, height: 160, display: 40 },
     fr: {
       title: 'F1 PITWALL',
       subtitle: 'Application de second écran pour la Formule 1',
