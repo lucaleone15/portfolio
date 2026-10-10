@@ -66,7 +66,7 @@ export function Hero() {
 
   return (
     <section
-      className="relative min-h-[90dvh] pt-24 sm:pt-32 pb-10 sm:pb-14 overflow-hidden flex flex-col justify-between bg-[#F9F9FB] dark:bg-[#0A0A0C] transition-colors duration-300"
+      className="relative min-h-[90dvh] print:min-h-0 print:pt-6 print:gap-10 pt-24 sm:pt-32 pb-10 sm:pb-14 overflow-hidden flex flex-col justify-between bg-[#F9F9FB] dark:bg-[#0A0A0C] transition-colors duration-300"
     >
       {/* Accent gradient + grain (same texture as the intro curtain) */}
       <NeonBackdrop />
