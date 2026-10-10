@@ -114,35 +114,9 @@ eb = pdf_region('matiere/etoileblanche/M53-1_Zest_playbook.pdf', 0, (55, 55, 262
 # Dark red reads poorly on the dark theme: there, the name is white (it is the white star)
 save(unmix(eb.crop((80, 260, eb.width - 80, 610)), (255, 255, 255)), 'etoile-blanche', dark_mono=True)
 
-# DriveGear: transparent logo file, the stacked version (DRIVE / GEAR): the one-line one is
-# too long for the cards
-save(Image.open('matiere/drivegear/Logo/LogoV1.png').convert('RGBA'), 'drivegear')
+# DriveGear: transparent logo file, the one-line version
+save(Image.open('matiere/drivegear/Logo/LogoLigneV1.png').convert('RGBA'), 'drivegear')
 
 # F1 PitWall: the cover of the mock-ups (vector), on black
 f1 = pdf_region('matiere/f1pitwall/webdon-labo2-luca-leone-M53-1--maquettes.pdf', 0, (100, 380, 1820, 660), 144)
-f1 = crop(key(f1, f1.getpixel((5, 5))))
-
-
-def split_at_widest_gap(im: Image.Image):
-    """Left and right parts of a one-line logo, cut at the widest empty column run"""
-    alpha = im.getchannel('A')
-    empty = [alpha.crop((x, 0, x + 1, im.height)).getbbox() is None for x in range(im.width)]
-    best, start = (0, 0), None
-    for x, e in enumerate(empty + [False]):
-        if e and start is None:
-            start = x
-        if not e and start is not None:
-            if x - start > best[1] - best[0]:
-                best = (start, x)
-            start = None
-    return crop(im.crop((0, 0, best[0], im.height))), crop(im.crop((best[1], 0, im.width, im.height)))
-
-
-# One line is eleven times wider than high: the F1 mark goes over PITWALL instead
-mark, word = split_at_widest_gap(f1)
-mark = mark.resize((round(word.width * 0.62), round(mark.height * word.width * 0.62 / mark.width)), Image.LANCZOS)
-gap = round(word.height * 0.28)
-stacked = Image.new('RGBA', (word.width, mark.height + gap + word.height), (0, 0, 0, 0))
-stacked.alpha_composite(mark, (0, 0))
-stacked.alpha_composite(word, (0, mark.height + gap))
-save(stacked, 'f1-pitwall')
+save(key(f1, f1.getpixel((5, 5))), 'f1-pitwall')

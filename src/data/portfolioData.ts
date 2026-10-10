@@ -443,7 +443,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     // DriveGear navy and blue, as in the brand palette
     accentColor: '#2A2A72',
     accentColorDark: '#009FFD',
-    logo: { src: '/images/logos/drivegear.webp', srcDark: '/images/logos/drivegear-dark.webp', width: 286, height: 160, display: 40 },
+    logo: { src: '/images/logos/drivegear.webp', srcDark: '/images/logos/drivegear-dark.webp', width: 1111, height: 160, display: 22 },
     fr: {
       title: 'DRIVEGEAR',
       subtitle: 'Boutique e-commerce automobile',
@@ -512,7 +512,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     // The app's racing red
     accentColor: '#C8102E',
     accentColorDark: '#F23845',
-    logo: { src: '/images/logos/f1-pitwall.webp', srcDark: '/images/logos/f1-pitwall-dark.webp', width: 477, height: 160, display: 40 },
+    logo: { src: '/images/logos/f1-pitwall.webp', srcDark: '/images/logos/f1-pitwall-dark.webp', width: 1792, height: 160, display: 18 },
     fr: {
       title: 'F1 PITWALL',
       subtitle: 'Application de second écran pour la Formule 1',
