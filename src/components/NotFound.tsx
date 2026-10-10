@@ -9,20 +9,30 @@ import { NeonBackdrop } from './NeonBackdrop';
  * short of the tyre wall. The car is public/images/f1-car.svg (also in the offline game).
  *
  * Large screens: the circuit is the page's background, edge to edge, and the text sits on
- * a fade of the page colour on the left. Phones: the scene runs the full width under the
+ * a fade of the page colour on the left, over the exit of the corner. Phones: the scene runs the full width under the
  * text, fading in and out at the top and bottom.
  */
 
-// Centre line of the circuit: up the straight, then into the bend
-const TRACK = 'M 175 540 L 175 300 C 175 195 255 150 365 150 L 760 150';
-// Kerbs only where the bend is, as on a real circuit
-const BEND = 'M 175 336 C 175 205 252 150 392 150';
+// Drawn to scale, as on a real circuit (1 m ≈ 8 units): a 13 m wide straight comes up the
+// right of the scene and turns left; the car went straight on at the turn-in, across the grass
+// verge and into the gravel trap, and stopped short of the tyre barrier.
+const TRACK = 'M 470 620 L 470 360 C 470 260 400 210 300 210 L -120 210';
+// Kerbs only where real circuits have them: inside at the apex, outside at the exit, just
+// beyond the white line (track limit)
+const APEX_KERB = 'M 410 420 L 410 360 C 410 302 366 270 300 270 L 240 270';
+const EXIT_KERB = 'M 318 150 C 280 150 240 150 150 150';
+// Racing line, rubbered in: outside on entry, apex, outside on exit
+const RACING_LINE = 'M 506 620 L 506 390 C 504 312 452 272 372 258 C 300 246 262 184 160 172 L -120 168';
 
-// Tyre wall around the gravel trap: two staggered rows along its outer edges
-const TYRES = [
-  ...Array.from({ length: 17 }, (_, i) => ({ x: 20 + (i % 2) * 7, y: 390 - i * 21 })),
-  ...Array.from({ length: 22 }, (_, i) => ({ x: 44 + i * 21, y: 20 + (i % 2) * 7 })),
-];
+// Tyre barrier: stacks three tyres deep (tyres 0.6 m across), along the top and the right
+// edge of the gravel trap, faced with a conveyor belt on the side cars hit
+const TYRE_R = 2.6;
+const BARRIER_TOP = Array.from({ length: 3 }, (_, row) =>
+  Array.from({ length: 82 }, (_, i) => ({ x: 170 + i * 5.3 + (row % 2) * 2.65, y: 74 + row * 4.6 })),
+).flat();
+const BARRIER_RIGHT = Array.from({ length: 3 }, (_, col) =>
+  Array.from({ length: 100 }, (_, i) => ({ x: 618 + col * 4.6, y: 88 + i * 5.3 + (col % 2) * 2.65 })),
+).flat();
 
 /**
  * `fill`: covers its box (page background); otherwise its natural size with soft top and
@@ -31,9 +41,11 @@ const TYRES = [
  */
 function OffTrack({ fr, fill, id }: { fr: boolean; fill: boolean; id: string }) {
   const ref = (name: string) => `url(#${id}-${name})`;
+  // Phones: closer on the corner and the gravel trap, so the car reads at that size
+  const view = fill ? { x: 0, y: 0, w: 640, h: 460 } : { x: 280, y: 40, w: 360, h: 330 };
   return (
     <svg
-      viewBox="0 0 640 460"
+      viewBox={`${view.x} ${view.y} ${view.w} ${view.h}`}
       preserveAspectRatio={fill ? 'xMidYMid slice' : 'xMidYMid meet'}
       className={fill ? 'absolute inset-0 w-full h-full' : 'block w-full h-auto'}
       role="img"
@@ -46,8 +58,8 @@ function OffTrack({ fr, fill, id }: { fr: boolean; fill: boolean; id: string }) 
           <stop offset="0.82" stopColor="#fff" />
           <stop offset="1" stopColor="#fff" stopOpacity="0" />
         </linearGradient>
-        <mask id={`${id}-mask`} maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="460">
-          <rect width="640" height="460" fill={ref('fade-y')} />
+        <mask id={`${id}-mask`} maskUnits="userSpaceOnUse" x={view.x} y={view.y} width={view.w} height={view.h}>
+          <rect x={view.x} y={view.y} width={view.w} height={view.h} fill={ref('fade-y')} />
         </mask>
         {/* Mown grass: wide diagonal stripes */}
         <pattern id={`${id}-mown`} width="90" height="90" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
@@ -73,64 +85,83 @@ function OffTrack({ fr, fill, id }: { fr: boolean; fill: boolean; id: string }) 
             <feMergeNode in="stones" />
           </feMerge>
         </filter>
-        <filter id={`${id}-shadow`} x="-40%" y="-20%" width="180%" height="140%">
-          <feDropShadow dx="-6" dy="9" stdDeviation="6" floodColor="#000" floodOpacity="0.45" />
+        <filter id={`${id}-shadow`} x="-60%" y="-30%" width="220%" height="160%">
+          <feDropShadow dx="1.6" dy="2.4" stdDeviation="1.4" floodColor="#000" floodOpacity="0.45" />
         </filter>
         <filter id={`${id}-dust`} x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="9" />
+          <feGaussianBlur stdDeviation="5" />
         </filter>
-        <radialGradient id={`${id}-light`} cx="78%" cy="15%" r="95%">
+        <radialGradient id={`${id}-light`} cx="80%" cy="20%" r="95%">
           <stop offset="0" stopColor="#fff" stopOpacity="0.12" />
           <stop offset="1" stopColor="#000" stopOpacity="0.2" />
         </radialGradient>
       </defs>
 
       <g mask={fill ? undefined : ref('mask')}>
-        {/* Mirrored so the car stops on the right, away from the text; shifted so it sits
-            clear of the edges */}
-        <g transform="translate(640 0) scale(-1 1) translate(80 70)">
+        <g>
+          {/* Grass, mown in stripes */}
           <rect x="-200" y="-200" width="1040" height="860" fill={ref('mown')} filter={ref('grain')} />
 
-          {/* Gravel trap on the outside of the bend */}
-          <path d="M -200 -200 H 560 C 562 40 470 72 365 74 C 232 76 98 160 98 300 C 98 352 72 398 -200 460 Z" fill="#d9caa4" filter={ref('stones')} />
+          {/* Service road and catch fence behind the barrier */}
+          <path d="M -200 40 H 662 V 660" fill="none" stroke="#6b6b70" strokeWidth="14" />
+          <path d="M 156 60 H 638 V 660" fill="none" stroke="#9a9aa0" strokeWidth="1.2" strokeDasharray="1 7" />
+          <path d="M 156 60 H 638 V 660" fill="none" stroke="#9a9aa0" strokeOpacity="0.6" strokeWidth="0.6" />
 
-          {/* Tyre wall */}
-          {TYRES.map((t, i) => (
-            <g key={i}>
-              <circle cx={t.x} cy={t.y} r="10.5" fill="#151517" />
-              <circle cx={t.x} cy={t.y} r="4.5" fill="#2e2e33" />
+          {/* Gravel trap, behind a grass verge on the outside of the corner */}
+          <path d="M 552 660 L 552 360 C 552 222 440 128 300 128 L 156 128 L 156 66 L 612 66 L 612 660 Z" fill="#d9caa4" filter={ref('stones')} />
+
+          {/* Tyre barrier and its conveyor belt facing the gravel */}
+          <g fill="#17171a">
+            {[...BARRIER_TOP, ...BARRIER_RIGHT].map((t, i) => (
+              <circle key={i} cx={t.x} cy={t.y} r={TYRE_R} />
+            ))}
+          </g>
+          <g fill="#2f2f34">
+            {[...BARRIER_TOP, ...BARRIER_RIGHT].map((t, i) => (
+              <circle key={i} cx={t.x} cy={t.y} r={TYRE_R * 0.42} />
+            ))}
+          </g>
+          <path d="M 168 87.5 H 613.5 V 660" fill="none" stroke="#c8102e" strokeWidth="3.2" strokeLinejoin="round" />
+          <path d="M 168 86.2 H 612.2 V 660" fill="none" stroke="#fff" strokeOpacity="0.35" strokeWidth="0.7" />
+
+          {/* Track: white lines (track limits), asphalt, rubbered racing line */}
+          <path d={TRACK} fill="none" stroke="#f2f2f2" strokeWidth="108" />
+          <path d={TRACK} fill="none" stroke="#2b2b30" strokeWidth="104" filter={ref('grain')} />
+          <path d={RACING_LINE} fill="none" stroke="#000" strokeOpacity="0.18" strokeWidth="22" strokeLinecap="round" />
+
+          {/* Kerbs: red and white blocks about 1 m long */}
+          {[APEX_KERB, EXIT_KERB].map((d) => (
+            <g key={d}>
+              <path d={d} fill="none" stroke="#f2f2f2" strokeWidth="11" />
+              <path d={d} fill="none" stroke="#d7141a" strokeWidth="11" strokeDasharray="8 8" />
             </g>
           ))}
 
-          {/* Circuit: kerbs in the bend, white edge lines, asphalt, racing line */}
-          <path d={BEND} fill="none" stroke="#f2f2f2" strokeWidth="132" />
-          <path d={BEND} fill="none" stroke="#d7141a" strokeWidth="132" strokeDasharray="16 16" />
-          <path d={TRACK} fill="none" stroke="#f2f2f2" strokeWidth="118" />
-          <path d={TRACK} fill="none" stroke="#2b2b30" strokeWidth="110" filter={ref('grain')} />
-          <path d="M 160 540 L 160 310 C 160 200 245 165 365 168 L 760 172" fill="none" stroke="#000" strokeOpacity="0.2" strokeWidth="30" />
-
-          {/* Straight on: black marks on the asphalt, then ruts in the gravel */}
+          {/* Straight on at the turn-in: rubber on the asphalt, earth on the verge, ruts in the gravel */}
           <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5, duration: 0.6 }} fill="none" strokeLinecap="round">
-            <g stroke="#0d0d0f" strokeOpacity="0.45" strokeWidth="8">
-              <path d="M 160 330 C 160 250 159 200 157 174" />
-              <path d="M 186 330 C 186 240 184 186 181 156" />
+            <g stroke="#0d0d0f" strokeOpacity="0.5" strokeWidth="2.4">
+              <path d="M 489 430 C 489 330 490 260 492 212" />
+              <path d="M 502 430 C 502 330 503 258 505 208" />
             </g>
-            <g stroke="#8c7a55" strokeOpacity="0.7" strokeWidth="9">
-              <path d="M 157 176 C 150 166 140 158 129 152" />
-              <path d="M 181 158 C 175 150 167 144 158 140" />
+            <g stroke="#5b4a2e" strokeOpacity="0.55" strokeWidth="3">
+              <path d="M 492 208 C 493 190 494 176 495 162" />
+              <path d="M 505 204 C 506 188 507 174 508 160" />
+            </g>
+            <g stroke="#9c8a62" strokeOpacity="0.75" strokeWidth="3.4">
+              <path d="M 495 160 C 496 148 497 140 498 134" />
+              <path d="M 508 158 C 509 146 510 138 511 132" />
             </g>
           </motion.g>
 
-          {/* The car, stopped in the gravel a little sideways, and its dust */}
+          {/* The car (5.6 m by 2 m), stopped in the gravel, and the dust it raised */}
           <motion.g
-            initial={{ x: 40, y: 200, rotate: 22, opacity: 0 }}
-            animate={{ x: 0, y: 0, rotate: 0, opacity: 1 }}
+            initial={{ y: 150, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-            style={{ transformOrigin: '126px 104px' }}
           >
-            <ellipse cx="104" cy="62" rx="50" ry="22" fill="#efe4c6" opacity="0.8" filter={ref('dust')} />
-            <g transform="translate(126 104) rotate(-22)">
-              <image href="/images/f1-car.svg" x="-20" y="-56" width="40" height="112" filter={ref('shadow')} />
+            <ellipse cx="506" cy="116" rx="26" ry="12" fill="#efe4c6" opacity="0.85" filter={ref('dust')} />
+            <g transform="translate(504 112) rotate(6)">
+              <image href="/images/f1-car.svg" x="-8" y="-22.4" width="16" height="44.8" filter={ref('shadow')} />
             </g>
           </motion.g>
         </g>
@@ -147,7 +178,7 @@ export function NotFound() {
   return (
     <main id="main-content" className="relative z-10 min-h-[100dvh] flex items-center overflow-hidden">
       {/* Large screens: the circuit fills the page; the page colour fades in on the left so
-          the text reads on it */}
+          the text reads on it (the action is on the right) */}
       <div className="absolute inset-0 hidden lg:block" aria-hidden="true">
         <OffTrack fr={fr} fill id="ot-bg" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,#F9F9FB_0%,rgba(249,249,251,0.94)_34%,rgba(249,249,251,0)_64%)] dark:bg-[linear-gradient(90deg,#0A0A0C_0%,rgba(10,10,12,0.94)_34%,rgba(10,10,12,0)_64%)]" />
