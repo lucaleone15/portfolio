@@ -91,8 +91,8 @@ export const META: Record<string, Record<Language, { title: string; description:
     en: { title: "HUG: a blood donation web platform | Luca Leone", description: "For the Geneva University Hospitals, an online survey that checks blood donation eligibility before booking. Graded 6/6." },
   },
   "karting-vuiteboeuf": {
-    fr: { title: "Karting de Vuiteboeuf : réseaux sociaux | Luca Leone", description: "Community manager du Karting de Vuiteboeuf : stratégie, photo et vidéo sur Instagram et TikTok. 329’000 vues depuis mai." },
-    en: { title: "Karting de Vuiteboeuf: social media | Luca Leone", description: "Community manager at Karting de Vuiteboeuf: strategy, photo and video on Instagram, TikTok and Facebook. 329,000 views since May." },
+    fr: { title: "Karting de Vuiteboeuf : réseaux sociaux | Luca Leone", description: "Community manager du Karting de Vuiteboeuf : photo, vidéo, Instagram et TikTok, et une app qui publie les résultats. 329’000 vues depuis mai." },
+    en: { title: "Karting de Vuiteboeuf: social media | Luca Leone", description: "Community manager at Karting de Vuiteboeuf: photo, video, Instagram, TikTok, and an app that posts race results. 329,000 views since May." },
   },
   "oceansight": {
     fr: { title: "OceanSight : app contre les déchets marins | Luca Leone", description: "OceanSight, app mobile pour signaler les déchets marins et rejoindre une mission de nettoyage. Recherche UX, prototype Figma." },
