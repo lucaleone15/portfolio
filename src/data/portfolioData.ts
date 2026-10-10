@@ -210,9 +210,10 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
       'Stratégie Social Media',
       'Instagram & TikTok',
       'Photo & Vidéo',
-      'Premiere Pro'
+      'Premiere Pro',
+      'Automatisation (React, Electron)'
     ],
-    stackEn: ['Social Media Strategy', 'Instagram & TikTok', 'Photo & Video', 'Premiere Pro'],
+    stackEn: ['Social Media Strategy', 'Instagram & TikTok', 'Photo & Video', 'Premiere Pro', 'Automation (React, Electron)'],
     // Karting Vuiteboeuf red, as in the project PDF (underlines, italics)
     accentColor: '#EB1D3E',
     logo: { src: '/images/logos/karting-vuiteboeuf.webp', srcDark: '/images/logos/karting-vuiteboeuf-dark.webp', width: 709, height: 160, display: 34 },

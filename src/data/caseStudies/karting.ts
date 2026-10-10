@@ -14,7 +14,7 @@ const KARTING_FR: CaseStudy = {
     { label: 'Durée', value: 'Depuis mai 2026, en cours' },
     { label: 'Mon rôle', value: 'Community manager : stratégie, photo, vidéo, publication' },
     { label: 'Équipe', value: 'Seul, avec l’équipe du karting' },
-    { label: 'Outils', value: 'Premiere Pro, Instagram, TikTok' },
+    { label: 'Outils', value: 'Premiere Pro, Instagram, TikTok ; React et Electron pour l’app' },
   ],
   links: [
     { label: 'Instagram', href: 'https://www.instagram.com/kartingvuiteboeuf/' },
@@ -126,7 +126,43 @@ const KARTING_FR: CaseStudy = {
             img('resultats-4', 800, 1000, 'Podium et classement de la Sprint 270cc, deuxième manche'),
           ],
         },
-        'Pour ces résultats, j’ai développé un logiciel qui va chercher les classements des courses en ligne et prépare automatiquement les visuels à publier. Les résultats sortent plus vite, toujours au même format, et sans erreur de recopie.',
+        'Ces carrousels de résultats, je ne les monte plus à la main : ils sortent d’une application que j’ai développée.',
+      ],
+    },
+    {
+      id: 'automatisation',
+      nav: 'L’automatisation',
+      title: 'Une app pour publier les résultats',
+      content: [
+        'Après chaque course, les classements paraissent sur SWS, la plateforme des championnats de karting, puis il fallait les recopier dans les visuels. Un week-end peut compter jusqu’à huit courses : c’était long, répétitif, et la moindre faute dans un nom se voyait.',
+        'J’ai donc conçu et développé une application pour Mac qui fait ce travail, en quatre semaines, entre juin et juillet.',
+        {
+          type: 'steps',
+          frame: 'screen',
+          steps: [
+            {
+              text: 'Un clic sur « Mettre à jour » récupère le calendrier, les résultats et les classements du circuit sur SWS (je valide moi-même la vérification anti-robot du site). L’app signale ce qui a changé depuis la dernière fois.',
+              image: img('app-mise-a-jour', 1600, 1000, 'Application Karting Vuiteboeuf : calendrier des courses et bandeau « 8 nouveaux résultats · 4 changements de classement »'),
+            },
+            {
+              text: 'Je coche les courses d’un même événement, et l’app prépare le carrousel : une couverture, puis le podium et le classement de chaque course, les noms remis dans l’ordre prénom-nom et le drapeau de chaque pilote.',
+              image: img('app-selection', 1600, 1000, 'Section Résultats de l’application, quatre courses Junior Cup cochées et le bouton « Générer les visuels (4) »'),
+            },
+            {
+              text: 'Si j’ai photographié le podium, je l’ajoute et je la recadre dans l’app : elle s’insère dans le carrousel, juste après la couverture.',
+              image: img('app-photos', 1600, 1000, 'Fenêtre « Photos de l’événement » pour importer la photo du podium et la photo de groupe'),
+            },
+          ],
+        },
+        'Les mêmes données s’exportent aussi en Excel, CSV, PDF, JSON ou vers un agenda. Les résultats sortent plus vite, toujours au même format, et sans erreur de recopie.',
+        {
+          type: 'figures',
+          items: [
+            { value: 22, label: 'mises à jour depuis fin juin' },
+            { value: 46, label: 'courses suivies au calendrier' },
+            { value: 6, label: 'formats d’export, images comprises' },
+          ],
+        },
       ],
     },
     {
@@ -173,7 +209,7 @@ const KARTING_EN: CaseStudy = {
     { label: 'Duration', value: 'Since May 2026, ongoing' },
     { label: 'My role', value: 'Community manager: strategy, photo, video, publishing' },
     { label: 'Team', value: 'Solo, with the karting staff' },
-    { label: 'Tools', value: 'Premiere Pro, Instagram, TikTok' },
+    { label: 'Tools', value: 'Premiere Pro, Instagram, TikTok; React and Electron for the app' },
   ],
   links: [
     { label: 'Instagram', href: 'https://www.instagram.com/kartingvuiteboeuf/' },
@@ -285,7 +321,43 @@ const KARTING_EN: CaseStudy = {
             img('resultats-4', 800, 1000, 'Podium and standings of the Sprint 270cc, second heat'),
           ],
         },
-        'For these results, I developed a piece of software that fetches race standings online and automatically prepares the visuals to post. Results go out faster, always in the same format, and without copying mistakes.',
+        'I no longer put these results carousels together by hand: they come out of an app I developed.',
+      ],
+    },
+    {
+      id: 'automatisation',
+      nav: 'Automation',
+      title: 'An app to publish the results',
+      content: [
+        'After each race, the standings are published on SWS, the karting championship platform, and then had to be copied into the visuals. A weekend can hold up to eight races: it was slow, repetitive, and the slightest typo in a name showed.',
+        'So I designed and developed a Mac app that does the job, in four weeks, between June and July.',
+        {
+          type: 'steps',
+          frame: 'screen',
+          steps: [
+            {
+              text: 'One click on “Mettre à jour” fetches the track’s calendar, results and standings from SWS (I pass the site’s anti-bot check myself). The app flags what has changed since last time.',
+              image: img('app-mise-a-jour', 1600, 1000, 'Karting Vuiteboeuf app: race calendar and a banner reading “8 new results · 4 standings changes”'),
+            },
+            {
+              text: 'I tick the races of one event, and the app builds the carousel: a cover, then the podium and standings of each race, names put back in first-name order and each driver’s flag.',
+              image: img('app-selection', 1600, 1000, 'Results section of the app, four Junior Cup races ticked and the “Generate visuals (4)” button'),
+            },
+            {
+              text: 'If I photographed the podium, I add the photo and crop it in the app: it slots into the carousel right after the cover.',
+              image: img('app-photos', 1600, 1000, '“Event photos” window to import the podium photo and the group photo'),
+            },
+          ],
+        },
+        'The same data also exports to Excel, CSV, PDF, JSON or a calendar. Results go out faster, always in the same format, and without copying mistakes.',
+        {
+          type: 'figures',
+          items: [
+            { value: 22, label: 'updates since late June' },
+            { value: 46, label: 'races tracked on the calendar' },
+            { value: 6, label: 'export formats, images included' },
+          ],
+        },
       ],
     },
     {

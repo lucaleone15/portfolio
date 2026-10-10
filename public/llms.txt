@@ -37,7 +37,7 @@ Chaque projet a sa propre étude de cas (contexte, démarche, résultats), en fr
 
 2. **[Karting de Vuiteboeuf](https://luca-leone.ch/projets/karting-vuiteboeuf)** (depuis mai 2026, en cours) :
    - *Type* : Expérience professionnelle, emploi en parallèle des études.
-   - *Description* : community management du circuit : stratégie, prises de vue photo et vidéo sur la piste, montage et publication sur Instagram, TikTok et Facebook. Un logiciel développé par Luca prépare automatiquement les visuels de résultats des courses.
+   - *Description* : community management du circuit : stratégie, prises de vue photo et vidéo sur la piste, montage et publication sur Instagram, TikTok et Facebook. Luca a aussi conçu et développé une application pour Mac (React, Electron, Playwright) qui récupère calendrier, résultats et classements sur la plateforme SWS, signale les nouveautés depuis la dernière mise à jour et génère les carrousels de résultats aux couleurs du karting (podiums, drapeaux, photos recadrées), avec export Excel, CSV, PDF, JSON et agenda.
    - *Rôle* : Community manager.
    - *Résultats depuis mai 2026* : 329'000 vues sur Instagram (+72,7 %), vues Facebook multipliées par près de six (+479 %).
    - *Comptes* : [Instagram](https://www.instagram.com/kartingvuiteboeuf/), [TikTok](https://www.tiktok.com/@kartingvuiteboeuf), [Facebook](https://www.facebook.com/KartingVuiteboeuf/).
