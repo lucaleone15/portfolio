@@ -12,7 +12,7 @@ import { createAnalyticsHandler } from './analytics';
  *
  * - Serves the prerendered pages: /x → dist/x.html or dist/x/index.html; unknown pages get
  *   dist/404.html with a real 404 status
- * - brotli / gzip for text files (cached in memory)
+ * - brotli / gzip for text files (cached in memory), byte ranges for the rest (videos)
  * - Cache: hashed build assets 1 year (immutable), HTML always revalidated, the rest 30 days
  * - Security headers incl. a strict CSP (only own scripts + the inline theme script, by hash)
  * - www.* is redirected (301) to the bare domain, and every other spelling of a page URL to
@@ -50,6 +50,8 @@ const MIME: Record<string, string> = {
   '.ico': 'image/x-icon',
   '.pdf': 'application/pdf',
   '.woff2': 'font/woff2',
+  '.mp4': 'video/mp4',
+  '.webm': 'video/webm',
 };
 const COMPRESSIBLE = new Set(['.html', '.js', '.mjs', '.css', '.json', '.webmanifest', '.xml', '.txt', '.svg']);
 
@@ -134,6 +136,34 @@ function send(req: http.IncomingMessage, res: http.ServerResponse, file: string,
 
   const accept = String(req.headers['accept-encoding'] ?? '');
   const encoding = COMPRESSIBLE.has(ext) ? (accept.includes('br') ? 'br' : accept.includes('gzip') ? 'gzip' : null) : null;
+
+  // Byte ranges for files sent as they are: a video needs them to seek (the project cards
+  // rewind their clip), and Safari won't even play one without them
+  if (!encoding) {
+    res.setHeader('Accept-Ranges', 'bytes');
+    const range = /^bytes=(\d*)-(\d*)$/.exec(String(req.headers.range ?? ''));
+    if (status === 200 && range && (range[1] || range[2])) {
+      const size = stat.size;
+      const start = range[1] ? Number(range[1]) : Math.max(0, size - Number(range[2]));
+      const end = range[1] && range[2] ? Math.min(Number(range[2]), size - 1) : size - 1;
+      if (start > end || start >= size) {
+        res.statusCode = 416;
+        res.setHeader('Content-Range', `bytes */${size}`);
+        res.end();
+        return;
+      }
+      res.statusCode = 206;
+      res.setHeader('Content-Range', `bytes ${start}-${end}/${size}`);
+      res.setHeader('Content-Length', end - start + 1);
+      if (req.method === 'HEAD') {
+        res.end();
+        return;
+      }
+      fs.createReadStream(file, { start, end }).pipe(res);
+      return;
+    }
+  }
+
   let body: Buffer = fs.readFileSync(file);
   if (encoding) {
     const key = `${file}:${stat.mtimeMs}:${encoding}`;

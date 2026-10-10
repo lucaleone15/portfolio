@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, MouseEvent } from 'react';
+import { useState, useRef, useEffect, useCallback, MouseEvent, TouchEvent } from 'react';
 import { motion, useMotionValue, useReducedMotion, useSpring } from 'motion/react';
 import { ArrowUpRight01Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
@@ -14,6 +14,77 @@ import { projectMediaTransition } from '../viewTransitions';
 // distorted or lit up, only tilted by a few degrees.
 const MAX_TILT = 3; // degrees, each axis
 const TILT_SPRING = { stiffness: 170, damping: 26 }; // critically damped: settles without wobble
+
+// Hover video: plays to the end and holds the last frame; on leave it plays backwards
+// (seeking frame by frame: the files are encoded with a keyframe on every frame) and then
+// fades back to the cover. Touch screens: the same on a long press; a short tap still opens.
+const REWIND_SECONDS = 1; // the whole clip rewinds in this time, wherever it stopped
+const LONG_PRESS_MS = 260;
+
+function useDiveVideo(enabled: boolean) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [visible, setVisible] = useState(false);
+  const rewindFrame = useRef(0);
+  const wanted = useRef(false);
+
+  const stopRewind = () => cancelAnimationFrame(rewindFrame.current);
+
+  const forward = useCallback(() => {
+    const video = videoRef.current;
+    if (!enabled || !video) return;
+    wanted.current = true;
+    stopRewind();
+    // Undo a reset() (inline styles win over the classes)
+    video.style.transition = '';
+    video.style.opacity = '';
+    if (video.preload !== 'auto') video.preload = 'auto';
+    // Shown once a frame is actually ready, so the cover never flashes to a blank video
+    const show = () => wanted.current && setVisible(true);
+    if (video.readyState >= 2) show();
+    else video.addEventListener('loadeddata', show, { once: true });
+    if (video.ended || video.currentTime >= video.duration) return; // already holding the last frame
+    video.play().catch(() => {});
+  }, [enabled]);
+
+  const backward = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    wanted.current = false;
+    video.pause();
+    stopRewind();
+    const duration = video.duration || 0;
+    if (!duration || video.currentTime <= 0.02) {
+      setVisible(false);
+      return;
+    }
+    const speed = duration / REWIND_SECONDS;
+    let last = performance.now();
+    const step = (now: number) => {
+      const t = Math.max(0, video.currentTime - ((now - last) / 1000) * speed);
+      last = now;
+      video.currentTime = t;
+      if (t > 0) rewindFrame.current = requestAnimationFrame(step);
+      else setVisible(false);
+    };
+    rewindFrame.current = requestAnimationFrame(step);
+  }, []);
+
+  // Hidden at once (no rewind): before the image morphs into the project page
+  const reset = useCallback(() => {
+    const video = videoRef.current;
+    wanted.current = false;
+    stopRewind();
+    if (video) {
+      video.pause();
+      video.style.transition = 'none';
+      video.style.opacity = '0';
+    }
+  }, []);
+
+  useEffect(() => () => cancelAnimationFrame(rewindFrame.current), []);
+
+  return { videoRef, visible, forward, backward, reset };
+}
 
 interface ProjectCardProps {
   key?: string | number;
@@ -35,6 +106,33 @@ export function ProjectCard({ project }: ProjectCardProps) {
   useEffect(() => {
     finePointer.current = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   }, []);
+
+  const dive = useDiveVideo(!!project.video && !reduceMotion);
+
+  // Long press on touch screens: play while held, rewind on release; the tap that follows a
+  // long press doesn't open the project
+  const pressTimer = useRef(0);
+  const pressStart = useRef({ x: 0, y: 0 });
+  const held = useRef(false);
+  const onTouchStart = (e: TouchEvent<HTMLDivElement>) => {
+    if (finePointer.current || !project.video) return;
+    held.current = false;
+    pressStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    pressTimer.current = window.setTimeout(() => {
+      held.current = true;
+      dive.forward();
+    }, LONG_PRESS_MS);
+  };
+  const onTouchMove = (e: TouchEvent<HTMLDivElement>) => {
+    const dx = e.touches[0].clientX - pressStart.current.x;
+    const dy = e.touches[0].clientY - pressStart.current.y;
+    // Scrolling, not pressing
+    if (Math.hypot(dx, dy) > 10) window.clearTimeout(pressTimer.current);
+  };
+  const onTouchEnd = () => {
+    window.clearTimeout(pressTimer.current);
+    if (held.current) dive.backward();
+  };
 
   const trackPointer = (e: MouseEvent<HTMLDivElement>) => {
     if (!imageContainerRef.current) return;
@@ -58,9 +156,20 @@ export function ProjectCard({ project }: ProjectCardProps) {
       href={projectPath(lang, project.id)}
       style={projectAccentVars(project)}
       // Flat again before the image morphs into the project page
-      onClick={() => {
+      onClick={(e) => {
+        if (held.current) {
+          // End of a long press (video preview), not a tap
+          e.preventDefault();
+          held.current = false;
+          return;
+        }
         tiltX.jump(0);
         tiltY.jump(0);
+        dive.reset();
+      }}
+      // Long press: no "open link" menu over the video preview
+      onContextMenu={(e) => {
+        if (held.current) e.preventDefault();
       }}
       className="project-accent group relative cursor-pointer flex flex-col transition duration-300 hover:-translate-y-1 rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
     >
@@ -73,16 +182,22 @@ export function ProjectCard({ project }: ProjectCardProps) {
           onMouseEnter={(e) => {
             trackPointer(e);
             setIsHovered(true);
+            if (finePointer.current) dive.forward();
           }}
           onMouseLeave={() => {
             setIsHovered(false);
             resetTilt();
+            if (finePointer.current) dive.backward();
           }}
           onMouseMove={trackPointer}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+          onTouchCancel={onTouchEnd}
           // The round cursor and the link outline step aside: the disc below replaces them
           data-cursor-hidden
           style={{ rotateX: tiltX, rotateY: tiltY, transformPerspective: 1000 }}
-          className="relative aspect-[16/10] w-full rounded-2xl bg-neutral-200 dark:bg-[#121215] shrink-0"
+          className="relative aspect-[16/10] w-full rounded-2xl bg-neutral-200 dark:bg-[#121215] shrink-0 select-none [-webkit-touch-callout:none]"
         >
           {/* Clipped image wrapper. Its view-transition name matches the project page's main
               visual, so opening the project morphs this image into it (and back). */}
@@ -101,6 +216,19 @@ export function ProjectCard({ project }: ProjectCardProps) {
               decoding="async"
               className="w-full h-full object-cover object-center"
             />
+            {project.video && (
+              <video
+                ref={dive.videoRef}
+                src={project.video}
+                muted
+                playsInline
+                preload="none"
+                disablePictureInPicture
+                aria-hidden="true"
+                tabIndex={-1}
+                className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-300 ${dive.visible ? 'opacity-100' : 'opacity-0'}`}
+              />
+            )}
           </div>
 
           {/* Hook written over the image, on a dark fade so it reads on any visual. Outside

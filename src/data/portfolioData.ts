@@ -34,6 +34,8 @@ export interface UnifiedProjectDefinition {
   accentColorDark?: string;
   /** Brand logo shown in place of the project's name (scripts/make-project-logos.py) */
   logo?: ProjectLogo;
+  /** Short "dive into the screen" clip played on the card while hovered (public/videos/) */
+  video?: string;
   fr: {
     title: string;
     subtitle: string;
@@ -128,6 +130,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     // HUG red, as in the project PDF
     accentColor: '#E62F2E',
     logo: { src: '/images/logos/hug.webp', srcDark: '/images/logos/hug-dark.webp', width: 705, height: 160, display: 34 },
+    video: '/videos/hug-dive.mp4',
     fr: {
       title: 'HUG',
       subtitle: 'Campagne digitale & plateforme web',
@@ -217,6 +220,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     // Karting Vuiteboeuf red, as in the project PDF (underlines, italics)
     accentColor: '#EB1D3E',
     logo: { src: '/images/logos/karting-vuiteboeuf.webp', srcDark: '/images/logos/karting-vuiteboeuf-dark.webp', width: 709, height: 160, display: 34 },
+    video: '/videos/karting-vuiteboeuf-dive.mp4',
     fr: {
       title: 'KARTING VUITEBOEUF',
       subtitle: 'Communication digitale & création de contenus',
@@ -295,6 +299,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     accentColor: '#275F5F',
     accentColorDark: '#2EBBA6',
     logo: { src: '/images/logos/oceansight.webp', srcDark: '/images/logos/oceansight-dark.webp', width: 482, height: 160, display: 40 },
+    video: '/videos/oceansight-dive.mp4',
     fr: {
       title: 'OCEANSIGHT',
       subtitle: 'Application mobile de signalement des déchets marins',
@@ -366,6 +371,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     accentColor: '#AB2328',
     accentColorDark: '#E0484E',
     logo: { src: '/images/logos/etoile-blanche.webp', srcDark: '/images/logos/etoile-blanche-dark.webp', width: 705, height: 160, display: 34 },
+    video: '/videos/etoile-blanche-dive.mp4',
     fr: {
       title: 'ÉTOILE BLANCHE',
       subtitle: 'Communication d’un restaurant lausannois',
@@ -445,6 +451,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     accentColor: '#2A2A72',
     accentColorDark: '#009FFD',
     logo: { src: '/images/logos/drivegear.webp', srcDark: '/images/logos/drivegear-dark.webp', width: 1111, height: 160, display: 22 },
+    video: '/videos/drivegear-dive.mp4',
     fr: {
       title: 'DRIVEGEAR',
       subtitle: 'Boutique e-commerce automobile',
@@ -514,6 +521,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     accentColor: '#C8102E',
     accentColorDark: '#F23845',
     logo: { src: '/images/logos/f1-pitwall.webp', srcDark: '/images/logos/f1-pitwall-dark.webp', width: 1792, height: 160, display: 18 },
+    video: '/videos/f1-pitwall-dive.mp4',
     fr: {
       title: 'F1 PITWALL',
       subtitle: 'Application de second écran pour la Formule 1',
@@ -583,6 +591,7 @@ export const PROJECTS_FR: Project[] = UNIFIED_PROJECTS.map((item) => ({
   accentColor: item.accentColor,
   accentColorDark: item.accentColorDark,
   logo: item.logo,
+  video: item.video,
   ...item.fr
 }));
 
@@ -598,6 +607,7 @@ export const PROJECTS_EN: Project[] = UNIFIED_PROJECTS.map((item) => ({
   accentColor: item.accentColor,
   accentColorDark: item.accentColorDark,
   logo: item.logo,
+  video: item.video,
   ...item.en
 }));
 
