@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { usePrinting } from '../print';
 import { ArrowUpRight01Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
 import { useLanguage } from '../context/LanguageContext';
@@ -81,6 +82,8 @@ const SKILLS_DATA: SkillItem[] = [
 export function SkillsSection() {
   const { lang } = useLanguage();
   const [activeSkillId, setActiveSkillId] = useState<string | null>(null);
+  // On paper every skill is open (there's no hover to reveal them)
+  const printing = usePrinting();
 
   const toggleSkill = (id: string) => {
     setActiveSkillId((prev) => (prev === id ? null : id));
@@ -156,7 +159,7 @@ export function SkillsSection() {
           className="divide-y divide-black/10 dark:divide-white/10 border-y border-black/10 dark:border-white/10"
         >
           {SKILLS_DATA.map((skill, index) => {
-            const isOpen = activeSkillId === skill.id;
+            const isOpen = printing || activeSkillId === skill.id;
             const panelId = `skill-panel-${skill.id}`;
 
             return (
@@ -225,7 +228,8 @@ export function SkillsSection() {
                         {isOpen ? (
                           <motion.div
                             key="content"
-                            initial={{ opacity: 0, height: 0 }}
+                            // Printing: shown at once, no height animation the paper would freeze at 0
+                            initial={printing ? false : { opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0, transition: { duration: 0.18, ease: [0.23, 1, 0.32, 1] } }}
                             transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
