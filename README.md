@@ -281,5 +281,3 @@ Principes suivis (Emil Kowalski, Apple Human Interface) : courbes d'accélérati
 ---
 
 © Luca Leone — [luca-leone.ch](https://luca-leone.ch) · [LinkedIn](https://linkedin.com/in/leone-luca)
-
-Crédit : la Formule 1 de la page 404 et du jeu hors connexion est la Ferrari 641 (1990) exposée au MoMA, photo de Tony Hisgett ([Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Ferrari_F1_moma_(4694290540).jpg), [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)), détourée et sans les logos de cigarettier.

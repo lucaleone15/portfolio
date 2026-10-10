@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="560" viewBox="0 0 200 560">
+  <!-- A modern Formula 1 car in Ferrari colours, seen from above, nose up. Drawn for the
+       404 page (src/components/NotFound.tsx) and the offline game (public/offline-game.js).
+       Generic: no team logos. Proportions of a current car (about 5.6 m by 2 m). -->
+  <defs>
+    <linearGradient id="red" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#8f0000"/>
+      <stop offset="0.3" stop-color="#d40000"/>
+      <stop offset="0.48" stop-color="#ff3b2f"/>
+      <stop offset="0.52" stop-color="#ff3b2f"/>
+      <stop offset="0.7" stop-color="#d40000"/>
+      <stop offset="1" stop-color="#8f0000"/>
+    </linearGradient>
+    <linearGradient id="podL" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#7d0000"/>
+      <stop offset="0.55" stop-color="#d00000"/>
+      <stop offset="1" stop-color="#f02a1f"/>
+    </linearGradient>
+    <linearGradient id="podR" x1="1" x2="0" y1="0" y2="0">
+      <stop offset="0" stop-color="#7d0000"/>
+      <stop offset="0.55" stop-color="#d00000"/>
+      <stop offset="1" stop-color="#f02a1f"/>
+    </linearGradient>
+    <linearGradient id="tyre" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#0b0b0c"/>
+      <stop offset="0.25" stop-color="#2a2a2d"/>
+      <stop offset="0.5" stop-color="#3a3a3e"/>
+      <stop offset="0.75" stop-color="#2a2a2d"/>
+      <stop offset="1" stop-color="#0b0b0c"/>
+    </linearGradient>
+    <linearGradient id="carbon" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#0e0e10"/>
+      <stop offset="0.5" stop-color="#2b2b30"/>
+      <stop offset="1" stop-color="#0e0e10"/>
+    </linearGradient>
+    <radialGradient id="helmet" cx="0.4" cy="0.35" r="0.7">
+      <stop offset="0" stop-color="#ff5a4e"/>
+      <stop offset="1" stop-color="#b80000"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Floor: black, wider than the bodywork -->
+  <path d="M100 150 C72 158 48 198 34 246 L18 300 C14 330 12 380 14 420 C16 456 30 476 48 488 L152 488 C170 476 184 456 186 420 C188 380 186 330 182 300 L166 246 C152 198 128 158 100 150 Z" fill="#141416"/>
+  <path d="M20 300 C16 340 15 390 17 424" stroke="#3a3a3f" stroke-width="2" fill="none"/>
+  <path d="M180 300 C184 340 185 390 183 424" stroke="#3a3a3f" stroke-width="2" fill="none"/>
+
+  <!-- Suspension -->
+  <g stroke="#0d0d0f" stroke-width="4.5" stroke-linecap="round">
+    <path d="M86 128 L40 142 M86 176 L40 160 M88 150 L44 152"/>
+    <path d="M114 128 L160 142 M114 176 L160 160 M112 150 L156 152"/>
+    <path d="M74 412 L42 436 M74 462 L42 452"/>
+    <path d="M126 412 L158 436 M126 462 L158 452"/>
+  </g>
+
+  <!-- Tyres: front narrower than rear -->
+  <g>
+    <rect x="14" y="108" width="40" height="84" rx="10" fill="url(#tyre)"/>
+    <rect x="146" y="108" width="40" height="84" rx="10" fill="url(#tyre)"/>
+    <rect x="8" y="398" width="48" height="104" rx="12" fill="url(#tyre)"/>
+    <rect x="144" y="398" width="48" height="104" rx="12" fill="url(#tyre)"/>
+    <!-- Sheen across the treads -->
+    <g fill="#fff" opacity="0.07">
+      <rect x="22" y="112" width="8" height="76" rx="4"/>
+      <rect x="154" y="112" width="8" height="76" rx="4"/>
+      <rect x="18" y="402" width="10" height="96" rx="5"/>
+      <rect x="154" y="402" width="10" height="96" rx="5"/>
+    </g>
+  </g>
+
+  <!-- Sidepods, with the white accent line of the current livery -->
+  <path d="M72 246 C54 248 34 258 28 282 L25 328 C25 360 36 382 52 398 C62 408 68 424 72 440 Z" fill="url(#podL)"/>
+  <path d="M128 246 C146 248 166 258 172 282 L175 328 C175 360 164 382 148 398 C138 408 132 424 128 440 Z" fill="url(#podR)"/>
+  <path d="M32 286 C36 266 52 256 70 254" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M168 286 C164 266 148 256 130 254" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M30 296 C30 330 34 356 46 376" stroke="#fff" stroke-opacity="0.35" stroke-width="1.5" fill="none"/>
+  <path d="M170 296 C170 330 166 356 154 376" stroke="#fff" stroke-opacity="0.35" stroke-width="1.5" fill="none"/>
+  <!-- Sidepod inlets -->
+  <path d="M34 266 C44 256 58 252 72 251 L72 259 C60 260 48 264 40 272 Z" fill="#0b0b0d"/>
+  <path d="M166 266 C156 256 142 252 128 251 L128 259 C140 260 152 264 160 272 Z" fill="#0b0b0d"/>
+
+  <!-- Engine cover, down to the rear -->
+  <path d="M100 214 C120 214 129 238 131 268 L133 330 C135 382 127 430 115 470 L108 506 L92 506 L85 470 C73 430 65 382 67 330 L69 268 C71 238 80 214 100 214 Z" fill="url(#red)"/>
+  <path d="M100 330 L100 500" stroke="#7a0000" stroke-width="2.5"/>
+  <path d="M100 330 L100 500" stroke="#fff" stroke-opacity="0.25" stroke-width="0.8"/>
+
+  <!-- Rear wing: endplates, main plane, flap -->
+  <rect x="16" y="494" width="9" height="56" rx="3" fill="#121214"/>
+  <rect x="175" y="494" width="9" height="56" rx="3" fill="#121214"/>
+  <path d="M22 506 C60 500 140 500 178 506 L178 526 C140 520 60 520 22 526 Z" fill="url(#carbon)"/>
+  <path d="M22 530 C60 524 140 524 178 530 L178 546 C140 540 60 540 22 546 Z" fill="#c80000"/>
+  <path d="M24 532 C62 526 138 526 176 532" stroke="#fff" stroke-width="2" fill="none"/>
+  <rect x="94" y="498" width="12" height="18" rx="3" fill="#0d0d0f"/>
+
+  <!-- Monocoque and nose -->
+  <path d="M100 14 C90 14 86 30 85 54 L82 138 C80 168 77 198 75 232 L125 232 C123 198 120 168 118 138 L115 54 C114 30 110 14 100 14 Z" fill="url(#red)"/>
+  <path d="M100 30 L100 210" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M92 22 C94 13 106 13 108 22 L107 34 L93 34 Z" fill="#141416"/>
+
+  <!-- Front wing: endplates, black main plane, red flaps with a white edge -->
+  <rect x="4" y="26" width="8" height="46" rx="3" fill="#121214"/>
+  <rect x="188" y="26" width="8" height="46" rx="3" fill="#121214"/>
+  <path d="M8 56 C40 48 70 46 100 46 C130 46 160 48 192 56 L192 70 C160 63 130 60 100 60 C70 60 40 63 8 70 Z" fill="url(#carbon)"/>
+  <path d="M12 46 C34 40 58 38 86 40 L86 47 C58 45 34 47 12 53 Z" fill="#d40000"/>
+  <path d="M188 46 C166 40 142 38 114 40 L114 47 C142 45 166 47 188 53 Z" fill="#d40000"/>
+  <path d="M12 36 C34 30 58 29 84 31 L84 37 C58 35 34 37 12 42 Z" fill="#b80000"/>
+  <path d="M188 36 C166 30 142 29 116 31 L116 37 C142 35 166 37 188 42 Z" fill="#b80000"/>
+  <path d="M12 46 C34 40 58 38 86 40" stroke="#fff" stroke-width="1.6" fill="none"/>
+  <path d="M188 46 C166 40 142 38 114 40" stroke="#fff" stroke-width="1.6" fill="none"/>
+
+  <!-- Mirrors -->
+  <g fill="#121214">
+    <rect x="56" y="232" width="16" height="7" rx="3"/>
+    <rect x="128" y="232" width="16" height="7" rx="3"/>
+  </g>
+  <path d="M72 236 L80 238 M128 236 L120 238" stroke="#121214" stroke-width="2"/>
+
+  <!-- Cockpit, driver's helmet, halo -->
+  <ellipse cx="100" cy="276" rx="15" ry="30" fill="#0b0b0d"/>
+  <circle cx="100" cy="282" r="11.5" fill="url(#helmet)"/>
+  <path d="M90 278 C94 270 106 270 110 278" stroke="#fff" stroke-width="2.4" fill="none"/>
+  <path d="M93 288 C96 293 104 293 107 288" stroke="#f5c400" stroke-width="2" fill="none"/>
+  <ellipse cx="100" cy="275" rx="7" ry="3" fill="#111"/>
+  <ellipse cx="100" cy="276" rx="20" ry="33" fill="none" stroke="#1b1b1e" stroke-width="5"/>
+  <path d="M100 243 L100 228" stroke="#1b1b1e" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- Airbox above the driver's head -->
+  <path d="M92 316 C92 308 108 308 108 316 L106 330 L94 330 Z" fill="#0b0b0d"/>
+</svg>
