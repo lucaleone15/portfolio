@@ -93,7 +93,7 @@ export default function CommandPaletteDialog({ open, onOpenChange }: { open: boo
             >
               <span className="w-4 text-center shrink-0" aria-hidden="true">🚦</span>
               <span className="font-semibold">Lights out</span>
-              <span className="ml-auto text-xs text-neutral-400 dark:text-[#71717A]">{lang === 'fr' ? 'Départ vers les projets' : 'Race to the projects'}</span>
+              <span className="ml-auto text-xs text-neutral-400 dark:text-[#71717A]">{lang === 'fr' ? 'Ton meilleur départ' : 'Your best start'}</span>
             </Command.Item>
           </Command.Group>
         )}

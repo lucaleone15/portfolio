@@ -380,35 +380,36 @@
   user-select: none;
 }
 
-/* Easter egg, karting mode (easter/kart.ts): the kart replaces the round cursor and the
-   link outline */
-.kart-mode [data-pointer-ui] {
-  display: none !important;
-}
-
-/* Print. The home page prints a one-page profile instead (PrintSheet, rendered next to #root
-   just before printing); other pages print their content without the site's chrome, every
-   scroll-revealed block visible. */
-@media screen {
-  .print-sheet {
-    display: none;
-  }
-}
+/* Print: the whole site, everything visible. The page lays out at paper width, so the
+   narrow layout applies (case-study steps show each image under its text); the site's
+   chrome goes; blocks revealed on scroll and covered cards are shown in full. See print.ts. */
 @media print {
   @page {
     size: A4;
-    margin: 14mm;
+    margin: 12mm;
   }
   html,
   body {
     background: #fff !important;
   }
-  body:has(> .print-sheet) > #root {
-    display: none !important;
-  }
-  .print-sheet {
+  /* Colours and backgrounds print even with "background graphics" off (default in most
+     browsers): the contact band is white text on red */
+  * {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+  }
+  /* Never cut a card, a figure or an image between two pages */
+  [data-stack-card],
+  figure,
+  img,
+  blockquote {
+    break-inside: avoid;
+  }
+  /* A title stays with what follows it */
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
   }
   [data-chrome],
   [data-pointer-ui],
@@ -417,6 +418,9 @@
   }
   [style*='opacity'] {
     opacity: 1 !important;
+  }
+  [data-stack-inner] {
+    transform: none !important;
   }
   *,
   *::before,
