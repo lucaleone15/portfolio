@@ -106,13 +106,16 @@
 /* Liquid glass materials (Apple-inspired): blurred, saturated backdrop and a soft vertical
    sheen, no outline: surfaces separate from the page by their fill and a diffuse shadow.
    Three weights, by role:
-   .glass       small interactive surfaces (buttons, chips, pills)
+   .glass       small interactive surfaces (buttons, chips, pills): translucent fill, no blur
    .glass-bar   large floating chrome (header, drawer, command palette): thicker, frostier
    .glass-media anything floating over a photo: dark tint, white text, same in both themes
    Never put one translucent surface on another: inside a .glass-bar, children stay flat.
    In the components layer, so Tailwind utilities (text colour, padding…) still win. */
 @layer components {
-  .glass,
+  /* Backdrop blur only where content really passes behind (header, drawer, over photos).
+     .glass sits on the page's own smooth background, where a blur shows nothing but costs a
+     compositing layer, and Chrome then draws lighter bands at the edge of the pills (dark
+     theme, pills side by side): its translucent fill alone gives the same look. */
   .glass-bar,
   .glass-media {
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
@@ -120,7 +123,6 @@
   }
 
   .glass {
-    --glass-blur: 16px;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.55) 100%);
     box-shadow:
       0 1px 3px rgba(0, 0, 0, 0.06),
