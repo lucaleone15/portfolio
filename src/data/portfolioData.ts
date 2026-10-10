@@ -34,11 +34,9 @@ export interface UnifiedProjectDefinition {
   accentColorDark?: string;
   /** Brand logo shown in place of the project's name (scripts/make-project-logos.py) */
   logo?: ProjectLogo;
-  /** Short "dive into the screen" clip played on the card while hovered (public/videos/) */
+  /** Short "dive into the screen" clip played on the card while hovered (public/videos/).
+      Its first frame is the cover (`imageUrl`, same framing and colours): no shift when it starts */
   video?: string;
-  /** The clip's first frame, same framing: the card's still image, so the clip starts
-      exactly where the still left off (the cover stays for the project page) */
-  poster?: string;
   fr: {
     title: string;
     subtitle: string;
@@ -113,9 +111,9 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     name: 'HUG',
     number: '01',
     year: '2026',
-    imageUrl: '/images/HUG-cover-2.webp',
+    imageUrl: '/images/hug-apercu.webp',
     images: [
-      '/images/HUG-cover-2.webp',
+      '/images/hug-apercu.webp',
       '/images/HUG-02.webp',
       '/images/HUG-03.webp',
       '/images/HUG-04.webp',
@@ -134,7 +132,6 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     accentColor: '#E62F2E',
     logo: { src: '/images/logos/hug.webp', srcDark: '/images/logos/hug-dark.webp', width: 705, height: 160, display: 34 },
     video: '/videos/hug-dive.mp4',
-    poster: '/images/hug-poster.webp',
     fr: {
       title: 'HUG',
       subtitle: 'Campagne digitale & plateforme web',
@@ -204,9 +201,9 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     name: 'Karting de Vuiteboeuf',
     number: '02',
     year: '2026',
-    imageUrl: '/images/KV-cover.webp',
+    imageUrl: '/images/karting-vuiteboeuf-apercu.webp',
     images: [
-      '/images/KV-cover.webp',
+      '/images/karting-vuiteboeuf-apercu.webp',
       '/images/KV-03.webp',
       '/images/KV-04.webp',
       '/images/KV-05.webp',
@@ -225,7 +222,6 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     accentColor: '#EB1D3E',
     logo: { src: '/images/logos/karting-vuiteboeuf.webp', srcDark: '/images/logos/karting-vuiteboeuf-dark.webp', width: 709, height: 160, display: 34 },
     video: '/videos/karting-vuiteboeuf-dive.mp4',
-    poster: '/images/karting-vuiteboeuf-poster.webp',
     fr: {
       title: 'KARTING VUITEBOEUF',
       subtitle: 'Communication digitale & création de contenus',
@@ -287,9 +283,9 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     name: 'OceanSight',
     number: '03',
     year: '2026',
-    imageUrl: '/images/OceanSight-cover.webp',
+    imageUrl: '/images/oceansight-apercu.webp',
     images: [
-      '/images/OceanSight-cover.webp',
+      '/images/oceansight-apercu.webp',
       '/images/OceanSight-02.webp',
       '/images/OceanSight-03.webp'
     ],
@@ -305,7 +301,6 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     accentColorDark: '#2EBBA6',
     logo: { src: '/images/logos/oceansight.webp', srcDark: '/images/logos/oceansight-dark.webp', width: 482, height: 160, display: 40 },
     video: '/videos/oceansight-dive.mp4',
-    poster: '/images/oceansight-poster.webp',
     fr: {
       title: 'OCEANSIGHT',
       subtitle: 'Application mobile de signalement des déchets marins',
@@ -369,8 +364,8 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     name: 'Étoile Blanche',
     number: '04',
     year: '2026',
-    imageUrl: '/images/EtoileBlanche-cover-2.webp',
-    images: ['/images/EtoileBlanche-cover-2.webp'],
+    imageUrl: '/images/etoile-blanche-apercu.webp',
+    images: ['/images/etoile-blanche-apercu.webp'],
     stack: ['Identité & print', 'Réseaux sociaux', 'Campagne d’affichage', 'Canva & Figma'],
     stackEn: ['Identity & print', 'Social media', 'Poster campaign', 'Canva & Figma'],
     // Étoile Blanche red, as on the printed menus
@@ -378,7 +373,6 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     accentColorDark: '#E0484E',
     logo: { src: '/images/logos/etoile-blanche.webp', srcDark: '/images/logos/etoile-blanche-dark.webp', width: 705, height: 160, display: 34 },
     video: '/videos/etoile-blanche-dive.mp4',
-    poster: '/images/etoile-blanche-poster.webp',
     fr: {
       title: 'ÉTOILE BLANCHE',
       subtitle: 'Communication d’un restaurant lausannois',
@@ -442,9 +436,9 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     name: 'DriveGear',
     number: '05',
     year: '2025',
-    imageUrl: '/images/DriveGear-cover.webp',
+    imageUrl: '/images/drivegear-apercu.webp',
     images: [
-      '/images/DriveGear-cover.webp',
+      '/images/drivegear-apercu.webp',
       '/images/DriveGear-03.webp',
       '/images/DriveGear-04.webp'
     ],
@@ -459,7 +453,6 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     accentColorDark: '#009FFD',
     logo: { src: '/images/logos/drivegear.webp', srcDark: '/images/logos/drivegear-dark.webp', width: 1111, height: 160, display: 22 },
     video: '/videos/drivegear-dive.mp4',
-    poster: '/images/drivegear-poster.webp',
     fr: {
       title: 'DRIVEGEAR',
       subtitle: 'Boutique e-commerce automobile',
@@ -521,8 +514,8 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     name: 'F1 PitWall',
     number: '06',
     year: '2025',
-    imageUrl: '/images/F1PitWall-cover.webp',
-    images: ['/images/F1PitWall-cover.webp'],
+    imageUrl: '/images/f1-pitwall-apercu.webp',
+    images: ['/images/f1-pitwall-apercu.webp'],
     stack: ['Concept produit', 'UI design', 'Données & IA', 'Figma'],
     stackEn: ['Product concept', 'UI design', 'Data & AI', 'Figma'],
     // The app's racing red
@@ -530,7 +523,6 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     accentColorDark: '#F23845',
     logo: { src: '/images/logos/f1-pitwall.webp', srcDark: '/images/logos/f1-pitwall-dark.webp', width: 1792, height: 160, display: 18 },
     video: '/videos/f1-pitwall-dive.mp4',
-    poster: '/images/f1-pitwall-poster.webp',
     fr: {
       title: 'F1 PITWALL',
       subtitle: 'Application de second écran pour la Formule 1',
@@ -601,7 +593,6 @@ export const PROJECTS_FR: Project[] = UNIFIED_PROJECTS.map((item) => ({
   accentColorDark: item.accentColorDark,
   logo: item.logo,
   video: item.video,
-  poster: item.poster,
   ...item.fr
 }));
 
@@ -618,7 +609,6 @@ export const PROJECTS_EN: Project[] = UNIFIED_PROJECTS.map((item) => ({
   accentColorDark: item.accentColorDark,
   logo: item.logo,
   video: item.video,
-  poster: item.poster,
   ...item.en
 }));
 
