@@ -91,8 +91,8 @@ const ETOILE_FR: CaseStudy = {
           type: 'gallery',
           cols: 2,
           items: [
-            img('anecdote-mur', 1184, 864, 'Affichette rouge « Le saviez-vous ? » sur un mur couvert de vieilles affiches'),
-            img('anecdote-salle', 1184, 864, 'Salle du restaurant avec des affichettes d’anecdotes sur les colonnes'),
+            img('anecdote-mur-2', 1184, 864, 'Affichette rouge « Le saviez-vous ? » sur un mur couvert de vieilles affiches'),
+            img('anecdote-salle-2', 1184, 864, 'Salle du restaurant avec des affichettes d’anecdotes sur les colonnes'),
           ],
         },
       ],
@@ -250,8 +250,8 @@ const ETOILE_EN: CaseStudy = {
           type: 'gallery',
           cols: 2,
           items: [
-            img('anecdote-mur', 1184, 864, 'Red “Did you know?” card on a wall covered with old posters'),
-            img('anecdote-salle', 1184, 864, 'Restaurant dining room with anecdote cards on the columns'),
+            img('anecdote-mur-2', 1184, 864, 'Red “Did you know?” card on a wall covered with old posters'),
+            img('anecdote-salle-2', 1184, 864, 'Restaurant dining room with anecdote cards on the columns'),
           ],
         },
       ],
