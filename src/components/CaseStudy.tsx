@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { animate, motion, useInView, useReducedMotion } from 'motion/react';
 import { ArrowUpRight01Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
 import { ProjectLogo } from './ProjectLogo';
+import { LightboxProvider, useZoomable } from './Lightbox';
 import { useLanguage } from '../context/LanguageContext';
 import { Project } from '../types';
 import { imageSrcSet } from '../data/images';
@@ -42,9 +43,26 @@ function Reveal({ children, className = '', delay = 0 }: { children: ReactNode; 
   );
 }
 
-function Picture({ image, className = '', sizes = '(min-width: 1152px) 1088px, 100vw', eager = false }: { image: CaseImage; className?: string; sizes?: string; eager?: boolean }) {
+/** A case study image; a tap opens it in the viewer (zoom={false} where the image is a control or a link) */
+function Picture({
+  image,
+  className = '',
+  sizes = '(min-width: 1152px) 1088px, 100vw',
+  eager = false,
+  zoom = true,
+  tabbable = true,
+}: {
+  image: CaseImage;
+  className?: string;
+  sizes?: string;
+  eager?: boolean;
+  zoom?: boolean;
+  tabbable?: boolean;
+}) {
+  const zoomable = useZoomable(image, { enabled: zoom, tabbable });
   return (
     <img
+      {...zoomable}
       src={image.src}
       alt={image.alt}
       width={image.width}
@@ -140,11 +158,12 @@ function Figures({ items, source }: { items: CaseFigure[]; source?: string }) {
 function StepVisual({ step, frame, active }: { step: CaseStep; frame: 'screen' | 'plain' | 'mockup'; active: boolean; key?: string }) {
   return (
     <div
-      className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${active ? 'opacity-100' : 'opacity-0'}`}
+      className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${active ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
       aria-hidden={!active}
     >
       <Picture
         image={step.image}
+        tabbable={active}
         sizes="(min-width: 1024px) 640px, 100vw"
         className={`max-w-full max-h-full ${
           frame === 'plain' ? 'object-contain rounded-xl' : `w-full h-full ${step.image.fit === 'contain' ? 'object-contain' : 'object-cover'}`
@@ -246,9 +265,9 @@ function Compare({ block }: { block: Extract<CaseBlock, { type: 'compare' }> }) 
           className="relative overflow-hidden rounded-2xl bg-neutral-200 dark:bg-[#141418] select-none ring-1 ring-black/5 dark:ring-white/10"
           style={{ aspectRatio: `${block.after.width} / ${block.after.height}` }}
         >
-          <Picture image={block.after} sizes="(min-width: 768px) 768px, 100vw" className="absolute inset-0 w-full h-full object-cover" />
+          <Picture image={block.after} zoom={false} sizes="(min-width: 768px) 768px, 100vw" className="absolute inset-0 w-full h-full object-cover" />
           <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
-            <Picture image={block.before} sizes="(min-width: 768px) 768px, 100vw" className="absolute inset-0 w-full h-full object-cover" />
+            <Picture image={block.before} zoom={false} sizes="(min-width: 768px) 768px, 100vw" className="absolute inset-0 w-full h-full object-cover" />
           </div>
           {/* Divider */}
           <div className="pointer-events-none absolute inset-y-0 w-0.5 bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.15)]" style={{ left: `${pos}%` }} aria-hidden="true">
@@ -432,7 +451,7 @@ function Block({ block }: { block: CaseBlock; key?: string | number }) {
       );
     }
     case 'image': {
-      const pic = <Picture image={block.image} className="w-full h-auto rounded-2xl ring-1 ring-black/5 dark:ring-white/10" />;
+      const pic = <Picture image={block.image} zoom={!block.href} className="w-full h-auto rounded-2xl ring-1 ring-black/5 dark:ring-white/10" />;
       return (
         <Reveal className="py-6">
           <figure>
@@ -567,10 +586,50 @@ function Toc({ sections }: { sections: CaseStudyData['sections'] }) {
 
 /* ---------- Page ---------- */
 
+/** Main visual: the case study's own, or the project's card image */
+function heroImage(project: Project, study: CaseStudyData): CaseImage {
+  return study.hero ?? { src: project.imageUrl, width: 1920, height: 1200, alt: `${project.name} – ${project.subtitle}` };
+}
+
+/** Every image of the page the viewer can show, in reading order (a slider's halves, videos and linked images stay out) */
+function caseImages(project: Project, study: CaseStudyData): CaseImage[] {
+  const list = [heroImage(project, study)];
+  for (const section of study.sections) {
+    for (const item of section.content) {
+      if (typeof item === 'string') continue;
+      if (item.type === 'steps') list.push(...item.steps.map((s) => s.image));
+      else if (item.type === 'pair' || item.type === 'strip' || item.type === 'gallery') list.push(...item.items);
+      else if (item.type === 'image' && !item.href) list.push(item.image);
+    }
+  }
+  return list.filter((im, i) => list.findIndex((other) => other.src === im.src) === i);
+}
+
+function Hero({ project, study }: { project: Project; study: CaseStudyData }) {
+  const image = heroImage(project, study);
+  const zoomable = useZoomable(image);
+  return (
+    <img
+      {...zoomable}
+      src={image.src}
+      srcSet={study.hero ? undefined : imageSrcSet(image.src)}
+      sizes={study.hero ? undefined : '(min-width: 1152px) 1088px, 100vw'}
+      alt={image.alt}
+      width={image.width}
+      height={image.height}
+      fetchPriority="high"
+      decoding="async"
+      className="absolute inset-0 w-full h-full object-cover"
+    />
+  );
+}
+
 export function CaseStudy({ project, study }: { project: Project; study: CaseStudyData; key?: string }) {
   const { lang } = useLanguage();
   const newTab = lang === 'fr' ? '(nouvel onglet)' : '(opens in a new tab)';
+  const images = useMemo(() => caseImages(project, study), [project, study]);
   return (
+    <LightboxProvider images={images}>
     <article>
       {/* Hero: the stake first, then the facts */}
       <header className="pb-10 sm:pb-14">
@@ -633,29 +692,7 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
         style={projectMediaTransition(project.id)}
         className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl sm:rounded-3xl bg-neutral-200 dark:bg-[#141418] shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
       >
-        {study.hero ? (
-          <img
-            src={study.hero.src}
-            alt={study.hero.alt}
-            width={study.hero.width}
-            height={study.hero.height}
-            fetchPriority="high"
-            decoding="async"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-        ) : (
-          <img
-            src={project.imageUrl}
-            srcSet={imageSrcSet(project.imageUrl)}
-            sizes="(min-width: 1152px) 1088px, 100vw"
-            alt={`${project.name} – ${project.subtitle}`}
-            width={1920}
-            height={1200}
-            fetchPriority="high"
-            decoding="async"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-        )}
+        <Hero project={project} study={study} />
       </div>
 
       {/* In short: for the 60-second read */}
@@ -720,5 +757,6 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
         {study.creditsNote && <p className="mt-6 text-sm text-neutral-600 dark:text-[#A1A1AA]">{study.creditsNote}</p>}
       </section>
     </article>
+    </LightboxProvider>
   );
 }
