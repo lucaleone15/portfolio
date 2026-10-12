@@ -50,23 +50,23 @@ const F1_FR: CaseStudy = {
           steps: [
             {
               text: 'L’accueil montre la course en cours ou la prochaine, le calendrier et les classements. On rejoint la course en un geste.',
-              image: img('app-accueil', 1600, 1200, 'Deux écrans d’accueil : la course en cours et le compte à rebours de la prochaine'),
+              image: img('app-accueil-mockup', 1600, 1200, 'Deux écrans d’accueil : la course en cours et le compte à rebours de la prochaine'),
             },
             {
               text: 'Le classement va plus loin que la TV : l’âge et le type de pneus, le rythme par secteur. Et le circuit montre la position de chaque pilote, les zones DRS, la météo et les incidents.',
-              image: img('app-classement-circuit', 1600, 1200, 'Deux écrans : le classement détaillé en direct et la carte du circuit avec les pilotes'),
+              image: img('app-classement-circuit-mockup', 1600, 1200, 'Deux écrans : le classement détaillé en direct et la carte du circuit avec les pilotes'),
             },
             {
               text: 'La télémétrie traduit les données brutes en courbes lisibles : vitesse, accélération, freinage. Et on peut comparer la trajectoire de deux pilotes, virage par virage.',
-              image: img('app-telemetrie', 1600, 1200, 'Deux écrans : les courbes de télémétrie d’un pilote et la comparaison de trajectoire entre deux pilotes'),
+              image: img('app-telemetrie-mockup', 1600, 1200, 'Deux écrans : les courbes de télémétrie d’un pilote et la comparaison de trajectoire entre deux pilotes'),
             },
             {
               text: 'La caméra embarquée et les radios entre le pilote et son équipe, parfois avant qu’elles ne passent à la TV.',
-              image: img('app-onboard-radio', 1600, 1200, 'Deux écrans : la caméra embarquée d’un pilote et le fil des messages radio'),
+              image: img('app-onboard-radio-mockup', 1600, 1200, 'Deux écrans : la caméra embarquée d’un pilote et le fil des messages radio'),
             },
             {
               text: 'Les prédictions et le simulateur : chances de victoire, fenêtres d’arrêt, scénarios « et si » et sa propre stratégie à tester.',
-              image: img('app-predictions', 1600, 1200, 'Deux écrans : les prédictions de classement final et le simulateur de stratégie'),
+              image: img('app-predictions-mockup', 1600, 1200, 'Deux écrans : les prédictions de classement final et le simulateur de stratégie'),
             },
           ],
         },
@@ -186,23 +186,23 @@ const F1_EN: CaseStudy = {
           steps: [
             {
               text: 'The home screen shows the race in progress or the next one, the calendar and the standings. You join the race in one tap.',
-              image: img('app-accueil', 1600, 1200, 'Two home screens: the race in progress and the countdown to the next one'),
+              image: img('app-accueil-mockup', 1600, 1200, 'Two home screens: the race in progress and the countdown to the next one'),
             },
             {
               text: 'The standings go further than TV: tyre age and compound, pace per sector. And the track map shows every driver’s position, DRS zones, weather and incidents.',
-              image: img('app-classement-circuit', 1600, 1200, 'Two screens: detailed live standings and the track map with the drivers'),
+              image: img('app-classement-circuit-mockup', 1600, 1200, 'Two screens: detailed live standings and the track map with the drivers'),
             },
             {
               text: 'Telemetry turns raw data into readable curves: speed, throttle, braking. And you can compare two drivers’ lines, corner by corner.',
-              image: img('app-telemetrie', 1600, 1200, 'Two screens: a driver’s telemetry curves and a line comparison between two drivers'),
+              image: img('app-telemetrie-mockup', 1600, 1200, 'Two screens: a driver’s telemetry curves and a line comparison between two drivers'),
             },
             {
               text: 'The onboard camera and the radio between drivers and their team, sometimes before it airs on TV.',
-              image: img('app-onboard-radio', 1600, 1200, 'Two screens: a driver’s onboard camera and the radio message feed'),
+              image: img('app-onboard-radio-mockup', 1600, 1200, 'Two screens: a driver’s onboard camera and the radio message feed'),
             },
             {
               text: 'Predictions and the simulator: chances of winning, pit windows, “what if” scenarios and your own strategy to test.',
-              image: img('app-predictions', 1600, 1200, 'Two screens: final standing predictions and the strategy simulator'),
+              image: img('app-predictions-mockup', 1600, 1200, 'Two screens: final standing predictions and the strategy simulator'),
             },
           ],
         },
