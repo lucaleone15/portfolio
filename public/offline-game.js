@@ -4,45 +4,88 @@
  * faster and faster; dodge the cones. Rows of cones leave one gap, which wanders across the
  * track: always reachable, never for long in the same place.
  * Arrow keys (or A/D), a finger or the mouse steer; Space or a tap starts. Best distance
- * kept in this browser. When the connection comes back, a banner offers to resume.
+ * kept in this browser. When the server answers again, a banner offers to resume.
  * Plain script, no dependency: there is no network.
  */
 (function () {
   // The language of the page the visitor wanted; opened directly (/offline), the browser's
   var direct = /^\/offline(\.html)?$/.test(location.pathname);
   var en = direct ? !/^fr\b/i.test(navigator.language || '') : location.pathname === '/en' || location.pathname.indexOf('/en/') === 0;
+  // One entry per connection state: [status pill, title, explanation]
   var T = en
     ? {
-        lang: 'en', flag: 'Red flag', title: 'Race neutralised', lead: 'No connection right now. While the network comes back, fancy a lap? Dodge the cones.',
-        back: 'The connection is back.', resume: 'Resume the race', best: 'Best', hint: '← → or drag your finger · Space or tap to start',
-        start: 'Tap or press Space', crash: 'Into the cones!', again: 'Tap or Space to go again', record: 'New record!', aria: 'Racing mini-game', page: 'Red flag · Luca Leone',
+        lang: 'en', page: 'Offline · Luca Leone’s portfolio', sub: 'Portfolio · luca-leone.ch',
+        checking: ['Checking the connection…', 'No connection', 'You’re on Luca Leone’s portfolio: the page you asked for couldn’t load without a connection.'],
+        offline: ['Offline', 'No connection', 'You’re on Luca Leone’s portfolio, but your device isn’t connected to the internet, so the page you asked for can’t load. It will be back as soon as the connection is.'],
+        unreachable: ['Site unreachable', 'The site isn’t responding', 'You’re on Luca Leone’s portfolio. Your device is online, but the site isn’t responding right now, so the page you asked for can’t load. The connection is checked every 5 seconds.'],
+        back: ['Connection restored', 'Back online', 'The connection is back: the page you asked for can load again.'],
+        preview: ['Online', 'Offline page', 'This page stands in for Luca Leone’s portfolio when the connection drops. You’re online: the site works as usual.'],
+        backText: 'The site is responding again.', resume: 'Show the page', previewText: 'You’re online.', home: 'Go to the portfolio',
+        flag: 'Red flag', pit: 'While the network comes back, fancy a lap? Dodge the cones.',
+        best: 'Best', hint: '← → or drag your finger · Space or tap to start',
+        start: 'Tap or press Space', crash: 'Into the cones!', again: 'Tap or Space to go again', record: 'New record!', aria: 'Racing mini-game',
       }
     : {
-        lang: 'fr', flag: 'Drapeau rouge', title: 'Course neutralisée', lead: 'Pas de connexion pour le moment. En attendant le retour du réseau, un petit tour de piste ? Évitez les cônes.',
-        back: 'La connexion est revenue.', resume: 'Reprendre la course', best: 'Record', hint: '← → ou glisser le doigt · Espace ou toucher pour démarrer',
-        start: 'Touchez ou appuyez sur Espace', crash: 'Dans les cônes !', again: 'Touchez ou Espace pour repartir', record: 'Nouveau record !', aria: 'Mini-jeu de course', page: 'Drapeau rouge · Luca Leone',
+        lang: 'fr', page: 'Hors ligne · Portfolio de Luca Leone', sub: 'Portfolio · luca-leone.ch',
+        checking: ['Vérification de la connexion…', 'Pas de connexion', 'Vous êtes sur le portfolio de Luca Leone : la page demandée n’a pas pu se charger, faute de connexion.'],
+        offline: ['Hors ligne', 'Pas de connexion', 'Vous êtes sur le portfolio de Luca Leone, mais votre appareil n’est pas connecté à internet : la page demandée ne peut pas se charger. Elle s’affichera dès que la connexion reviendra.'],
+        unreachable: ['Site injoignable', 'Le site ne répond pas', 'Vous êtes sur le portfolio de Luca Leone. Votre appareil est connecté à internet, mais le site ne répond pas pour le moment : la page demandée ne peut pas se charger. La connexion est vérifiée toutes les 5 secondes.'],
+        back: ['Connexion rétablie', 'Connexion revenue', 'La connexion est revenue : la page demandée peut à nouveau se charger.'],
+        preview: ['En ligne', 'Page hors ligne', 'Cette page remplace le portfolio de Luca Leone quand la connexion est coupée. Vous êtes en ligne : le site fonctionne normalement.'],
+        backText: 'Le site répond à nouveau.', resume: 'Afficher la page', previewText: 'Vous êtes en ligne.', home: 'Aller au portfolio',
+        flag: 'Drapeau rouge', pit: 'En attendant le retour du réseau, un petit tour de piste ? Évitez les cônes.',
+        best: 'Record', hint: '← → ou glisser le doigt · Espace ou toucher pour démarrer',
+        start: 'Touchez ou appuyez sur Espace', crash: 'Dans les cônes !', again: 'Touchez ou Espace pour repartir', record: 'Nouveau record !', aria: 'Mini-jeu de course',
       };
   var $ = function (id) { return document.getElementById(id); };
   document.documentElement.lang = T.lang;
   document.title = T.page;
+  $('brandSub').textContent = T.sub;
   $('flag').textContent = T.flag;
-  $('title').firstChild.textContent = T.title;
-  $('lead').textContent = T.lead;
-  $('backText').textContent = T.back;
-  $('resume').textContent = T.resume;
+  $('pitLead').textContent = T.pit;
   $('bestLabel').textContent = T.best;
   $('hint').textContent = T.hint;
 
-  // Back online: offer to reload the page the visitor wanted
+  // The connection state, never guessed: navigator.onLine only says a network is there
+  // (it is true when the site is down, or when this page is opened directly), so the
+  // server itself is asked, every 5 seconds while the page is visible. The resume banner
+  // shows only once the server has answered.
   var back = $('back');
-  var showBack = function () { back.classList.toggle('show', navigator.onLine); };
-  window.addEventListener('online', showBack);
-  window.addEventListener('offline', showBack);
-  showBack();
-  // Reload the page the visitor wanted (the service worker shows this game at its address);
-  // opened directly, the game has no page behind it: back to the portfolio's home
+  var setState = function (state) {
+    document.body.setAttribute('data-state', state);
+    $('status').textContent = T[state][0];
+    $('title').firstChild.textContent = T[state][1];
+    $('lead').textContent = T[state][2];
+    back.classList.toggle('show', state === 'back' || state === 'preview');
+    $('backText').textContent = state === 'preview' ? T.previewText : T.backText;
+    $('resume').textContent = direct ? T.home : T.resume;
+  };
+  var timer;
+  var check = function () {
+    clearTimeout(timer);
+    if (!navigator.onLine) setState('offline');
+    else {
+      // Not one of the files the service worker keeps: this request always goes to the server
+      var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+      var abort = setTimeout(function () { if (ctrl) ctrl.abort(); }, 4000);
+      fetch('/favicon.svg?online=' + Date.now(), { method: 'HEAD', cache: 'no-store', signal: ctrl ? ctrl.signal : undefined })
+        .then(function (res) { return res.ok; }, function () { return false; })
+        .then(function (ok) {
+          clearTimeout(abort);
+          setState(ok ? (direct ? 'preview' : 'back') : navigator.onLine ? 'unreachable' : 'offline');
+        });
+    }
+    if (document.visibilityState !== 'hidden') timer = setTimeout(check, 5000);
+  };
+  window.addEventListener('online', check);
+  window.addEventListener('offline', check);
+  document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') check(); });
+  setState('checking');
+  check();
+  // Reload the page the visitor wanted (the service worker shows this page at its address);
+  // opened directly, there is no page behind it: the portfolio's home
   $('resume').addEventListener('click', function () {
-    if (/^\/offline(\.html)?$/.test(location.pathname)) location.href = en ? '/en/' : '/';
+    if (direct) location.href = en ? '/en/' : '/';
     else location.reload();
   });
 

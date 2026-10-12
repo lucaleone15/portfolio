@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="robots" content="noindex, nofollow" />
   <meta name="color-scheme" content="light dark" />
-  <title>Drapeau rouge · Luca Leone</title>
+  <title>Hors ligne · Portfolio de Luca Leone</title>
   <!-- Shown by the service worker (public/sw.js) when a page can't load without a
        connection. Standalone on purpose: no network, so nothing but this file and
        offline-game.js (both kept by the service worker). Inline styles only: the site's
@@ -17,6 +17,9 @@
       --muted: #5a5a63;
       --accent: #c50e36;
       --card: #ffffff;
+      --line: rgba(0, 0, 0, 0.1);
+      --ok: #157a3c;
+      --warn: #a15c00;
       color-scheme: light dark;
     }
     @media (prefers-color-scheme: dark) {
@@ -26,6 +29,9 @@
         --muted: #a1a1aa;
         --accent: #f23845;
         --card: #16161a;
+        --line: rgba(255, 255, 255, 0.12);
+        --ok: #4ade80;
+        --warn: #fbbf24;
       }
     }
     * { box-sizing: border-box; }
@@ -35,25 +41,32 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       gap: 22px;
-      padding: 32px 16px;
+      padding: max(20px, env(safe-area-inset-top)) 16px 32px;
       font-family: "Plus Jakarta Sans Variable", "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       text-align: center;
       -webkit-font-smoothing: antialiased;
     }
-    .flag {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
+    /* Whose site this is, before anything else */
+    .brand {
+      display: flex; align-items: center; gap: 12px; width: min(640px, 100%); min-height: 40px;
+      padding-bottom: 16px; border-bottom: 1px solid var(--line); text-align: left;
     }
-    .flag::before { content: ""; width: 18px; height: 12px; border-radius: 2px; background: #e10600; }
-    h1 { margin: 0; font-size: clamp(40px, 9vw, 72px); font-weight: 800; letter-spacing: -0.035em; line-height: 1.02; }
+    /* The site's wordmark (Syne Bold, as in the header), drawn as paths: no font to load */
+    .wordmark { display: block; height: 19px; width: auto; color: var(--ink); }
+    .brand small { margin-left: auto; font-size: 13px; color: var(--muted); }
+    main { display: flex; flex-direction: column; align-items: center; gap: 22px; margin: auto 0; width: 100%; }
+    /* Connection state, checked against the server (offline-game.js) */
+    .status {
+      display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px;
+      border: 1px solid var(--line); font-size: 13px; font-weight: 700; color: var(--accent);
+    }
+    .status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+    body[data-state="checking"] .status, body[data-state="unreachable"] .status { color: var(--warn); }
+    body[data-state="back"] .status, body[data-state="preview"] .status { color: var(--ok); }
+    h1 { margin: 0; font-size: clamp(36px, 8vw, 64px); font-weight: 800; letter-spacing: -0.035em; line-height: 1.04; }
     h1 span { color: var(--accent); }
-    p { margin: 0; max-width: 32em; font-size: clamp(15px, 2.2vw, 18px); line-height: 1.55; color: var(--muted); }
-    .game { position: relative; width: min(380px, 100%); }
-    canvas { display: block; width: 100%; height: auto; border-radius: 20px; background: #2c2c31; touch-action: none; cursor: pointer; box-shadow: 0 20px 50px -20px rgba(0,0,0,0.45); }
-    .hud { display: flex; justify-content: space-between; width: min(380px, 100%); font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
-    .hud em { font-style: normal; color: var(--muted); font-weight: 500; }
+    p { margin: 0; max-width: 34em; font-size: clamp(15px, 2.2vw, 18px); line-height: 1.55; color: var(--muted); }
     .back {
       display: none; align-items: center; gap: 12px; padding: 10px 10px 10px 18px; border-radius: 999px;
       background: var(--card); box-shadow: 0 10px 30px -12px rgba(0,0,0,0.35); font-weight: 600; font-size: 15px;
@@ -63,29 +76,53 @@
       font: inherit; font-weight: 700; border: 0; border-radius: 999px; padding: 11px 20px; cursor: pointer;
       background: var(--accent); color: #fff;
     }
+    /* The game: what the wait is for, after the explanation */
+    .pit { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; margin-top: 10px; }
+    .flag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
+    }
+    .flag::before { content: ""; width: 18px; height: 12px; border-radius: 2px; background: #e10600; }
+    .pit p { font-size: 15px; }
+    .game { position: relative; width: min(380px, 100%); }
+    canvas { display: block; width: 100%; height: auto; border-radius: 20px; background: #2c2c31; touch-action: none; cursor: pointer; box-shadow: 0 20px 50px -20px rgba(0,0,0,0.45); }
+    .hud { display: flex; justify-content: space-between; width: min(380px, 100%); font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .hud em { font-style: normal; color: var(--muted); font-weight: 500; }
     .sign { font-size: 13px; color: var(--muted); }
-    .sign b { color: var(--ink); }
   </style>
 </head>
-<body>
-  <span class="flag" id="flag">Drapeau rouge</span>
-  <h1 id="title">Course neutralisée<span>.</span></h1>
-  <p id="lead">Pas de connexion pour le moment. En attendant le retour du réseau, un petit tour de piste ? Évitez les cônes.</p>
+<body data-state="checking">
+  <header class="brand">
+    <svg class="wordmark" viewBox="77 -647 6324 659" role="img" aria-label="Luca Leone">
+      <path fill="currentColor" d="M210 -647V-111H640V0H77V-647ZM1297 0H1167.0V-497H1297.0ZM1174 -239 1175 -205Q1173 -191 1165 -164.5Q1157 -138 1140.5 -108.0Q1124 -78 1098 -50.5Q1072 -23 1034 -5.5Q996 12 944 12Q903 12 863.5 2.0Q824 -8 792 -31.5Q760 -55 741 -95.0Q722 -135 722 -196V-497H852.0V-218Q852 -170 867.5 -142.5Q883 -115 913 -104.0Q943 -93 984 -93Q1038 -93 1077 -116.5Q1116 -140 1140.5 -174.0Q1165 -208 1174 -239ZM1980 -196Q1975 -131 1938.5 -84.0Q1902 -37 1838 -12.5Q1774 12 1686 12Q1594 12 1521.5 -17.5Q1449 -47 1407.5 -104.5Q1366 -162 1366 -247Q1366 -332 1407.5 -390.0Q1449 -448 1521.5 -478.0Q1594 -508 1686 -508Q1774 -508 1837 -483.5Q1900 -459 1936.5 -413.0Q1973 -367 1979 -302H1860.0Q1843 -352 1797 -380.0Q1751 -408 1686 -408Q1634 -408 1591.5 -390.0Q1549 -372 1523.5 -336.5Q1498 -301 1498 -247Q1498 -194 1523 -158.5Q1548 -123 1591 -105.5Q1634 -88 1686 -88Q1756 -88 1800.5 -116.0Q1845 -144 1861 -196ZM2293 11Q2219 11 2158.5 -21.5Q2098 -54 2062.5 -112.5Q2027 -171 2027 -248Q2027 -327 2063 -385.0Q2099 -443 2160.5 -475.5Q2222 -508 2300 -508Q2386 -508 2438.5 -473.5Q2491 -439 2515 -380.0Q2539 -321 2539 -248Q2539 -204 2525 -158.5Q2511 -113 2482 -74.5Q2453 -36 2406 -12.5Q2359 11 2293 11ZM2335 -89Q2394 -89 2437 -109.0Q2480 -129 2503 -165.0Q2526 -201 2526 -248Q2526 -299 2502.5 -334.5Q2479 -370 2436.5 -388.5Q2394 -407 2335 -407Q2252 -407 2206 -363.5Q2160 -320 2160 -248Q2160 -200 2182 -164.5Q2204 -129 2243.5 -109.0Q2283 -89 2335 -89ZM2526 -497H2656.0V0H2535.0Q2535 0 2532.5 -19.5Q2530 -39 2528 -69.0Q2526 -99 2526 -128ZM3115 -647V-111H3545.0V0H2982.0V-647ZM4060 -165H4186.0Q4178 -114 4143.5 -74.0Q4109 -34 4050 -11.0Q3991 12 3906 12Q3811 12 3738 -18.5Q3665 -49 3624 -107.0Q3583 -165 3583 -247Q3583 -329 3623 -387.5Q3663 -446 3734.5 -477.0Q3806 -508 3902 -508Q4000 -508 4065 -477.0Q4130 -446 4161.5 -383.5Q4193 -321 4188 -224H3714.0Q3719 -186 3742.5 -155.0Q3766 -124 3806.5 -106.0Q3847 -88 3903 -88Q3965 -88 4006.5 -109.5Q4048 -131 4060 -165ZM3896 -409Q3824 -409 3779 -377.5Q3734 -346 3721 -300H4059.0Q4054 -350 4011.5 -379.5Q3969 -409 3896 -409ZM4553 12Q4459 12 4387.5 -18.0Q4316 -48 4276 -105.5Q4236 -163 4236 -247Q4236 -331 4276 -389.5Q4316 -448 4387.5 -478.0Q4459 -508 4553 -508Q4647 -508 4717.5 -478.0Q4788 -448 4828 -389.5Q4868 -331 4868 -247Q4868 -163 4828 -105.5Q4788 -48 4717.5 -18.0Q4647 12 4553 12ZM4553 -88Q4605 -88 4646.5 -106.5Q4688 -125 4712 -160.5Q4736 -196 4736 -247Q4736 -298 4712 -334.5Q4688 -371 4647 -390.0Q4606 -409 4553 -409Q4501 -409 4459 -390.0Q4417 -371 4392.5 -335.0Q4368 -299 4368 -247Q4368 -196 4392 -160.5Q4416 -125 4458 -106.5Q4500 -88 4553 -88ZM4939 -497H5069.0V0H4939.0ZM5300 -508Q5346 -508 5385 -496.0Q5424 -484 5453 -459.0Q5482 -434 5498 -395.5Q5514 -357 5514 -304V0H5384.0V-281Q5384 -344 5353.5 -373.5Q5323 -403 5254 -403Q5202 -403 5160 -383.0Q5118 -363 5092 -332.5Q5066 -302 5062 -269L5061 -320Q5066 -355 5084 -388.0Q5102 -421 5132.5 -448.5Q5163 -476 5205 -492.0Q5247 -508 5300 -508ZM6060 -165H6186.0Q6178 -114 6143.5 -74.0Q6109 -34 6050 -11.0Q5991 12 5906 12Q5811 12 5738 -18.5Q5665 -49 5624 -107.0Q5583 -165 5583 -247Q5583 -329 5623 -387.5Q5663 -446 5734.5 -477.0Q5806 -508 5902 -508Q6000 -508 6065 -477.0Q6130 -446 6161.5 -383.5Q6193 -321 6188 -224H5714.0Q5719 -186 5742.5 -155.0Q5766 -124 5806.5 -106.0Q5847 -88 5903 -88Q5965 -88 6006.5 -109.5Q6048 -131 6060 -165ZM5896 -409Q5824 -409 5779 -377.5Q5734 -346 5721 -300H6059.0Q6054 -350 6011.5 -379.5Q5969 -409 5896 -409Z"/>
+      <path fill="var(--accent)" d="M6401 -114V0H6250.0V-114Z"/>
+    </svg>
+    <small id="brandSub">Portfolio · luca-leone.ch</small>
+  </header>
 
-  <div class="back" id="back" role="status">
-    <span id="backText">La connexion est revenue.</span>
-    <button type="button" id="resume">Reprendre la course</button>
-  </div>
+  <main>
+    <span class="status" id="status" role="status">Vérification de la connexion…</span>
+    <h1 id="title">Pas de connexion<span>.</span></h1>
+    <p id="lead">Vous êtes sur le portfolio de Luca Leone : la page demandée n’a pas pu se charger, faute de connexion.</p>
 
-  <div class="hud" aria-live="polite">
-    <span id="distance">0 m</span>
-    <span><em id="bestLabel">Record</em> <span id="best">–</span></span>
-  </div>
-  <div class="game">
-    <canvas id="track" width="380" height="520" aria-label="Mini-jeu de course"></canvas>
-  </div>
-  <p class="sign" id="hint">← → ou glisser le doigt · Espace ou toucher pour démarrer</p>
-  <p class="sign"><b>Luca Leone</b> · luca-leone.ch</p>
+    <div class="back" id="back">
+      <span id="backText">Le site répond à nouveau.</span>
+      <button type="button" id="resume">Afficher la page</button>
+    </div>
+
+    <section class="pit" aria-labelledby="flag">
+      <span class="flag" id="flag">Drapeau rouge</span>
+      <p id="pitLead">En attendant le retour du réseau, un petit tour de piste ? Évitez les cônes.</p>
+      <div class="hud" aria-live="polite">
+        <span id="distance">0 m</span>
+        <span><em id="bestLabel">Record</em> <span id="best">–</span></span>
+      </div>
+      <div class="game">
+        <canvas id="track" width="380" height="520" aria-label="Mini-jeu de course"></canvas>
+      </div>
+      <p class="sign" id="hint">← → ou glisser le doigt · Espace ou toucher pour démarrer</p>
+    </section>
+  </main>
 
   <script src="/offline-game.js" defer></script>
 </body>
