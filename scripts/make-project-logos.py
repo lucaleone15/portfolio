@@ -25,10 +25,8 @@ def pixels(im: Image.Image):
     return (im.get_flattened_data if hasattr(im, 'get_flattened_data') else im.getdata)()
 
 
-def unmix(rgb: Image.Image, bg, solid: float = 1) -> Image.Image:
-    """Opaque image on a solid background -> transparent image of what was drawn on it
-    (solid: the opacity un-mixing finds for the logo's main colour, which is in fact opaque;
-    on white, a red could also be a lighter, see-through red, and would look dull on dark)"""
+def unmix(rgb: Image.Image, bg) -> Image.Image:
+    """Opaque image on a solid background -> transparent image of what was drawn on it"""
     k = bg
 
     def pixel(c):
@@ -39,7 +37,7 @@ def unmix(rgb: Image.Image, bg, solid: float = 1) -> Image.Image:
         )
         if a < 0.04:
             return (0, 0, 0, 0)
-        a = min(a / solid, 1)
+        a = min(a, 1)
         return tuple(round(min(255, max(0, kv + (v - kv) / a))) for v, kv in zip(c, k)) + (round(a * 255),)
 
     out = Image.new('RGBA', rgb.size)
@@ -102,13 +100,21 @@ def themed(im: Image.Image, theme: str, mono: bool = False, ink_before: int | No
     return out
 
 
-def save(im: Image.Image, name: str, file: str | None = None, symbol_right: bool = False, light_as_is: bool = False, neutral: float = 0.22):
+def save(im: Image.Image, name: str, file: str | None = None, symbol_right: bool = False, light_as_is: bool = False, neutral: float = 0.22, dark: Image.Image | None = None):
     """file: base name of the files when it differs from the logo's id (new name = no stale
     cached copy, the images are cached for 30 days); light_as_is: the light-theme file keeps
-    the logo's own colours, only the dark one is themed"""
+    the logo's own colours, only the dark one is themed; dark: the brand's own version for
+    dark backgrounds (same size and layout), both used as they are"""
     file = file or name
-    im = crop(im)
-    im = im.resize((round(im.width * HEIGHT / im.height), HEIGHT), Image.LANCZOS)
+    size = lambda i: i.resize((round(i.width * HEIGHT / i.height), HEIGHT), Image.LANCZOS)
+    if dark is not None:
+        box = im.getchannel('A').point(lambda v: 255 if v > 24 else 0).getbbox()
+        im, dark = size(im.crop(box)), size(dark.crop(box))
+        im.save(OUT / f'{file}.webp', 'WEBP', quality=92, method=6)
+        dark.save(OUT / f'{file}-dark.webp', 'WEBP', quality=92, method=6)
+        print(f'{name}: {im.width}x{im.height}')
+        return
+    im = size(crop(im))
     ink_before = widest_gap(im) if symbol_right else None
     for theme in ('light', 'dark'):
         path = OUT / (f'{file}.webp' if theme == 'light' else f'{file}-dark.webp')
@@ -138,11 +144,11 @@ save(Image.open('matiere/kartingvuiteboeuf/LOGO/Logo-KartingVuiteboeuf.png').con
 ocean = Image.open('public/images/case/oceansight/logo.webp').convert('RGB')
 save(key(ocean, ocean.getpixel((10, 10))), 'oceansight')
 
-# L'Étoile Blanche: the name, from the cover of the Zest playbook (vector), on its white box
-eb = pdf_region('matiere/etoileblanche/M53-1_Zest_playbook.pdf', 0, (55, 55, 262, 175), 600)
-# Its red in both themes; the dark drop shadow of the letters turns white on the dark theme
-# (its red, #A82024, un-mixes to 87 % opacity on white)
-save(unmix(eb.crop((80, 260, eb.width - 80, 610)), (255, 255, 255), solid=0.87), 'etoile-blanche', file='etoile-blanche-color')
+# L'Étoile Blanche: the official logo files (transparent), the one for light backgrounds and
+# the one for dark ones (white drop shadow); only the name, CAFÉ - BAR - RESTAURANT below it
+# would be unreadable at this size
+eb = [Image.open(f'matiere/etoileblanche/Logo/logo-fond-{bg}.png').convert('RGBA').crop((0, 0, 6251, 1500)) for bg in ('blanc', 'noir')]
+save(eb[0], 'etoile-blanche', file='etoile-blanche-logo', dark=eb[1])
 
 # DriveGear: transparent logo file, the one-line version
 save(Image.open('matiere/drivegear/Logo/LogoLigneV1.png').convert('RGBA'), 'drivegear')

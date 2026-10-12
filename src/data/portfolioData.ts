@@ -211,7 +211,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     // Étoile Blanche red, as on the printed menus
     accentColor: '#AB2328',
     accentColorDark: '#E0484E',
-    logo: { src: '/images/logos/etoile-blanche-color.webp', srcDark: '/images/logos/etoile-blanche-color-dark.webp', width: 705, height: 160, display: 34 },
+    logo: { src: '/images/logos/etoile-blanche-logo.webp', srcDark: '/images/logos/etoile-blanche-logo-dark.webp', width: 709, height: 160, display: 34 },
     video: '/videos/etoile-blanche-dive.mp4',
     fr: {
       subtitle: 'Communication d’un restaurant lausannois',
