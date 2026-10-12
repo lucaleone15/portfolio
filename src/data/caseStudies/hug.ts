@@ -84,8 +84,8 @@ const HUG_FR: CaseStudy = {
       content: [
         {
           type: 'compare',
-          before: img('avant-wireframe-admin-mockup-2', 1600, 1200, 'Wireframe en niveaux de gris du tableau de bord de l’administration'),
-          after: img('apres-site-admin-mockup', 1600, 1200, 'Tableau de bord de l’administration sur le site en ligne, avec les chiffres et le classement du trophée'),
+          before: img('avant-wireframe-admin-mockup-3', 1600, 1200, 'Wireframe en niveaux de gris du tableau de bord de l’administration'),
+          after: img('apres-site-admin-mockup-2', 1600, 1200, 'Tableau de bord de l’administration sur le site en ligne, avec les chiffres et le classement du trophée'),
           beforeLabel: 'Wireframe',
           afterLabel: 'Site en ligne',
           caption: 'Le tableau de bord de l’administration, du wireframe au site en ligne. Faites glisser pour comparer.',
@@ -96,27 +96,27 @@ const HUG_FR: CaseStudy = {
           steps: [
             {
               text: 'L’accueil s’adresse aux entreprises : « Les HUG mènent l’enquête ». On y découvre le programme et on inscrit son entreprise.',
-              image: img('site-accueil-mockup', 1600, 1200, 'Page d’accueil : « Les HUG mènent l’enquête », avec une loupe sur une goutte de sang'),
+              image: img('site-accueil-mockup-2', 1600, 1200, 'Page d’accueil : « Les HUG mènent l’enquête », avec une loupe sur une goutte de sang'),
             },
             {
               text: 'Chaque entreprise reçoit sa propre page, à ses couleurs : un don sauve trois vies, une mission de sept minutes.',
-              image: img('site-entreprise-mockup', 1600, 1200, 'Page de la Banque Cantonale de Genève, en rouge : « Un don de sang sauve 3 vies. Une mission de 7 minutes. »'),
+              image: img('site-entreprise-mockup-2', 1600, 1200, 'Page de la Banque Cantonale de Genève, en rouge : « Un don de sang sauve 3 vies. Une mission de 7 minutes. »'),
             },
             {
               text: 'Sur la même page, un tableau d’indices répond aux questions qu’on n’ose pas poser : est-ce que ça fait mal, combien de temps ça dure.',
-              image: img('site-indices-mockup', 1600, 1200, 'Tableau de liège avec des fiches reliées par des fils rouges : « C’est quoi le don du sang ? »'),
+              image: img('site-indices-mockup-2', 1600, 1200, 'Tableau de liège avec des fiches reliées par des fils rouges : « C’est quoi le don du sang ? »'),
             },
             {
               text: 'L’enquête reprend les critères officiels, posés comme les questions d’un interrogatoire. À la fin, la personne éligible prend rendez-vous ; les autres transmettent l’enquête à un collègue.',
-              image: img('site-enquete-mockup', 1600, 1200, 'Question de l’enquête sur un dossier en papier kraft : « Avez-vous entre 18 et 75 ans ? »'),
+              image: img('site-enquete-mockup-2', 1600, 1200, 'Question de l’enquête sur un dossier en papier kraft : « Avez-vous entre 18 et 75 ans ? »'),
             },
             {
               text: 'Toutes les entreprises qui organisent une collecte reçoivent le Label 100 pour Sang ; le Trophée Sangsationnel classe les plus engagées.',
-              image: img('site-trophee-mockup', 1600, 1200, 'Classement 2026 du trophée avec un podium de trois entreprises'),
+              image: img('site-trophee-mockup-2', 1600, 1200, 'Classement 2026 du trophée avec un podium de trois entreprises'),
             },
             {
               text: 'Le centre de transfusion suit tout depuis son administration, jusqu’à la question où les gens abandonnent l’enquête.',
-              image: img('site-admin-mockup', 1600, 1200, 'Page Analytics de l’administration : entonnoir, abandons par question, appareils et sources'),
+              image: img('site-admin-mockup-2', 1600, 1200, 'Page Analytics de l’administration : entonnoir, abandons par question, appareils et sources'),
             },
           ],
         },
@@ -316,8 +316,8 @@ const HUG_EN: CaseStudy = {
       content: [
         {
           type: 'compare',
-          before: img('avant-wireframe-admin-mockup-2', 1600, 1200, 'Greyscale wireframe of the admin dashboard'),
-          after: img('apres-site-admin-mockup', 1600, 1200, 'Admin dashboard on the live site, with the figures and the trophy ranking'),
+          before: img('avant-wireframe-admin-mockup-3', 1600, 1200, 'Greyscale wireframe of the admin dashboard'),
+          after: img('apres-site-admin-mockup-2', 1600, 1200, 'Admin dashboard on the live site, with the figures and the trophy ranking'),
           beforeLabel: 'Wireframe',
           afterLabel: 'Live site',
           caption: 'The admin dashboard, from wireframe to live site. Drag to compare.',
@@ -328,27 +328,27 @@ const HUG_EN: CaseStudy = {
           steps: [
             {
               text: 'The home page speaks to companies: “The HUG are investigating”. It presents the programme and lets a company sign up.',
-              image: img('site-accueil-mockup', 1600, 1200, 'Home page: “The HUG are investigating”, with a magnifying glass over a drop of blood'),
+              image: img('site-accueil-mockup-2', 1600, 1200, 'Home page: “The HUG are investigating”, with a magnifying glass over a drop of blood'),
             },
             {
               text: 'Each company gets its own page, in its own colours: one donation saves three lives, a seven-minute mission.',
-              image: img('site-entreprise-mockup', 1600, 1200, 'Banque Cantonale de Genève page, in red: “One blood donation saves 3 lives. A 7-minute mission.”'),
+              image: img('site-entreprise-mockup-2', 1600, 1200, 'Banque Cantonale de Genève page, in red: “One blood donation saves 3 lives. A 7-minute mission.”'),
             },
             {
               text: 'On the same page, an evidence board answers the questions people don’t dare to ask: does it hurt, how long does it take.',
-              image: img('site-indices-mockup', 1600, 1200, 'Corkboard with cards linked by red threads: “What is blood donation?”'),
+              image: img('site-indices-mockup-2', 1600, 1200, 'Corkboard with cards linked by red threads: “What is blood donation?”'),
             },
             {
               text: 'The survey uses the official criteria, asked like interrogation questions. At the end, eligible people book an appointment; the others pass the survey on to a colleague.',
-              image: img('site-enquete-mockup', 1600, 1200, 'Survey question on a kraft-paper file: “Are you between 18 and 75?”'),
+              image: img('site-enquete-mockup-2', 1600, 1200, 'Survey question on a kraft-paper file: “Are you between 18 and 75?”'),
             },
             {
               text: 'Every company that holds a blood drive receives the Label 100 pour Sang; the Trophée Sangsationnel ranks the most committed ones.',
-              image: img('site-trophee-mockup', 1600, 1200, '2026 trophy ranking with a podium of three companies'),
+              image: img('site-trophee-mockup-2', 1600, 1200, '2026 trophy ranking with a podium of three companies'),
             },
             {
               text: 'The transfusion centre follows everything from its admin area, down to the question where people drop out of the survey.',
-              image: img('site-admin-mockup', 1600, 1200, 'Admin analytics page: funnel, drop-offs per question, devices and sources'),
+              image: img('site-admin-mockup-2', 1600, 1200, 'Admin analytics page: funnel, drop-offs per question, devices and sources'),
             },
           ],
         },

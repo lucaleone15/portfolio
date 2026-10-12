@@ -3,7 +3,7 @@
   "name": "hug__site-accueil",
   "model": "laptop-14",
   "images": [
-   "matiere/hug/site/Capture d’écran 2026-10-08 à 12.41.15.png"
+   "matiere/_mockup-fit/hug__site-accueil.png"
   ],
   "bg": [
    "#cc342b",
@@ -14,13 +14,14 @@
   "camera": {
    "preset": "front"
   },
-  "align": 0.5
+  "align": 0.5,
+  "fitted_from": "matiere/hug/site/Capture d’écran 2026-10-08 à 12.41.15.png"
  },
  {
   "name": "hug__site-entreprise",
   "model": "laptop-14",
   "images": [
-   "matiere/hug/site/Capture d’écran 2026-09-22 à 17.48.12.png"
+   "matiere/_mockup-fit/hug__site-entreprise.png"
   ],
   "bg": [
    "#cc342b",
@@ -31,13 +32,14 @@
   "camera": {
    "preset": "front"
   },
-  "align": 0.5
+  "align": 0.5,
+  "fitted_from": "matiere/hug/site/Capture d’écran 2026-09-22 à 17.48.12.png"
  },
  {
   "name": "hug__site-enquete",
   "model": "laptop-14",
   "images": [
-   "matiere/hug/site/Capture d’écran 2026-09-22 à 17.48.34.png"
+   "matiere/_mockup-fit/hug__site-enquete.png"
   ],
   "bg": [
    "#cc342b",
@@ -48,13 +50,14 @@
   "camera": {
    "preset": "front"
   },
-  "align": 0.5
+  "align": 0.5,
+  "fitted_from": "matiere/hug/site/Capture d’écran 2026-09-22 à 17.48.34.png"
  },
  {
   "name": "hug__site-indices",
   "model": "laptop-14",
   "images": [
-   "matiere/hug/site/Capture d’écran 2026-09-22 à 17.48.20.png"
+   "matiere/_mockup-fit/hug__site-indices.png"
   ],
   "bg": [
    "#cc342b",
@@ -65,13 +68,14 @@
   "camera": {
    "preset": "front"
   },
-  "align": 0.5
+  "align": 0.5,
+  "fitted_from": "matiere/hug/site/Capture d’écran 2026-09-22 à 17.48.20.png"
  },
  {
   "name": "hug__site-trophee",
   "model": "laptop-14",
   "images": [
-   "matiere/hug/site/Capture d’écran 2026-09-22 à 17.47.03.png"
+   "matiere/_mockup-fit/hug__site-trophee.png"
   ],
   "bg": [
    "#cc342b",
@@ -82,13 +86,14 @@
   "camera": {
    "preset": "front"
   },
-  "align": 0.5
+  "align": 0.5,
+  "fitted_from": "matiere/hug/site/Capture d’écran 2026-09-22 à 17.47.03.png"
  },
  {
   "name": "hug__site-admin",
   "model": "laptop-14",
   "images": [
-   "matiere/hug/site/Capture d’écran 2026-09-22 à 17.49.48.png"
+   "matiere/_mockup-fit/hug__site-admin.png"
   ],
   "bg": [
    "#cc342b",
@@ -99,13 +104,14 @@
   "camera": {
    "preset": "front"
   },
-  "align": 0.5
+  "align": 0.5,
+  "fitted_from": "matiere/hug/site/Capture d’écran 2026-09-22 à 17.49.48.png"
  },
  {
   "name": "hug__apres-site-admin",
   "model": "laptop-14",
   "images": [
-   "matiere/hug/site/Capture d’écran 2026-09-22 à 17.50.09.png"
+   "matiere/_mockup-fit/hug__apres-site-admin.png"
   ],
   "bg": [
    "#cc342b",
@@ -116,13 +122,14 @@
   "camera": {
    "preset": "front"
   },
-  "align": 0.5
+  "align": 0.5,
+  "fitted_from": "matiere/hug/site/Capture d’écran 2026-09-22 à 17.50.09.png"
  },
  {
   "name": "hug__avant-wireframe-admin",
   "model": "laptop-14",
   "images": [
-   "matiere/_mockup-src/hug-wireframe.png"
+   "matiere/_mockup-fit/hug__avant-wireframe-admin.png"
   ],
   "bg": [
    "#cc342b",
@@ -133,13 +140,14 @@
   "camera": {
    "preset": "front"
   },
-  "align": 0.5
+  "align": 0.5,
+  "fitted_from": "matiere/_mockup-src/hug-wireframe.png"
  },
  {
   "name": "drivegear__site-accueil",
   "model": "laptop-14",
   "images": [
-   "matiere/_mockup-src/dg-accueil.png"
+   "matiere/_mockup-fit/drivegear__site-accueil.png"
   ],
   "bg": [
    "#05a0f7",
@@ -150,13 +158,14 @@
   "camera": {
    "preset": "front"
   },
-  "align": 0.5
+  "align": 0.5,
+  "fitted_from": "matiere/drivegear/Capture d’écran 2026-09-21 à 12.19.55 1.png"
  },
  {
   "name": "drivegear__site-produit",
   "model": "laptop-14",
   "images": [
-   "matiere/_mockup-src/dg-produit.png"
+   "matiere/_mockup-fit/drivegear__site-produit.png"
   ],
   "bg": [
    "#05a0f7",
@@ -167,13 +176,14 @@
   "camera": {
    "preset": "front"
   },
-  "align": 0.5
+  "align": 0.5,
+  "fitted_from": "matiere/_mockup-src/dg-produit.png"
  },
  {
   "name": "drivegear__site-panier",
   "model": "laptop-14",
   "images": [
-   "matiere/_mockup-src/dg-panier.png"
+   "matiere/_mockup-fit/drivegear__site-panier.png"
   ],
   "bg": [
    "#05a0f7",
@@ -184,13 +194,14 @@
   "camera": {
    "preset": "front"
   },
-  "align": 0.5
+  "align": 0.5,
+  "fitted_from": "matiere/_mockup-src/dg-panier.png"
  },
  {
   "name": "karting__app-mise-a-jour",
   "model": "laptop-14",
   "images": [
-   "matiere/_mockup-src/kv-update.png"
+   "matiere/_mockup-fit/karting__app-mise-a-jour.png"
   ],
   "bg": [
    "#e92643",
@@ -201,13 +212,14 @@
   "camera": {
    "preset": "front"
   },
-  "align": 0.5
+  "align": 0.5,
+  "fitted_from": "matiere/_mockup-src/kv-update.png"
  },
  {
   "name": "karting__app-selection",
   "model": "laptop-14",
   "images": [
-   "matiere/_mockup-src/kv-results.png"
+   "matiere/_mockup-fit/karting__app-selection.png"
   ],
   "bg": [
    "#e92643",
@@ -218,13 +230,14 @@
   "camera": {
    "preset": "front"
   },
-  "align": 0.5
+  "align": 0.5,
+  "fitted_from": "matiere/_mockup-src/kv-results.png"
  },
  {
   "name": "karting__app-podium",
   "model": "laptop-14",
   "images": [
-   "matiere/_mockup-src/kv-podium.png"
+   "matiere/_mockup-fit/karting__app-podium.png"
   ],
   "bg": [
    "#e92643",
@@ -235,7 +248,8 @@
   "camera": {
    "preset": "front"
   },
-  "align": 0.5
+  "align": 0.5,
+  "fitted_from": "matiere/_mockup-src/kv-podium.png"
  },
  {
   "name": "karting__posts-ask",

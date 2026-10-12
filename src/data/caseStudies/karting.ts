@@ -142,15 +142,15 @@ const KARTING_FR: CaseStudy = {
           steps: [
             {
               text: 'Un clic sur « Mettre à jour » récupère le calendrier, les résultats et les classements du circuit sur SWS (je valide moi-même la vérification anti-robot du site). L’app signale ce qui a changé depuis la dernière fois.',
-              image: img('app-mise-a-jour-mockup', 1600, 1200, 'Application Karting Vuiteboeuf : calendrier des courses et bandeau « 8 nouveaux résultats · 4 changements de classement »'),
+              image: img('app-mise-a-jour-mockup-2', 1600, 1200, 'Application Karting Vuiteboeuf : calendrier des courses et bandeau « 8 nouveaux résultats · 4 changements de classement »'),
             },
             {
               text: 'Je coche les courses d’un même événement, et l’app prépare le carrousel : une couverture, puis le podium et le classement de chaque course, les noms remis dans l’ordre prénom-nom et le drapeau de chaque pilote.',
-              image: img('app-selection-mockup', 1600, 1200, 'Section Résultats de l’application, quatre courses Junior Cup cochées et le bouton « Générer les visuels (4) »'),
+              image: img('app-selection-mockup-2', 1600, 1200, 'Section Résultats de l’application, quatre courses Junior Cup cochées et le bouton « Générer les visuels (4) »'),
             },
             {
               text: 'Pour mettre un visage sur chaque place, j’importe la photo du podium et je place un cadre sur chacun des trois premiers : l’app découpe la photo et met chaque pilote à sa place. La photo de groupe peut aussi s’ajouter en slide, juste après la couverture. (Ici, une photo et des noms fictifs.)',
-              image: img('app-podium-mockup', 1600, 1200, 'Recadrage d’une photo de podium dans l’app : un cadre de couleur sur chacun des trois pilotes, avec son nom (photo et noms fictifs pour l’exemple)'),
+              image: img('app-podium-mockup-2', 1600, 1200, 'Recadrage d’une photo de podium dans l’app : un cadre de couleur sur chacun des trois pilotes, avec son nom (photo et noms fictifs pour l’exemple)'),
             },
           ],
         },
@@ -337,15 +337,15 @@ const KARTING_EN: CaseStudy = {
           steps: [
             {
               text: 'One click on “Mettre à jour” fetches the track’s calendar, results and standings from SWS (I pass the site’s anti-bot check myself). The app flags what has changed since last time.',
-              image: img('app-mise-a-jour-mockup', 1600, 1200, 'Karting Vuiteboeuf app: race calendar and a banner reading “8 new results · 4 standings changes”'),
+              image: img('app-mise-a-jour-mockup-2', 1600, 1200, 'Karting Vuiteboeuf app: race calendar and a banner reading “8 new results · 4 standings changes”'),
             },
             {
               text: 'I tick the races of one event, and the app builds the carousel: a cover, then the podium and standings of each race, names put back in first-name order and each driver’s flag.',
-              image: img('app-selection-mockup', 1600, 1200, 'Results section of the app, four Junior Cup races ticked and the “Generate visuals (4)” button'),
+              image: img('app-selection-mockup-2', 1600, 1200, 'Results section of the app, four Junior Cup races ticked and the “Generate visuals (4)” button'),
             },
             {
               text: 'To put a face on each place, I import the podium photo and draw a frame on each of the top three: the app crops the photo and puts every driver in their spot. The group photo can also go in as a slide, right after the cover. (Here, a made-up photo and names.)',
-              image: img('app-podium-mockup', 1600, 1200, 'Cropping a podium photo in the app: a coloured frame on each of the three drivers, with their name (photo and names made up for the example)'),
+              image: img('app-podium-mockup-2', 1600, 1200, 'Cropping a podium photo in the app: a coloured frame on each of the three drivers, with their name (photo and names made up for the example)'),
             },
           ],
         },
