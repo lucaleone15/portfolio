@@ -69,15 +69,15 @@ const DRIVEGEAR_FR: CaseStudy = {
           steps: [
             {
               text: 'L’accueil pose l’univers : votre route, votre style, votre passion.',
-              image: img('site-accueil-mockup', 1600, 1200, 'Page d’accueil de DriveGear avec une voiture de sport jaune'),
+              image: img('site-accueil-mockup-2', 1600, 1200, 'Page d’accueil de DriveGear avec une voiture de sport jaune'),
             },
             {
               text: 'Chacune des 30 fiches produits est rédigée et optimisée pour le référencement : description, caractéristiques et photos.',
-              image: img('site-produit-mockup', 1600, 1200, 'Fiche produit d’un spray rénovateur pour plastiques, avec prix et boutons d’achat'),
+              image: img('site-produit-mockup-2', 1600, 1200, 'Fiche produit d’un spray rénovateur pour plastiques, avec prix et boutons d’achat'),
             },
             {
               text: 'Le panier et le paiement fonctionnent de bout en bout, avec PayPal et le virement.',
-              image: img('site-panier-mockup', 1600, 1200, 'Page du panier avec deux produits, le total et le bouton de paiement PayPal'),
+              image: img('site-panier-mockup-2', 1600, 1200, 'Page du panier avec deux produits, le total et le bouton de paiement PayPal'),
             },
           ],
         },
@@ -188,15 +188,15 @@ const DRIVEGEAR_EN: CaseStudy = {
           steps: [
             {
               text: 'The home page sets the tone: your road, your style, your passion.',
-              image: img('site-accueil-mockup', 1600, 1200, 'DriveGear home page with a yellow sports car'),
+              image: img('site-accueil-mockup-2', 1600, 1200, 'DriveGear home page with a yellow sports car'),
             },
             {
               text: 'Each of the 30 product pages is written and optimised for search: description, specifications and photos.',
-              image: img('site-produit-mockup', 1600, 1200, 'Product page of a plastic restorer spray, with price and buy buttons'),
+              image: img('site-produit-mockup-2', 1600, 1200, 'Product page of a plastic restorer spray, with price and buy buttons'),
             },
             {
               text: 'Cart and checkout work end to end, with PayPal and bank transfer.',
-              image: img('site-panier-mockup', 1600, 1200, 'Cart page with two products, the total and the PayPal button'),
+              image: img('site-panier-mockup-2', 1600, 1200, 'Cart page with two products, the total and the PayPal button'),
             },
           ],
         },
