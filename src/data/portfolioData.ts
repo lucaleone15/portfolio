@@ -107,7 +107,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     // HUG red, as in the project PDF
     accentColor: '#D42524',
     accentColorDark: '#F0514F',
-    logo: { src: '/images/logos/hug.webp', srcDark: '/images/logos/hug-dark.webp', width: 705, height: 160, display: 34 },
+    logo: { src: '/images/logos/hug-color.webp', srcDark: '/images/logos/hug-color-dark.webp', width: 696, height: 160, display: 34 },
     video: '/videos/hug-dive.mp4',
     fr: {
       subtitle: 'Campagne digitale & plateforme web',
@@ -211,7 +211,7 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     // Étoile Blanche red, as on the printed menus
     accentColor: '#AB2328',
     accentColorDark: '#E0484E',
-    logo: { src: '/images/logos/etoile-blanche.webp', srcDark: '/images/logos/etoile-blanche-dark.webp', width: 705, height: 160, display: 34 },
+    logo: { src: '/images/logos/etoile-blanche-color.webp', srcDark: '/images/logos/etoile-blanche-color-dark.webp', width: 705, height: 160, display: 34 },
     video: '/videos/etoile-blanche-dive.mp4',
     fr: {
       subtitle: 'Communication d’un restaurant lausannois',
