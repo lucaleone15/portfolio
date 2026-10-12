@@ -234,7 +234,7 @@ export function PrivacyPolicy() {
           {c.sections.map((section, i) => (
             <section key={section.title} aria-labelledby={`privacy-${i}`}>
               <h2 id={`privacy-${i}`} className="flex items-baseline gap-3 text-xl sm:text-2xl font-extrabold text-neutral-900 dark:text-white mb-4">
-                <span className="index-number text-lg sm:text-xl text-neutral-500 dark:text-white/40">{String(i + 1).padStart(2, '0')}</span>
+                <span className="index-number text-lg sm:text-xl text-neutral-500 dark:text-white/60">{String(i + 1).padStart(2, '0')}</span>
                 {section.title}
               </h2>
               <div className="space-y-4 text-base sm:text-lg text-neutral-600 dark:text-[#A1A1AA] leading-relaxed">

@@ -12,7 +12,7 @@ import { createPodiumHandler } from './podium';
  * Built with esbuild to dist-server/index.mjs; run from the project root: `npm start`.
  *
  * - Serves the prerendered pages: /x → dist/x.html or dist/x/index.html; unknown pages get
- *   dist/404.html with a real 404 status
+ *   dist/404.html (404-en.html under /en/) with a real 404 status
  * - brotli / gzip for text files (cached in memory), byte ranges for the rest (videos)
  * - Cache: hashed build assets 1 year (immutable), HTML always revalidated, the rest 30 days
  * - Security headers incl. a strict CSP (only own scripts + the inline theme script, by hash)
@@ -236,7 +236,8 @@ const server = http.createServer((req, res) => {
       res.end('Not found');
       return;
     }
-    send(req, res, path.join(DIST, '404.html'), 404);
+    const en = urlPath === '/en' || urlPath.startsWith('/en/');
+    send(req, res, path.join(DIST, en ? '404-en.html' : '404.html'), 404);
   };
 
   analytics(req, res, () => contact(req, res, () => podium(req, res, next404)));

@@ -87,7 +87,7 @@ export function PodiumPage() {
         {failed ? (
           <p className="text-neutral-600 dark:text-[#A1A1AA]">{fr ? 'Le classement est indisponible pour le moment.' : 'The leaderboard is unavailable right now.'}</p>
         ) : entries === null ? (
-          <p className="text-neutral-500 dark:text-[#71717A]">{fr ? 'Chargement du classement…' : 'Loading the leaderboard…'}</p>
+          <p className="text-neutral-500 dark:text-[#A1A1AA]">{fr ? 'Chargement du classement…' : 'Loading the leaderboard…'}</p>
         ) : entries.length === 0 ? (
           <p className="text-lg text-neutral-700 dark:text-[#D4D4D8]">{fr ? 'Personne encore sur le podium. La première place est libre.' : 'Nobody on the podium yet. First place is up for grabs.'}</p>
         ) : (
@@ -129,7 +129,7 @@ export function PodiumPage() {
           </>
         )}
 
-        <p className="mt-14 text-sm text-neutral-500 dark:text-[#71717A]">
+        <p className="mt-14 text-sm text-neutral-500 dark:text-[#A1A1AA]">
           {fr ? 'Envie de voir comment ce site est construit ? ' : 'Curious how this site is built? '}
           <Link href={hiddenPath(lang, 'stand')} className="underline underline-offset-2 hover:text-[var(--accent)]">
             {fr ? 'Passe au stand' : 'Come to the pits'}

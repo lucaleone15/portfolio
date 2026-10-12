@@ -58,14 +58,14 @@ export interface UnifiedProjectDefinition {
   };
 }
 
-/** Text on a fill of this colour: white when it reads (≥ 3:1, bold UI labels), dark otherwise */
+/** Text on a fill of this colour: white when it reads (≥ 4.5:1, WCAG AA for small text), dark otherwise */
 function textOn(hex: string) {
   const channel = (i: number) => {
     const c = parseInt(hex.slice(1 + i * 2, 3 + i * 2), 16) / 255;
     return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
   };
   const luminance = 0.2126 * channel(0) + 0.7152 * channel(1) + 0.0722 * channel(2);
-  return 1.05 / (luminance + 0.05) >= 3 ? '#FFFFFF' : '#0A0A0C';
+  return 1.05 / (luminance + 0.05) >= 4.5 ? '#FFFFFF' : '#0A0A0C';
 }
 
 /** CSS variables for a project's accent; pair with the `project-accent` class (see index.css). */
@@ -105,7 +105,8 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     ],
     stackEn: ['Laravel & Vue.js', 'UI/UX Design', 'Digital Communication', 'Print & Social Media'],
     // HUG red, as in the project PDF
-    accentColor: '#E62F2E',
+    accentColor: '#D42524',
+    accentColorDark: '#F0514F',
     logo: { src: '/images/logos/hug.webp', srcDark: '/images/logos/hug-dark.webp', width: 705, height: 160, display: 34 },
     video: '/videos/hug-dive.mp4',
     fr: {
@@ -141,7 +142,8 @@ export const UNIFIED_PROJECTS: UnifiedProjectDefinition[] = [
     ],
     stackEn: ['Social Media Strategy', 'Instagram & TikTok', 'Photo & Video', 'Premiere Pro', 'Automation (React, Electron)'],
     // Karting Vuiteboeuf red, as in the project PDF (underlines, italics)
-    accentColor: '#EB1D3E',
+    accentColor: '#D31432',
+    accentColorDark: '#F4505F',
     logo: { src: '/images/logos/karting-vuiteboeuf.webp', srcDark: '/images/logos/karting-vuiteboeuf-dark.webp', width: 709, height: 160, display: 34 },
     video: '/videos/karting-vuiteboeuf-dive.mp4',
     fr: {

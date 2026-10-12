@@ -206,7 +206,7 @@ export function SkillsSection() {
                           className={`index-number text-base sm:text-lg transition-colors duration-200 ${
                             isOpen
                               ? 'text-[var(--accent)]'
-                              : 'text-neutral-500 dark:text-white/40 group-hover:text-[var(--accent)]'
+                              : 'text-neutral-500 dark:text-white/60 group-hover:text-[var(--accent)]'
                           }`}
                         >
                           {skill.number}
@@ -252,7 +252,7 @@ export function SkillsSection() {
                             </div>
                           </motion.div>
                         ) : (
-                          <div className="hidden lg:flex items-center h-8 text-xs text-neutral-500 dark:text-neutral-500 group-hover:text-neutral-700 dark:group-hover:text-neutral-300 transition-colors">
+                          <div className="hidden lg:flex items-center h-8 text-xs text-neutral-500 dark:text-neutral-400 group-hover:text-neutral-700 dark:group-hover:text-neutral-300 transition-colors">
                             <span>{lang === 'fr' ? 'Survoler pour afficher' : 'Hover to reveal'}</span>
                           </div>
                         )}

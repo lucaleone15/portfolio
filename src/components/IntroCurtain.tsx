@@ -100,7 +100,7 @@ export function IntroCurtain({ onDone }: IntroCurtainProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.2 } }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative z-10 flex justify-between items-center text-xs text-neutral-500 dark:text-[#71717A] tracking-wider uppercase font-semibold"
+            className="relative z-10 flex justify-between items-center text-xs text-neutral-500 dark:text-[#A1A1AA] tracking-wider uppercase font-semibold"
           >
             <span>Portfolio</span>
             <span suppressHydrationWarning>{new Date().getFullYear()}</span>
@@ -160,7 +160,7 @@ export function IntroCurtain({ onDone }: IntroCurtainProps) {
                 className="h-full bg-[var(--accent)] origin-left"
               />
             </div>
-            <div className="flex justify-between items-center text-xs text-neutral-500 dark:text-[#71717A]">
+            <div className="flex justify-between items-center text-xs text-neutral-500 dark:text-[#A1A1AA]">
               <span>{lang === 'fr' ? 'Ingénierie des médias' : 'Media Engineering'}</span>
               <span>HEIG-VD</span>
             </div>
