@@ -167,11 +167,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
         tiltY.jump(0);
         dive.reset();
       }}
-      // Long press: no "open link" menu over the video preview
+      // Long press on a touch screen plays the preview, so the phone's own long-press
+      // features stay out of it: the link preview / callout and the "lift to drag" are tied
+      // to the <a> itself (hence on it, not on the image), Android's menu to contextmenu
       onContextMenu={(e) => {
-        if (held.current) e.preventDefault();
+        if (held.current || (!finePointer.current && project.video)) e.preventDefault();
       }}
-      className="project-accent group relative cursor-pointer flex flex-col transition duration-300 hover:-translate-y-1 rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+      draggable={false}
+      className="project-accent group relative cursor-pointer flex flex-col transition duration-300 hover:-translate-y-1 rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)] [-webkit-touch-callout:none] [-webkit-user-drag:none]"
     >
       <article className="flex flex-col h-full">
       {/* Frameless Showcase Container */}
@@ -215,6 +218,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               height={375}
               loading="lazy"
               decoding="async"
+              draggable={false}
               className="w-full h-full object-cover object-center"
             />
             {project.video && (
