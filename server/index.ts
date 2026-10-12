@@ -20,7 +20,8 @@ import { createPodiumHandler } from './podium';
  *   its canonical one (x.html, x/index.html, trailing slash, renamed projects)
  * - POST /api/contact (server/contact.ts) and first-party analytics (server/analytics.ts)
  *
- * Env (.env in the project root): PORT (default 3000), SMTP_* / CONTACT_TO, STATS_KEY.
+ * Env (.env in the project root): PORT (default 3000), SMTP_* / CONTACT_TO, STATS_KEY, DATA_DIR
+ * (default .data/).
  */
 
 const ROOT = process.cwd();
@@ -192,8 +193,10 @@ function canonicalPagePath(pathname: string) {
 }
 
 const contact = createContactHandler(env);
-const analytics = createAnalyticsHandler(env);
-const podium = createPodiumHandler();
+// Statistics and podium scores; DATA_DIR can put them outside the site folder, out of reach of a deploy
+const dataDir = env.DATA_DIR ? path.resolve(env.DATA_DIR) : path.join(ROOT, '.data');
+const analytics = createAnalyticsHandler(env, dataDir);
+const podium = createPodiumHandler(dataDir);
 
 const server = http.createServer((req, res) => {
   for (const [name, value] of Object.entries(SECURITY_HEADERS)) res.setHeader(name, value);

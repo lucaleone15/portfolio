@@ -106,6 +106,7 @@ npm start               # http://localhost:3000
 | `SMTP_FROM` | Adresse d'expédition | `SMTP_USER` |
 | `STATS_KEY` | Clé d'accès au tableau de bord `/stats` (longue chaîne aléatoire) | — (tableau désactivé) |
 | `PORT` | Port du serveur de production | `3000` |
+| `DATA_DIR` | Dossier des statistiques et du podium (chemin absolu conseillé, hors du dossier du site) | `.data/` |
 
 Sans configuration SMTP, le formulaire reste utilisable : il propose au visiteur d'envoyer son message depuis sa propre messagerie (lien pré-rempli).
 
@@ -124,7 +125,7 @@ npm start
 Points d'attention :
 
 1. **`.env`** présent sur le serveur (SMTP + `STATS_KEY`).
-2. Le dossier **`.data/`** (statistiques) doit **persister** entre deux déploiements.
+2. Les données (statistiques `hits.ndjson`, scores `podium.json`) doivent **persister** entre deux déploiements. Le plus sûr : `DATA_DIR` vers un dossier **hors du site** (ex. `DATA_DIR=/srv/customer/portfolio-data`), qu'aucun déploiement ne touche. Sinon, `.data/` est ignoré par git (un `git pull` ne le touche pas), mais ne jamais l'envoyer depuis sa machine (il contient les visites locales) ni supprimer le dossier du site pour le redéployer.
 3. Derrière un proxy (Nginx, Caddy, hébergeur…), le serveur lit l'IP réelle via `X-Forwarded-For` (limitation anti-spam du formulaire).
 4. HTTPS est géré par le proxy / l'hébergeur ; le serveur envoie déjà `Strict-Transport-Security`.
 
