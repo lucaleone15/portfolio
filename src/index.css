@@ -206,6 +206,30 @@
   html.has-custom-cursor :is(input, textarea, select) {
     cursor: auto;
   }
+  /* The image viewer is a modal <dialog>, drawn above everything, the round cursor
+     included: the native cursor comes back there */
+  html.has-custom-cursor .lightbox {
+    cursor: auto;
+  }
+  html.has-custom-cursor .lightbox button {
+    cursor: pointer;
+  }
+}
+
+/* Image viewer (Lightbox.tsx): each image fades in as it arrives */
+.lightbox-image {
+  animation: lightbox-in 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes lightbox-in {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lightbox-image {
+    animation: none;
+  }
 }
 
 /* Page changes (router → View Transitions API). A project's card image and the project

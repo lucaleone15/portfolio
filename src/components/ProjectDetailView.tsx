@@ -29,7 +29,8 @@ export function ProjectDetailView({
   // Keyboard: Alt+←/→ switch project, Escape goes back
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (!project) return;
+      // The image viewer (Lightbox.tsx) handles its own keys: Escape closes it, not the page
+      if (!project || document.querySelector('dialog[open]')) return;
       if (e.key === 'Escape') {
         navigate(backHref);
       } else if (e.key === 'ArrowLeft' && e.altKey) {
