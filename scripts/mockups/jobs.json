@@ -1,0 +1,471 @@
+[
+ {
+  "name": "hug__site-accueil",
+  "model": "laptop-14",
+  "images": [
+   "matiere/hug/site/Capture d’écran 2026-10-08 à 12.41.15.png"
+  ],
+  "bg": [
+   "#cc342b",
+   "#0c0f14"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "align": 0.5
+ },
+ {
+  "name": "hug__site-entreprise",
+  "model": "laptop-14",
+  "images": [
+   "matiere/hug/site/Capture d’écran 2026-09-22 à 17.48.12.png"
+  ],
+  "bg": [
+   "#cc342b",
+   "#0c0f14"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "align": 0.5
+ },
+ {
+  "name": "hug__site-enquete",
+  "model": "laptop-14",
+  "images": [
+   "matiere/hug/site/Capture d’écran 2026-09-22 à 17.48.34.png"
+  ],
+  "bg": [
+   "#cc342b",
+   "#0c0f14"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "align": 0.5
+ },
+ {
+  "name": "hug__site-indices",
+  "model": "laptop-14",
+  "images": [
+   "matiere/hug/site/Capture d’écran 2026-09-22 à 17.48.20.png"
+  ],
+  "bg": [
+   "#cc342b",
+   "#0c0f14"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "align": 0.5
+ },
+ {
+  "name": "hug__site-trophee",
+  "model": "laptop-14",
+  "images": [
+   "matiere/hug/site/Capture d’écran 2026-09-22 à 17.47.03.png"
+  ],
+  "bg": [
+   "#cc342b",
+   "#0c0f14"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "align": 0.5
+ },
+ {
+  "name": "hug__site-admin",
+  "model": "laptop-14",
+  "images": [
+   "matiere/hug/site/Capture d’écran 2026-09-22 à 17.49.48.png"
+  ],
+  "bg": [
+   "#cc342b",
+   "#0c0f14"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "align": 0.5
+ },
+ {
+  "name": "hug__apres-site-admin",
+  "model": "laptop-14",
+  "images": [
+   "matiere/hug/site/Capture d’écran 2026-09-22 à 17.50.09.png"
+  ],
+  "bg": [
+   "#cc342b",
+   "#0c0f14"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "align": 0.5
+ },
+ {
+  "name": "hug__avant-wireframe-admin",
+  "model": "laptop-14",
+  "images": [
+   "matiere/_mockup-src/hug-wireframe.png"
+  ],
+  "bg": [
+   "#cc342b",
+   "#0c0f14"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "align": 0.5
+ },
+ {
+  "name": "drivegear__site-accueil",
+  "model": "laptop-14",
+  "images": [
+   "matiere/_mockup-src/dg-accueil.png"
+  ],
+  "bg": [
+   "#05a0f7",
+   "#0c0d12"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "align": 0.5
+ },
+ {
+  "name": "drivegear__site-produit",
+  "model": "laptop-14",
+  "images": [
+   "matiere/_mockup-src/dg-produit.png"
+  ],
+  "bg": [
+   "#05a0f7",
+   "#0c0d12"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "align": 0.5
+ },
+ {
+  "name": "drivegear__site-panier",
+  "model": "laptop-14",
+  "images": [
+   "matiere/_mockup-src/dg-panier.png"
+  ],
+  "bg": [
+   "#05a0f7",
+   "#0c0d12"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "align": 0.5
+ },
+ {
+  "name": "karting__app-mise-a-jour",
+  "model": "laptop-14",
+  "images": [
+   "matiere/_mockup-src/kv-update.png"
+  ],
+  "bg": [
+   "#e92643",
+   "#0d0e10"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "align": 0.5
+ },
+ {
+  "name": "karting__app-selection",
+  "model": "laptop-14",
+  "images": [
+   "matiere/_mockup-src/kv-results.png"
+  ],
+  "bg": [
+   "#e92643",
+   "#0d0e10"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "align": 0.5
+ },
+ {
+  "name": "karting__app-podium",
+  "model": "laptop-14",
+  "images": [
+   "matiere/_mockup-src/kv-podium.png"
+  ],
+  "bg": [
+   "#e92643",
+   "#0d0e10"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "align": 0.5
+ },
+ {
+  "name": "karting__posts-ask",
+  "model": "phone-pro",
+  "images": [
+   "matiere/kartingvuiteboeuf/IMG_2570.PNG",
+   "matiere/kartingvuiteboeuf/IMG_2569.PNG"
+  ],
+  "bg": [
+   "#e92643",
+   "#0d0e10"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "row": 8.6
+ },
+ {
+  "name": "karting__posts-chronos",
+  "model": "phone-pro",
+  "images": [
+   "matiere/kartingvuiteboeuf/IMG_2572.PNG",
+   "matiere/kartingvuiteboeuf/IMG_2575.PNG"
+  ],
+  "bg": [
+   "#e92643",
+   "#0d0e10"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "row": 8.6
+ },
+ {
+  "name": "karting__posts-reels",
+  "model": "phone-pro",
+  "images": [
+   "matiere/kartingvuiteboeuf/IMG_2582.PNG",
+   "matiere/kartingvuiteboeuf/IMG_2581.PNG"
+  ],
+  "bg": [
+   "#e92643",
+   "#0d0e10"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "row": 8.6
+ },
+ {
+  "name": "oceansight__app-1-accueil",
+  "model": "phone-pro",
+  "images": [
+   "matiere/oceansight/Prototype/Splash 1.1.png"
+  ],
+  "bg": [
+   "#267677",
+   "#0c0d0d"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "row": 8.6
+ },
+ {
+  "name": "oceansight__app-2-carte",
+  "model": "phone-pro",
+  "images": [
+   "matiere/oceansight/Prototype/Home - map.png",
+   "matiere/oceansight/Prototype/Missions.png"
+  ],
+  "bg": [
+   "#267677",
+   "#0c0d0d"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "row": 8.6
+ },
+ {
+  "name": "oceansight__app-3-mission",
+  "model": "phone-pro",
+  "images": [
+   "matiere/oceansight/Prototype/Home - mission-3.png"
+  ],
+  "bg": [
+   "#267677",
+   "#0c0d0d"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "row": 8.6
+ },
+ {
+  "name": "oceansight__app-4-rapport",
+  "model": "phone-pro",
+  "images": [
+   "matiere/oceansight/Prototype/Home - mission-1.png",
+   "matiere/oceansight/Prototype/Reports - Saved species.png"
+  ],
+  "bg": [
+   "#267677",
+   "#0c0d0d"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "row": 8.6
+ },
+ {
+  "name": "oceansight__app-5-profil",
+  "model": "phone-pro",
+  "images": [
+   "matiere/oceansight/Prototype/Profile.png"
+  ],
+  "bg": [
+   "#267677",
+   "#0c0d0d"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "row": 8.6
+ },
+ {
+  "name": "f1-pitwall__app-accueil",
+  "model": "phone-pro",
+  "images": [
+   "matiere/f1pitwall/Maquette/Home - No race in progress.png",
+   "matiere/f1pitwall/Maquette/Home - Race in progress.png"
+  ],
+  "bg": [
+   "#eb0000",
+   "#0e0e11"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "row": 8.6
+ },
+ {
+  "name": "f1-pitwall__app-classement-circuit",
+  "model": "phone-pro",
+  "images": [
+   "matiere/f1pitwall/Maquette/Race Dashboard - Standing.png",
+   "matiere/f1pitwall/Maquette/Race Dashboard - Track.png"
+  ],
+  "bg": [
+   "#eb0000",
+   "#0e0e11"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "row": 8.6
+ },
+ {
+  "name": "f1-pitwall__app-onboard-radio",
+  "model": "phone-pro",
+  "images": [
+   "matiere/f1pitwall/Maquette/Race Dashboard - Standing-3.png",
+   "matiere/f1pitwall/Maquette/Race Dashboard - Standing-4.png"
+  ],
+  "bg": [
+   "#eb0000",
+   "#0e0e11"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "row": 8.6
+ },
+ {
+  "name": "f1-pitwall__app-predictions",
+  "model": "phone-pro",
+  "images": [
+   "matiere/f1pitwall/Maquette/Race Dashboard - Predictions.png",
+   "matiere/f1pitwall/Maquette/Race Dashboard - Strategy.png"
+  ],
+  "bg": [
+   "#eb0000",
+   "#0e0e11"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "row": 8.6
+ },
+ {
+  "name": "f1-pitwall__app-telemetrie",
+  "model": "phone-pro",
+  "images": [
+   "matiere/f1pitwall/Maquette/Race Dashboard - Standing-1.png",
+   "matiere/f1pitwall/Maquette/Race Dashboard - Standing-2.png"
+  ],
+  "bg": [
+   "#eb0000",
+   "#0e0e11"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "row": 8.6
+ }
+]

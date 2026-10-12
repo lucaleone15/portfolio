@@ -68,23 +68,23 @@ const OCEANSIGHT_FR: CaseStudy = {
           steps: [
             {
               text: 'Rejoindre la communauté : un compte suffit pour signaler et participer.',
-              image: os('app-1-accueil-2', 1600, 1200, 'Écran d’accueil « Join us » sur une photo de déchets plastiques en mer'),
+              image: os('app-1-accueil-mockup', 1600, 1200, 'Écran d’accueil « Join us » sur une photo de déchets plastiques en mer'),
             },
             {
               text: 'Trouver une mission sur la carte ou dans une liste, filtrée par région, type de déchet ou difficulté.',
-              image: os('app-2-carte', 1600, 1200, 'Deux écrans : la carte des missions et la liste des missions avec leurs photos'),
+              image: os('app-2-carte-mockup', 1600, 1200, 'Deux écrans : la carte des missions et la liste des missions avec leurs photos'),
             },
             {
               text: 'Chaque mission indique le lieu, la date et ce qui a été vu. On la rejoint en un geste.',
-              image: os('app-3-mission', 1600, 1200, 'Écran de détail d’une mission : photo, type de déchet, lieu, date et description'),
+              image: os('app-3-mission-mockup', 1600, 1200, 'Écran de détail d’une mission : photo, type de déchet, lieu, date et description'),
             },
             {
               text: 'Après une mission, le rapport documente l’action et les espèces sauvées, avec leur fiche.',
-              image: os('app-4-rapport', 1600, 1200, 'Deux écrans : le détail d’une mission et la liste des espèces sauvées'),
+              image: os('app-4-rapport-mockup', 1600, 1200, 'Deux écrans : le détail d’une mission et la liste des espèces sauvées'),
             },
             {
               text: 'Le profil montre son impact : missions réalisées, kilos de plastique retirés, espèces sauvées, badges.',
-              image: os('app-5-profil', 1600, 1200, 'Écran du profil avec les badges, les statistiques et le nombre de missions réalisées'),
+              image: os('app-5-profil-mockup', 1600, 1200, 'Écran du profil avec les badges, les statistiques et le nombre de missions réalisées'),
             },
           ],
         },
@@ -213,23 +213,23 @@ const OCEANSIGHT_EN: CaseStudy = {
           steps: [
             {
               text: 'Join the community: one account is enough to report and take part.',
-              image: os('app-1-accueil-2', 1600, 1200, '“Join us” welcome screen over a photo of plastic waste at sea'),
+              image: os('app-1-accueil-mockup', 1600, 1200, '“Join us” welcome screen over a photo of plastic waste at sea'),
             },
             {
               text: 'Find a mission on the map or in a list, filtered by region, type of waste or difficulty.',
-              image: os('app-2-carte', 1600, 1200, 'Two screens: the mission map and the list of missions with their photos'),
+              image: os('app-2-carte-mockup', 1600, 1200, 'Two screens: the mission map and the list of missions with their photos'),
             },
             {
               text: 'Each mission shows the place, the date and what was spotted. You join it in one tap.',
-              image: os('app-3-mission', 1600, 1200, 'Mission detail screen: photo, type of waste, place, date and description'),
+              image: os('app-3-mission-mockup', 1600, 1200, 'Mission detail screen: photo, type of waste, place, date and description'),
             },
             {
               text: 'After a mission, the report documents the action and the species saved, each with its own card.',
-              image: os('app-4-rapport', 1600, 1200, 'Two screens: mission details and the list of saved species'),
+              image: os('app-4-rapport-mockup', 1600, 1200, 'Two screens: mission details and the list of saved species'),
             },
             {
               text: 'The profile shows your impact: missions completed, kilos of plastic removed, species saved, badges.',
-              image: os('app-5-profil', 1600, 1200, 'Profile screen with badges, statistics and the number of missions completed'),
+              image: os('app-5-profil-mockup', 1600, 1200, 'Profile screen with badges, statistics and the number of missions completed'),
             },
           ],
         },
