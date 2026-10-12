@@ -57,7 +57,7 @@ export function ProjectDetailView({
   if (!caseStudy) return null;
 
   return (
-    <div
+    <main
       id="main-content"
       style={projectAccentVars(project)}
       className="project-accent min-h-screen bg-[#F9F9FB] text-neutral-900 dark:bg-[#0A0A0C] dark:text-white pt-24 sm:pt-28 pb-20 sm:pb-32 transition-colors duration-300"
@@ -141,7 +141,7 @@ export function ProjectDetailView({
             <div className="px-3 pb-4 sm:p-0 sm:pr-8 min-w-0">
               <p className="eyebrow sm:text-sm" style={{ color: 'var(--pa-text)' }}>
                 {lang === 'fr' ? 'Projet suivant' : 'Next project'}
-                <span className="text-neutral-400 dark:text-white/40"> · {nextProject.number}</span>
+                <span className="text-neutral-600 dark:text-white/60"> · {nextProject.number}</span>
               </p>
               <p className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-extrabold uppercase tracking-tight leading-[1.05] text-neutral-900 dark:text-white break-words">
                 <ProjectLogo project={nextProject} scale={1.8} />
@@ -183,6 +183,6 @@ export function ProjectDetailView({
           </div>
         </nav>
       </div>
-    </div>
+    </main>
   );
 }

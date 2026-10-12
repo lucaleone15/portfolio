@@ -121,7 +121,7 @@ export function StandPage() {
               </div>
             ))}
           </div>
-          <p className="mt-3 text-xs text-neutral-500 dark:text-[#71717A]">
+          <p className="mt-3 text-xs text-neutral-500 dark:text-[#A1A1AA]">
             {fr ? 'Mesuré à l’instant dans ton navigateur.' : 'Measured just now in your browser.'}
             {load?.cached ? (fr ? ' Les fichiers venaient déjà de ton cache : rien à télécharger.' : ' The files were already in your cache: nothing to download.') : ''}
           </p>
@@ -155,7 +155,7 @@ export function StandPage() {
               <li key={s.name} className="flex items-baseline justify-between gap-4 py-3.5">
                 <span className="font-bold text-neutral-900 dark:text-white">
                   {s.name}
-                  {s.version && <span className="ml-2 text-xs font-medium text-neutral-500 dark:text-[#71717A] tabular-nums">{s.version}</span>}
+                  {s.version && <span className="ml-2 text-xs font-medium text-neutral-500 dark:text-[#A1A1AA] tabular-nums">{s.version}</span>}
                 </span>
                 <span className="text-sm text-right text-neutral-600 dark:text-[#A1A1AA]">{s.role}</span>
               </li>
@@ -177,7 +177,7 @@ export function StandPage() {
           <ol className="space-y-3">
             {secrets.map((s, i) => (
               <li key={s} className="flex gap-4 text-base sm:text-lg text-neutral-800 dark:text-[#E4E4E7] leading-relaxed">
-                <span className="index-number text-neutral-400 dark:text-white/30 shrink-0">{i + 1}</span>
+                <span className="index-number text-neutral-500 dark:text-white/60 shrink-0">{i + 1}</span>
                 {s}
               </li>
             ))}

@@ -293,9 +293,10 @@
   --pa-on: var(--pa-on-l);
   --pa-text: var(--pa);
 }
+/* Dark theme: fills keep the brand's deep colour (white text stays readable on buttons and
+   badges); the lighter variant is for text on the dark page, where the deep one is too dim */
 .dark .project-accent {
-  --pa: var(--pa-d);
-  --pa-on: var(--pa-on-d);
+  --pa-text: var(--pa-d);
 }
 
 /* Subtle grain overlay */
@@ -352,8 +353,8 @@
 .case-accent :is(h2, p, figcaption, blockquote, span) {
   color: var(--pa-on) !important;
 }
-.case-accent figcaption,
-.case-accent :is(.eyebrow, .index-number) {
+/* Captions and labels stay fully opaque (small text: WCAG AA); the big numbers can soften */
+.case-accent .index-number {
   opacity: 0.8;
 }
 

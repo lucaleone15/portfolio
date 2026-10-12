@@ -64,7 +64,7 @@ export default function CommandPaletteDialog({ open, onOpenChange }: { open: boo
       contentClassName="glass-bar fixed z-[201] left-1/2 top-[18vh] -translate-x-1/2 w-[min(560px,calc(100vw-2rem))] rounded-3xl overflow-hidden"
     >
       <div className="flex items-center gap-3 px-4 border-b border-black/10 dark:border-white/10">
-        <Icon icon={Search01Icon} className="w-[18px] h-[18px] text-neutral-400 dark:text-[#71717A]" />
+        <Icon icon={Search01Icon} className="w-[18px] h-[18px] text-neutral-400 dark:text-[#A1A1AA]" />
         <Command.Input
           autoFocus
           value={search}
@@ -87,12 +87,12 @@ export default function CommandPaletteDialog({ open, onOpenChange }: { open: boo
             <Command.Item value={`stand garage coulisses pits behind ${query}`} onSelect={() => run(() => navigate(hiddenPath(lang, 'stand')))} className={item}>
               <span className="w-4 text-center shrink-0" aria-hidden="true">🔧</span>
               <span className="font-semibold">{lang === 'fr' ? 'Au stand' : 'In the pits'}</span>
-              <span className="ml-auto text-xs text-neutral-400 dark:text-[#71717A]">{lang === 'fr' ? 'Les coulisses du site' : 'Behind the site'}</span>
+              <span className="ml-auto text-xs text-neutral-400 dark:text-[#A1A1AA]">{lang === 'fr' ? 'Les coulisses du site' : 'Behind the site'}</span>
             </Command.Item>
             <Command.Item value={`podium classement leaderboard ${query}`} onSelect={() => run(() => navigate(hiddenPath(lang, 'podium')))} className={item}>
               <span className="w-4 text-center shrink-0" aria-hidden="true">🏆</span>
               <span className="font-semibold">Podium</span>
-              <span className="ml-auto text-xs text-neutral-400 dark:text-[#71717A]">{lang === 'fr' ? 'Les meilleurs départs' : 'The best starts'}</span>
+              <span className="ml-auto text-xs text-neutral-400 dark:text-[#A1A1AA]">{lang === 'fr' ? 'Les meilleurs départs' : 'The best starts'}</span>
             </Command.Item>
           </Command.Group>
         )}
@@ -116,7 +116,7 @@ export default function CommandPaletteDialog({ open, onOpenChange }: { open: boo
             >
               <span className="w-4 text-center shrink-0" aria-hidden="true">🚦</span>
               <span className="font-semibold">Lights out</span>
-              <span className="ml-auto text-xs text-neutral-400 dark:text-[#71717A]">{lang === 'fr' ? 'Ton meilleur départ' : 'Your best start'}</span>
+              <span className="ml-auto text-xs text-neutral-400 dark:text-[#A1A1AA]">{lang === 'fr' ? 'Ton meilleur départ' : 'Your best start'}</span>
             </Command.Item>
           </Command.Group>
         )}
@@ -131,7 +131,7 @@ export default function CommandPaletteDialog({ open, onOpenChange }: { open: boo
             >
               <Icon icon={Folder01Icon} className="w-4 h-4 shrink-0 opacity-60" />
               <span className="font-semibold">{p.name}</span>
-              <span className="ml-auto text-xs text-neutral-400 dark:text-[#71717A] truncate">{p.category}</span>
+              <span className="ml-auto text-xs text-neutral-400 dark:text-[#A1A1AA] truncate">{p.category}</span>
             </Command.Item>
           ))}
         </Command.Group>
@@ -153,7 +153,7 @@ export default function CommandPaletteDialog({ open, onOpenChange }: { open: boo
             ) : (
               <>
                 {lang === 'fr' ? "Copier l'email" : 'Copy email'}
-                <span className="ml-auto text-xs text-neutral-400 dark:text-[#71717A]">{USER_INFO.email}</span>
+                <span className="ml-auto text-xs text-neutral-400 dark:text-[#A1A1AA]">{USER_INFO.email}</span>
               </>
             )}
           </Command.Item>
@@ -178,7 +178,7 @@ export default function CommandPaletteDialog({ open, onOpenChange }: { open: boo
           >
             <Icon icon={Pdf02Icon} className="w-4 h-4 shrink-0 opacity-60" />
             {lang === 'fr' ? 'Voir le CV' : 'View CV'}
-            <span className="ml-auto text-xs text-neutral-400 dark:text-[#71717A]">PDF</span>
+            <span className="ml-auto text-xs text-neutral-400 dark:text-[#A1A1AA]">PDF</span>
           </Command.Item>
           <Command.Item value="linkedin" onSelect={() => run(() => window.open(USER_INFO.linkedin, '_blank', 'noopener'))} className={item}>
             <Icon icon={Linkedin02Icon} className="w-4 h-4 shrink-0 opacity-60" />

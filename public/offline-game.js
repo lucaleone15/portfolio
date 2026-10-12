@@ -8,7 +8,9 @@
  * Plain script, no dependency: there is no network.
  */
 (function () {
-  var en = location.pathname === '/en' || location.pathname.indexOf('/en/') === 0;
+  // The language of the page the visitor wanted; opened directly (/offline), the browser's
+  var direct = /^\/offline(\.html)?$/.test(location.pathname);
+  var en = direct ? !/^fr\b/i.test(navigator.language || '') : location.pathname === '/en' || location.pathname.indexOf('/en/') === 0;
   var T = en
     ? {
         lang: 'en', flag: 'Red flag', title: 'Race neutralised', lead: 'No connection right now. While the network comes back, fancy a lap? Dodge the cones.',

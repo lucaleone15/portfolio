@@ -5,7 +5,7 @@
  * server (no stale version after a deploy). Registered in src/main.tsx (production only).
  * Change VERSION when one of FILES changes.
  */
-const VERSION = 'offline-v6';
+const VERSION = 'offline-v7';
 const OFFLINE_URL = '/offline';
 const FILES = [OFFLINE_URL, '/offline-game.js', '/images/f1-car.svg'];
 

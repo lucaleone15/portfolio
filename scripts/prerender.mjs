@@ -44,16 +44,18 @@ for (const route of getAllRoutes()) {
   console.log(`prerendered ${url}`);
 }
 
-// 404 page (served with a real 404 status by the production server): noindex instead of
-// the template's generic robots tag
-{
-  const head = getHeadData({ name: 'notFound', lang: 'fr' });
+// 404 pages, French and English (served with a real 404 status by the production server,
+// the English one for /en/… addresses): noindex instead of the template's generic robots tag
+for (const lang of ['fr', 'en']) {
+  const head = getHeadData({ name: 'notFound', lang });
   const html = template
+    .replace(/<html lang="[^"]*"/, `<html lang="${head.lang}"`)
     .replace(/\s*<meta name="robots"[^>]*>/, '')
     .replace(SEO_BLOCK, `<!--seo:start-->\n${renderHeadTags(head)}\n    <!--seo:end-->`)
-    .replace('<div id="root"></div>', `<div id="root">${render('/404')}</div>`);
-  fs.writeFileSync(path.join(dist, '404.html'), html);
-  console.log('prerendered 404.html');
+    .replace('<div id="root"></div>', `<div id="root">${render(lang === 'fr' ? '/404' : '/en/404')}</div>`);
+  const file = lang === 'fr' ? '404.html' : '404-en.html';
+  fs.writeFileSync(path.join(dist, file), html);
+  console.log(`prerendered ${file}`);
 }
 
 // Sitemap lastmod = date of the last commit touching the files a page is made of, so it only

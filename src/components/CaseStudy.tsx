@@ -130,7 +130,7 @@ function Figures({ items, source }: { items: CaseFigure[]; source?: string }) {
           </Reveal>
         ))}
       </dl>
-      {source && <p className="mt-8 text-xs text-neutral-500 dark:text-[#71717A]">{source}</p>}
+      {source && <p className="mt-8 text-xs text-neutral-500 dark:text-[#A1A1AA]">{source}</p>}
     </div>
   );
 }
@@ -209,7 +209,7 @@ function Steps({ steps, frame = 'plain' }: { steps: CaseStep[]; frame?: 'screen'
                     <Picture image={s.image} sizes="100vw" className="w-full h-auto rounded-lg" />
                   </div>
                 </figure>
-                <p className="index-number text-lg text-neutral-500 dark:text-white/40">
+                <p className="index-number text-lg text-neutral-500 dark:text-white/60">
                   {String(i + 1).padStart(2, '0')} / {String(steps.length).padStart(2, '0')}
                 </p>
                 <p className="mt-3 text-lg sm:text-xl leading-relaxed text-neutral-800 dark:text-[#E4E4E7]">{s.text}</p>
@@ -297,9 +297,9 @@ function Architecture({ block }: { block: Extract<CaseBlock, { type: 'architectu
             className={`rounded-2xl p-5 ${n.highlight ? 'text-[var(--pa-on)]' : 'bg-black/[0.04] dark:bg-white/[0.06]'}`}
             style={n.highlight ? { backgroundColor: 'var(--pa)' } : undefined}
           >
-            <p className="eyebrow opacity-70">{n.sub}</p>
+            <p className={`eyebrow ${n.highlight ? '' : 'opacity-70'}`}>{n.sub}</p>
             <p className="mt-1 text-xl font-bold">{n.title}</p>
-            <p className="mt-3 text-sm leading-relaxed opacity-85">{n.note}</p>
+            <p className={`mt-3 text-sm leading-relaxed ${n.highlight ? '' : 'opacity-85'}`}>{n.note}</p>
           </motion.div>,
           i < block.nodes.length - 1 && (
             <motion.div
@@ -551,7 +551,7 @@ function Toc({ sections }: { sections: CaseStudyData['sections'] }) {
                       : 'border-transparent opacity-60 hover:opacity-100'
                     : on
                       ? 'text-neutral-900 dark:text-white'
-                      : 'border-transparent text-neutral-500 hover:text-neutral-900 dark:text-[#71717A] dark:hover:text-white'
+                      : 'border-transparent text-neutral-500 hover:text-neutral-900 dark:text-[#A1A1AA] dark:hover:text-white'
                 }`}
                 style={on && !onAccent ? { borderColor: 'var(--pa)' } : undefined}
               >
