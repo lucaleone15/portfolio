@@ -25,8 +25,10 @@ def pixels(im: Image.Image):
     return (im.get_flattened_data if hasattr(im, 'get_flattened_data') else im.getdata)()
 
 
-def unmix(rgb: Image.Image, bg) -> Image.Image:
-    """Opaque image on a solid background -> transparent image of what was drawn on it"""
+def unmix(rgb: Image.Image, bg, solid: float = 1) -> Image.Image:
+    """Opaque image on a solid background -> transparent image of what was drawn on it
+    (solid: the opacity un-mixing finds for the logo's main colour, which is in fact opaque;
+    on white, a red could also be a lighter, see-through red, and would look dull on dark)"""
     k = bg
 
     def pixel(c):
@@ -37,7 +39,7 @@ def unmix(rgb: Image.Image, bg) -> Image.Image:
         )
         if a < 0.04:
             return (0, 0, 0, 0)
-        a = min(a, 1)
+        a = min(a / solid, 1)
         return tuple(round(min(255, max(0, kv + (v - kv) / a))) for v, kv in zip(c, k)) + (round(a * 255),)
 
     out = Image.new('RGBA', rgb.size)
@@ -79,9 +81,9 @@ def widest_gap(im: Image.Image) -> int:
     return best[0]
 
 
-def themed(im: Image.Image, theme: str, mono: bool = False, ink_before: int | None = None) -> Image.Image:
-    """Neutral (unsaturated) pixels take the theme's ink colour, brand colours stay
-    (mono: the whole logo in the ink colour; ink_before: only left of that x, so that the
+def themed(im: Image.Image, theme: str, mono: bool = False, ink_before: int | None = None, neutral: float = 0.22) -> Image.Image:
+    """Neutral pixels (saturation under `neutral`) take the theme's ink colour, brand colours
+    stay (mono: the whole logo in the ink colour; ink_before: only left of that x, so that the
     white drawn inside a coloured symbol stays white)"""
     ink = INK[theme]
     width = im.width
@@ -93,20 +95,25 @@ def themed(im: Image.Image, theme: str, mono: bool = False, ink_before: int | No
             return p
         mx, mn = max(r, g, b), min(r, g, b)
         saturation = (mx - mn) / mx if mx else 0
-        return ink + (a,) if mono or saturation < 0.22 else p
+        return ink + (a,) if mono or saturation < neutral else p
 
     out = Image.new('RGBA', im.size)
     out.putdata([pixel(i, p) for i, p in enumerate(pixels(im))])
     return out
 
 
-def save(im: Image.Image, name: str, dark_mono: bool = False, symbol_right: bool = False):
+def save(im: Image.Image, name: str, file: str | None = None, symbol_right: bool = False, light_as_is: bool = False, neutral: float = 0.22):
+    """file: base name of the files when it differs from the logo's id (new name = no stale
+    cached copy, the images are cached for 30 days); light_as_is: the light-theme file keeps
+    the logo's own colours, only the dark one is themed"""
+    file = file or name
     im = crop(im)
     im = im.resize((round(im.width * HEIGHT / im.height), HEIGHT), Image.LANCZOS)
     ink_before = widest_gap(im) if symbol_right else None
     for theme in ('light', 'dark'):
-        path = OUT / (f'{name}.webp' if theme == 'light' else f'{name}-dark.webp')
-        themed(im, theme, mono=dark_mono and theme == 'dark', ink_before=ink_before).save(path, 'WEBP', quality=92, method=6)
+        path = OUT / (f'{file}.webp' if theme == 'light' else f'{file}-dark.webp')
+        out = im if light_as_is and theme == 'light' else themed(im, theme, ink_before=ink_before, neutral=neutral)
+        out.save(path, 'WEBP', quality=92, method=6)
     print(f'{name}: {im.width}x{im.height}')
 
 
@@ -117,11 +124,11 @@ def pdf_region(path: str, page: int, rect, dpi: int) -> Image.Image:
 
 OUT.mkdir(parents=True, exist_ok=True)
 
-# HUG: the full logo (letters + Hôpitaux Universitaires Genève), from the white poster of
-# the communication kit (embedded image)
-kit = fitz.open('matiere/hug/06-communication/Kit_Communication_CTS.pdf')
-poster = Image.open(io.BytesIO(fitz.Pixmap(kit, 2593).tobytes('png'))).convert('RGB')
-save(unmix(poster.crop((150, 150, 1250, 520)), (255, 255, 255)), 'hug')
+# HUG: the official colour logo (letters + Hôpitaux Universitaires Genève), vector (an .ai
+# file opens as a PDF, transparent, with the overlapping letters). Its own grey wordmark in
+# the light theme, white in the dark one; the coloured letters stay
+hug = fitz.open('matiere/hug/logo_hug/logo_hug_h_quadri.ai')[0].get_pixmap(dpi=600, alpha=True, clip=fitz.Rect(200, 240, 645, 355))
+save(Image.open(io.BytesIO(hug.tobytes('png'))), 'hug', file='hug-color', light_as_is=True, neutral=0.1)
 
 # Karting de Vuiteboeuf: transparent logo file
 # (the KV symbol on the right keeps its white letters in both themes)
@@ -133,8 +140,9 @@ save(key(ocean, ocean.getpixel((10, 10))), 'oceansight')
 
 # L'Étoile Blanche: the name, from the cover of the Zest playbook (vector), on its white box
 eb = pdf_region('matiere/etoileblanche/M53-1_Zest_playbook.pdf', 0, (55, 55, 262, 175), 600)
-# Dark red reads poorly on the dark theme: there, the name is white (it is the white star)
-save(unmix(eb.crop((80, 260, eb.width - 80, 610)), (255, 255, 255)), 'etoile-blanche', dark_mono=True)
+# Its red in both themes; the dark drop shadow of the letters turns white on the dark theme
+# (its red, #A82024, un-mixes to 87 % opacity on white)
+save(unmix(eb.crop((80, 260, eb.width - 80, 610)), (255, 255, 255), solid=0.87), 'etoile-blanche', file='etoile-blanche-color')
 
 # DriveGear: transparent logo file, the one-line version
 save(Image.open('matiere/drivegear/Logo/LogoLigneV1.png').convert('RGBA'), 'drivegear')
