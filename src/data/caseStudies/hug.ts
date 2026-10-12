@@ -84,7 +84,7 @@ const HUG_FR: CaseStudy = {
       content: [
         {
           type: 'compare',
-          before: img('avant-wireframe-admin-mockup', 1600, 1200, 'Wireframe en niveaux de gris du tableau de bord de l’administration'),
+          before: img('avant-wireframe-admin-mockup-2', 1600, 1200, 'Wireframe en niveaux de gris du tableau de bord de l’administration'),
           after: img('apres-site-admin-mockup', 1600, 1200, 'Tableau de bord de l’administration sur le site en ligne, avec les chiffres et le classement du trophée'),
           beforeLabel: 'Wireframe',
           afterLabel: 'Site en ligne',
@@ -316,7 +316,7 @@ const HUG_EN: CaseStudy = {
       content: [
         {
           type: 'compare',
-          before: img('avant-wireframe-admin-mockup', 1600, 1200, 'Greyscale wireframe of the admin dashboard'),
+          before: img('avant-wireframe-admin-mockup-2', 1600, 1200, 'Greyscale wireframe of the admin dashboard'),
           after: img('apres-site-admin-mockup', 1600, 1200, 'Admin dashboard on the live site, with the figures and the trophy ranking'),
           beforeLabel: 'Wireframe',
           afterLabel: 'Live site',
