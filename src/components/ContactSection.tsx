@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { USER_INFO } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
 import { Link, privacyPath, sectionPath } from '../router';
-import { ArrowUpRight01Icon, Call02Icon, Copy01Icon, Linkedin02Icon, Loading03Icon, Mail01Icon, Tick02Icon } from '@hugeicons/core-free-icons';
+import { Add01Icon, ArrowUpRight01Icon, Call02Icon, Copy01Icon, Linkedin02Icon, Loading03Icon, Mail01Icon, Tick02Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
 import { ContactRow, FloatingField, RevealHeadline, RevealWords, Signature } from './ContactExtras';
 
@@ -35,11 +35,25 @@ export function ContactSection() {
 
   const PRIMARY_EMAIL = 'luca@luca-leone.ch';
   const [emailInvalid, setEmailInvalid] = useState(false);
+  const [topicMissing, setTopicMissing] = useState(false);
+  const chooseTopic = (topic: string) => {
+    setFormData((prev) => ({ ...prev, subject: topic }));
+    setTopicMissing(false);
+  };
+
+  // Switching language keeps the chosen topic (same position in the other list)
+  useEffect(() => {
+    setFormData((prev) => {
+      const other = TOPICS[lang === 'fr' ? 'en' : 'fr'].indexOf(prev.subject);
+      return other === -1 ? prev : { ...prev, subject: TOPICS[lang][other] };
+    });
+  }, [lang]);
 
   useEffect(() => {
     const onPreselect = (e: Event) => {
       const index = (e as CustomEvent<number>).detail;
       setFormData((prev) => ({ ...prev, subject: TOPICS[lang][index] ?? prev.subject }));
+      setTopicMissing(false);
     };
     window.addEventListener(PRESELECT_TOPIC_EVENT, onPreselect);
     return () => window.removeEventListener(PRESELECT_TOPIC_EVENT, onPreselect);
@@ -68,6 +82,10 @@ export function ContactSection() {
 
   const handleFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (!formData.subject) {
+      setTopicMissing(true);
+      return;
+    }
     if (!formData.name || !formData.email || !formData.message) return;
 
     const successMessage =
@@ -100,8 +118,8 @@ export function ContactSection() {
       setStatusMessage(
         data.confirmed
           ? lang === 'fr'
-            ? `Merci ${formData.name.split(' ')[0]} ! Votre message est bien arrivé. Une confirmation vous a été envoyée à ${formData.email}.`
-            : `Thank you ${formData.name.split(' ')[0]}! Your message has arrived. A confirmation has been sent to ${formData.email}.`
+            ? `Merci ${formData.name.split(' ')[0]} ! Votre message est bien arrivé. Une confirmation vous a été envoyée à ${formData.email} (pensez à regarder dans les indésirables).`
+            : `Thank you ${formData.name.split(' ')[0]}! Your message has arrived. A confirmation has been sent to ${formData.email} (check your spam folder if you don’t see it).`
           : successMessage,
       );
       setFormData({ name: '', email: '', subject: '', message: '', honey: '' });
@@ -134,7 +152,7 @@ export function ContactSection() {
     <section id="contact" className="relative pt-6 sm:pt-10 bg-[#F9F9FB] dark:bg-[#0A0A0C] transition-colors duration-300">
       <div
         data-on-accent
-        className="relative overflow-hidden rounded-t-[2rem] sm:rounded-t-[3rem] bg-[var(--accent-light)] text-white pt-16 sm:pt-24 pb-20 sm:pb-28 selection:bg-white selection:text-[var(--accent-light)] [&_*:focus-visible]:outline-white"
+        className="relative overflow-hidden rounded-t-[2rem] sm:rounded-t-[3rem] bg-[var(--accent-light)] text-white pt-16 sm:pt-24 pb-20 sm:pb-28 selection:bg-white! selection:text-[var(--accent-light)]! [&_*:focus-visible]:outline-white"
       >
         {/* Depth: a darker pool bottom-left, a lighter one top-right, and grain */}
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
@@ -178,14 +196,14 @@ export function ContactSection() {
         >
           {lang === 'fr' ? (
             <>
-              Je recherche actuellement une entreprise pour mon{' '}
-              <strong className="font-bold text-white">travail de Bachelor</strong>. Votre équipe a un sujet à proposer ?
-              Écrivez-moi.
+              Un projet, une collaboration, un stage ou un sujet pour mon{' '}
+              <strong className="font-bold text-white">travail de Bachelor</strong> ? Écrivez-moi, je reviens vers vous
+              rapidement.
             </>
           ) : (
             <>
-              I'm currently looking for a company to host my <strong className="font-bold text-white">Bachelor thesis</strong>.
-              Does your team have a topic in mind? Get in touch.
+              A project, a collaboration, an internship or a topic for my{' '}
+              <strong className="font-bold text-white">Bachelor thesis</strong>? Get in touch, I'll get back to you soon.
             </>
           )}
         </motion.p>
@@ -199,28 +217,73 @@ export function ContactSection() {
             {/* Row 1 — label */}
             <p id="contact-topic-label" className="lg:col-span-7 lg:row-start-1 mb-3 lg:mb-4 self-end eyebrow text-white/70">
               {lang === 'fr' ? 'Votre demande concerne' : 'This is about'}
+              <span aria-hidden="true"> *</span>
             </p>
 
-            {/* Row 2 — topic chips (one tap instead of typing a subject) */}
-            <div role="group" aria-labelledby="contact-topic-label" className="lg:col-span-7 lg:row-start-2 self-center flex flex-wrap gap-2">
-                    {TOPICS[lang].map((topic) => {
+            {/* Row 2 — topic choice (one tap instead of typing a subject), required. Real buttons
+                (the pointer outline wraps them, like every other button),
+                exposed as a radio group: arrow keys move the choice, Tab enters and leaves the group.
+                Each chip carries a "+" that turns into a tick once chosen, so it reads as an action.
+                Grid, so a second line stays a clean block: phones 2 columns with the long "Bachelor"
+                chip across both; wider screens 3 chips then 2 (6-column grid), each row filling the width,
+                so no single chip looks more important than the others. */}
+            <div
+              role="radiogroup"
+              aria-labelledby="contact-topic-label"
+              aria-required="true"
+              aria-invalid={topicMissing || undefined}
+              aria-describedby={topicMissing ? 'contact-topic-error' : undefined}
+              onKeyDown={(e) => {
+                const step = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
+                if (!step) return;
+                e.preventDefault();
+                const chips = Array.from(e.currentTarget.querySelectorAll('[role="radio"]')) as HTMLElement[];
+                const from = chips.indexOf(document.activeElement as HTMLElement);
+                const next = (Math.max(from, 0) + step + chips.length) % chips.length;
+                chooseTopic(TOPICS[lang][next]);
+                chips[next]?.focus();
+              }}
+              className="lg:col-span-7 lg:row-start-2 self-center grid grid-cols-2 sm:grid-cols-6 gap-2"
+            >
+                    {TOPICS[lang].map((topic, i) => {
                       const selected = formData.subject === topic;
+                      // Roving focus: only the chosen chip (or the first one) is a Tab stop
+                      const tabStop = formData.subject ? selected : i === 0;
                       return (
                         <button
                           key={topic}
                           type="button"
-                          aria-pressed={selected}
-                          onClick={() => setFormData({ ...formData, subject: selected ? '' : topic })}
-                          className={`font-syne h-10 px-4 rounded-full text-sm font-bold transition active:scale-[0.97] cursor-pointer ${
+                          role="radio"
+                          aria-checked={selected}
+                          tabIndex={tabStop ? 0 : -1}
+                          onClick={() => chooseTopic(topic)}
+                          className={`font-syne group h-11 px-2.5 sm:px-3 max-[359px]:text-[13px] inline-flex items-center justify-center gap-1.5 rounded-full border text-sm font-bold whitespace-nowrap ${
+                            i === 2 ? 'col-span-2' : i < 2 ? 'sm:col-span-2' : 'sm:col-span-3'
+                          } transition-[background-color,border-color,color,transform] duration-200 active:scale-[0.97] cursor-pointer ${
                             selected
-                              ? 'bg-white text-[var(--accent-light)]'
-                              : 'bg-white/15 text-white hover:bg-white/25'
+                              ? 'bg-white border-white text-[var(--accent-light)]'
+                              : `bg-transparent text-white hover:bg-white/15 hover:border-white ${topicMissing ? 'border-white' : 'border-white/50'}`
                           }`}
                         >
+                          <span aria-hidden="true" className="relative w-4 h-4 shrink-0">
+                            <Icon
+                              icon={Add01Icon}
+                              className={`absolute inset-0 w-4 h-4 transition duration-200 ease-out ${selected ? 'opacity-0 rotate-90 scale-50' : 'opacity-80 group-hover:opacity-100'}`}
+                            />
+                            <Icon
+                              icon={Tick02Icon}
+                              className={`absolute inset-0 w-4 h-4 transition duration-200 ease-out ${selected ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}
+                            />
+                          </span>
                           {topic}
                         </button>
                       );
                     })}
+              {topicMissing && (
+                <p id="contact-topic-error" className="col-span-full pt-1 text-xs font-semibold text-white">
+                  {lang === 'fr' ? 'Choisissez le sujet de votre demande.' : 'Choose what your message is about.'}
+                </p>
+              )}
             </div>
 
             {/* Row 3 — name + email, underlines on the row's bottom edge */}
@@ -304,6 +367,8 @@ export function ContactSection() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
+                    // The browser checks the text fields itself; the topic is flagged at the same time
+                    onClick={() => !formData.subject && setTopicMissing(true)}
                     className="font-syne relative min-w-[15rem] h-14 px-10 rounded-full bg-white text-[var(--accent-light)] hover:bg-white/90 disabled:cursor-wait font-bold text-sm tracking-wide transition duration-200 cursor-pointer shadow-xs active:scale-[0.97] inline-flex items-center justify-center overflow-hidden"
                   >
                     {/* State morph: the labels cross-fade through a light blur so they read as one
@@ -351,7 +416,7 @@ export function ContactSection() {
             <ContactRow
               className="lg:col-start-8 lg:col-span-5 lg:row-start-2 border-t"
               icon={<Icon icon={Mail01Icon} className="w-5 h-5" />}
-              label={copied ? (lang === 'fr' ? 'Adresse copiée' : 'Address copied') : lang === 'fr' ? 'Email · écrire directement' : 'Email · write directly'}
+              label={copied ? (lang === 'fr' ? 'Adresse copiée' : 'Address copied') : 'Email'}
               value={PRIMARY_EMAIL}
               href={`mailto:${PRIMARY_EMAIL}`}
               trailing={<Icon icon={ArrowUpRight01Icon} className="w-5 h-5" />}
