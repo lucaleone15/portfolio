@@ -30,6 +30,33 @@ const CONFIRM_MAX = 3;
 // Topics offered by the form (FR and EN); anything else is dropped
 const TOPICS = new Set(['Projet', 'Collaboration', 'Travail de Bachelor', 'Stage / emploi', 'Autre', 'Project', 'Bachelor thesis', 'Internship / job', 'Other']);
 
+/** The confirmation to the visitor, shared with the delivery test (server/mailTest.ts) */
+export const confirmationMail = (
+  mail: { subject: string; text: string; html: string },
+  sender: string,
+  owner: string,
+  to: string,
+) => ({
+  from: { name: 'Luca Leone', address: sender },
+  // Address only: the visitor-typed name never reaches a header of an outgoing email
+  to,
+  replyTo: owner,
+  subject: mail.subject,
+  text: mail.text,
+  html: mail.html,
+  // Marks it as an automatic reply (RFC 3834): out-of-office replies don't answer it back,
+  // and mail filters know it's a transactional message, not a newsletter
+  headers: { 'Auto-Submitted': 'auto-replied', 'X-Auto-Response-Suppress': 'All' },
+});
+
+/** What the SMTP server answered, in the server log: the first place to look when a mail is missing */
+const logDelivery = (kind: string, to: string, info: { accepted?: unknown[]; rejected?: unknown[]; response?: string; messageId?: string }) => {
+  const rejected = info.rejected?.length ?? 0;
+  const line = `[contact] ${kind} → ${to}: accepted ${info.accepted?.length ?? 0}, rejected ${rejected} · ${info.response} · ${info.messageId}`;
+  if (rejected) console.error(line);
+  else console.log(line);
+};
+
 const json = (res: ServerResponse, status: number, body: object) => {
   res.statusCode = status;
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
@@ -88,14 +115,16 @@ export function createContactHandler(env: Env) {
     return recent.length > RATE_MAX;
   };
 
+  // Only confirmations actually sent count toward the daily cap (a failed try doesn't use one up)
   const mayConfirm = (address: string) => {
+    const now = Date.now();
+    const recent = (confirmations.get(address.toLowerCase()) ?? []).filter((t) => now - t < CONFIRM_WINDOW_MS);
+    return recent.length < CONFIRM_MAX;
+  };
+  const recordConfirmation = (address: string) => {
     const key = address.toLowerCase();
     const now = Date.now();
-    const recent = (confirmations.get(key) ?? []).filter((t) => now - t < CONFIRM_WINDOW_MS);
-    if (recent.length >= CONFIRM_MAX) return false;
-    recent.push(now);
-    confirmations.set(key, recent);
-    return true;
+    confirmations.set(key, [...(confirmations.get(key) ?? []).filter((t) => now - t < CONFIRM_WINDOW_MS), now]);
   };
 
   return async (req: IncomingMessage, res: ServerResponse, next: () => void) => {
@@ -137,7 +166,7 @@ export function createContactHandler(env: Env) {
     try {
       mailer = await getTransporter();
       const mail = ownerEmail(details);
-      await mailer.sendMail({
+      const info = await mailer.sendMail({
         from: { name: `Portfolio · ${name}`, address: sender },
         to: owner,
         replyTo: { name, address: email },
@@ -145,6 +174,7 @@ export function createContactHandler(env: Env) {
         text: mail.text,
         html: mail.html,
       });
+      logDelivery('notification', owner, info);
     } catch (err) {
       console.error('[contact] send failed:', err);
       return json(res, 502, { error: 'send_failed' });
@@ -152,19 +182,15 @@ export function createContactHandler(env: Env) {
 
     // The message is delivered: the confirmation is a courtesy and may fail on its own
     let confirmed = false;
-    if (mayConfirm(email)) {
+    if (!mayConfirm(email)) {
+      console.warn(`[contact] confirmation skipped: ${CONFIRM_MAX} already sent to ${email} today`);
+    } else {
       try {
-        const mail = visitorEmail(details);
-        await mailer.sendMail({
-          from: { name: 'Luca Leone', address: sender },
-          // Address only: the visitor-typed name never reaches a header of an outgoing email
-          to: email,
-          replyTo: owner,
-          subject: mail.subject,
-          text: mail.text,
-          html: mail.html,
-        });
-        confirmed = true;
+        const info = await mailer.sendMail(confirmationMail(visitorEmail(details), sender, owner, email));
+        logDelivery('confirmation', email, info);
+        // The SMTP server may accept the message for some recipients only
+        confirmed = (info.accepted?.length ?? 0) > 0 && !info.rejected?.length;
+        if (confirmed) recordConfirmation(email);
       } catch (err) {
         console.error('[contact] confirmation failed:', err);
       }
