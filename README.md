@@ -33,7 +33,7 @@ Site bilingue (FR / EN), pré-rendu pour le référencement, avec ses propres ro
 
 | Section | Contenu |
 | --- | --- |
-| **Intro** | Rideau typographique au premier chargement de l'accueil (le nom se révèle lettre par lettre) |
+| **Intro** | Rideau rouge au premier chargement de l'accueil : le monogramme LL s'ouvre, ses deux L deviennent les L de « Luca Leone », sa moitié rouge vif devient le point ; le nom vole jusqu'au logo de l'en-tête, puis le rideau se lève (un clic, une touche ou un défilement le passe) |
 | **Hero** | Accroche animée (« Je transforme des idées en… »), bandeau d'outils, fond dégradé + grain |
 | **Compétences** | Six domaines, détail au survol (souris) ou au tap (mobile) |
 | **Projets** | Six cartes : phrase clé sur l'image, rôle, légère inclinaison au survol et pastille floutée « Voir le projet » qui suit la souris ; filtres par catégorie ; sur mobile, cartes empilées au scroll |
@@ -149,7 +149,7 @@ Après une mise en ligne qui change l'image d'aperçu, la rafraîchir sur Linked
 │   ├── ai-catalog.json        Catalogue pour les agents IA (copies dans .well-known/)
 │   └── robots.txt
 ├── src/
-│   ├── App.tsx                Assemblage : intro, curseur, header, page (accueil / projet / 404)
+│   ├── App.tsx                Assemblage : intro, contour au survol, header, page (accueil / projet / 404)
 │   ├── main.tsx               Point d'entrée navigateur
 │   ├── entry-server.tsx       Point d'entrée du pré-rendu
 │   ├── router.tsx             Routeur maison (History API + View Transitions)
@@ -160,11 +160,12 @@ Après une mise en ligne qui change l'image d'aperçu, la rafraîchir sur Linked
 │   │   └── caseStudies/       Une étude de cas par projet (FR + EN), un fichier par projet
 │   ├── hooks/                 usePauseOffscreen (animations en pause hors écran)
 │   ├── theme/colors.ts        Catalogue de palettes d'accent (ACTIVE_ACCENT_ID)
-│   └── index.css              Tailwind + styles globaux (curseur, fonds, transitions)
+│   └── index.css              Tailwind + styles globaux (fonds, transitions)
 ├── server/
 │   ├── index.ts               Serveur de production
 │   ├── contact.ts             POST /api/contact
 │   ├── contactEmails.ts       Emails du formulaire (notification + confirmation signée)
+│   ├── mailTest.ts            Test d'envoi de la confirmation (npm run mail:test)
 │   └── analytics.ts           Statistiques internes + /stats
 ├── scripts/
 │   ├── prerender.mjs          Génère les pages HTML, la 404 et le sitemap
@@ -215,13 +216,15 @@ Après une modification de contenu : `npm run build` (le pré-rendu, les métado
 - **Pages cachées** (easter eggs) : `/stand` (coulisses du site) et `/podium` (classement du jeu « Lights out », `server/podium.ts`, scores dans `.data/podium.json` à conserver entre deux déploiements) ; `noindex`, hors du sitemap, accessibles via la recherche ⌘K.
 - **Politique de confidentialité** : `noindex, follow` et hors du sitemap (utile aux visiteurs, pas une page à trouver dans Google).
 - **Suggestion de langue** (`src/components/LanguageHint.tsx`) : si le navigateur ne demande pas la langue de la page (par ex. un recruteur anglophone sur la version française), une petite pastille propose l'autre version. Jamais de redirection ; une fois fermée ou suivie, elle ne revient plus.
-- **Icônes** : `favicon.svg` (le « L. » en Syne, vectorisé : aucune police à charger), `apple-touch-icon.png`, `icon-192/512.png` et `site.webmanifest`.
+- **Icônes** : le monogramme « LL » (deux L de part et d'autre d'une ligne, sur les deux rouges du site), généré par `python3 scripts/make-icons.py` : `favicon.svg`, `favicon-32.png`, `apple-touch-icon.png`, `icon-192/512.png` (liés avec `?v=2` dans `index.html` et `site.webmanifest` : changer ce numéro quand le logo change, les navigateurs gardent longtemps les favicons).
 
 ### Formulaire de contact
 
 - Le navigateur envoie le message à **`POST /api/contact`** (`server/contact.ts`), qui l'expédie via le compte SMTP de la boîte mail du site (Nodemailer). Aucun service de formulaire tiers.
 - Protections : champ piège anti-robots, validation des champs, sujet limité à la liste du formulaire, taille limitée, délais d'attente SMTP, **5 messages / 10 minutes par IP**.
-- Deux emails mis en forme (`server/contactEmails.ts`) : la notification reçue (« Répondre à » = le visiteur, objet = sujet choisi) et une confirmation envoyée au visiteur dans sa langue, avec le sujet en tête et la signature email, sans recopier son message (au plus 3 confirmations par jour vers une même adresse).
+- Deux emails mis en forme (`server/contactEmails.ts`) : la notification reçue (« Répondre à » = le visiteur, objet = sujet choisi) et une confirmation envoyée au visiteur dans sa langue, avec le sujet en tête et la signature email, sans recopier son message (au plus 3 confirmations par jour vers une même adresse, seules celles réellement envoyées comptent). La confirmation porte l'en-tête `Auto-Submitted: auto-replied` (réponse automatique, RFC 3834).
+- Chaque envoi est journalisé avec la réponse du serveur SMTP (`[contact] confirmation → … accepted 1, rejected 0 · 250 …`) : c'est le premier endroit où regarder si un email manque.
+- **Tester la confirmation sur le serveur** : `npm run mail:test -- adresse@exemple.com` (après `npm run build`). Vérifie la connexion SMTP, envoie la vraie confirmation à cette adresse, affiche la réponse du serveur et les enregistrements SPF / DMARC du domaine. Si le serveur l'accepte mais qu'elle n'arrive pas, elle a été filtrée à l'arrivée : regarder les indésirables, et activer **DKIM** pour le domaine chez l'hébergeur mail (Infomaniak : Service Mail → DKIM).
 - En cas d'échec, le message n'est pas perdu : un lien ouvre la messagerie du visiteur avec le message pré-rempli.
 
 ### Statistiques
@@ -253,7 +256,7 @@ Statistiques internes et respectueuses de la vie privée (`server/analytics.ts`)
 | Carte → page projet | API **View Transitions** : l'image de la carte se transforme en visuel de la page |
 | Études de cas | **IntersectionObserver + CSS sticky** : visuel fixe pendant que le texte défile, chiffres qui comptent, comparateur avant / après, sommaire qui suit la lecture |
 | Cartes de projets | Inclinaison douce au survol, pastille floutée « Voir le projet » qui remplace le curseur ; vidéo qui plonge dans l'écran au survol (appui long sur mobile), garde la dernière image, puis se rembobine à l'envers |
-| Curseur | Rond en couleurs inversées + contour rouge qui épouse liens et boutons |
+| Survol | Curseur du système ; contour rouge qui épouse liens et boutons |
 | Recherche | **cmdk**, ouverture instantanée (loupe ou ⌘K / Ctrl+K) |
 
 Principes suivis (Emil Kowalski, Apple Human Interface) : courbes d'accélération personnalisées, durées courtes, animations interruptibles, uniquement `transform` / `opacity`, retour visuel à l'appui, effets de survol réservés aux souris.
