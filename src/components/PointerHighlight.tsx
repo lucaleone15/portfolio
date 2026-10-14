@@ -5,7 +5,7 @@ import { animate, motion, useMotionValue, useReducedMotion, useSpring } from 'mo
  * Pointer highlight, in the spirit of the iPadOS pointer: when the pointer rests on a link
  * or button, a thin accent outline wraps that element, keeps its corner radius, glides from
  * one element to the next and leans slightly toward the pointer (magnetic feel).
- * Works alongside InvertedCursor.
+ * Works with the system pointer.
  */
 
 const INTERACTIVE = 'a, button, [role="button"]';

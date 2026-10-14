@@ -8,7 +8,6 @@ import { AboutSection } from './components/AboutSection';
 import { ContactSection } from './components/ContactSection';
 import { ProjectDetailView } from './components/ProjectDetailView';
 import { PointerHighlight } from './components/PointerHighlight';
-import { InvertedCursor } from './components/InvertedCursor';
 import { CommandPalette } from './components/CommandPalette';
 import { LanguageHint } from './components/LanguageHint';
 import { IntroCurtain, skipIntro } from './components/IntroCurtain';
@@ -116,8 +115,7 @@ function PortfolioApp() {
       {/* Typographic intro curtain (home page landings only) */}
       {playIntro && <IntroCurtain />}
 
-      {/* Inverted round cursor + accent outline that glides onto links and buttons */}
-      <InvertedCursor />
+      {/* Accent outline that glides onto links and buttons */}
       <PointerHighlight />
 
       {/* ⌘K / Ctrl+K */}

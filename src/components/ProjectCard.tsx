@@ -197,7 +197,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
           onTouchCancel={onTouchEnd}
-          // The round cursor and the link outline step aside: the disc below replaces them
+          // The system pointer and the link outline step aside: the lens below replaces them
           data-cursor-hidden
           style={{ rotateX: tiltX, rotateY: tiltY, transformPerspective: 1000 }}
           className="relative aspect-[16/10] w-full rounded-2xl bg-neutral-200 dark:bg-[#121215] shrink-0 select-none [-webkit-touch-callout:none]"
@@ -259,8 +259,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
           {/* Pointer replacement over the image: a lens of strong blur whose edge fades out
               Plain blur with a faint neutral tint: no outline, no brightening.
-              Follows the pointer 1:1 (a cursor must never lag); grows in from a dot like the
-              round cursor it takes over from. Mouse/trackpad only. */}
+              Follows the pointer 1:1 (a cursor must never lag); grows in from a dot.
+              Mouse/trackpad only. */}
           <motion.div
             data-pointer-ui
             className="pointer-events-none absolute left-0 top-0 z-50 hidden [@media(hover:hover)_and_(pointer:fine)]:block"

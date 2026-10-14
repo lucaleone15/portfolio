@@ -190,29 +190,11 @@
   }
 }
 
-/* Inverted round cursor (InvertedCursor.tsx). The native cursor is hidden by ONE inherited
-   declaration on <html>; elements that set their own cursor (links via the UA stylesheet,
-   Tailwind cursor-* utilities) are told to inherit instead. Per-element cursor rules made
-   the native cursor flash back at every element boundary. Only active once the component
-   has mounted (has-custom-cursor), so without JS the native cursor stays. */
+/* Project images: the blurred "Voir le projet" lens follows the pointer and stands in for it
+   (ProjectCard.tsx), so the system pointer steps aside there. Mouse/trackpad only. */
 @media (hover: hover) and (pointer: fine) {
-  html.has-custom-cursor {
+  [data-cursor-hidden] {
     cursor: none;
-  }
-  html.has-custom-cursor :is(a, button, [role="button"], summary, label[for], .cursor-pointer, .cursor-default) {
-    cursor: inherit;
-  }
-  /* Text fields keep the I-beam (the round cursor hides itself there) */
-  html.has-custom-cursor :is(input, textarea, select) {
-    cursor: auto;
-  }
-  /* The image viewer is a modal <dialog>, drawn above everything, the round cursor
-     included: the native cursor comes back there */
-  html.has-custom-cursor .lightbox {
-    cursor: auto;
-  }
-  html.has-custom-cursor .lightbox button {
-    cursor: pointer;
   }
 }
 
