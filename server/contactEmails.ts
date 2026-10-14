@@ -117,18 +117,19 @@ Envoyé le ${esc(swissDate(d.date, 'fr'))}<br>depuis ${esc(SITE + d.page)}
 
 /** The email signature designed for Luca's mailbox: logo, name, title, clickable contacts */
 function signature(lang: MailLang) {
-  const red = '#E0244A';
-  const grey = '#808080';
+  // The site's red and the emails' grey (readable at 12 px), as in the brand charter
+  const red = ACCENT;
+  const grey = '#6B6B6B';
   const link = (href: string, label: string) => `<a href="${href}" style="color:${red};text-decoration:none;">${label}</a>`;
   const dot = `<span style="color:${grey};font-weight:normal;">&nbsp;&nbsp;·&nbsp;&nbsp;</span>`;
   return `<table cellpadding="0" cellspacing="0" border="0" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;border-collapse:collapse;">
 <tr>
 <td style="padding:0 14px 0 0;vertical-align:middle;">
-<a href="${SITE}" style="text-decoration:none;"><img src="${SITE}/icon-192.png" width="56" height="56" alt="Luca Leone" style="display:block;width:56px;height:56px;border:0;border-radius:12px;"></a>
+<a href="${SITE}" style="text-decoration:none;"><img src="${SITE}/signature-logo.png" width="56" height="56" alt="Luca Leone" style="display:block;width:56px;height:56px;border:0;border-radius:12px;"></a>
 </td>
 <td style="padding:0 0 0 14px;border-left:2px solid ${red};vertical-align:top;">
 <div style="font-size:16px;font-weight:bold;line-height:21px;letter-spacing:-0.2px;color:#1A1A1A;">Luca Leone</div>
-<div style="font-size:12px;line-height:17px;color:${grey};">${lang === 'fr' ? 'Étudiant en Ingénierie des médias · HEIG-VD' : 'Media Engineering student · HEIG-VD'}</div>
+<div style="font-size:12px;line-height:17px;color:${grey};">${lang === 'fr' ? 'Étudiant en ingénierie des médias · HEIG-VD' : 'Media Engineering student · HEIG-VD'}</div>
 <div style="font-size:12px;line-height:17px;color:${grey};padding-bottom:6px;">${lang === 'fr' ? 'Communication digitale · UI/UX · Développement web' : 'Digital communication · UI/UX · Web development'}</div>
 <div style="font-size:12px;line-height:18px;font-weight:bold;">${link('tel:+41798687204', '+41 79 868 72 04')}${dot}${link('mailto:luca@luca-leone.ch', 'luca@luca-leone.ch')}</div>
 <div style="font-size:12px;line-height:18px;font-weight:bold;">${link(lang === 'fr' ? SITE : `${SITE}/en/`, 'luca-leone.ch')}${dot}${link(LINKEDIN, 'LinkedIn')}</div>
@@ -178,7 +179,7 @@ ${signature(d.lang)}
 </td></tr>
 <tr><td style="padding:16px 32px 24px;border-top:1px solid #EEEEF0;font-size:12px;line-height:1.6;color:#8A8A8E;">${esc(c.note)}</td></tr>`,
   );
-  const text = [d.subject ? `${c.topic} : ${d.subject}\n` : '', c.hello(name), '', ...c.body, '', c.sign, 'Luca Leone', d.lang === 'fr' ? 'Étudiant en Ingénierie des médias · HEIG-VD' : 'Media Engineering student · HEIG-VD', '+41 79 868 72 04 · luca@luca-leone.ch', 'luca-leone.ch · ' + LINKEDIN, '', c.note]
+  const text = [d.subject ? `${c.topic} : ${d.subject}\n` : '', c.hello(name), '', ...c.body, '', c.sign, 'Luca Leone', d.lang === 'fr' ? 'Étudiant en ingénierie des médias · HEIG-VD' : 'Media Engineering student · HEIG-VD', '+41 79 868 72 04 · luca@luca-leone.ch', 'luca-leone.ch · ' + LINKEDIN, '', c.note]
     .filter((l, i, a) => !(l === '' && a[i - 1] === ''))
     .join('\n');
   return { subject: c.subject, html, text };
