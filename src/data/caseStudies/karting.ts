@@ -24,7 +24,7 @@ const KARTING_FR: CaseStudy = {
   brief: [
     { label: 'Le problème', text: 'Une offre attractive, mais une présence en ligne irrégulière et peu variée.' },
     { label: 'Ma réponse', text: 'Des contenus réguliers, tournés sur la piste, et des rendez-vous qui reviennent.' },
-    { label: 'Le résultat', text: 'Depuis mai : 329’000 vues sur Instagram (+72,7 %) et des vues Facebook multipliées par près de six (+479 %).' },
+    { label: 'Le résultat', text: 'Depuis mai : 329’000 vues sur Instagram (+73 %) et des vues Facebook multipliées par près de six (+479 %).' },
   ],
   sections: [
     {
@@ -174,9 +174,9 @@ const KARTING_FR: CaseStudy = {
         {
           type: 'figures',
           items: [
-            { value: 329.3, suffix: ' k', label: 'vues sur Instagram depuis mai, +72,7 %' },
-            { value: 88.8, prefix: '+', suffix: ' %', label: 'd’interactions sur Instagram' },
-            { value: 117.5, suffix: ' k', label: 'vues sur le reel le plus regardé' },
+            { value: 329, suffix: ' k', label: 'vues sur Instagram depuis mai, +73 %' },
+            { value: 89, prefix: '+', suffix: ' %', label: 'd’interactions sur Instagram' },
+            { value: 118, suffix: ' k', label: 'vues sur le reel le plus regardé' },
             { value: 479, prefix: '+', suffix: ' %', label: 'de vues sur Facebook' },
           ],
         },
@@ -219,7 +219,7 @@ const KARTING_EN: CaseStudy = {
   brief: [
     { label: 'The problem', text: 'An attractive offer, but an irregular and repetitive online presence.' },
     { label: 'My answer', text: 'Regular content shot on the track, and formats that come back.' },
-    { label: 'The result', text: 'Since May: 329,000 views on Instagram (+72.7%) and Facebook views up nearly sixfold (+479%).' },
+    { label: 'The result', text: 'Since May: 329,000 views on Instagram (+73%) and Facebook views up nearly sixfold (+479%).' },
   ],
   sections: [
     {
@@ -369,9 +369,9 @@ const KARTING_EN: CaseStudy = {
         {
           type: 'figures',
           items: [
-            { value: 329.3, suffix: 'k', label: 'Instagram views since May, up 72.7%' },
-            { value: 88.8, prefix: '+', suffix: '%', label: 'Instagram interactions' },
-            { value: 117.5, suffix: 'k', label: 'views on the most-watched reel' },
+            { value: 329, suffix: 'k', label: 'Instagram views since May, up 73%' },
+            { value: 89, prefix: '+', suffix: '%', label: 'Instagram interactions' },
+            { value: 118, suffix: 'k', label: 'views on the most-watched reel' },
             { value: 479, prefix: '+', suffix: '%', label: 'Facebook views' },
           ],
         },
