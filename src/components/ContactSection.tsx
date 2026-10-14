@@ -1,5 +1,5 @@
-import { useEffect, useState, FormEvent } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { useEffect, useRef, useState, FormEvent } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { USER_INFO } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
 import { Link, privacyPath, sectionPath } from '../router';
@@ -23,6 +23,12 @@ export function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [statusMessage, setStatusMessage] = useState('');
+  // Once sent, the form gives way to a thank-you: 'leaving' fades the fields out first
+  const [phase, setPhase] = useState<'form' | 'leaving' | 'sent'>('form');
+  const [sent, setSent] = useState<{ name: string; email: string; confirmed: boolean } | null>(null);
+  const thanksRef = useRef<HTMLHeadingElement>(null);
+  const thanksBoxRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -36,6 +42,27 @@ export function ContactSection() {
   const PRIMARY_EMAIL = 'luca@luca-leone.ch';
   const [emailInvalid, setEmailInvalid] = useState(false);
   const [topicMissing, setTopicMissing] = useState(false);
+  const showThanks = (details: { name: string; email: string; confirmed: boolean }) => {
+    setSent(details);
+    setPhase('leaving');
+    window.setTimeout(() => setPhase('sent'), reduceMotion ? 0 : 320);
+  };
+
+  // The thank-you takes the form's place: bring it into view and give it the focus (announced)
+  useEffect(() => {
+    if (phase !== 'sent') return;
+    thanksRef.current?.focus({ preventScroll: true });
+    // scroll-mt keeps it clear of the floating header
+    thanksBoxRef.current?.scrollIntoView({ block: 'nearest', behavior: reduceMotion ? 'auto' : 'smooth' });
+  }, [phase, reduceMotion]);
+
+  const writeAgain = () => {
+    setSubmitStatus('idle');
+    setStatusMessage('');
+    setSent(null);
+    setPhase('form');
+  };
+
   const chooseTopic = (topic: string) => {
     setFormData((prev) => ({ ...prev, subject: topic }));
     setTopicMissing(false);
@@ -88,13 +115,10 @@ export function ContactSection() {
     }
     if (!formData.name || !formData.email || !formData.message) return;
 
-    const successMessage =
-      lang === 'fr' ? 'Merci ! Votre message est bien arrivé, je reviens vers vous rapidement.' : 'Thank you! Your message has arrived, I’ll get back to you soon.';
-
     // A bot filled the hidden field: pretend it worked, send nothing
     if (formData.honey) {
       setSubmitStatus('success');
-      setStatusMessage(successMessage);
+      showThanks({ name: '', email: '', confirmed: false });
       return;
     }
 
@@ -115,13 +139,7 @@ export function ContactSection() {
       }
       setIsSubmitting(false);
       setSubmitStatus('success');
-      setStatusMessage(
-        data.confirmed
-          ? lang === 'fr'
-            ? `Merci ${formData.name.split(' ')[0]} ! Votre message est bien arrivé. Une confirmation vous a été envoyée à ${formData.email} (pensez à regarder dans les indésirables).`
-            : `Thank you ${formData.name.split(' ')[0]}! Your message has arrived. A confirmation has been sent to ${formData.email} (check your spam folder if you don’t see it).`
-          : successMessage,
-      );
+      showThanks({ name: formData.name.trim().split(/\s+/)[0] ?? '', email: formData.email, confirmed: !!data.confirmed });
       setFormData({ name: '', email: '', subject: '', message: '', honey: '' });
     } catch (err) {
       console.error('Contact submission error:', err);
@@ -213,7 +231,12 @@ export function ContactSection() {
             The form and the list use display:contents so their children become grid items;
             on mobile the DOM order (form, then contacts) is kept. */}
         <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-16">
-          <form onSubmit={handleFormSubmit} className="contents">
+          {phase !== 'sent' ? (
+          <form
+            onSubmit={handleFormSubmit}
+            data-leaving={phase === 'leaving' || undefined}
+            className="contents [&>*]:transition-[opacity,transform] [&>*]:duration-300 [&>*]:ease-out data-[leaving]:[&>*]:opacity-0 data-[leaving]:[&>*]:-translate-y-2"
+          >
             {/* Row 1 — label */}
             <p id="contact-topic-label" className="lg:col-span-7 lg:row-start-1 mb-3 lg:mb-4 self-end eyebrow text-white/70">
               {lang === 'fr' ? 'Votre demande concerne' : 'This is about'}
@@ -407,6 +430,47 @@ export function ContactSection() {
               </div>
             </div>
           </form>
+          ) : (
+            /* Thank-you, in the form's place (rows 1–5 of the left column) */
+            <motion.div
+              ref={thanksBoxRef}
+              initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+              className="lg:col-span-7 lg:row-start-1 lg:row-span-5 self-center py-4 lg:py-0 scroll-mt-28"
+            >
+              <p className="eyebrow text-white/70 inline-flex items-center gap-2">
+                <Icon icon={Tick02Icon} className="w-4 h-4" />
+                {lang === 'fr' ? 'Message envoyé' : 'Message sent'}
+              </p>
+              <h3
+                ref={thanksRef}
+                tabIndex={-1}
+                className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05] text-white outline-none"
+              >
+                {lang === 'fr' ? `Merci${sent?.name ? ` ${sent.name}` : ''} !` : `Thank you${sent?.name ? `, ${sent.name}` : ''}!`}
+              </h3>
+              <p className="mt-6 max-w-xl text-lg sm:text-xl leading-relaxed text-white/85">
+                {lang === 'fr'
+                  ? 'Votre message est bien arrivé. Je le lis attentivement et je reviens vers vous rapidement.'
+                  : 'Your message has arrived. I’ll read it carefully and get back to you soon.'}
+              </p>
+              {sent?.confirmed && (
+                <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/75">
+                  {lang === 'fr' ? 'Une confirmation vous a été envoyée à ' : 'A confirmation has been sent to '}
+                  <strong className="font-semibold text-white break-words">{sent.email}</strong>
+                  {lang === 'fr' ? '. Pensez à regarder dans les indésirables si vous ne la voyez pas.' : '. Check your spam folder if you don’t see it.'}
+                </p>
+              )}
+              <button
+                type="button"
+                onClick={writeAgain}
+                className="font-syne mt-10 h-12 px-6 rounded-full border border-white/50 text-white text-sm font-bold hover:bg-white/15 hover:border-white transition-[background-color,border-color,transform] duration-200 active:scale-[0.97] cursor-pointer"
+              >
+                {lang === 'fr' ? 'Envoyer un autre message' : 'Send another message'}
+              </button>
+            </motion.div>
+          )}
 
           {/* Direct contact rows (rows 1–4 of the right column) */}
           <p className="mt-16 lg:mt-0 lg:col-start-8 lg:col-span-5 lg:row-start-1 mb-3 lg:mb-4 self-end eyebrow text-white/70">
