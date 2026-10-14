@@ -85,7 +85,9 @@ export function Header({ activeSection }: HeaderProps) {
             aria-label={lang === 'fr' ? 'Luca Leone, accueil' : 'Luca Leone, home'}
             className="text-left group cursor-pointer inline-flex items-baseline"
           >
-            <span className="font-syne text-lg sm:text-xl font-bold tracking-tight text-neutral-900 dark:text-white transition-colors">
+            {/* data-brand-*: the intro curtain flies its name onto this one (IntroCurtain.tsx) */}
+            <span data-brand-wordmark className="font-syne text-lg sm:text-xl font-bold tracking-tight text-neutral-900 dark:text-white transition-colors">
+              <span data-brand-baseline className="inline-block w-0 h-0" aria-hidden="true" />
               Luca Leone<span className="text-[var(--accent)] font-bold drop-shadow-[0_0_1px_rgba(0,0,0,0.5)]">.</span>
             </span>
           </Link>
