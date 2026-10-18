@@ -1,6 +1,7 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Transporter } from 'nodemailer';
 import { ownerEmail, visitorEmail, type MailLang } from './contactEmails';
+import type { MessageStore } from './messages';
 
 /**
  * POST /api/contact — sends the contact form through the site owner's own SMTP account
@@ -12,7 +13,9 @@ import { ownerEmail, visitorEmail, type MailLang } from './contactEmails';
  *   SMTP_FROM    sender address (defaults to SMTP_USER; must be allowed by the SMTP account)
  *
  * Two emails per message: a formatted notification to the owner (reply goes straight to the
- * visitor) and a confirmation to the visitor (server/contactEmails.ts).
+ * visitor) and a confirmation to the visitor (server/contactEmails.ts). Each message is also
+ * kept for the atelier's inbox (server/messages.ts) before the emails go out: if sending
+ * fails, the message isn't lost and the visitor still gets the thank-you.
  *
  * Protections: JSON body ≤ 20 KB, field validation, honeypot, 5 messages / 10 min per IP,
  * and at most 3 confirmations a day to the same address (the form can't be used to flood
@@ -85,7 +88,7 @@ const readBody = (req: IncomingMessage) =>
     req.on('error', reject);
   });
 
-export function createContactHandler(env: Env) {
+export function createContactHandler(env: Env, deps: { messages?: MessageStore } = {}) {
   const hits = new Map<string, number[]>();
   const confirmations = new Map<string, number[]>();
   let transporter: Transporter | null = null;
@@ -155,8 +158,16 @@ export function createContactHandler(env: Env) {
     const ip = forwarded || req.socket.remoteAddress || 'unknown';
     if (rateLimited(ip)) return json(res, 429, { error: 'rate_limited' });
 
+    // Kept first: whatever happens with the emails, the message reaches the atelier
+    let stored: string | null = null;
+    try {
+      stored = deps.messages?.add({ name, email, subject, message, lang, page, emailed: false }).id ?? null;
+    } catch (err) {
+      console.error('[contact] could not keep the message:', err);
+    }
+
     if (!env.SMTP_HOST || !env.SMTP_USER || !env.SMTP_PASS) {
-      return json(res, 503, { error: 'not_configured' });
+      return stored ? json(res, 200, { ok: true, confirmed: false }) : json(res, 503, { error: 'not_configured' });
     }
 
     const details = { name, email, subject, message, lang, page, date: new Date() };
@@ -175,9 +186,10 @@ export function createContactHandler(env: Env) {
         html: mail.html,
       });
       logDelivery('notification', owner, info);
+      if (stored) deps.messages?.update(stored, { emailed: true });
     } catch (err) {
       console.error('[contact] send failed:', err);
-      return json(res, 502, { error: 'send_failed' });
+      return stored ? json(res, 200, { ok: true, confirmed: false }) : json(res, 502, { error: 'send_failed' });
     }
 
     // The message is delivered: the confirmation is a courtesy and may fail on its own

@@ -6,13 +6,14 @@ import { USER_INFO } from '../data/portfolioData';
  * Privacy policy (Swiss nLPD / revFADP, and GDPR for visitors in the EU).
  * It must describe what the site actually does — keep it in sync with:
  *   server/contact.ts    (contact form: fields, IP used in memory for rate limiting only)
+ *   server/messages.ts   (a copy of each message for the atelier's inbox, deleted after 12 months)
  *   server/analytics.ts  (page views: path, referrer host, date; no IP, no cookie; 13 months)
  *   server/podium.ts     (Lights out leaderboard: pseudo, time, date, only if the visitor asks)
  *   ThemeContext / index.html (theme preference in localStorage)
  *   LanguageHint (dismissed language suggestion in localStorage)
  */
 
-const LAST_UPDATED = { fr: '10 octobre 2026', en: 'October 10, 2026' };
+const LAST_UPDATED = { fr: '18 octobre 2026', en: 'October 18, 2026' };
 
 interface Section {
   title: string;
@@ -49,7 +50,7 @@ const CONTENT: Record<'fr' | 'en', { label: string; title: string; intro: string
         body: [
           'Lorsque vous utilisez le formulaire, les données suivantes sont traitées :',
           ['votre nom ;', 'votre adresse email ;', 'le sujet choisi et votre message.'],
-          'Elles servent uniquement à vous répondre. Elles sont envoyées par email à ma boîte de messagerie (hébergée chez Infomaniak, en Suisse) et ne sont pas stockées ailleurs sur le site.',
+          'Elles servent uniquement à vous répondre. Elles sont envoyées par email à ma boîte de messagerie (hébergée chez Infomaniak, en Suisse). Une copie est aussi enregistrée sur le serveur du site (en Suisse), dans un espace privé auquel moi seul ai accès, pour suivre les demandes ; elle est supprimée automatiquement 12 mois après la réception du message.',
           'Votre adresse IP est utilisée temporairement, en mémoire et sans être enregistrée, pour limiter les envois abusifs (5 messages par 10 minutes).',
           'Les messages sont conservés le temps nécessaire au traitement de votre demande et au suivi de nos échanges, au maximum deux ans après le dernier contact, sauf obligation légale contraire.',
         ],
@@ -141,7 +142,7 @@ const CONTENT: Record<'fr' | 'en', { label: string; title: string; intro: string
         body: [
           'When you use the contact form, the following data is processed:',
           ['your name;', 'your email address;', 'the topic you chose and your message.'],
-          'It is only used to reply to you. It is sent by email to my mailbox (hosted by Infomaniak, in Switzerland) and is not stored anywhere else on the site.',
+          'It is only used to reply to you. It is sent by email to my mailbox (hosted by Infomaniak, in Switzerland). A copy is also kept on the site’s server (in Switzerland), in a private area only I can access, to keep track of requests; it is deleted automatically 12 months after the message was received.',
           'Your IP address is used temporarily, in memory and without being recorded, to limit abuse (5 messages per 10 minutes).',
           'Messages are kept for as long as needed to handle your request and follow up on our exchange, at most two years after the last contact, unless the law requires otherwise.',
         ],

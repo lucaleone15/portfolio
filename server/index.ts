@@ -8,6 +8,7 @@ import { createAnalyticsHandler } from './analytics';
 import { createPodiumHandler } from './podium';
 import { canonicalPagePath, loadRedirects } from './canonical';
 import { createAdminRoutes } from './admin/routes';
+import { createMessageStore } from './messages';
 
 /**
  * Production server (replaces `vite preview`, which Vite says isn't meant for production).
@@ -206,9 +207,10 @@ function sendNotFound(req: http.IncomingMessage, res: http.ServerResponse) {
   send(req, res, path.join(DIST, en ? '404-en.html' : '404.html'), 404);
 }
 
-const contact = createContactHandler(env);
-// Statistics and podium scores; DATA_DIR can put them outside the site folder, out of reach of a deploy
+// Statistics, podium scores, contact messages and the admin's draft; DATA_DIR can put them
+// outside the site folder, out of reach of a deploy
 const dataDir = env.DATA_DIR ? path.resolve(env.DATA_DIR) : path.join(ROOT, '.data');
+const contact = createContactHandler(env, { messages: createMessageStore(dataDir) });
 const analytics = createAnalyticsHandler(env, dataDir);
 const podium = createPodiumHandler(dataDir);
 const admin = createAdminRoutes(env, {

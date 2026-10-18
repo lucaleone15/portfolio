@@ -190,6 +190,7 @@ Après une mise en ligne qui change l'image d'aperçu, la rafraîchir sur Linked
 │   ├── mailTest.ts            Test d'envoi de la confirmation (npm run mail:test)
 │   ├── analytics.ts           Statistiques internes (enregistrement des pages vues)
 │   ├── stats.ts               Calcul des statistiques affichées dans l'atelier
+│   ├── messages.ts            Messages du formulaire gardés pour la boîte de réception (12 mois)
 │   ├── canonical.ts           Une URL par page, redirections des projets renommés
 │   └── admin/                 Admin : connexion (mot de passe + TOTP), brouillon, images, publication git
 ├── scripts/
@@ -237,6 +238,9 @@ Un espace privé pour modifier tout le contenu sans toucher au code, sur ordinat
 - **Éditeur** : mode **Page** (l'étude de cas telle qu'en ligne : on clique sur un texte pour l'écrire, sur un bloc pour le régler, « + » pour ajouter un bloc) et mode **Structure** (les sections et leurs blocs, à réordonner, avec tous les réglages). FR / EN en haut. En anglais, le français est affiché au-dessus de chaque champ ; un texte français modifié après sa traduction marque l'anglais **« à revoir »**.
 - **Brouillon** : tout s'enregistre au fil de l'eau sur le serveur (`DATA_DIR/admin/draft/`), le même brouillon sur le téléphone et l'ordinateur. Rien ne change en ligne avant « Publier ». Deux appareils qui modifient la même page : le second est prévenu au lieu d'écraser.
 - **Images** : envoyées depuis l'ordinateur ou la pellicule, converties en WebP sRGB (1920 px), variantes 640 / 1280 px pour les couvertures, nom unique. Vidéos MP4/WebM et PDF gardés tels quels.
+- **Statistiques** : pages vues sur 7, 30 ou 90 jours, comparées à la période précédente ; par jour, projets les plus vus (FR + EN), provenance, pages, part en anglais.
+- **Messages** : la boîte de réception du formulaire de contact (nouveau, lu, répondu, archivé), avec un compteur de non-lus. « Répondre » ouvre la messagerie avec le message cité et le marque comme répondu.
+- **Thème** clair, sombre ou celui de l'appareil (bouton dans la barre latérale ou en haut sur téléphone).
 
 ### Mise en place
 
@@ -288,7 +292,8 @@ Si une étape échoue (build, push refusé, dossier du serveur modifié), le sit
 - Deux emails mis en forme (`server/contactEmails.ts`) : la notification reçue (« Répondre à » = le visiteur, objet = sujet choisi) et une confirmation envoyée au visiteur dans sa langue, avec le sujet en tête et la signature email, sans recopier son message (au plus 3 confirmations par jour vers une même adresse, seules celles réellement envoyées comptent). La confirmation porte l'en-tête `Auto-Submitted: auto-replied` (réponse automatique, RFC 3834).
 - Chaque envoi est journalisé avec la réponse du serveur SMTP (`[contact] confirmation → … accepted 1, rejected 0 · 250 …`) : c'est le premier endroit où regarder si un email manque.
 - **Tester la confirmation sur le serveur** : `npm run mail:test -- adresse@exemple.com` (après `npm run build`). Vérifie la connexion SMTP, envoie la vraie confirmation à cette adresse, affiche la réponse du serveur et les enregistrements SPF / DMARC du domaine. Si le serveur l'accepte mais qu'elle n'arrive pas, elle a été filtrée à l'arrivée : regarder les indésirables, et activer **DKIM** pour le domaine chez l'hébergeur mail (Infomaniak : Service Mail → DKIM).
-- En cas d'échec, le message n'est pas perdu : un lien ouvre la messagerie du visiteur avec le message pré-rempli.
+- Chaque message est d'abord **gardé sur le serveur** (`server/messages.ts`, `DATA_DIR/messages.json`) pour la boîte de réception de l'atelier, puis les emails partent. Si l'envoi échoue (ou si le SMTP n'est pas configuré), le message est quand même reçu et le visiteur voit le remerciement. Copies supprimées automatiquement 12 mois après réception (indiqué dans la politique de confidentialité).
+- Si même l'enregistrement échoue, le message n'est pas perdu pour autant : un lien ouvre la messagerie du visiteur avec le message pré-rempli.
 
 ### Statistiques
 
