@@ -15,4 +15,5 @@ export { getAllRoutes, getHeadData, projectImagePaths, renderHeadTags, renderSit
 export { USER_INFO } from './data/portfolioData';
 export { pathFor } from './router';
 export { CONTENT } from './content/load';
+export { checkContent } from './content/check';
 export { DERIVED_FILES, fillDerivedFile } from './content/derived';

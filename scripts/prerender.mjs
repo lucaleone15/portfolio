@@ -12,9 +12,12 @@ const root = process.cwd();
 const dist = path.join(root, process.env.BUILD_OUT_DIR || 'dist');
 const ssrEntry = path.join(root, 'dist-ssr', 'entry-server.js');
 
-const { render, getAllRoutes, getHeadData, renderHeadTags, renderSitemap, projectImagePaths, pathFor, USER_INFO, CONTENT, DERIVED_FILES, fillDerivedFile } = await import(
+const { render, getAllRoutes, getHeadData, renderHeadTags, renderSitemap, projectImagePaths, pathFor, USER_INFO, CONTENT, DERIVED_FILES, fillDerivedFile, checkContent } = await import(
   pathToFileURL(ssrEntry).href
 );
+
+// content/*.json must match the schema (src/content/schema.ts), or the build stops here
+checkContent();
 
 const template = fs.readFileSync(path.join(dist, 'index.html'), 'utf-8');
 const SEO_BLOCK = /<!--seo:start-->[\s\S]*?<!--seo:end-->/;

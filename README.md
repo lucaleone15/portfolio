@@ -18,6 +18,9 @@ Site bilingue (FR / EN), pré-rendu pour le référencement, avec ses propres ro
 - [Déploiement](#déploiement)
 - [Structure du projet](#structure-du-projet)
 - [Modifier le contenu](#modifier-le-contenu)
+- [Dashboard admin](#dashboard-admin)
+  - [Mise en place](#mise-en-place)
+  - [Publier](#publier)
 - [Fonctionnement](#fonctionnement)
   - [Routage, pré-rendu et SEO](#routage-pré-rendu-et-seo)
   - [Formulaire de contact](#formulaire-de-contact)
@@ -40,6 +43,7 @@ Site bilingue (FR / EN), pré-rendu pour le référencement, avec ses propres ro
 | **Page projet** | Étude de cas racontée au scroll : accroche, contexte, problème / réponse / résultat, sections illustrées (captures, maquettes, galeries, comparateur avant / après, vidéo), chiffres clés animés, citation, équipe ; sommaire latéral sur grand écran ; type de projet (professionnel, académique avec un vrai client, académique) |
 | **À propos** | Bio révélée à la lecture, langues, centres d'intérêt, frises expérience / formation, CV (ouvert dans un nouvel onglet) |
 | **Contact** | Bloc en couleur d'accent : formulaire (emails de notification et de confirmation), email qui ouvre la messagerie + bouton copier, téléphone, LinkedIn |
+| **Admin** | Espace privé (adresse secrète, mot de passe + code) pour modifier tout le contenu et le publier : voir [Dashboard admin](#dashboard-admin) |
 
 Autres : thème clair / sombre (suit le système), recherche rapide (icône loupe dans l'en-tête, raccourci **⌘K / Ctrl+K**), page 404, politique de confidentialité, image d'aperçu pour les réseaux sociaux.
 
@@ -53,7 +57,10 @@ Autres : thème clair / sombre (suit le système), recherche rapide (icône loup
 | Build | [Vite 6](https://vite.dev) (client + rendu serveur pour le pré-rendu), esbuild (serveur) |
 | Animations | [Motion](https://motion.dev), [GSAP + ScrollTrigger](https://gsap.com), API View Transitions du navigateur |
 | UI | [cmdk](https://cmdk.paco.me) (recherche ⌘K), [Hugeicons](https://hugeicons.com) (icônes, via `src/components/Icon.tsx`), polices Syne et Plus Jakarta Sans (auto-hébergées) |
-| Serveur | Node.js (`node:http`, sans framework), [Nodemailer](https://nodemailer.com) (envoi des emails) |
+| Serveur | Node.js (`node:http`, sans framework), [Nodemailer](https://nodemailer.com) (envoi des emails), [sharp](https://sharp.pixelplumbing.com) (images envoyées depuis l'admin) |
+| Contenu | Fichiers JSON dans `content/`, validés par [zod](https://zod.dev) (`src/content/schema.ts`) |
+| Admin | Bundle séparé (`admin.html`, `src/admin/`), glisser-déposer [dnd-kit](https://dndkit.com) |
+| Tests | [Vitest](https://vitest.dev), Testing Library, jsdom |
 
 GSAP et cmdk sont **chargés à la demande** : ils ne pèsent pas sur le premier affichage.
 
@@ -83,12 +90,16 @@ npm start               # http://localhost:3000
 | Commande | Rôle |
 | --- | --- |
 | `npm run dev` | Serveur de développement Vite (rechargement à chaud), avec `/api/contact` et les statistiques |
-| `npm run build` | Build complet : client → bundle de pré-rendu → pages HTML statiques + sitemap → serveur de production |
+| `npm run build` | Build complet : site (`build:site`) → admin (`build:admin`) → serveur de production (`build:server`) |
+| `npm run build:site` | Le site seul : client → bundle de pré-rendu → pages HTML statiques, sitemap, `llms.txt` et catalogues IA (dans `$BUILD_OUT_DIR`, `dist/` par défaut) |
+| `npm run build:admin` | Le bundle de l'admin (`dist-admin/`), jamais servi au public |
+| `npm test` | Tests (Vitest) : contenu, serveur admin, publication (vrais dépôts git temporaires), écrans de l'admin |
+| `npm run admin:setup` | Affiche les lignes `.env` de la connexion admin (empreinte du mot de passe, clé de l'app d'authentification). Après `npm run build` |
 | `npm start` | Lance le serveur de production (`dist-server/index.mjs`) — à exécuter depuis la racine du projet |
 | `npm run preview` | Aperçu Vite du dossier `dist/` (pour vérifier, pas pour la production) |
 | `npm run lint` | Vérification TypeScript (`tsc --noEmit`) |
 | `npm run images` | Génère les variantes 640 px et 1280 px des couvertures de projets (`public/images/sm/`, `md/`), converties en sRGB |
-| `npm run clean` | Supprime `dist/`, `dist-ssr/`, `dist-server/` |
+| `npm run clean` | Supprime `dist/`, `dist-ssr/`, `dist-server/` (et `dist-admin/` se reconstruit au build) |
 
 ---
 
@@ -106,7 +117,13 @@ npm start               # http://localhost:3000
 | `SMTP_FROM` | Adresse d'expédition | `SMTP_USER` |
 | `STATS_KEY` | Clé d'accès au tableau de bord `/stats` (longue chaîne aléatoire) | — (tableau désactivé) |
 | `PORT` | Port du serveur de production | `3000` |
-| `DATA_DIR` | Dossier des statistiques et du podium (chemin absolu conseillé, hors du dossier du site) | `.data/` |
+| `DATA_DIR` | Dossier des statistiques, du podium, du brouillon et des images en attente de l'admin (chemin absolu conseillé, hors du dossier du site) | `.data/` |
+| `ADMIN_PATH` | Adresse de l'admin, difficile à deviner (ex. `/atelier-7k2q9`), jamais liée nulle part | — (admin désactivé) |
+| `ADMIN_PASSWORD_HASH` | Empreinte du mot de passe (`npm run admin:setup`) | — (admin désactivé) |
+| `ADMIN_TOTP_SECRET` | Clé de l'app d'authentification (`npm run admin:setup`) | — (admin désactivé) |
+| `ADMIN_PUBLISH_MODE` | `git` sur le serveur (Publier = pull, commit, build, push), `files` en local (écrit seulement `content/` et `public/`) | `files` |
+| `ADMIN_GIT_SSH_KEY` | Clé privée de la clé de déploiement GitHub (serveur) | — |
+| `ADMIN_GIT_NAME` / `ADMIN_GIT_EMAIL` | Auteur des commits de l'admin | `Luca Leone (dashboard)` / `luca@luca-leone.ch` |
 
 Sans configuration SMTP, le formulaire reste utilisable : il propose au visiteur d'envoyer son message depuis sa propre messagerie (lien pré-rempli).
 
@@ -124,14 +141,14 @@ npm start
 
 Points d'attention :
 
-1. **`.env`** présent sur le serveur (SMTP + `STATS_KEY`).
+1. **`.env`** présent sur le serveur (SMTP, `STATS_KEY`, et les variables `ADMIN_*` pour le dashboard : voir [Dashboard admin](#dashboard-admin)).
 2. Les données (statistiques `hits.ndjson`, scores `podium.json`) doivent **persister** entre deux déploiements. Le plus sûr : `DATA_DIR` vers un dossier **hors du site** (ex. `DATA_DIR=/srv/customer/portfolio-data`), qu'aucun déploiement ne touche. Sinon, `.data/` est ignoré par git (un `git pull` ne le touche pas), mais ne jamais l'envoyer depuis sa machine (il contient les visites locales) ni supprimer le dossier du site pour le redéployer.
 3. Derrière un proxy (Nginx, Caddy, hébergeur…), le serveur lit l'IP réelle via `X-Forwarded-For` (limitation anti-spam du formulaire).
 4. HTTPS est géré par le proxy / l'hébergeur ; le serveur envoie déjà `Strict-Transport-Security`.
 
 Après une mise en ligne qui change l'image d'aperçu, la rafraîchir sur LinkedIn via le [Post Inspector](https://www.linkedin.com/post-inspector/).
 
-**Remplacer une image :** le serveur met les fichiers de `public/` en cache 30 jours. Une image modifiée doit donc changer de **nom** (ex. `HUG-cover.webp` → `HUG-cover-2.webp`), sinon les visiteurs gardent l'ancienne.
+**Remplacer une image :** le serveur met les fichiers de `public/` en cache 30 jours. Une image modifiée doit donc changer de **nom** (ex. `HUG-cover.webp` → `HUG-cover-2.webp`), sinon les visiteurs gardent l'ancienne. Depuis l'admin, c'est automatique : chaque fichier envoyé reçoit un nom unique.
 
 ---
 
@@ -139,14 +156,19 @@ Après une mise en ligne qui change l'image d'aperçu, la rafraîchir sur Linked
 
 ```
 ├── index.html                 Gabarit HTML (thème appliqué avant affichage, zone SEO remplie au build)
+├── admin.html                 Page de l'admin (bundle séparé, vite.admin.config.ts → dist-admin/)
+├── content/                   Le contenu du site (modifié par l'admin, ou à la main)
+│   ├── site.json              Hero, À propos, compétences, contact, SEO des pages fixes
+│   ├── projects.json          Ordre des projets, projets masqués, anciennes adresses (redirections)
+│   └── projects/<id>.json     Un projet : carte, SEO, fiche llms.txt, étude de cas
 ├── public/                    Fichiers servis tels quels
 │   ├── images/                Couvertures des projets (.webp) + sm/, md/ (variantes 640 / 1280 px)
 │   │   └── case/<projet>/     Images des études de cas (captures, maquettes, photos)
 │   ├── pdf/                   CV
 │   ├── tools/                 Logos du bandeau d'outils
 │   ├── og-image.jpg           Image d'aperçu réseaux sociaux (1200×630)
-│   ├── llms.txt               Résumé du profil et des projets pour les assistants IA
-│   ├── ai-catalog.json        Catalogue pour les agents IA (copies dans .well-known/)
+│   ├── llms.txt               Résumé du profil pour les assistants IA (la liste des projets est générée au build)
+│   ├── ai-catalog.json        Catalogue pour les agents IA (copies dans .well-known/ ; {n}/{names} remplis au build)
 │   └── robots.txt
 ├── src/
 │   ├── App.tsx                Assemblage : intro, contour au survol, header, page (accueil / projet / 404)
@@ -156,8 +178,9 @@ Après une mise en ligne qui change l'image d'aperçu, la rafraîchir sur Linked
 │   ├── seo.ts                 <head> par page, JSON-LD, sitemap
 │   ├── components/            Sections et composants (Hero, ProjectCard, CaseStudy, ContactSection…)
 │   ├── context/               Langue (depuis l'URL), thème, couleur d'accent
-│   ├── data/                  Contenu : projets, parcours, coordonnées ; variantes d'images
-│   │   └── caseStudies/       Une étude de cas par projet (FR + EN), un fichier par projet
+│   ├── content/               Schéma du contenu (zod), lecture de content/, textes bilingues, crochets d'édition
+│   ├── data/                  Types des études de cas (règles d'écriture), libellés, variantes d'images
+│   ├── admin/                 L'admin : connexion, liste des projets, éditeur Page / Structure, publication
 │   ├── hooks/                 usePauseOffscreen (animations en pause hors écran)
 │   ├── theme/colors.ts        Catalogue de palettes d'accent (ACTIVE_ACCENT_ID)
 │   └── index.css              Tailwind + styles globaux (fonds, transitions)
@@ -166,12 +189,15 @@ Après une mise en ligne qui change l'image d'aperçu, la rafraîchir sur Linked
 │   ├── contact.ts             POST /api/contact
 │   ├── contactEmails.ts       Emails du formulaire (notification + confirmation signée)
 │   ├── mailTest.ts            Test d'envoi de la confirmation (npm run mail:test)
-│   └── analytics.ts           Statistiques internes + /stats
+│   ├── analytics.ts           Statistiques internes + /stats
+│   ├── canonical.ts           Une URL par page, redirections des projets renommés
+│   └── admin/                 Admin : connexion (mot de passe + TOTP), brouillon, images, publication git
 ├── scripts/
 │   ├── prerender.mjs          Génère les pages HTML, la 404 et le sitemap
 │   ├── make-image-variants.py Variantes 640 / 1280 px des couvertures (sRGB)
 │   ├── make-project-logos.py  Logos des projets, transparents, version claire et sombre
 │   └── og/                    Modèle de l'image d'aperçu (voir og/README.md)
+├── tests/                     Tests Vitest (contenu, serveur, admin)
 ├── matiere/                   Matière brute des projets (rapports, exports) : locale, ignorée par git
 └── vite.config.ts             Build + routes API en développement
 ```
@@ -180,24 +206,61 @@ Après une mise en ligne qui change l'image d'aperçu, la rafraîchir sur Linked
 
 ## Modifier le contenu
 
+Le plus simple : le **[dashboard admin](#dashboard-admin)**, qui modifie les fichiers de `content/` et publie. À la main, voici où sont les choses :
+
 | Je veux… | Où |
 | --- | --- |
-| Ajouter / modifier un **projet** (carte) | `src/data/portfolioData.ts` → `UNIFIED_PROJECTS` (textes FR/EN, type, catégorie, phrase clé, rôle, couverture, couleur). L'`id` devient l'URL : `/projets/<id>` et `/en/projects/<id>`. Chaque projet a besoin de son étude de cas (ligne suivante) : sans elle, sa page répond 404 |
-| Écrire l'**étude de cas** d'un projet | `src/data/caseStudies/<projet>.ts` (FR + EN), puis l'enregistrer dans `src/data/caseStudies/index.ts`. Les images vont dans `public/images/case/<projet>/` |
-| Changer le **titre / la description Google** d'une page | `META` en haut de `src/seo.ts` (titres ≤ 60 caractères, descriptions 120–160) |
-| Changer le **logo** d'un projet | `python3 scripts/make-project-logos.py` (depuis les fichiers de `matiere/`) génère `public/images/logos/<id>.webp` et `<id>-dark.webp`, transparents ; puis `logo` du projet dans `src/data/portfolioData.ts`. Le logo remplace le nom sur la carte, en tête de l'étude de cas et dans « Projet suivant » |
-| Changer la **vidéo de survol** d'une carte | Encoder la vidéo pour le web (16:10, 1152×720, sans son, une image clé par image pour que le retour en arrière soit fluide), par ex. `ffmpeg -i source.mp4 -an -vf "crop=1728:1080,scale=1152:720,setpts=0.5*PTS" -c:v libx264 -crf 27 -g 1 -movflags +faststart public/videos/<id>-dive.mp4`, puis `video` du projet dans `src/data/portfolioData.ts` |
+| Ajouter / modifier un **projet** (carte, étude de cas, SEO) | Dans l'admin (Projets), ou `content/projects/<id>.json`. L'`id` devient l'URL : `/projets/<id>` et `/en/projects/<id>`. Chaque texte est `{ "fr", "en", "enOf" }` : `enOf` est l'empreinte du français dont l'anglais a été traduit (l'admin le tient à jour ; à la main, la laisser telle quelle signale l'anglais « à revoir ») |
+| Changer l'**ordre**, **masquer** ou **renommer** un projet | Dans l'admin, ou `content/projects.json` (`order`, `hidden`, `redirects` : ancienne adresse → nouvelle) |
+| Changer le **titre / la description Google** d'une page | Dans l'admin (onglet SEO des pages, ou Référencement d'un projet), ou `seo` dans `content/site.json` / le fichier du projet (titres ≤ 60 caractères, descriptions 120–160 ; `{N}` devient le nombre de projets en toutes lettres) |
+| Changer le **logo** d'un projet | `python3 scripts/make-project-logos.py` (depuis les fichiers de `matiere/`) génère `public/images/logos/<id>.webp` et `<id>-dark.webp`, transparents ; puis `logo` dans `content/projects/<id>.json`. Le logo remplace le nom sur la carte, en tête de l'étude de cas et dans « Projet suivant » |
+| Changer la **vidéo de survol** d'une carte | Encoder la vidéo pour le web (16:10, 1152×720, sans son, une image clé par image pour que le retour en arrière soit fluide), par ex. `ffmpeg -i source.mp4 -an -vf "crop=1728:1080,scale=1152:720,setpts=0.5*PTS" -c:v libx264 -crf 27 -g 1 -movflags +faststart <id>-dive.mp4`, puis l'envoyer depuis l'admin (Carte de l'accueil → Vidéo au survol) |
 | Refaire les **mockups d'écrans** des études de cas | Lancer MockupLab (`../MockupLab`, `npx vite`), puis `node scripts/mockups/render.mjs scripts/mockups/jobs.json <dossier>` et `python3 scripts/mockups/frame.py <dossier> <nom> <sortie.webp>` : appareils de face, fond en dégradé radial aux couleurs de l'aperçu du projet, cadrage 4:3 identique pour tous |
-| Ajouter une **couverture** de projet | `.webp` 1920×1200 (16:10) dans `public/images/`, puis `npm run images`. C'est aussi la première image de la vidéo de survol : même cadrage (recadrage 16:10 centré) et mêmes couleurs, sinon l'image saute quand la vidéo démarre |
-| Modifier le **parcours** (expériences, formation) | `src/data/portfolioData.ts` (FR) et `src/components/AboutSection.tsx` (EN) |
-| Modifier la **bio** et les textes d'interface | `src/context/LanguageContext.tsx` |
-| Changer les **compétences** | `src/components/SkillsSection.tsx` → `SKILLS_DATA` |
-| Remplacer le **CV** | `public/pdf/` + `USER_INFO.cv` dans `src/data/portfolioData.ts` |
+| Ajouter une **couverture** de projet | Depuis l'admin (conversion sRGB, variantes 640 / 1280 px automatiques). À la main : `.webp` 1920×1200 (16:10) dans `public/images/`, puis `npm run images`. C'est aussi la première image de la vidéo de survol : même cadrage et mêmes couleurs |
+| Modifier le **Hero**, la **bio**, les **langues**, le **parcours**, les **compétences**, le **contact** | Dans l'admin (onglets Hero, À propos, Compétences, Contact), ou `content/site.json` |
+| Remplacer le **CV** | Dans l'admin (Contact → CV), ou `public/pdf/` + `contact.cv` dans `content/site.json` |
+| Modifier les **textes d'interface** (titres de section, boutons) | `src/context/LanguageContext.tsx` (ce n'est pas du contenu : ils restent dans le code) |
 | Changer la **couleur d'accent** | `ACTIVE_ACCENT_ID` dans `src/theme/colors.ts` **et** les valeurs par défaut en haut de `src/index.css` (premier affichage) |
 | Modifier l'**image d'aperçu** | `scripts/og/og-image.html`, puis régénérer (voir `scripts/og/README.md`) |
-| Mettre à jour les infos pour les **IA** | `public/llms.txt` et `representativeQueries` dans `public/ai-catalog.json` + `public/.well-known/` |
+| Mettre à jour les infos pour les **IA** | Le profil : `public/llms.txt` ; la fiche de chaque projet : « Fiche pour les IA » dans l'admin (`seo.llms`), la liste est rebâtie au build. `representativeQueries` : `public/ai-catalog.json` + `public/.well-known/` |
 
-Après une modification de contenu : `npm run build` (le pré-rendu, les métadonnées et le sitemap se mettent à jour automatiquement).
+Après une modification à la main : `npm run build` (le pré-rendu, les métadonnées, le sitemap et les fichiers pour les IA se mettent à jour automatiquement). Les règles d'écriture des études de cas sont en tête de `src/data/caseStudies/types.ts` (et dans l'admin).
+
+---
+
+## Dashboard admin
+
+Un espace privé pour modifier tout le contenu sans toucher au code, sur ordinateur comme sur téléphone, aux couleurs du site.
+
+- **Accès** : à l'adresse `ADMIN_PATH`, avec un mot de passe **et** un code à 6 chiffres de l'app d'authentification. Sans session, toute adresse de l'admin répond la 404 du site ; rien n'est lié depuis le site public, rien n'est indexé. 5 essais ratés bloquent 15 min (20 essais toutes adresses confondues : 1 h). Session : 7 jours sans visite, 30 jours au plus.
+- **Projets** : ordre (glisser ou flèches), visible / masqué, nouveau projet (il s'ouvre avec la structure des études de cas), changer l'adresse (l'ancienne redirige), supprimer.
+- **Éditeur** : mode **Page** (l'étude de cas telle qu'en ligne : on clique sur un texte pour l'écrire, sur un bloc pour le régler, « + » pour ajouter un bloc) et mode **Structure** (les sections et leurs blocs, à réordonner, avec tous les réglages). FR / EN en haut. En anglais, le français est affiché au-dessus de chaque champ ; un texte français modifié après sa traduction marque l'anglais **« à revoir »**.
+- **Brouillon** : tout s'enregistre au fil de l'eau sur le serveur (`DATA_DIR/admin/draft/`), le même brouillon sur le téléphone et l'ordinateur. Rien ne change en ligne avant « Publier ». Deux appareils qui modifient la même page : le second est prévenu au lieu d'écraser.
+- **Images** : envoyées depuis l'ordinateur ou la pellicule, converties en WebP sRGB (1920 px), variantes 640 / 1280 px pour les couvertures, nom unique. Vidéos MP4/WebM et PDF gardés tels quels.
+
+### Mise en place
+
+En local : `npm run build && npm run admin:setup`, copier les deux lignes affichées dans `.env` avec un `ADMIN_PATH`, puis `npm run dev` et ouvrir `http://localhost:3000<ADMIN_PATH>/`. En local, « Publier » écrit seulement `content/` et `public/` : on relit, on commite et on pousse soi-même.
+
+Sur le serveur (Infomaniak, site Node.js) :
+
+1. Créer une **clé de déploiement** avec droit d'écriture : `ssh-keygen -t ed25519 -f ~/.ssh/portfolio-deploy -N ""`, puis sur GitHub : dépôt → Settings → Deploy keys → Add, coller `portfolio-deploy.pub`, cocher **Allow write access**.
+2. Faire passer le clone par SSH : `git remote set-url origin git@github.com:lucaleone15/portfolio.git`.
+3. Dans le `.env` du serveur : `ADMIN_PATH`, `ADMIN_PASSWORD_HASH`, `ADMIN_TOTP_SECRET` (générés par `npm run admin:setup`), `ADMIN_PUBLISH_MODE=git`, `ADMIN_GIT_SSH_KEY=/chemin/vers/.ssh/portfolio-deploy`, et un `DATA_DIR` hors du dossier du site.
+4. Redéployer comme d'habitude (`git pull --ff-only && npm ci --include=dev && npm run build`, puis relancer `npm start`). Les dépendances de développement sont nécessaires : « Publier » reconstruit le site sur le serveur.
+
+### Publier
+
+Le bouton « Publier » montre ce qui a changé et les textes anglais pas à jour (chacun mène au champ en question), puis, en mode `git` :
+
+1. **récupère** les changements de GitHub (`git pull --ff-only`) ;
+2. **vérifie** : si une page du brouillon a aussi été modifiée sur GitHub depuis, on choisit page par page quelle version garder ; si du **code serveur** ou des **dépendances** ont changé (`server/`, `package.json`, `package-lock.json`, l'admin), la publication s'arrête : redéployer à la main d'abord ;
+3. **écrit** le contenu et les images dans `content/` et `public/`, fait un **commit** (« Content: HUG, … ») ;
+4. **construit** le site dans `dist-next/` (environ une minute) ;
+5. **pousse** sur GitHub ;
+6. **met en ligne** en échangeant `dist-next/` et `dist/`, sans redémarrer le serveur.
+
+Si une étape échoue (build, push refusé, dossier du serveur modifié), le site en ligne et le dépôt du serveur restent sur leur version précédente et le brouillon est gardé. Sur sa machine, un `git pull` récupère tout ce qui a été publié depuis l'admin, images comprises.
 
 ---
 
