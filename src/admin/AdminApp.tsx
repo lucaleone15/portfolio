@@ -7,6 +7,7 @@ import { useAdminPath } from './nav';
 import { DraftProvider, useDraftClient, useDraftState } from './DraftContext';
 import { ProjectsList } from './pages/ProjectsList';
 import { ProjectEditor } from './pages/ProjectEditor';
+import { SiteEditor, isSiteTab } from './pages/SiteEditor';
 
 export function AdminApp() {
   const [signedIn, setSignedIn] = useState<boolean | null>(null);
@@ -39,6 +40,8 @@ function Workspace({ onSignOut }: { onSignOut: () => void }) {
   let page = <ProjectsList />;
   const project = /^\/projets\/([a-z0-9-]+)$/.exec(path);
   if (project) page = <ProjectEditor key={project[1]} id={project[1]} query={query} />;
+  const siteTab = /^\/site\/([a-z-]+)$/.exec(path)?.[1];
+  if (siteTab && isSiteTab(siteTab)) page = <SiteEditor key={siteTab} tab={siteTab} query={query} />;
 
   return (
     <Shell

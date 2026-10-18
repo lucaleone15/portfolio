@@ -12,6 +12,7 @@ import { newProject } from '../templates';
 import { adminNavigate } from '../nav';
 import { useDraftClient, useDraftState, useStaged } from '../DraftContext';
 import { Button, Dialog, Pill, fieldClass, labelClass } from '../ui';
+import { ContentTabs } from './SiteEditor';
 
 const RENAME_ERRORS: Record<string, string> = {
   taken: 'Cette adresse est déjà prise (par un projet ou une ancienne adresse).',
@@ -46,6 +47,7 @@ export function ProjectsList() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 md:px-8 md:py-10">
+      <ContentTabs current="projets" />
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="eyebrow text-[var(--accent)]">Contenu</p>

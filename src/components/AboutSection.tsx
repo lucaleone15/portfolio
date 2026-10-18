@@ -2,6 +2,7 @@ import { ArrowUpRight01Icon, Pdf02Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
 import { motion } from 'motion/react';
 import { useContact, useSite } from '../content/ContentContext';
+import { useEditAttrs } from '../content/edit';
 import { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -10,6 +11,8 @@ export function AboutSection() {
 
   const { bio, education, experience, languages, passions } = useSite().about;
   const contact = useContact();
+  // Admin preview only: what can be edited in place
+  const edit = useEditAttrs();
 
   // Scroll-linked details (GSAP loaded on demand): bio words sharpen while read,
   // timeline rails draw and their dots light up as each step is passed
@@ -156,7 +159,7 @@ export function AboutSection() {
             </div>
 
             {/* Bio: each word sharpens from faint to full as it scrolls through the reading zone */}
-            <div data-bio className="space-y-4">
+            <div {...edit('about.bio')} data-bio className="space-y-4">
               {bio.split('\n\n').map((paragraph, idx) => (
                 <p key={idx} className="text-base sm:text-lg text-neutral-800 dark:text-[#E4E4E7] leading-relaxed">
                   {paragraph.split(' ').map((word, w) => (
@@ -180,6 +183,7 @@ export function AboutSection() {
                   {languages.map((item, idx) => (
                     <div
                       key={`lang-${idx}`}
+                      {...edit(`about.languages.${idx}`)}
                       className="h-8 px-3.5 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-black font-syne text-xs font-bold inline-flex items-center gap-1.5 shadow-xs select-none"
                     >
                       <span>{item.name}</span>
@@ -198,6 +202,7 @@ export function AboutSection() {
                   {passions.map((item, idx) => (
                     <span
                       key={`passion-${idx}`}
+                      {...edit(`about.passions.${idx}`)}
                       className="h-8 px-3.5 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-black font-syne text-xs font-bold inline-flex items-center shadow-xs select-none"
                     >
                       {item}
@@ -241,17 +246,17 @@ export function AboutSection() {
                   >
                     <span className={dotClass(`exp-${idx}`)} aria-hidden="true" />
                     <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-2 mb-1.5">
-                      <h4 className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white group-hover:text-[var(--accent)] transition-colors">
+                      <h4 {...edit(`about.experience.${idx}.title`)} className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white group-hover:text-[var(--accent)] transition-colors">
                         {item.title}
                       </h4>
-                      <span className="text-xs font-bold text-[var(--accent)] tracking-wide shrink-0">
+                      <span {...edit(`about.experience.${idx}.period`)} className="text-xs font-bold text-[var(--accent)] tracking-wide shrink-0">
                         {item.period}
                       </span>
                     </div>
                     <p className="text-xs text-neutral-500 dark:text-[#A1A1AA] font-medium">
                       {item.company} {item.location ? `· ${item.location}` : ''}
                     </p>
-                    <div className="text-xs sm:text-sm text-neutral-600 dark:text-[#A1A1AA] mt-3 space-y-2.5 leading-relaxed">
+                    <div {...edit(`about.experience.${idx}.description`)} className="text-xs sm:text-sm text-neutral-600 dark:text-[#A1A1AA] mt-3 space-y-2.5 leading-relaxed">
                       {item.description.split('\n\n').map((paragraph, pIdx) => {
                         if (paragraph.includes('•')) {
                           const lines = paragraph.split('\n').filter((l) => l.trim().length > 0);
@@ -303,10 +308,10 @@ export function AboutSection() {
                   >
                     <span className={dotClass(`edu-${idx}`)} aria-hidden="true" />
                     <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-2 mb-1.5">
-                      <h4 className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white group-hover:text-[var(--accent)] transition-colors">
+                      <h4 {...edit(`about.education.${idx}.title`)} className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white group-hover:text-[var(--accent)] transition-colors">
                         {item.title}
                       </h4>
-                      <span className="text-xs font-bold text-[var(--accent)] tracking-wide shrink-0">
+                      <span {...edit(`about.education.${idx}.period`)} className="text-xs font-bold text-[var(--accent)] tracking-wide shrink-0">
                         {item.period}
                       </span>
                     </div>
