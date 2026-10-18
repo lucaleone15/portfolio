@@ -10,11 +10,12 @@
     "preview": "vite preview",
     "clean": "rm -rf dist dist-ssr dist-server",
     "lint": "tsc --noEmit",
-    "build:server": "esbuild server/index.ts server/mailTest.ts --bundle --platform=node --format=esm --target=node20 --packages=external --outdir=dist-server --out-extension:.js=.mjs",
+    "build:server": "esbuild server/index.ts server/mailTest.ts server/admin/setup.ts --bundle --platform=node --format=esm --target=node20 --packages=external --outdir=dist-server --out-extension:.js=.mjs",
     "mail:test": "node dist-server/mailTest.mjs",
     "images": "python3 scripts/make-image-variants.py",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "admin:setup": "node dist-server/admin/setup.mjs"
   },
   "dependencies": {
     "@dnd-kit/core": "6.3.1",
