@@ -65,3 +65,19 @@ export const upload = (file: Blob & { name?: string }, kind: 'image' | 'video' |
 
 /** A file of the site as the admin shows it: uploads not published yet come from the staging area */
 export const previewSrc = (src: string, staged: Set<string>) => (staged.has(src) ? new URL(`staged${src}`, document.baseURI).toString() : src);
+
+export interface PublishStatus {
+  state: 'idle' | 'running' | 'done' | 'failed';
+  step?: 'pull' | 'check' | 'write' | 'build' | 'push' | 'swap';
+  error?: { code: string; pages?: PageRef[]; files?: string[]; log?: string };
+  published?: PageRef[];
+}
+export interface PublishSummary {
+  status: PublishStatus;
+  changed: { ref: PageRef; label: string }[];
+  stale: { ref: string; path: string; fr: string }[];
+  missingEn: { ref: string; path: string; fr: string }[];
+}
+export const getPublish = () => api<PublishSummary>('GET', 'publish');
+export const startPublish = () => api<PublishStatus>('POST', 'publish');
+export const resolveConflict = (ref: PageRef, keep: 'draft' | 'repo') => api('POST', 'publish/resolve', { ref, keep });

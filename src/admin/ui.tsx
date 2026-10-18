@@ -43,7 +43,7 @@ export function Pill({ children, tone = 'muted' }: { children: ReactNode; tone?:
     accent: 'bg-[rgba(var(--accent-rgb),0.12)] text-[var(--accent)]',
     warn: 'bg-amber-500/15 text-amber-700 dark:text-amber-300',
   };
-  return <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] ${tones[tone]}`}>{children}</span>;
+  return <span className={`inline-flex shrink-0 items-center whitespace-nowrap rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] ${tones[tone]}`}>{children}</span>;
 }
 
 export const fieldClass =
