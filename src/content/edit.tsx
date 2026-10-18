@@ -23,6 +23,9 @@ export function EditProvider({ value, children }: { value: EditApi | null; child
 
 const none = () => ({});
 
+/** In the admin's preview: lets a component split a line into separately editable parts */
+export const useEditing = () => !!useContext(EditContext);
+
 /** Call once per component, then spread edit(path) on each element */
 export function useEditAttrs(): (path: string) => { 'data-edit'?: string } {
   return useContext(EditContext) ? (path) => ({ 'data-edit': path }) : none;

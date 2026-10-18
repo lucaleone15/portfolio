@@ -2,7 +2,7 @@ import { ArrowUpRight01Icon, Pdf02Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
 import { motion } from 'motion/react';
 import { useContact, useSite } from '../content/ContentContext';
-import { useEditAttrs } from '../content/edit';
+import { useEditAttrs, useEditing } from '../content/edit';
 import { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -13,6 +13,7 @@ export function AboutSection() {
   const contact = useContact();
   // Admin preview only: what can be edited in place
   const edit = useEditAttrs();
+  const editing = useEditing();
 
   // Scroll-linked details (GSAP loaded on demand): bio words sharpen while read,
   // timeline rails draw and their dots light up as each step is passed
@@ -254,7 +255,17 @@ export function AboutSection() {
                       </span>
                     </div>
                     <p className="text-xs text-neutral-500 dark:text-[#A1A1AA] font-medium">
-                      {item.company} {item.location ? `· ${item.location}` : ''}
+                      {editing ? (
+                        // Admin preview: company and place as separate parts, each editable
+                        <>
+                          <span {...edit(`about.experience.${idx}.company`)}>{item.company}</span>{' '}
+                          <span {...edit(`about.experience.${idx}.location`)}>{item.location ? `· ${item.location}` : '· (lieu)'}</span>
+                        </>
+                      ) : (
+                        <>
+                          {item.company} {item.location ? `· ${item.location}` : ''}
+                        </>
+                      )}
                     </p>
                     <div {...edit(`about.experience.${idx}.description`)} className="text-xs sm:text-sm text-neutral-600 dark:text-[#A1A1AA] mt-3 space-y-2.5 leading-relaxed">
                       {item.description.split('\n\n').map((paragraph, pIdx) => {
@@ -316,7 +327,17 @@ export function AboutSection() {
                       </span>
                     </div>
                     <p className="text-xs text-neutral-500 dark:text-[#A1A1AA] font-medium">
-                      {item.institution} · {item.location}
+                      {editing ? (
+                        <>
+                          <span {...edit(`about.education.${idx}.institution`)}>{item.institution}</span>
+                          {' · '}
+                          <span {...edit(`about.education.${idx}.location`)}>{item.location || '(lieu)'}</span>
+                        </>
+                      ) : (
+                        <>
+                          {item.institution} · {item.location}
+                        </>
+                      )}
                     </p>
                     {item.details && item.details.trim().length > 0 && (
                       <div {...edit(`about.education.${idx}.details`)} className="text-xs sm:text-sm text-neutral-600 dark:text-[#A1A1AA] mt-3 space-y-2 leading-relaxed">
