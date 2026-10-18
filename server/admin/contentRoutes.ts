@@ -1,3 +1,5 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import { englishTodo } from '../../src/content/txt';
 import { allPages, pageData, type PageRef } from '../../src/content/pages';
 import { DraftError, type DraftStore } from './draft';
@@ -15,13 +17,33 @@ const STATUS: Record<DraftError['code'], number> = { invalid: 422, 'invalid-id':
 
 const isRef = (s: string): s is PageRef => s === 'site' || s === 'index' || /^project:[a-z0-9-]+$/.test(s);
 
-export function contentState(draft: DraftStore) {
-  const state = draft.read();
-  const todo = englishTodo(allPages(state.content).map((ref) => ({ ref, data: pageData(state.content, ref) })));
-  return { ...state, ...todo };
+/** Files uploaded but not published yet, as site paths ("/images/case/hug/x-1a2b3c4d.webp") */
+export function stagedFiles(stagingDir: string): string[] {
+  const out: string[] = [];
+  const walk = (dir: string) => {
+    let entries: fs.Dirent[] = [];
+    try {
+      entries = fs.readdirSync(dir, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const e of entries) {
+      const full = path.join(dir, e.name);
+      if (e.isDirectory()) walk(full);
+      else out.push('/' + path.relative(stagingDir, full).split(path.sep).join('/'));
+    }
+  };
+  walk(stagingDir);
+  return out.sort();
 }
 
-export function createContentRoutes(draft: DraftStore): ApiRoute {
+export function contentState(draft: DraftStore, stagingDir: string) {
+  const state = draft.read();
+  const todo = englishTodo(allPages(state.content).map((ref) => ({ ref, data: pageData(state.content, ref) })));
+  return { ...state, ...todo, staged: stagedFiles(stagingDir) };
+}
+
+export function createContentRoutes(draft: DraftStore, stagingDir: string): ApiRoute {
   const guard = async (ctx: Ctx, fn: () => void | Promise<void>) => {
     try {
       await fn();
@@ -34,7 +56,7 @@ export function createContentRoutes(draft: DraftStore): ApiRoute {
   return async (ctx) => {
     const { route, req } = ctx;
     if (route === '/content' && req.method === 'GET') {
-      ctx.send(200, contentState(draft));
+      ctx.send(200, contentState(draft, stagingDir));
       return true;
     }
     if (route === '/draft/discard' && req.method === 'POST') {

@@ -1,3 +1,6 @@
+import type { PageRef } from '../content/pages';
+import type { ContentResponse } from './store';
+
 /** Calls to the admin API (server/admin/), relative to the admin's <base href="ADMIN_PATH/"> */
 
 export class ApiError extends Error {
@@ -44,3 +47,21 @@ export async function me(): Promise<boolean> {
     throw err;
   }
 }
+
+
+export const getContent = () => api<ContentResponse & { staged: string[] }>('GET', 'content');
+export const savePage = (ref: PageRef, data: unknown, revision: number, opts: { keepalive?: boolean } = {}) =>
+  api<{ revision: number }>('PUT', `content/${ref}`, { data, revision }, opts);
+export const deleteProject = (id: string) => api('DELETE', `content/project:${id}`);
+export const renameProject = (from: string, to: string) => api('POST', `content/project:${from}/rename`, { to });
+export const discardDraft = () => api('POST', 'draft/discard');
+export const upload = (file: Blob & { name?: string }, kind: 'image' | 'video' | 'pdf', folder: string) =>
+  api<{ src: string; width?: number; height?: number }>(
+    'POST',
+    `uploads?${new URLSearchParams({ kind, folder, filename: file.name ?? 'fichier' })}`,
+    undefined,
+    { raw: file, type: file.type || 'application/octet-stream' },
+  );
+
+/** A file of the site as the admin shows it: uploads not published yet come from the staging area */
+export const previewSrc = (src: string, staged: Set<string>) => (staged.has(src) ? new URL(`staged${src}`, document.baseURI).toString() : src);

@@ -39,6 +39,7 @@ test('GET content gives the draft, revisions and the English to do', async () =>
   expect(body.revisions['project:a']).toBe(0);
   expect(body.changed).toEqual([]);
   expect(Array.isArray(body.stale)).toBe(true);
+  expect(body.staged).toEqual([]);
 });
 
 test('PUT a page: saved, then stale on an old revision, invalid on a bad shape', async () => {
