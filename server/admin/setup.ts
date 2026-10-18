@@ -1,5 +1,6 @@
 import crypto from 'node:crypto';
 import readline from 'node:readline';
+import qrcode from 'qrcode-terminal';
 import { base32Encode, hashPassword } from './auth';
 
 /**
@@ -36,14 +37,16 @@ if ((await ask('Encore une fois : ')) !== password) {
 const secret = base32Encode(crypto.randomBytes(20));
 const hash = await hashPassword(password);
 
+const uri = `otpauth://totp/luca-leone.ch:Luca?secret=${secret}&issuer=luca-leone.ch`;
+
 console.log(`
 À copier dans le .env du serveur (et en local si tu veux l'admin en dev) :
 
 ADMIN_PASSWORD_HASH="${hash}"
 ADMIN_TOTP_SECRET="${secret}"
 
-Dans ton app d'authentification (Google Authenticator, 1Password…), ajoute un compte avec
-« Saisir une clé » et cette clé : ${secret}
-ou ouvre ce lien sur le téléphone :
-otpauth://totp/luca-leone.ch:Luca?secret=${secret}&issuer=luca-leone.ch
+Dans ton app d'authentification (Google Authenticator, 1Password…), scanne ce QR code :
+`);
+qrcode.generate(uri, { small: true }, (qr: string) => console.log(qr));
+console.log(`Ou ajoute un compte avec « Saisir une clé » et cette clé : ${secret}
 `);

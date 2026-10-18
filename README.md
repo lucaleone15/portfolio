@@ -94,7 +94,7 @@ npm start               # http://localhost:3000
 | `npm run build:site` | Le site seul : client → bundle de pré-rendu → pages HTML statiques, sitemap, `llms.txt` et catalogues IA (dans `$BUILD_OUT_DIR`, `dist/` par défaut) |
 | `npm run build:admin` | Le bundle de l'admin (`dist-admin/`), jamais servi au public |
 | `npm test` | Tests (Vitest) : contenu, serveur admin, publication (vrais dépôts git temporaires), écrans de l'admin |
-| `npm run admin:setup` | Affiche les lignes `.env` de la connexion admin (empreinte du mot de passe, clé de l'app d'authentification). Après `npm run build` |
+| `npm run admin:setup` | Affiche les lignes `.env` de la connexion admin (empreinte du mot de passe, clé de l'app d'authentification) et un QR code à scanner avec l'app. N'écrit rien : on copie les lignes dans `.env`. Après `npm run build` |
 | `npm start` | Lance le serveur de production (`dist-server/index.mjs`) — à exécuter depuis la racine du projet |
 | `npm run preview` | Aperçu Vite du dossier `dist/` (pour vérifier, pas pour la production) |
 | `npm run lint` | Vérification TypeScript (`tsc --noEmit`) |
