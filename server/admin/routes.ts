@@ -9,6 +9,6 @@ type Env = Record<string, string | undefined>;
 /** The admin handler with all its API modules (content, uploads, publishing) */
 export function createAdminRoutes(env: Env, deps: AdminDeps) {
   const draft = createDraftStore({ repoRoot: deps.repoRoot, dir: path.join(deps.dataDir, 'admin', 'draft') });
-  const routes: ApiRoute[] = [createContentRoutes(draft), createUploadRoutes(deps.dataDir)];
+  const routes: ApiRoute[] = [createContentRoutes(draft, path.join(deps.dataDir, 'admin', 'uploads')), createUploadRoutes(deps.dataDir)];
   return createAdminHandler(env, deps, routes);
 }

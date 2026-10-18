@@ -1,4 +1,5 @@
-import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import { useEffect, useRef, type ButtonHTMLAttributes, type ReactNode } from 'react';
+import type { SaveState } from './store';
 
 /** The LL monogram (public/favicon.svg) */
 export function Monogram({ size = 32 }: { size?: number }) {
@@ -49,3 +50,54 @@ export const fieldClass =
   'w-full min-h-11 rounded-xl border border-[var(--color-border)] dark:border-white/10 bg-white dark:bg-white/[0.04] px-3.5 py-2.5 text-base text-neutral-900 dark:text-white placeholder:text-neutral-400 outline-none transition focus:border-[var(--accent)] focus:ring-4 focus:ring-[rgba(var(--accent-rgb),0.15)]';
 
 export const labelClass = 'mb-1.5 block text-[11px] font-bold uppercase tracking-[0.14em] text-neutral-500 dark:text-[#A1A1AA]';
+
+
+/** A modal sheet: centred on large screens, from the bottom on phones */
+export function Dialog({ open, title, onClose, children }: { open: boolean; title: string; onClose: () => void; children: ReactNode }) {
+  const ref = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const d = ref.current;
+    if (!d) return;
+    if (open && !d.open) d.showModal();
+    if (!open && d.open) d.close();
+  }, [open]);
+  return (
+    <dialog
+      ref={ref}
+      onClose={onClose}
+      onClick={(e) => e.target === ref.current && onClose()}
+      className="m-0 mt-auto w-full max-w-none rounded-t-3xl border-0 bg-[var(--color-paper)] p-0 text-neutral-900 shadow-2xl backdrop:bg-black/40 backdrop:backdrop-blur-sm dark:bg-[#141417] dark:text-white sm:m-auto sm:max-w-lg sm:rounded-3xl"
+    >
+      {open && (
+        <div className="p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] sm:p-8">
+          <h2 className="font-syne text-xl font-extrabold tracking-tight">{title}</h2>
+          <div className="mt-5">{children}</div>
+        </div>
+      )}
+    </dialog>
+  );
+}
+
+const SAVE_LABEL: Record<SaveState, string> = {
+  saved: 'Enregistré',
+  saving: 'Enregistrement…',
+  offline: 'Hors ligne, nouvel essai…',
+  signedOut: 'Session expirée',
+  conflict: 'Modifié sur un autre appareil',
+  invalid: 'Erreur d’enregistrement',
+};
+
+export function SaveIndicator({ state, onReload }: { state: SaveState; onReload: () => void }) {
+  const bad = state === 'offline' || state === 'conflict' || state === 'invalid' || state === 'signedOut';
+  return (
+    <span role="status" aria-live="polite" className={`flex items-center gap-2 text-xs font-semibold ${bad ? 'text-[var(--accent)]' : 'text-neutral-500 dark:text-[#A1A1AA]'}`}>
+      <span className={`size-2 rounded-full ${state === 'saved' ? 'bg-emerald-500' : bad ? 'bg-[var(--accent)]' : 'animate-pulse bg-amber-500'}`} aria-hidden="true" />
+      <span className="hidden sm:inline">{SAVE_LABEL[state]}</span>
+      {state === 'conflict' && (
+        <button type="button" onClick={onReload} className="underline underline-offset-2">
+          Recharger
+        </button>
+      )}
+    </span>
+  );
+}
