@@ -79,3 +79,10 @@ test('a real PDF and an MP4 are kept as they are', async () => {
   const video = await processUpload({ kind: 'video', filename: 'survol.mp4', body: mp4, folder: '', stagingDir: staging });
   expect(video.src).toMatch(/^\/videos\/survol-[0-9a-f]{8}\.mp4$/);
 });
+
+test('an AVIF image is accepted and converted', async () => {
+  const avif = await sharp({ create: { width: 40, height: 30, channels: 3, background: '#2f6db5' } }).avif().toBuffer();
+  const out = await processUpload({ kind: 'image', filename: 'photo.avif', body: avif, folder: 'case/hug', stagingDir: staging });
+  expect(out).toMatchObject({ width: 40, height: 30 });
+  expect(out.src).toMatch(/\.webp$/);
+});

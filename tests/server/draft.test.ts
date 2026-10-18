@@ -89,7 +89,8 @@ test('rename: refused onto an existing id, a redirect source or an invalid slug;
   s.rename('a', 'c');
   s.rename('c', 'd');
   const { content } = s.read();
-  expect(content.index.redirects).toEqual({ 'hug-sangsationnel': 'hug', a: 'd', c: 'd' });
+  // c was never published: only the published address a keeps working, pointing straight at d
+  expect(content.index.redirects).toEqual({ 'hug-sangsationnel': 'hug', a: 'd' });
   expect(content.index.order).toEqual(['d', 'b']);
   expect(content.projects.d.id).toBe('d');
   expect(content.projects.a).toBeUndefined();
@@ -122,4 +123,32 @@ test('a project deleted then created again at the same address starts from revis
   s.remove('b');
   expect(s.read().revisions['project:b']).toBeUndefined();
   expect(s.write('project:b', project('b', 'Nouveau b'), 0).revision).toBe(1);
+});
+
+test('renaming back to the previous address works, and drops that redirect', () => {
+  const s = store();
+  s.rename('a', 'a2');
+  s.rename('a2', 'a');
+  const { content } = s.read();
+  expect(content.projects.a.id).toBe('a');
+  // a2 was never published: no redirect for it either
+  expect(content.index.redirects).toEqual({ 'hug-sangsationnel': 'hug' });
+});
+
+test('renaming a project that was never published leaves no redirect behind', () => {
+  const s = store();
+  s.write('project:neuf', project('neuf'), 0);
+  s.rename('neuf', 'neuf2');
+  expect(s.read().content.index.redirects).toEqual({ 'hug-sangsationnel': 'hug' });
+});
+
+test('a new project cannot take an address that redirects elsewhere', () => {
+  expect(() => store().write('project:hug-sangsationnel', project('hug-sangsationnel'), 0)).toThrow(expect.objectContaining({ code: 'taken' }));
+});
+
+test('no conflict when the draft and the repo already hold the same page', () => {
+  const s = store();
+  s.write('project:a', project('a', 'Pareil'), 0);
+  write('content/projects/a.json', project('a', 'Pareil'));
+  expect(s.conflicts()).toEqual([]);
 });

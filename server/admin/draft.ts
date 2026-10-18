@@ -132,6 +132,8 @@ export function createDraftStore(deps: { repoRoot: string; dir: string }) {
       const id = projectIdOf(ref);
       if (id !== null && (parsed.data as { id: string }).id !== id) throw new DraftError('invalid', [{ path: ['id'], message: 'id does not match the page' }]);
       ensure();
+      // A new project can't take an old address that redirects to another one
+      if (id !== null && !fs.existsSync(path.join(deps.dir, pageFile(ref))) && Object.hasOwn(readIndex().redirects, id)) throw new DraftError('taken');
       const base = loadBase();
       if ((base.revisions[ref] ?? 0) !== revision) throw new DraftError('stale');
       writePage(ref, parsed.data);
@@ -168,13 +170,17 @@ export function createDraftStore(deps: { repoRoot: string; dir: string }) {
       const index = readIndex();
       const fromFile = path.join(deps.dir, pageFile(projectRef(from)));
       if (!fs.existsSync(fromFile)) throw new DraftError('missing');
-      if (fs.existsSync(path.join(deps.dir, pageFile(projectRef(to)))) || Object.hasOwn(index.redirects, to)) throw new DraftError('taken');
+      // Back to an address that redirects to this very project is fine (undoing a rename)
+      const backToOld = index.redirects[to] === from;
+      if (fs.existsSync(path.join(deps.dir, pageFile(projectRef(to)))) || (Object.hasOwn(index.redirects, to) && !backToOld)) throw new DraftError('taken');
       const project = JSON.parse(fs.readFileSync(fromFile, 'utf8'));
       writePage(projectRef(to), { ...project, id: to });
       fs.rmSync(fromFile);
       // Old addresses keep working, and never through a chain of redirects
       const redirects = Object.fromEntries(Object.entries(index.redirects).map(([k, v]) => [k, v === from ? to : v]));
-      redirects[from] = to;
+      delete redirects[to];
+      // Only a published address needs to keep working
+      if (repoTree()[pageFile(projectRef(from))] !== undefined) redirects[from] = to;
       const swap = (ids: string[]) => ids.map((x) => (x === from ? to : x));
       writePage('index', { order: swap(index.order), hidden: swap(index.hidden), redirects });
       const base = loadBase();
@@ -187,8 +193,11 @@ export function createDraftStore(deps: { repoRoot: string; dir: string }) {
       if (!exists()) return [];
       const base = loadBase();
       const repo = repoTree();
+      const draft = draftTree();
       return changedFiles()
         .filter((rel) => (repo[rel] === undefined ? undefined : sha(repo[rel])) !== base.hashes[rel])
+        // Both sides ended up the same (e.g. a publish cut short after its push): nothing to choose
+        .filter((rel) => draft[rel] !== repo[rel])
         .map(refOfFile);
     },
 

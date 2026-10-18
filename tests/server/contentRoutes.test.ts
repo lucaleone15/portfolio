@@ -86,3 +86,7 @@ test('uploads: processed, previewable under staged/, refused with a message', as
   expect((await up(Buffer.alloc(11 * 1024 * 1024), 'kind=pdf&folder=&filename=cv.pdf')).status).toBe(413);
   expect((await up(png, 'kind=autre&folder=&filename=x')).status).toBe(422);
 });
+
+test('a malformed address is a 404, not a server error', async () => {
+  expect((await call('PUT', 'content/project:%E0%A4%A', { data: {}, revision: 0 })).status).toBe(404);
+});

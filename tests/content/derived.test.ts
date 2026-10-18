@@ -26,3 +26,11 @@ test('llms.txt block: numbered entries, written ones kept, others built from the
   expect(block).toContain('\n\n2. **[Karting de Vuiteboeuf](https://luca-leone.ch/projets/karting-vuiteboeuf)** (depuis mai 2026, en cours) :');
   expect(block.match(/^\d+\. /gm)).toHaveLength(6);
 });
+
+test('names written into a JSON file are escaped (quotes, backslashes)', async () => {
+  const { fillDerivedFile } = await import('../../src/content/derived');
+  const c = realContent();
+  c.projects.hug.name = 'HUG "Sang" \\ test';
+  const out = fillDerivedFile('ai-catalog.json', '{"description": "{n} études ({names})"}', c);
+  expect(JSON.parse(out).description).toContain('HUG "Sang" \\ test');
+});
