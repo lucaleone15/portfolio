@@ -192,7 +192,8 @@ export const ProjectsIndexSchema = z.object({
 export type ProjectsIndex = z.infer<typeof ProjectsIndexSchema>;
 
 const SeoSchema = z.object({ title: txt('Titre SEO'), description: txt('Description SEO') });
-export const SITE_PAGES = ['home', 'projets', 'a-propos', 'contact', 'privacy', 'notfound'] as const;
+import { SITE_PAGES } from './sitePages';
+export { SITE_PAGES };
 
 export const SiteSchema = z.object({
   contact: z

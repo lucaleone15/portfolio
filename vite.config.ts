@@ -50,6 +50,29 @@ function siteApi(env: Record<string, string>): Plugin {
   return { name: 'site-api', configureServer: mount, configurePreviewServer: mount };
 }
 
+/**
+ * content/*.json in the visitors' bundle: without what only the admin and the build use (each
+ * text's English fingerprint `enOf`, each project's llms.txt entry). The prerender (SSR build)
+ * keeps everything.
+ */
+function contentForVisitors(): Plugin {
+  const strip = (v: unknown): unknown => {
+    if (Array.isArray(v)) return v.map(strip);
+    if (v && typeof v === 'object') {
+      return Object.fromEntries(Object.entries(v).filter(([k]) => k !== 'enOf' && k !== 'llms').map(([k, x]) => [k, strip(x)]));
+    }
+    return v;
+  };
+  return {
+    name: 'content-for-visitors',
+    enforce: 'pre',
+    transform(code, id, options) {
+      if (options?.ssr || !/[\\/]content[\\/].*\.json$/.test(id)) return;
+      return { code: JSON.stringify(strip(JSON.parse(code))), map: null };
+    },
+  };
+}
+
 /** Facts shown on the hidden /stand page, read at build time (git may be missing: then empty) */
 function buildInfo() {
   const git = (cmd: string) => {
@@ -73,7 +96,7 @@ export default defineConfig(({ isSsrBuild, mode }) => {
   // All variables from .env (not only VITE_*): SMTP settings stay server-side
   const env = { ...loadEnv(mode, process.cwd(), ''), ...process.env } as Record<string, string>;
   return {
-    plugins: [react(), tailwindcss(), siteApi(env)],
+    plugins: [contentForVisitors(), react(), tailwindcss(), siteApi(env)],
     define: { __BUILD_INFO__: JSON.stringify(buildInfo()) },
     build: {
       // The SSR bundle (dist-ssr) is only used by scripts/prerender.mjs: no need to copy public/

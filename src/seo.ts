@@ -3,7 +3,7 @@ import { USER_INFO } from './data/portfolioData';
 import type { CaseBlock } from './data/caseStudies/types';
 import { CONTENT } from './content/load';
 import { projectSeo, toCaseStudy, toProject, toSite, visibleProjects } from './content/localize';
-import { SITE_PAGES } from './content/schema';
+import { SITE_PAGES } from './content/sitePages';
 import { fillTemplate } from './content/derived';
 import { homePath, pathFor, privacyPath, projectPath, Route, SECTION_IDS, SectionId, sectionPath } from './router';
 
