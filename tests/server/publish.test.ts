@@ -19,6 +19,7 @@ const project = (id: string, title: string) => {
 
 let remote: string, server: string, laptop: string, data: string;
 let buildFails: boolean;
+let duringBuild: (() => void) | null = null;
 
 function setup() {
   const root = tmpDir('publish');
@@ -43,6 +44,7 @@ function setup() {
   fs.mkdirSync(path.join(server, 'dist'));
   fs.writeFileSync(path.join(server, 'dist/index.html'), 'old site');
   buildFails = false;
+  duringBuild = null;
 }
 
 function publisher() {
@@ -55,6 +57,7 @@ function publisher() {
     stagingDir: path.join(data, 'uploads'),
     git: createGit(runCommand, server, { name: 'Luca Leone (dashboard)', email: 'luca@luca-leone.ch' }),
     build: async () => {
+      duringBuild?.();
       if (buildFails) return { ok: false, log: 'vite: boom' };
       const a = JSON.parse(fs.readFileSync(path.join(server, 'content/projects/a.json'), 'utf8'));
       fs.mkdirSync(path.join(server, 'dist-next'), { recursive: true });
@@ -183,4 +186,29 @@ test('uploads referenced by the draft are published with it', async () => {
   expect(files).toContain('public/images/cover-1a2b3c4d.webp');
   expect(files).toContain('public/images/sm/cover-1a2b3c4d.webp');
   expect(files).not.toContain('unused');
+});
+
+test('an edit saved while the site builds is kept for the next publish', async () => {
+  const { draft, pub } = publisher();
+  draft.write('project:a', project('a', 'A v2'), 0);
+  duringBuild = () => draft.write('project:b', project('b', 'B pendant le build'), 0);
+  pub.start();
+  expect((await pub.wait()).state).toBe('done');
+  const after = draft.read();
+  expect(after.changed).toEqual(['project:b']);
+  expect(after.content.projects.b.study.title.fr).toBe('B pendant le build');
+  expect(after.content.projects.a.study.title.fr).toBe('A v2');
+  expect(after.revisions['project:b']).toBe(1);
+});
+
+test('a pulled change to the content schema code stops the publish', async () => {
+  fs.mkdirSync(path.join(laptop, 'src/content'), { recursive: true });
+  fs.writeFileSync(path.join(laptop, 'src/content/schema.ts'), '// v2\n');
+  git(laptop, 'add', '-A');
+  git(laptop, 'commit', '-qm', 'schema change');
+  git(laptop, 'push', '-q', 'origin', 'main');
+  const { draft, pub } = publisher();
+  draft.write('project:a', project('a', 'A v2'), 0);
+  pub.start();
+  expect((await pub.wait()).error).toMatchObject({ code: 'code-changed', files: ['src/content/schema.ts'] });
 });

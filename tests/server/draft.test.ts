@@ -116,3 +116,10 @@ test('applyTo writes only what changed and deletes removed projects', () => {
   expect(fs.existsSync(path.join(repo, 'content/projects/b.json'))).toBe(false);
   expect(fs.statSync(path.join(repo, 'content/site.json')).mtimeMs).toBe(siteBefore);
 });
+
+test('a project deleted then created again at the same address starts from revision 0', () => {
+  const s = store();
+  s.remove('b');
+  expect(s.read().revisions['project:b']).toBeUndefined();
+  expect(s.write('project:b', project('b', 'Nouveau b'), 0).revision).toBe(1);
+});

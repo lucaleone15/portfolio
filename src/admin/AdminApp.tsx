@@ -8,6 +8,7 @@ import { PublishPanel } from './publish/PublishPanel';
 import { getPublish, resolveConflict, startPublish } from './api';
 import { adminNavigate, useAdminPath } from './nav';
 import { DraftProvider, useDraftClient, useDraftState } from './DraftContext';
+import { signOutAfterSaving } from './store';
 import { ProjectsList } from './pages/ProjectsList';
 import { ProjectEditor } from './pages/ProjectEditor';
 import { SiteEditor, isSiteTab } from './pages/SiteEditor';
@@ -27,8 +28,7 @@ export function AdminApp() {
   return (
     <DraftProvider>
       <Workspace
-        onSignOut={async () => {
-          await logout().catch(() => {});
+        onSignOut={() => {
           setSignedIn(false);
         }}
       />
@@ -51,7 +51,7 @@ function Workspace({ onSignOut }: { onSignOut: () => void }) {
 
   return (
     <Shell
-      onSignOut={onSignOut}
+      onSignOut={() => void signOutAfterSaving(client, () => logout().catch(() => {})).then(onSignOut)}
       status={<SaveIndicator state={state.saveState} onReload={() => void client.load()} />}
       publish={
         <Button variant="primary" disabled={!changes} onClick={() => setPublishing(true)}>

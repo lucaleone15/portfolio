@@ -93,3 +93,59 @@ test('the English to do follows the edits', async () => {
   store.update('project:hug', (p) => void (p.study.title.fr = 'Un autre titre'));
   expect(store.getState().stale).toContainEqual({ ref: 'project:hug', path: 'study.title', fr: 'Un autre titre' });
 });
+
+test('a server error (5xx) is retried like a network failure, not shown as a lasting error', async () => {
+  const api = fakeApi();
+  api.fail.push(new ApiError(503, 'restarting'));
+  const store = createDraftClient(api, { debounceMs: 800, retryMs: 3000 });
+  await store.load();
+  store.update('project:hug', (p) => void (p.name = 'X'));
+  await vi.advanceTimersByTimeAsync(900);
+  expect(store.getState().saveState).toBe('offline');
+  await vi.advanceTimersByTimeAsync(3100);
+  expect(store.getState().saveState).toBe('saved');
+});
+
+test('a refused save (422) clears once the page saves again', async () => {
+  const api = fakeApi();
+  api.fail.push(new ApiError(422, { issues: [] }));
+  const store = createDraftClient(api, { debounceMs: 800, retryMs: 3000 });
+  await store.load();
+  store.update('project:hug', (p) => void (p.name = 'X'));
+  await vi.advanceTimersByTimeAsync(900);
+  expect(store.getState().saveState).toBe('invalid');
+  store.update('project:hug', (p) => void (p.name = 'Y'));
+  await vi.advanceTimersByTimeAsync(900);
+  expect(store.getState().saveState).toBe('saved');
+});
+
+test('leaving while a save is in flight still sends the latest edit, one revision ahead', async () => {
+  const api = fakeApi();
+  let release!: () => void;
+  const slow = api.savePage;
+  let first = true;
+  api.savePage = async (...args) => {
+    if (first) {
+      first = false;
+      await new Promise<void>((r) => (release = r));
+    }
+    return slow(...args);
+  };
+  const store = createDraftClient(api, { debounceMs: 800, retryMs: 3000 });
+  await store.load();
+  store.update('project:hug', (p) => void (p.name = 'Un'));
+  await vi.advanceTimersByTimeAsync(900); // first save starts and hangs
+  store.update('project:hug', (p) => void (p.name = 'Deux'));
+  window.dispatchEvent(new Event('pagehide'));
+  await vi.advanceTimersByTimeAsync(0);
+  expect(api.saves.at(-1)).toEqual({ ref: 'project:hug', revision: 1, keepalive: true });
+  release();
+  store.dispose();
+});
+
+test('signing out sends pending edits first', async () => {
+  const { signOutAfterSaving } = await import('../../src/admin/store');
+  const order: string[] = [];
+  await signOutAfterSaving({ flush: async () => void order.push('flush') }, async () => void order.push('logout'));
+  expect(order).toEqual(['flush', 'logout']);
+});

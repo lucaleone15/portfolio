@@ -2,6 +2,7 @@ import { useId, useRef, useState } from 'react';
 import type { Language } from '../../types';
 import { ImageSchema, type StoredImage } from '../../content/schema';
 import { ApiError } from '../api';
+import { UPLOAD_LIMITS, tooLargeMessage } from '../../content/uploadLimits';
 import { FieldEditor, useMedia } from './FieldEditor';
 import type { FileKind } from './schemaWalk';
 import { Button, labelClass } from '../ui';
@@ -14,6 +15,11 @@ function useUpload(kind: FileKind, cover: boolean) {
   const [error, setError] = useState('');
   const run = async (file: File) => {
     if (!upload) return null;
+    // Refused here rather than cut off mid-way by the server (which looks like a network error)
+    if (file.size > UPLOAD_LIMITS[kind]) {
+      setError(tooLargeMessage(kind));
+      return null;
+    }
     setBusy(true);
     setError('');
     try {

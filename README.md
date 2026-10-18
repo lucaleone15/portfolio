@@ -245,7 +245,7 @@ En local : `npm run build && npm run admin:setup`, copier les deux lignes affich
 Sur le serveur (Infomaniak, site Node.js) :
 
 1. Créer une **clé de déploiement** avec droit d'écriture : `ssh-keygen -t ed25519 -f ~/.ssh/portfolio-deploy -N ""`, puis sur GitHub : dépôt → Settings → Deploy keys → Add, coller `portfolio-deploy.pub`, cocher **Allow write access**.
-2. Faire passer le clone par SSH : `git remote set-url origin git@github.com:lucaleone15/portfolio.git`.
+2. Faire passer **l'envoi seulement** par SSH : `git remote set-url --push origin git@github.com:lucaleone15/portfolio.git`. La récupération (`git pull`, le déploiement manuel) reste sur l'adresse actuelle et marche comme avant ; seul « Publier » pousse, avec la clé de déploiement.
 3. Dans le `.env` du serveur : `ADMIN_PATH`, `ADMIN_PASSWORD_HASH`, `ADMIN_TOTP_SECRET` (générés par `npm run admin:setup`), `ADMIN_PUBLISH_MODE=git`, `ADMIN_GIT_SSH_KEY=/chemin/vers/.ssh/portfolio-deploy`, et un `DATA_DIR` hors du dossier du site.
 4. Redéployer comme d'habitude (`git pull --ff-only && npm ci --include=dev && npm run build`, puis relancer `npm start`). Les dépendances de développement sont nécessaires : « Publier » reconstruit le site sur le serveur.
 

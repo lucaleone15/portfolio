@@ -89,13 +89,16 @@ export function createDraftClient(api: DraftApi, opts: { debounceMs: number; ret
         const pending = new Set(state.pending);
         // Edited again while saving: another save follows
         if (pageData(state.content, ref) === data) pending.delete(ref);
-        set({ revisions: { ...state.revisions, [ref]: revision }, pending, changed: new Set(state.changed).add(ref), saveState: state.saveState === 'offline' ? 'saving' : state.saveState });
+        const recovered = state.saveState === 'offline' || state.saveState === 'invalid';
+        set({ revisions: { ...state.revisions, [ref]: revision }, pending, changed: new Set(state.changed).add(ref), saveState: recovered ? 'saving' : state.saveState });
         settle();
         if (pending.has(ref)) schedule(ref);
       } catch (err) {
         if (err instanceof ApiError && err.status === 404) set({ saveState: 'signedOut' });
         else if (err instanceof ApiError && err.status === 409) set({ saveState: 'conflict' });
-        else if (err instanceof ApiError) set({ saveState: 'invalid' });
+        // A refused page (422…): kept, not retried until it is edited again
+        else if (err instanceof ApiError && err.status >= 400 && err.status < 500) set({ saveState: 'invalid' });
+        // Network failure, or the server restarting (5xx): retried
         else {
           set({ saveState: 'offline' });
           if (!retryTimer) {
@@ -133,7 +136,13 @@ export function createDraftClient(api: DraftApi, opts: { debounceMs: number; ret
   }
 
   const onLeave = () => {
-    if (state.pending.size && state.saveState !== 'signedOut' && state.saveState !== 'conflict') void flush(true);
+    if (!state.pending.size || state.saveState === 'signedOut' || state.saveState === 'conflict') return;
+    for (const ref of state.pending) {
+      // A save already on its way will bump the revision: the last edit goes out one ahead,
+      // now (the page is closing, there is no waiting for the first one)
+      if (inFlight.has(ref)) void api.savePage(ref, pageData(state.content, ref), (state.revisions[ref] ?? 0) + 1, { keepalive: true }).catch(() => {});
+      else void save(ref, true);
+    }
   };
   const onVisibility = () => document.visibilityState === 'hidden' && onLeave();
   if (typeof window !== 'undefined') {
@@ -189,6 +198,12 @@ export function createDraftClient(api: DraftApi, opts: { debounceMs: number; ret
 }
 
 export type DraftClient = ReturnType<typeof createDraftClient>;
+
+/** Sign out only once the pending edits are on the server */
+export async function signOutAfterSaving(client: Pick<DraftClient, 'flush'>, logout: () => Promise<void>) {
+  await client.flush().catch(() => {});
+  await logout();
+}
 
 export function useDraft(client: DraftClient): DraftState {
   return useSyncExternalStore(client.subscribe, client.getState);

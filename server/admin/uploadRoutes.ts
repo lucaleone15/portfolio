@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { readBody, type ApiRoute } from './handler';
 import { processUpload, UploadError, UPLOAD_LIMITS, type UploadKind } from './uploads';
+import { tooLargeMessage } from '../../src/content/uploadLimits';
 
 /** POST uploads?kind=image|video|pdf&folder=…&filename=…, raw body → { src, width?, height? } */
 export function createUploadRoutes(dataDir: string): ApiRoute {
@@ -13,7 +14,7 @@ export function createUploadRoutes(dataDir: string): ApiRoute {
       return true;
     }
     const limit = UPLOAD_LIMITS[kind];
-    const tooLarge = () => ctx.send(413, { error: `Fichier trop lourd : ${Math.round(limit / 1024 / 1024)} Mo au maximum.` });
+    const tooLarge = () => ctx.send(413, { error: tooLargeMessage(kind) });
     let body: Buffer;
     try {
       body = await readBody(ctx.req, limit);

@@ -63,7 +63,7 @@ export function EditablePreview({
           </ContentProvider>
         </StaticLanguageProvider>
       </StaticRouterProvider>
-      {editing && value && <InlineEditor target={editing.el} value={value} lang={lang} onChange={(v) => onEdit(editing.path, v)} onClose={() => setEditing(null)} />}
+      {editing && value && <InlineEditor target={editing.el} path={editing.path} value={value} lang={lang} onChange={(v) => onEdit(editing.path, v)} onClose={() => setEditing(null)} />}
     </div>
   );
 }

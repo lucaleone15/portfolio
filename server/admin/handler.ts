@@ -71,8 +71,11 @@ export function readBody(req: IncomingMessage, limit: number): Promise<Buffer> {
     req.on('data', (chunk: Buffer) => {
       size += chunk.length;
       if (size <= limit) chunks.push(chunk);
-      // …up to a point: far past it, the connection is cut
-      else if (size > limit * 2 + 1_000_000) req.destroy();
+      // …up to a point: far past it, the connection is cut (and the read fails, never hangs)
+      else if (size > limit * 2 + 1_000_000) {
+        reject(Object.assign(new Error('too large'), { status: 413 }));
+        req.destroy();
+      }
     });
     req.on('end', () => (size > limit ? reject(Object.assign(new Error('too large'), { status: 413 })) : resolve(Buffer.concat(chunks))));
     req.on('error', reject);
@@ -143,13 +146,13 @@ export function createAdminHandler(env: Env, deps: AdminDeps, apiRoutes: ApiRout
     const ip = clientIp(ctx.req);
     const wait = limiter.retryAfterMs(ip);
     if (wait > 0) return ctx.send(429, { retryAfter: Math.ceil(wait / 1000) });
+    // Counted as a failure right away, before anything is awaited: attempts sent all at once
+    // can't slip past the lock. A success clears it.
+    limiter.fail(ip);
     const { password = '', code = '' } = await ctx.json<{ password?: string; code?: string }>(2_000);
     const passwordOk = await verifyPassword(String(password), env.ADMIN_PASSWORD_HASH!);
     const counter = passwordOk ? verifyTotp(env.ADMIN_TOTP_SECRET!, String(code).replace(/\s/g, ''), now(), lastCounter()) : null;
-    if (counter === null) {
-      limiter.fail(ip);
-      return ctx.send(401, { error: 'invalid' });
-    }
+    if (counter === null) return ctx.send(401, { error: 'invalid' });
     limiter.succeed(ip);
     fs.mkdirSync(adminDir, { recursive: true });
     fs.writeFileSync(totpFile, JSON.stringify({ last: counter }));

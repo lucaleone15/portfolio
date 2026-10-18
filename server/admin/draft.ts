@@ -156,7 +156,9 @@ export function createDraftStore(deps: { repoRoot: string; dir: string }) {
       const index = readIndex();
       writePage('index', { ...index, order: index.order.filter((x) => x !== id), hidden: index.hidden.filter((x) => x !== id) });
       const base = loadBase();
-      bump(base, projectRef(id), 'index');
+      // A project created again at this address starts over from revision 0
+      delete base.revisions[projectRef(id)];
+      bump(base, 'index');
       saveBase(base);
     },
 
@@ -176,7 +178,8 @@ export function createDraftStore(deps: { repoRoot: string; dir: string }) {
       const swap = (ids: string[]) => ids.map((x) => (x === from ? to : x));
       writePage('index', { order: swap(index.order), hidden: swap(index.hidden), redirects });
       const base = loadBase();
-      bump(base, projectRef(from), projectRef(to), 'index');
+      delete base.revisions[projectRef(from)];
+      bump(base, projectRef(to), 'index');
       saveBase(base);
     },
 
@@ -234,6 +237,20 @@ export function createDraftStore(deps: { repoRoot: string; dir: string }) {
     },
 
     changedRefs: (): PageRef[] => changedFiles().map(refOfFile),
+
+    /**
+     * After a publish: the repo now holds what was published, so it becomes the draft's base.
+     * Pages saved in the meantime (during the build) still differ, and stay in the draft.
+     */
+    settle() {
+      if (!exists()) return;
+      const base = loadBase();
+      const repo = repoTree();
+      base.commit = headCommit();
+      base.hashes = Object.fromEntries(Object.entries(repo).map(([rel, text]) => [rel, sha(text)]));
+      saveBase(base);
+      if (!changedFiles().length) this.discard();
+    },
 
     discard() {
       fs.rmSync(deps.dir, { recursive: true, force: true });
