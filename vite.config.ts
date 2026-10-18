@@ -1,11 +1,12 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import {defineConfig, loadEnv, type Plugin} from 'vite';
+import {defineConfig, type Plugin} from 'vite';
 import {createContactHandler} from './server/contact';
 import {createAnalyticsHandler} from './server/analytics';
 import {createPodiumHandler} from './server/podium';
 import {createAdminRoutes} from './server/admin/routes';
+import {devEnv} from './server/devEnv';
 import {execSync} from 'node:child_process';
 import {readFileSync} from 'node:fs';
 import type {IncomingMessage, ServerResponse} from 'node:http';
@@ -94,7 +95,7 @@ function buildInfo() {
 
 export default defineConfig(({ isSsrBuild, mode }) => {
   // All variables from .env (not only VITE_*): SMTP settings stay server-side
-  const env = { ...loadEnv(mode, process.cwd(), ''), ...process.env } as Record<string, string>;
+  const env = devEnv(mode, process.cwd());
   return {
     plugins: [contentForVisitors(), react(), tailwindcss(), siteApi(env)],
     define: { __BUILD_INFO__: JSON.stringify(buildInfo()) },
