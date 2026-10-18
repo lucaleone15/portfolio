@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Button, Monogram } from './ui';
+import { Monogram } from './ui';
 import { adminNavigate } from './nav';
 import type { IconSvgElement } from '@hugeicons/react';
 import { ChartColumnIcon, Logout03Icon, Mail01Icon, PencilEdit02Icon } from '@hugeicons/core-free-icons';
@@ -28,6 +28,10 @@ function ThemeIcon({ theme }: { theme: ThemeChoice }) {
   );
 }
 
+/** The sidebar's small actions (theme, sign out): one style, so they line up */
+const sideAction =
+  'flex min-h-11 w-full items-center gap-2.5 rounded-xl px-3 text-left text-sm font-semibold text-neutral-600 hover:bg-[var(--color-surface)] dark:text-[#A1A1AA] dark:hover:bg-white/5';
+
 /** Switches the atelier's theme: system → light → dark */
 function ThemeButton({ withLabel = false }: { withLabel?: boolean }) {
   const [theme, next] = useTheme();
@@ -37,7 +41,7 @@ function ThemeButton({ withLabel = false }: { withLabel?: boolean }) {
       onClick={next}
       aria-label={`${THEME_LABEL[theme]} (changer)`}
       title={THEME_LABEL[theme]}
-      className="flex min-h-11 items-center gap-2.5 rounded-xl px-3 text-sm font-semibold text-neutral-600 hover:bg-[var(--color-surface)] dark:text-[#A1A1AA] dark:hover:bg-white/5"
+      className={withLabel ? sideAction : 'grid size-11 place-items-center rounded-xl text-neutral-600 hover:bg-[var(--color-surface)] dark:text-[#A1A1AA] dark:hover:bg-white/5'}
     >
       <ThemeIcon theme={theme} />
       {withLabel && THEME_LABEL[theme]}
@@ -105,10 +109,10 @@ export function Shell({
         </nav>
         <div className="mt-auto space-y-1">
           <ThemeButton withLabel />
-          <Button variant="quiet" onClick={onSignOut} className="w-full justify-start gap-2.5 px-3 font-sans">
+          <button type="button" onClick={onSignOut} className={sideAction}>
             <Icon icon={Logout03Icon} className="size-[18px]" />
             Se déconnecter
-          </Button>
+          </button>
         </div>
       </aside>
 
