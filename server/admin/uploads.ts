@@ -2,6 +2,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import sharp from 'sharp';
+import { UPLOAD_LIMITS, tooLargeMessage } from '../../src/content/uploadLimits';
 
 /**
  * Files added from the admin, prepared like scripts/make-image-variants.py does and kept in the
@@ -16,7 +17,7 @@ export class UploadError extends Error {}
 
 export type UploadKind = 'image' | 'video' | 'pdf';
 
-export const UPLOAD_LIMITS: Record<UploadKind, number> = { image: 25 * 1024 * 1024, video: 60 * 1024 * 1024, pdf: 10 * 1024 * 1024 };
+export { UPLOAD_LIMITS };
 
 const UNSUPPORTED = 'Format non pris en charge : exporte en JPEG ou PNG';
 const VARIANTS = { sm: { width: 640, quality: 76 }, md: { width: 1280, quality: 78 } };
@@ -53,7 +54,7 @@ export async function processUpload(input: {
 }): Promise<{ src: string; width?: number; height?: number }> {
   const { kind, filename, body, folder, stagingDir } = input;
   const limit = UPLOAD_LIMITS[kind];
-  if (body.length > limit) throw new UploadError(`Fichier trop lourd : ${Math.round(limit / 1024 / 1024)} Mo au maximum.`);
+  if (body.length > limit) throw new UploadError(tooLargeMessage(kind));
   if (folder !== '' && !/^[a-z0-9-]+(\/[a-z0-9-]+)*$/.test(folder)) throw new UploadError('Dossier invalide.');
   const base = `${slugify(filename)}-${hash8(body)}`;
 

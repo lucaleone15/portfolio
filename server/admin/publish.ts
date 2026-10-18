@@ -24,8 +24,8 @@ export interface JobStatus {
   published?: PageRef[];
 }
 
-/** Changes pulled from GitHub that need a manual redeploy (server code, dependencies, the admin itself) */
-const PROTECTED = [/^server\//, /^package\.json$/, /^package-lock\.json$/, /^src\/admin\//, /^admin\.html$/, /^vite\.admin\.config\.ts$/];
+/** Changes pulled from GitHub that need a manual redeploy (server code — src/content is bundled into it —, dependencies, the admin itself) */
+const PROTECTED = [/^server\//, /^src\/content\//, /^package\.json$/, /^package-lock\.json$/, /^src\/admin\//, /^admin\.html$/, /^vite\.admin\.config\.ts$/];
 
 class Stop extends Error {
   constructor(public detail: NonNullable<JobStatus['error']>) {
@@ -87,7 +87,8 @@ export function createPublisher(deps: {
 
   const finish = (changed: PageRef[], uploads: string[]) => {
     deps.onPublished();
-    deps.draft.discard();
+    // Not discard(): pages saved while the site was building stay in the draft
+    deps.draft.settle();
     for (const src of uploads) fs.rmSync(path.join(deps.stagingDir, src), { force: true });
     status = { state: 'done', finishedAt: new Date().toISOString(), published: changed };
   };

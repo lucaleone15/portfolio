@@ -71,3 +71,12 @@ test('a mutation without X-Admin is refused', async () => {
   const res = await fetch(`${srv.base}/atelier/api/logout`, { method: 'POST' });
   expect(res.status).toBe(403);
 });
+
+test('wrong codes sent all at once still lock the sign-in after five', async () => {
+  await start();
+  const statuses = (await Promise.all(Array.from({ length: 12 }, () => post('/atelier/api/login', { password: TEST_PASSWORD, code: '000000' })))).map((r) => r.status);
+  // Only five attempts are actually checked; the rest are refused before any check
+  expect(statuses.filter((s) => s === 401)).toHaveLength(5);
+  expect(statuses.filter((s) => s === 429)).toHaveLength(7);
+  expect((await post('/atelier/api/login', { password: TEST_PASSWORD, code: currentCode() })).status).toBe(429);
+});

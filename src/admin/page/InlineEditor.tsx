@@ -7,7 +7,10 @@ import { setEn, setFr, type Txt } from '../../content/txt';
  * that element's own typography, following it when the page scrolls. Each keystroke goes to the
  * draft (the page underneath re-renders); Escape or a click elsewhere closes it.
  */
-export function InlineEditor({ target, value, lang, onChange, onClose }: { target: HTMLElement; value: Txt; lang: Language; onChange: (v: Txt) => void; onClose: () => void }) {
+export function InlineEditor({ target: clicked, path, value, lang, onChange, onClose }: { target: HTMLElement; path: string; value: Txt; lang: Language; onChange: (v: Txt) => void; onClose: () => void }) {
+  // React may replace the element while its text changes (lists keyed by that text): follow the
+  // element now showing this path
+  const target = clicked.isConnected ? clicked : (document.querySelector<HTMLElement>(`[data-edit="${path}"]`) ?? clicked);
   const box = useRef<HTMLTextAreaElement>(null);
   const [rect, setRect] = useState(() => target.getBoundingClientRect());
   const style = useRef(window.getComputedStyle(target));
