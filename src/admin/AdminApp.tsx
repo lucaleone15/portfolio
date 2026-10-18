@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import { logout, me } from './api';
 import { Login } from './Login';
 import { Shell } from './Shell';
-import { Button, SaveIndicator } from './ui';
-import { useAdminPath } from './nav';
+import { Button, Dialog, SaveIndicator } from './ui';
+import { PublishPanel } from './publish/PublishPanel';
+import { getPublish, resolveConflict, startPublish } from './api';
+import { adminNavigate, useAdminPath } from './nav';
 import { DraftProvider, useDraftClient, useDraftState } from './DraftContext';
 import { ProjectsList } from './pages/ProjectsList';
 import { ProjectEditor } from './pages/ProjectEditor';
@@ -36,6 +38,7 @@ function Workspace({ onSignOut }: { onSignOut: () => void }) {
   const state = useDraftState();
   const { path, query } = useAdminPath();
   const changes = new Set([...state.changed, ...state.pending]).size;
+  const [publishing, setPublishing] = useState(false);
 
   let page = <ProjectsList />;
   const project = /^\/projets\/([a-z0-9-]+)$/.exec(path);
@@ -48,13 +51,28 @@ function Workspace({ onSignOut }: { onSignOut: () => void }) {
       onSignOut={onSignOut}
       status={<SaveIndicator state={state.saveState} onReload={() => void client.load()} />}
       publish={
-        <Button variant="primary" disabled>
+        <Button variant="primary" disabled={!changes} onClick={() => setPublishing(true)}>
           Publier{changes ? ` · ${changes}` : ''}
         </Button>
       }
     >
       {page}
       {state.saveState === 'signedOut' && <Login overlay onSignedIn={() => void client.resumeAfterLogin()} />}
+      <Dialog open={publishing} title="Publier" onClose={() => setPublishing(false)}>
+        {publishing && state.loaded && (
+          <PublishPanel
+            api={{ getPublish, startPublish, resolveConflict }}
+            flush={client.flush}
+            navigate={(to) => {
+              setPublishing(false);
+              adminNavigate(to);
+            }}
+            content={state.content}
+            onClose={() => setPublishing(false)}
+            onPublished={() => void client.load()}
+          />
+        )}
+      </Dialog>
     </Shell>
   );
 }
