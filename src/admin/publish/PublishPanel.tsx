@@ -9,6 +9,21 @@ export interface PublishApi {
   getPublish: () => Promise<PublishSummary>;
   startPublish: () => Promise<PublishStatus>;
   resolveConflict: (ref: PageRef, keep: 'draft' | 'repo') => Promise<void>;
+  /** Throws the whole draft away */
+  discard?: () => Promise<void>;
+}
+
+/** Follows a publish to its end (panel closed while it ran): the final state */
+export async function waitForPublish(getPublish: () => Promise<PublishSummary>, intervalMs = 3000): Promise<PublishStatus['state']> {
+  for (;;) {
+    try {
+      const { status } = await getPublish();
+      if (status.state !== 'running') return status.state;
+    } catch {
+      // network hiccup: ask again
+    }
+    await new Promise((r) => setTimeout(r, intervalMs));
+  }
 }
 
 const STEPS: [NonNullable<PublishStatus['step']>, string][] = [
@@ -63,6 +78,7 @@ export function PublishPanel({
   content,
   onClose,
   onPublished,
+  onDiscarded,
   pollMs = 1500,
 }: {
   api: PublishApi;
@@ -71,11 +87,13 @@ export function PublishPanel({
   content: Content;
   onClose: () => void;
   onPublished: () => void;
+  onDiscarded?: () => void;
   pollMs?: number;
 }) {
   const [summary, setSummary] = useState<PublishSummary | null>(null);
   const [status, setStatus] = useState<PublishStatus | null>(null);
   const [resolved, setResolved] = useState<Set<string>>(new Set());
+  const [offline, setOffline] = useState(false);
   const alive = useRef(true);
 
   const load = async () => {
@@ -99,10 +117,18 @@ export function PublishPanel({
   useEffect(() => {
     if (status?.state !== 'running') return;
     const t = setTimeout(async () => {
-      const s = await api.getPublish();
-      if (!alive.current) return;
-      setStatus(s.status);
-      if (s.status.state === 'done') onPublished();
+      try {
+        const s = await api.getPublish();
+        if (!alive.current) return;
+        setOffline(false);
+        setStatus(s.status);
+        if (s.status.state === 'done') onPublished();
+      } catch {
+        // Lost the connection for a moment: keep asking (the publish goes on on the server)
+        if (!alive.current) return;
+        setOffline(true);
+        setStatus((st) => (st ? { ...st } : st));
+      }
     }, pollMs);
     return () => clearTimeout(t);
   }, [status, api, pollMs, onPublished]);
@@ -122,6 +148,8 @@ export function PublishPanel({
   if (status?.state === 'running') {
     const current = STEPS.findIndex(([s]) => s === status.step);
     return (
+      <>
+      {offline && <p className="mb-3 text-sm font-semibold text-[var(--accent)]">Connexion perdue, nouvel essai… La publication continue sur le serveur.</p>}
       <ol className="space-y-3" aria-live="polite">
         {STEPS.map(([s, label], i) => (
           <li key={s} className={`flex items-center gap-3 text-sm font-semibold ${i < current ? 'text-emerald-600 dark:text-emerald-400' : i === current ? 'text-neutral-900 dark:text-white' : 'text-neutral-400'}`}>
@@ -130,6 +158,7 @@ export function PublishPanel({
           </li>
         ))}
       </ol>
+      </>
     );
   }
 
@@ -225,8 +254,22 @@ export function PublishPanel({
         </div>
       )}
 
-      <div className="flex justify-end gap-3">
-        <Button onClick={onClose}>Annuler</Button>
+      <div className="flex flex-wrap justify-end gap-3">
+        {api.discard && summary.changed.length > 0 && (
+          <Button
+            variant="quiet"
+            className="mr-auto"
+            onClick={async () => {
+              if (!window.confirm('Annuler toutes les modifications du brouillon ? Le site en ligne ne change pas, mais le brouillon est perdu.')) return;
+              await api.discard!();
+              onDiscarded?.();
+              onClose();
+            }}
+          >
+            Annuler toutes les modifications
+          </Button>
+        )}
+        <Button onClick={onClose}>Fermer</Button>
         <Button variant="primary" disabled={!summary.changed.length || (error?.code === 'conflict' && (error.pages ?? []).some((p) => !resolved.has(p)))} onClick={publish}>
           {todo.length ? 'Publier quand même' : 'Publier'}
         </Button>

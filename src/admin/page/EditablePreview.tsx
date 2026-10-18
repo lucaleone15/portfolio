@@ -49,7 +49,7 @@ export function EditablePreview({
     const path = el.dataset.edit!;
     const v = getAt(doc, path);
     // Texts in both languages, and names of people, companies and schools (plain text), are written in place
-    if (isTxt(v) || (typeof v === 'string' && /\.(name|company|institution)$/.test(path))) setEditing({ path, el });
+    if (isTxt(v) || (typeof v === 'string' && /(^|\.)(name|company|institution)$/.test(path))) setEditing({ path, el });
     else onOpen(path);
   };
   const value = editing ? (getAt(doc, editing.path) as Txt | string | undefined) : undefined;

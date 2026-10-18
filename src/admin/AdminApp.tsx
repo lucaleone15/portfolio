@@ -4,8 +4,8 @@ import { Monogram } from './ui';
 import { Login } from './Login';
 import { Shell, type Section } from './Shell';
 import { Button, Dialog, SaveIndicator } from './ui';
-import { PublishPanel } from './publish/PublishPanel';
-import { getPublish, resolveConflict, startPublish } from './api';
+import { PublishPanel, waitForPublish } from './publish/PublishPanel';
+import { discardDraft, getPublish, resolveConflict, startPublish } from './api';
 import { adminNavigate, useAdminPath } from './nav';
 import { DraftProvider, useDraftClient, useDraftState } from './DraftContext';
 import { signOutAfterSaving } from './store';
@@ -44,6 +44,14 @@ function Workspace({ onSignOut }: { onSignOut: () => void }) {
   const { path, query } = useAdminPath();
   const changes = new Set([...state.changed, ...state.pending]).size;
   const [publishing, setPublishing] = useState(false);
+  // Closed while a publish runs: follow it, then reload the draft (revisions, "Publier · N")
+  const closePublishing = () => {
+    setPublishing(false);
+    void getPublish().then(
+      (r) => r.status.state === 'running' && waitForPublish(getPublish).then(() => client.load()),
+      () => {},
+    );
+  };
   const [unread, setUnread] = useState(0);
 
   // New messages, for the tab's badge
@@ -83,18 +91,19 @@ function Workspace({ onSignOut }: { onSignOut: () => void }) {
     >
       {page}
       {state.saveState === 'signedOut' && <Login overlay onSignedIn={() => void client.resumeAfterLogin()} />}
-      <Dialog open={publishing} title="Publier" onClose={() => setPublishing(false)}>
+      <Dialog open={publishing} title="Publier" onClose={closePublishing}>
         {publishing && state.loaded && (
           <PublishPanel
-            api={{ getPublish, startPublish, resolveConflict }}
+            api={{ getPublish, startPublish, resolveConflict, discard: discardDraft }}
             flush={client.flush}
             navigate={(to) => {
               setPublishing(false);
               adminNavigate(to);
             }}
             content={state.content}
-            onClose={() => setPublishing(false)}
+            onClose={closePublishing}
             onPublished={() => void client.load()}
+            onDiscarded={() => void client.load()}
           />
         )}
       </Dialog>

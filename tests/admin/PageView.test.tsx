@@ -45,3 +45,14 @@ test('in English, a block without its English shows the French marked "to transl
   });
   expect(view.container.textContent).toContain('⟨à traduire⟩');
 });
+
+test('the home page card is previewed above the case study, its texts editable in place', () => {
+  const { view, edits, content } = setup('fr');
+  const hook = view.container.querySelector('[data-edit="card.hook"]');
+  expect(hook?.textContent).toBe(content.projects.hug.card.hook!.fr);
+  fireEvent.click(hook!);
+  const box = screen.getByRole('textbox', { name: 'Modifier le texte' }) as HTMLTextAreaElement;
+  fireEvent.change(box, { target: { value: 'Nouvelle accroche' } });
+  expect(edits.at(-1)).toEqual(['card.hook', expect.objectContaining({ fr: 'Nouvelle accroche' })]);
+  expect(view.container.querySelector('[data-edit="card.subtitle"]')).toBeTruthy();
+});

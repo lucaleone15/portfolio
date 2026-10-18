@@ -3,6 +3,7 @@ import type { Language } from '../../types';
 import type { Content, StoredProject } from '../../content/schema';
 import { toCaseStudy, toProject } from '../../content/localize';
 import { CaseStudy } from '../../components/CaseStudy';
+import { ProjectCard } from '../../components/ProjectCard';
 import { projectPath } from '../../router';
 import { projectAccentVars } from '../../data/portfolioData';
 import { EditablePreview } from './EditablePreview';
@@ -48,6 +49,11 @@ export function PageView({
   return (
     <EditablePreview doc={project} content={previewContent} url={projectPath(lang, project.id)} lang={lang} onEdit={onEdit} onOpen={onOpen} onInsert={onInsert}>
       <div style={projectAccentVars(view)} className="project-accent bg-[#F9F9FB] px-5 py-10 text-neutral-900 dark:bg-[#0A0A0C] dark:text-white sm:px-10 sm:py-14">
+        {/* The project's card as on the home page */}
+        <p className="eyebrow mb-4 text-neutral-500 dark:text-[#A1A1AA]">Carte sur l’accueil</p>
+        <div className="mb-14 max-w-md border-b border-black/10 pb-14 dark:border-white/10">
+          <ProjectCard project={view} />
+        </div>
         {study && <CaseStudy project={view} study={study} />}
       </div>
     </EditablePreview>
