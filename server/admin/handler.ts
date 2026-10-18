@@ -67,16 +67,14 @@ export function readBody(req: IncomingMessage, limit: number): Promise<Buffer> {
   return new Promise((resolve, reject) => {
     const chunks: Buffer[] = [];
     let size = 0;
+    // Past the limit the rest is read and dropped (not cut off), so the client gets the answer
     req.on('data', (chunk: Buffer) => {
       size += chunk.length;
-      if (size > limit) {
-        reject(Object.assign(new Error('too large'), { status: 413 }));
-        req.destroy();
-        return;
-      }
-      chunks.push(chunk);
+      if (size <= limit) chunks.push(chunk);
+      // …up to a point: far past it, the connection is cut
+      else if (size > limit * 2 + 1_000_000) req.destroy();
     });
-    req.on('end', () => resolve(Buffer.concat(chunks)));
+    req.on('end', () => (size > limit ? reject(Object.assign(new Error('too large'), { status: 413 })) : resolve(Buffer.concat(chunks))));
     req.on('error', reject);
   });
 }

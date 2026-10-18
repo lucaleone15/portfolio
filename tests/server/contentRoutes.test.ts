@@ -65,3 +65,23 @@ test('rename, delete and discard', async () => {
   expect((await call('POST', 'draft/discard')).status).toBe(204);
   expect(Object.keys((await (await call('GET', 'content')).json()).content.projects)).toEqual(['a']);
 });
+
+test('uploads: processed, previewable under staged/, refused with a message', async () => {
+  const sharp = (await import('sharp')).default;
+  const png = await sharp({ create: { width: 64, height: 48, channels: 3, background: '#c50e36' } }).png().toBuffer();
+  const up = (body: Buffer, qs: string) =>
+    fetch(`${srv.base}/atelier/api/uploads?${qs}`, { method: 'POST', headers: { Cookie: cookie, 'X-Admin': '1', 'Content-Type': 'application/octet-stream' }, body });
+  const res = await up(png, 'kind=image&folder=case/hug&filename=Mon%20image.png');
+  expect(res.status).toBe(200);
+  const out = await res.json();
+  expect(out).toMatchObject({ width: 64, height: 48 });
+  const staged = await fetch(`${srv.base}/atelier/staged${out.src}`, { headers: { Cookie: cookie } });
+  expect(staged.status).toBe(200);
+  expect(staged.headers.get('content-type')).toBe('image/webp');
+  expect((await fetch(`${srv.base}/atelier/staged${out.src}`)).status).toBe(404);
+  const junk = await up(Buffer.from('pas une image'), 'kind=image&folder=case/hug&filename=x.jpg');
+  expect(junk.status).toBe(422);
+  expect((await junk.json()).error).toBe('Format non pris en charge : exporte en JPEG ou PNG');
+  expect((await up(Buffer.alloc(11 * 1024 * 1024), 'kind=pdf&folder=&filename=cv.pdf')).status).toBe(413);
+  expect((await up(png, 'kind=autre&folder=&filename=x')).status).toBe(422);
+});
