@@ -39,7 +39,14 @@ export function InlineEditor({ target, value, lang, onChange, onClose }: { targe
   }, [text, rect.height]);
 
   const s = style.current;
-  const page = window.getComputedStyle(document.body).backgroundColor;
+  // The first opaque background behind the element (a dark chip, a coloured band, the page)
+  const background = (() => {
+    for (let el: HTMLElement | null = target; el; el = el.parentElement) {
+      const bg = window.getComputedStyle(el).backgroundColor;
+      if (bg && bg !== 'transparent' && !/rgba\(.*,\s*0\)$/.test(bg)) return bg;
+    }
+    return 'var(--color-paper)';
+  })();
 
   return (
     <textarea
@@ -70,7 +77,7 @@ export function InlineEditor({ target, value, lang, onChange, onClose }: { targe
         textTransform: s.textTransform as never,
         textAlign: s.textAlign as never,
         color: s.color,
-        background: page && page !== 'rgba(0, 0, 0, 0)' ? page : 'var(--color-paper)',
+        background,
         border: 'none',
         borderRadius: 10,
         outline: '2px solid var(--accent)',

@@ -5,10 +5,13 @@ import { ArrowUpRight01Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
 import { useLanguage } from '../context/LanguageContext';
 import { useSite } from '../content/ContentContext';
+import { useEditAttrs } from '../content/edit';
 
 export function SkillsSection() {
   const { lang } = useLanguage();
   const { skills } = useSite();
+  // Admin preview only: what can be edited in place
+  const edit = useEditAttrs();
   const [activeSkillId, setActiveSkillId] = useState<string | null>(null);
   // On paper every skill is open (there's no hover to reveal them)
   const printing = usePrinting();
@@ -140,6 +143,7 @@ export function SkillsSection() {
                           {skill.number}
                         </span>
                         <span
+                          {...edit(`skills.${index}.title`)}
                           className={`text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight transition-colors duration-200 ${
                             isOpen
                               ? 'text-[var(--accent)]'
@@ -163,7 +167,7 @@ export function SkillsSection() {
                             transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
                             className="space-y-4 overflow-hidden"
                           >
-                            <p className="text-sm sm:text-base text-neutral-600 dark:text-[#A1A1AA] leading-relaxed max-w-2xl">
+                            <p {...edit(`skills.${index}.desc`)} className="text-sm sm:text-base text-neutral-600 dark:text-[#A1A1AA] leading-relaxed max-w-2xl">
                               {skill.desc}
                             </p>
 

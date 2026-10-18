@@ -7,6 +7,7 @@ import { Link, sectionPath } from '../router';
 import { BACHELOR_TOPIC_INDEX, PRESELECT_TOPIC_EVENT } from './ContactSection';
 import { introPending, onIntroLifted } from './IntroCurtain';
 import { useSite } from '../content/ContentContext';
+import { useEditAttrs } from '../content/edit';
 
 // What the ideas become. The longest line ("en contenus engageants.") is 11.6× the font size
 // (measured in the page), so the headline size is derived from the available width ÷ 11.8:
@@ -52,6 +53,8 @@ function RotatingWords({ words, running }: { words: string[]; running: boolean; 
 export function Hero() {
   const { lang, t } = useLanguage();
   const { hero } = useSite();
+  // Admin preview only: what can be edited in place
+  const edit = useEditAttrs();
   // Hidden while the intro curtain covers the page, revealed the moment it lifts (or at once
   // when the hero mounts later, e.g. coming back from a project page)
   const [ready, setReady] = useState(() => !introPending());
@@ -75,7 +78,7 @@ export function Hero() {
           {/* The page's single <h1>: identity label + positioning statement. The name is visible
               in the logo, so it's only repeated for screen readers and search engines. */}
           {/* Identity line (same style as the section labels, e.g. "Compétences") */}
-          <p className="eyebrow sm:text-sm text-[var(--accent)]" aria-hidden="true">
+          <p {...edit('hero.eyebrow')} className="eyebrow sm:text-sm text-[var(--accent)]" aria-hidden="true">
             {hero.eyebrow}
           </p>
 
@@ -87,11 +90,11 @@ export function Hero() {
                 : 'Luca Leone, Media Engineering student at HEIG-VD — '}
             </span>
             <span className="block font-serif leading-[1.05] tracking-[-0.035em] text-[min(2rem,calc((100vw-3rem)/11.8))] sm:text-[min(3rem,calc((100vw-5rem)/11.8))] md:text-[min(3.75rem,calc((100vw-5rem)/11.8))] lg:text-[min(4.5rem,calc((100vw-5rem)/11.8))] xl:text-[min(5.6rem,calc(64rem/11.8))] text-neutral-900 dark:text-white">
-              <span className="block">
+              <span {...edit('hero.headline')} className="block">
                 {`${hero.headline.before} `}
                 <span className="font-extrabold text-[var(--accent)]">{hero.headline.accent}</span>
               </span>
-              <span className="block">
+              <span {...edit('hero.outcomes')} className="block">
                 {`${hero.headline.joiner} `}
                 <RotatingWords key={lang} words={hero.outcomes} running={ready} />.
               </span>
@@ -99,12 +102,12 @@ export function Hero() {
           </h1>
 
           <div className="max-w-3xl space-y-3 text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed font-normal">
-            <p className="text-neutral-600 dark:text-[#A1A1AA]">
+            <p {...edit('hero.lead')} className="text-neutral-600 dark:text-[#A1A1AA]">
               {hero.lead}
             </p>
             {/* Availability, written as a plain sentence; the key words link to the form with the
                 "Bachelor thesis" topic preselected */}
-            <p className="text-neutral-900 dark:text-white">
+            <p {...edit('hero.availability')} className="text-neutral-900 dark:text-white">
               {hero.availability.before}
               <Link
                 href={sectionPath(lang, 'contact')}
