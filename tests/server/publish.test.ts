@@ -212,3 +212,20 @@ test('a pulled change to the content schema code stops the publish', async () =>
   pub.start();
   expect((await pub.wait()).error).toMatchObject({ code: 'code-changed', files: ['src/content/schema.ts'] });
 });
+
+test('after a publish, uploads nobody uses any more are cleared after a day', async () => {
+  const { draft, pub } = publisher();
+  const uploads = path.join(data, 'uploads/images/case/hug');
+  fs.mkdirSync(uploads, { recursive: true });
+  const old = path.join(uploads, 'abandon-00000000.webp');
+  const recent = path.join(uploads, 'en-cours-11111111.webp');
+  fs.writeFileSync(old, 'x');
+  fs.writeFileSync(recent, 'x');
+  const twoDaysAgo = (Date.now() - 2 * 86_400_000) / 1000;
+  fs.utimesSync(old, twoDaysAgo, twoDaysAgo);
+  draft.write('project:a', project('a', 'A v2'), 0);
+  pub.start();
+  expect((await pub.wait()).state).toBe('done');
+  expect(fs.existsSync(old)).toBe(false);
+  expect(fs.existsSync(recent)).toBe(true); // maybe in an edit not saved yet
+});

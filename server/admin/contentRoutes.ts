@@ -65,8 +65,14 @@ export function createContentRoutes(draft: DraftStore, stagingDir: string): ApiR
       return true;
     }
     const m = /^\/content\/([^/]+)(\/rename)?$/.exec(route);
-    if (!m || !isRef(decodeURIComponent(m[1]))) return false;
-    const ref = decodeURIComponent(m[1]) as PageRef;
+    let decoded = '';
+    try {
+      decoded = m ? decodeURIComponent(m[1]) : '';
+    } catch {
+      return false; // malformed %-encoding: an address that doesn't exist
+    }
+    if (!m || !isRef(decoded)) return false;
+    const ref = decoded as PageRef;
     const id = ref.startsWith('project:') ? ref.slice('project:'.length) : null;
 
     if (!m[2] && req.method === 'PUT') {

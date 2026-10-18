@@ -80,7 +80,8 @@ export async function processUpload(input: {
   } catch {
     throw new UploadError(UNSUPPORTED);
   }
-  if (!meta.format || !['jpeg', 'png', 'webp', 'avif', 'tiff', 'gif'].includes(meta.format)) throw new UploadError(UNSUPPORTED);
+  // sharp reports AVIF as 'heif'; an iPhone HEIC (HEVC) can't be decoded and fails just below
+  if (!meta.format || !['jpeg', 'png', 'webp', 'avif', 'heif', 'tiff', 'gif'].includes(meta.format)) throw new UploadError(UNSUPPORTED);
 
   // rotate(): apply the EXIF orientation; sharp converts from the embedded profile (Display P3
   // for Mac screenshots) to sRGB, so the colours don't look washed out in the browser

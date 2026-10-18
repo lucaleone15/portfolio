@@ -57,6 +57,31 @@ function referencedUploads(draftJson: string, stagingDir: string): string[] {
   return out;
 }
 
+/**
+ * Uploads no page uses, more than a day old: abandoned (a replaced image, a test). Younger ones
+ * may belong to an edit not saved yet, and stay.
+ */
+function pruneStaged(stagingDir: string, draftJson: string, olderThanMs = 86_400_000) {
+  const used = new Set(referencedUploads(draftJson, stagingDir));
+  const walk = (dir: string) => {
+    let entries: fs.Dirent[] = [];
+    try {
+      entries = fs.readdirSync(dir, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const e of entries) {
+      const full = path.join(dir, e.name);
+      if (e.isDirectory()) walk(full);
+      else {
+        const src = '/' + path.relative(stagingDir, full).split(path.sep).join('/');
+        if (!used.has(src) && Date.now() - fs.statSync(full).mtimeMs > olderThanMs) fs.rmSync(full, { force: true });
+      }
+    }
+  };
+  walk(stagingDir);
+}
+
 export function createPublisher(deps: {
   mode: 'git' | 'files';
   repoRoot: string;
@@ -90,6 +115,7 @@ export function createPublisher(deps: {
     // Not discard(): pages saved while the site was building stay in the draft
     deps.draft.settle();
     for (const src of uploads) fs.rmSync(path.join(deps.stagingDir, src), { force: true });
+    pruneStaged(deps.stagingDir, JSON.stringify(deps.draft.read().content));
     status = { state: 'done', finishedAt: new Date().toISOString(), published: changed };
   };
 

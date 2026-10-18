@@ -21,14 +21,20 @@ export function countWord(n: number, lang: Language, capitalized = false): strin
   return capitalized ? word.charAt(0).toUpperCase() + word.slice(1) : word;
 }
 
-/** {n} / {N}: number of projects shown on the site, in words (lower case / capitalised); {names}: their names */
-export function fillTemplate(text: string, c: Content, lang: Language): string {
+/**
+ * {n} / {N}: number of projects shown on the site, in words (lower case / capitalised); {names}:
+ * their names. `escape` adapts the inserted values to the file (JSON strings).
+ */
+export function fillTemplate(text: string, c: Content, lang: Language, escape: (v: string) => string = (v) => v): string {
   const projects = visibleProjects(c, lang);
   return text
-    .replaceAll('{n}', countWord(projects.length, lang))
-    .replaceAll('{N}', countWord(projects.length, lang, true))
-    .replaceAll('{names}', projects.map((p) => p.name).join(', '));
+    .replaceAll('{n}', escape(countWord(projects.length, lang)))
+    .replaceAll('{N}', escape(countWord(projects.length, lang, true)))
+    .replaceAll('{names}', escape(projects.map((p) => p.name).join(', ')));
 }
+
+/** A value inside a JSON string: quotes and backslashes escaped */
+const jsonString = (v: string) => JSON.stringify(v).slice(1, -1);
 
 const KIND_FR = { pro: 'Expérience professionnelle', 'school-client': 'Projet académique avec un vrai client', school: 'Projet académique' };
 
@@ -51,7 +57,7 @@ export function llmsProjectsBlock(c: Content): string {
 
 /** A public file with its placeholders filled; llms.txt also gets its project list between the markers */
 export function fillDerivedFile(name: string, text: string, c: Content): string {
-  let out = fillTemplate(text, c, 'fr');
+  let out = fillTemplate(text, c, 'fr', name.endsWith('.json') ? jsonString : undefined);
   if (name === 'llms.txt') out = out.replace(/<!--projets:start-->[\s\S]*?<!--projets:end-->\n/, `${llmsProjectsBlock(c)}\n`);
   return out;
 }
