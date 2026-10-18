@@ -79,7 +79,8 @@
       "fr": "OceanSight, app mobile pour signaler les déchets marins et rejoindre une mission de nettoyage. Recherche UX, prototype Figma.",
       "en": "OceanSight, a mobile app to report marine waste and join a clean-up mission. UX research, Figma prototype and user tests, graded 6/6.",
       "enOf": "aed100a0"
-    }
+    },
+    "llms": "**[OceanSight](https://luca-leone.ch/projets/oceansight)** (2026) :\n   - *Type* : Projet académique (cours Bases UI/UX, HEIG-VD), lié à l'ODD 14 « vie aquatique ».\n   - *Description* : application mobile collaborative pour signaler des déchets marins (filets fantômes, îles de plastique), rejoindre une mission de nettoyage et suivre son impact.\n   - *Rôle* : UX/UI design, de la recherche utilisateur au prototype. Équipe : Sacha Loskov et Romain Blanchard.\n   - *Résultat* : 6/6 en UX et 5.4/6 en UI, après des tests avec cinq personnes.\n   - *Outils* : Figma, FigJam."
   },
   "study": {
     "kicker": {

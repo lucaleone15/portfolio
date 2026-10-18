@@ -74,7 +74,8 @@
       "fr": "DriveGear, boutique en ligne pour passionnés d’automobile, créée seul de A à Z : marque, WooCommerce, SEO et réseaux. Noté 5.9/6.",
       "en": "DriveGear, an online store for car enthusiasts built solo from A to Z: brand, WooCommerce, SEO and social. Graded 5.9/6.",
       "enOf": "992f3891"
-    }
+    },
+    "llms": "**[DriveGear](https://luca-leone.ch/projets/drivegear)** (2025) :\n   - *Type* : Projet académique (cours E-commerce, HEIG-VD), projet solo.\n   - *Description* : boutique en ligne pour passionnés d'automobile créée de A à Z : marque, boutique WooCommerce, 30 fiches produits, trois modèles de vente (vente directe, affiliation, impression à la demande), SEO, newsletter, réseaux sociaux et campagne publicitaire.\n   - *Résultat* : 5.9/6.\n   - *Outils* : WordPress, WooCommerce, Yoast SEO, Google Analytics 4, Notion."
   },
   "study": {
     "kicker": {

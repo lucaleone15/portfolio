@@ -162,11 +162,11 @@ export default function App({ initialUrl }: { initialUrl?: string }) {
       <MotionConfig reducedMotion="user">
         <ThemeProvider>
           <AccentProvider>
-            <LanguageProvider>
-              <ContentProvider>
+            <ContentProvider>
+              <LanguageProvider>
                 <PortfolioApp />
-              </ContentProvider>
-            </LanguageProvider>
+              </LanguageProvider>
+            </ContentProvider>
           </AccentProvider>
         </ThemeProvider>
       </MotionConfig>

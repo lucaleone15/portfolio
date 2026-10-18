@@ -79,7 +79,8 @@
       "fr": "F1 PitWall, concept d’app qui place les fans de F1 sur le muret des stands : télémétrie, circuit en direct et prédictions par IA.",
       "en": "F1 PitWall, an app concept that puts Formula 1 fans on the pit wall: telemetry, a live track map and AI race predictions.",
       "enOf": "c1717497"
-    }
+    },
+    "llms": "**[F1 PitWall](https://luca-leone.ch/projets/f1-pitwall)** (2025) :\n   - *Type* : Projet académique individuel (cours WebDon, HEIG-VD).\n   - *Description* : concept d'application de second écran qui place les fans de Formule 1 sur le muret des stands : classement détaillé, télémétrie, circuit en direct et prédictions de course (modèle hybride LightGBM et simulation Monte-Carlo) à partir des données Ergast, FastF1 et OpenF1.\n   - *Rôle* : Concept, données et UI.\n   - *Résultat* : 5.5/6, concept jugé « original et ambitieux ».\n   - *Outils* : Figma, données ouvertes, machine learning."
   },
   "study": {
     "kicker": {

@@ -79,7 +79,8 @@
       "fr": "Pour les HUG, une enquête en ligne qui vérifie l’éligibilité au don du sang avant l’inscription. Laravel et Vue, noté 6/6.",
       "en": "For the Geneva University Hospitals, an online survey that checks blood donation eligibility before booking. Graded 6/6.",
       "enOf": "68e16bd1"
-    }
+    },
+    "llms": "**[HUG – Les HUG mènent l'enquête](https://luca-leone.ch/projets/hug)** (2026) :\n   - *Type* : Projet académique avec un vrai client, les Hôpitaux universitaires de Genève (projet d'intégration HEIG-VD, 4 semaines).\n   - *Problème* : sur dix inscrits à une collecte de sang en entreprise, trois repartaient sans avoir pu donner.\n   - *Réponse* : le questionnaire d'éligibilité transformé en enquête policière en ligne, pour savoir avant de s'inscrire si l'on peut donner ; plateforme web, tableau de bord pour les entreprises, campagne (affiches, intranet, réseaux sociaux).\n   - *Rôle* : Développeur full-stack, participation au concept et à l'UX/UI. Équipe de 7 : Romain Blanchard, Étienne Bergeon, Christophe Cunha, Aissya M'Ghirbi, Liliana Kolmakova et Marc Bridy.\n   - *Résultat* : site en ligne pendant un an ([donnez-votre-sang.ch](https://donnez-votre-sang.ch)), note maximale 6/6.\n   - *Technologies* : Laravel, Vue 3, MySQL, Figma."
   },
   "study": {
     "kicker": {

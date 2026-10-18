@@ -11,7 +11,7 @@ const root = process.cwd();
 const dist = path.join(root, 'dist');
 const ssrEntry = path.join(root, 'dist-ssr', 'entry-server.js');
 
-const { render, getAllRoutes, getHeadData, renderHeadTags, renderSitemap, projectImagePaths, pathFor, USER_INFO } = await import(
+const { render, getAllRoutes, getHeadData, renderHeadTags, renderSitemap, projectImagePaths, pathFor, USER_INFO, CONTENT, DERIVED_FILES, fillDerivedFile } = await import(
   pathToFileURL(ssrEntry).href
 );
 
@@ -98,5 +98,12 @@ const sitemap = renderSitemap({
 });
 fs.writeFileSync(path.join(dist, 'sitemap.xml'), sitemap);
 console.log('wrote sitemap.xml');
+
+// Texts that count or list the projects (llms.txt, AI catalogues): rebuilt from the content
+for (const name of DERIVED_FILES) {
+  const file = path.join(dist, name);
+  fs.writeFileSync(file, fillDerivedFile(name, fs.readFileSync(path.join(root, 'public', name), 'utf8'), CONTENT));
+  console.log(`wrote ${name}`);
+}
 
 fs.rmSync(path.join(root, 'dist-ssr'), { recursive: true, force: true });

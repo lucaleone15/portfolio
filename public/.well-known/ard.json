@@ -3,7 +3,7 @@
     {
       "identifier": "urn:air:luca-leone.ch:portfolio:profile",
       "displayName": "Luca Leone - Profil & Réalisations",
-      "description": "Profil, parcours et six études de cas de Luca Leone (HUG, Karting de Vuiteboeuf, OceanSight, L'Étoile Blanche, DriveGear, F1 PitWall) : communication digitale, UX/UI design et développement web.",
+      "description": "Profil, parcours et {n} études de cas de Luca Leone ({names}) : communication digitale, UX/UI design et développement web.",
       "type": "text/markdown",
       "url": "https://luca-leone.ch/llms.txt",
       "representativeQueries": [

@@ -4,6 +4,7 @@ import type { CaseBlock } from './data/caseStudies/types';
 import { CONTENT } from './content/load';
 import { projectSeo, toCaseStudy, toProject, toSite, visibleProjects } from './content/localize';
 import { SITE_PAGES } from './content/schema';
+import { fillTemplate } from './content/derived';
 import { homePath, pathFor, privacyPath, projectPath, Route, SECTION_IDS, SectionId, sectionPath } from './router';
 
 /**
@@ -44,7 +45,7 @@ export function getAllRoutes(): Route[] {
   return langs.flatMap((lang) => [
     { name: 'home', lang } as Route,
     ...SECTION_IDS.map((section) => ({ name: 'home', lang, section }) as Route),
-    ...CONTENT.index.order.map((id) => ({ name: 'project', lang, slug: id }) as Route),
+    ...visibleProjects(CONTENT, lang).map((p) => ({ name: 'project', lang, slug: p.id }) as Route),
     { name: 'privacy', lang } as Route,
     { name: 'stand', lang } as Route,
     { name: 'podium', lang } as Route,
@@ -54,6 +55,13 @@ export function getAllRoutes(): Route[] {
 function alternatesFor(route: Route) {
   const fr = abs(pathFor({ ...route, lang: 'fr' } as Route));
   const en = abs(pathFor({ ...route, lang: 'en' } as Route));
+  // A project not written in English yet has no English page
+  if (route.name === 'project' && !visibleProjects(CONTENT, 'en').some((p) => p.id === route.slug)) {
+    return [
+      { hreflang: 'fr', href: fr },
+      { hreflang: 'x-default', href: fr },
+    ];
+  }
   return [
     { hreflang: 'fr', href: fr },
     { hreflang: 'en', href: en },
@@ -67,8 +75,14 @@ function alternatesFor(route: Route) {
  * characters and ≤ 920 px (two lines of Arial 14 px). Each one is unique, describes its page
  * in plain words, puts the key information first (mobile cuts sooner) and ends titles with the name.
  */
+/** A fixed page's title and description, with {N} / {names} filled from the projects on the site */
+const pageSeo = (page: (typeof SITE_PAGES)[number], lang: Language) => {
+  const { title, description } = toSite(CONTENT.site, lang).seo[page];
+  return { title: fillTemplate(title, CONTENT, lang), description: fillTemplate(description, CONTENT, lang) };
+};
+
 export const META: Record<string, Record<Language, { title: string; description: string }>> = {
-  ...Object.fromEntries(SITE_PAGES.map((page) => [page, { fr: toSite(CONTENT.site, 'fr').seo[page], en: toSite(CONTENT.site, 'en').seo[page] }])),
+  ...Object.fromEntries(SITE_PAGES.map((page) => [page, { fr: pageSeo(page, 'fr'), en: pageSeo(page, 'en') }])),
   ...Object.fromEntries(Object.values(CONTENT.projects).map((p) => [p.id, { fr: projectSeo(p, 'fr'), en: projectSeo(p, 'en') }])),
 };
 

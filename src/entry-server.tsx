@@ -14,3 +14,5 @@ export function render(url: string): string {
 export { getAllRoutes, getHeadData, projectImagePaths, renderHeadTags, renderSitemap } from './seo';
 export { USER_INFO } from './data/portfolioData';
 export { pathFor } from './router';
+export { CONTENT } from './content/load';
+export { DERIVED_FILES, fillDerivedFile } from './content/derived';

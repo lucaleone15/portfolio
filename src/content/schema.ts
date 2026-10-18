@@ -172,7 +172,13 @@ export const StoredProjectSchema = z
         overview: txt('Aperçu (long)'),
       })
       .describe("Carte de l'accueil"),
-    seo: z.object({ title: txt('Titre SEO'), description: txt('Description SEO') }).describe('Référencement'),
+    seo: z
+      .object({
+        title: txt('Titre SEO'),
+        description: txt('Description SEO'),
+        llms: str('Fiche pour les IA, en français (llms.txt) (long)').optional(),
+      })
+      .describe('Référencement'),
     study: StudySchema,
   })
   .describe('Projet');
