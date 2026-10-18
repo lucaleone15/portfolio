@@ -6,14 +6,12 @@ import { NeonBackdrop } from './NeonBackdrop';
 import { Link, sectionPath } from '../router';
 import { BACHELOR_TOPIC_INDEX, PRESELECT_TOPIC_EVENT } from './ContactSection';
 import { introPending, onIntroLifted } from './IntroCurtain';
+import { useSite } from '../content/ContentContext';
 
 // What the ideas become. The longest line ("en contenus engageants.") is 11.6× the font size
 // (measured in the page), so the headline size is derived from the available width ÷ 11.8:
-// every outcome stays on one line, from a 360px phone to a wide screen.
-export const OUTCOMES = {
-  fr: ['expériences digitales', 'interfaces intuitives', 'contenus engageants', 'identités visuelles', 'sites web sur mesure'],
-  en: ['digital experiences', 'intuitive interfaces', 'engaging content', 'visual identities', 'custom websites'],
-};
+// every outcome stays on one line, from a 360px phone to a wide screen. The words themselves
+// are content (content/site.json → hero.outcomes); the admin warns past that length.
 const ROTATE_EVERY_MS = 2600;
 const EASE_IN_OUT = [0.77, 0, 0.175, 1] as const;
 
@@ -53,6 +51,7 @@ function RotatingWords({ words, running }: { words: string[]; running: boolean; 
 
 export function Hero() {
   const { lang, t } = useLanguage();
+  const { hero } = useSite();
   // Hidden while the intro curtain covers the page, revealed the moment it lifts (or at once
   // when the hero mounts later, e.g. coming back from a project page)
   const [ready, setReady] = useState(() => !introPending());
@@ -77,7 +76,7 @@ export function Hero() {
               in the logo, so it's only repeated for screen readers and search engines. */}
           {/* Identity line (same style as the section labels, e.g. "Compétences") */}
           <p className="eyebrow sm:text-sm text-[var(--accent)]" aria-hidden="true">
-            {lang === 'fr' ? 'Étudiant en ingénierie des médias · HEIG-VD' : 'Media Engineering student · HEIG-VD'}
+            {hero.eyebrow}
           </p>
 
           <h1 className="font-normal">
@@ -88,40 +87,33 @@ export function Hero() {
                 : 'Luca Leone, Media Engineering student at HEIG-VD — '}
             </span>
             <span className="block font-serif leading-[1.05] tracking-[-0.035em] text-[min(2rem,calc((100vw-3rem)/11.8))] sm:text-[min(3rem,calc((100vw-5rem)/11.8))] md:text-[min(3.75rem,calc((100vw-5rem)/11.8))] lg:text-[min(4.5rem,calc((100vw-5rem)/11.8))] xl:text-[min(5.6rem,calc(64rem/11.8))] text-neutral-900 dark:text-white">
-              {lang === 'fr' ? (
-                <span className="block">
-                  Je transforme des <span className="font-extrabold text-[var(--accent)]">idées</span>
-                </span>
-              ) : (
-                <span className="block">
-                  I turn <span className="font-extrabold text-[var(--accent)]">ideas</span>
-                </span>
-              )}
               <span className="block">
-                {lang === 'fr' ? 'en ' : 'into '}
-                <RotatingWords key={lang} words={OUTCOMES[lang]} running={ready} />.
+                {`${hero.headline.before} `}
+                <span className="font-extrabold text-[var(--accent)]">{hero.headline.accent}</span>
+              </span>
+              <span className="block">
+                {`${hero.headline.joiner} `}
+                <RotatingWords key={lang} words={hero.outcomes} running={ready} />.
               </span>
             </span>
           </h1>
 
           <div className="max-w-3xl space-y-3 text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed font-normal">
             <p className="text-neutral-600 dark:text-[#A1A1AA]">
-              {lang === 'fr'
-                ? 'De A à Z, avec une approche qui allie créativité et technique : contenus, réseaux sociaux, identité visuelle, UI/UX et développement web.'
-                : 'End to end, with an approach that blends creativity and technique: content, social media, visual identity, UI/UX and web development.'}
+              {hero.lead}
             </p>
             {/* Availability, written as a plain sentence; the key words link to the form with the
                 "Bachelor thesis" topic preselected */}
             <p className="text-neutral-900 dark:text-white">
-              {lang === 'fr' ? 'Je cherche actuellement une entreprise pour réaliser mon ' : "I'm currently looking for a company to host my "}
+              {hero.availability.before}
               <Link
                 href={sectionPath(lang, 'contact')}
                 onClick={() => window.dispatchEvent(new CustomEvent(PRESELECT_TOPIC_EVENT, { detail: BACHELOR_TOPIC_INDEX }))}
                 className="pointer-events-auto whitespace-nowrap font-semibold underline decoration-[var(--accent)] decoration-2 underline-offset-[0.2em] hover:text-[var(--accent)] transition-colors"
               >
-                {lang === 'fr' ? 'travail de Bachelor' : 'Bachelor thesis'}
+                {hero.availability.link}
               </Link>
-              .
+              {hero.availability.after}
             </p>
           </div>
 

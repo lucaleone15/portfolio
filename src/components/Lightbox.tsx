@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState, ty
 import { ArrowLeft01Icon, ArrowRight01Icon, Cancel01Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
 import { useLanguage } from '../context/LanguageContext';
-import type { CaseImage } from '../data/caseStudies';
+import type { CaseImage } from '../data/caseStudies/types';
 
 /**
  * Full-screen viewer for a case study's images: a tap on any image opens it large, then

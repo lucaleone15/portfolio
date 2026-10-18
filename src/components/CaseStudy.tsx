@@ -9,7 +9,7 @@ import { Project } from '../types';
 import { imageSrcSet } from '../data/images';
 import { PROJECT_KIND_LABEL } from '../data/portfolioData';
 import { projectMediaTransition } from '../viewTransitions';
-import type { CaseBlock, CaseFigure, CaseImage, CaseStep, CaseStudy as CaseStudyData } from '../data/caseStudies';
+import type { CaseBlock, CaseFigure, CaseImage, CaseStep, CaseStudy as CaseStudyData } from '../data/caseStudies/types';
 
 /**
  * Case study page told as a scroll story. One template for every project: the content

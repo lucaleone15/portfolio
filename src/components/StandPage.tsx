@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { hiddenPath, homePath, Link } from '../router';
-import { UNIFIED_PROJECTS } from '../data/portfolioData';
+import { CONTENT } from '../content/load';
+
+const UNIFIED_PROJECTS = CONTENT.index.order.map((id) => CONTENT.projects[id]);
 import { getAllRoutes, getHeadData, projectImagePaths } from '../seo';
 
 /**

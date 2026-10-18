@@ -74,18 +74,10 @@ const lastCommit = (paths) => {
   }
 };
 
-// Case study file of each project (src/data/caseStudies/); a project missing here falls back
-// to the project data file
-const CASE_STUDY_FILES = {
-  hug: 'hug',
-  'karting-vuiteboeuf': 'karting',
-  oceansight: 'oceansight',
-  'etoile-blanche': 'etoileBlanche',
-  drivegear: 'drivegear',
-  'f1-pitwall': 'f1Pitwall',
-};
 const HOME_SOURCES = [
-  'src/data/portfolioData.ts',
+  'content/site.json',
+  'content/projects.json',
+  ':(glob)content/projects/*.json',
   'src/context/LanguageContext.tsx',
   ...['Hero', 'HeroBandeau', 'SkillsSection', 'ProjectsSection', 'ProjectCard', 'AboutSection', 'ContactSection', 'ContactExtras'].map(
     (name) => `src/components/${name}.tsx`,
@@ -94,10 +86,8 @@ const HOME_SOURCES = [
 ];
 const sourcesFor = (route) => {
   if (route.name === 'project') {
-    const file = CASE_STUDY_FILES[route.slug];
-    if (!file) return ['src/data/portfolioData.ts'];
     const folders = new Set(projectImagePaths(route.lang, route.slug).map((src) => `public${path.posix.dirname(src)}`));
-    return [`src/data/caseStudies/${file}.ts`, ...folders];
+    return [`content/projects/${route.slug}.json`, ...folders];
   }
   return HOME_SOURCES;
 };

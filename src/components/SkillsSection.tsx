@@ -4,83 +4,11 @@ import { usePrinting } from '../print';
 import { ArrowUpRight01Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
 import { useLanguage } from '../context/LanguageContext';
-
-export interface SkillItem {
-  id: string;
-  number: string;
-  titleFr: string;
-  titleEn: string;
-  descFr: string;
-  descEn: string;
-  tools: string[];
-  toolsEn: string[];
-}
-
-export const SKILLS_DATA: SkillItem[] = [
-  {
-    id: 'ui-ux',
-    number: '01',
-    titleFr: 'UI/UX Design',
-    titleEn: 'UI/UX Design',
-    descFr: "Conception d'interfaces intuitives et ergonomiques, wireframes, prototypes interactifs haute fidélité et design systems modulaires.",
-    descEn: 'Designing intuitive and ergonomic interfaces, wireframes, high-fidelity interactive prototypes, and modular design systems.',
-    tools: ['Figma', 'Prototypage', 'Design Systems', 'Tests utilisateurs'],
-    toolsEn: ['Figma', 'Prototyping', 'Design Systems', 'User testing']
-  },
-  {
-    id: 'web-dev',
-    number: '02',
-    titleFr: 'Développement Web',
-    titleEn: 'Web Development',
-    descFr: "Intégration et développement d'applications web sur mesure, modernes, véloces et pensées pour répondre précisément aux besoins de chaque projet.",
-    descEn: 'Developing modern, fast, and tailored web applications crafted to match the specific requirements of each project.',
-    tools: ['JavaScript', 'Vue.js', 'Laravel', 'Tailwind CSS', 'PHP'],
-    toolsEn: ['JavaScript', 'Vue.js', 'Laravel', 'Tailwind CSS', 'PHP']
-  },
-  {
-    id: 'comm-digitale',
-    number: '03',
-    titleFr: 'Communication Digitale',
-    titleEn: 'Digital Communication',
-    descFr: 'Élaboration de stratégies de contenu numérique, gestion de communautés et déploiement de campagnes multicanales engageantes.',
-    descEn: 'Developing digital content strategies, managing social channels, and launching engaging multi-platform campaigns.',
-    tools: ['Stratégie Social Media', 'Instagram & TikTok', 'Community Management', 'Storytelling'],
-    toolsEn: ['Social media strategy', 'Instagram & TikTok', 'Community management', 'Storytelling']
-  },
-  {
-    id: 'dir-art',
-    number: '04',
-    titleFr: 'Direction Artistique',
-    titleEn: 'Art Direction',
-    descFr: "Création d'identités visuelles singulières, déclinaison de chartes graphiques, typographie soignée et cohérence de marque.",
-    descEn: 'Crafting distinctive brand identities, editorial visual guidelines, refined typography, and overall brand coherence.',
-    tools: ['Identité visuelle', 'Illustrator & Photoshop', 'Typographie'],
-    toolsEn: ['Visual identity', 'Illustrator & Photoshop', 'Typography']
-  },
-  {
-    id: 'prod-video',
-    number: '05',
-    titleFr: 'Production Audiovisuelle',
-    titleEn: 'Audiovisual Production',
-    descFr: 'Captation photo, tournage et montage vidéo dynamique sur le terrain, étalonnage et formats courts optimisés pour le web et les réseaux.',
-    descEn: 'Photography, dynamic on-site video filming and editing, color grading, and short-form storytelling tailored for social platforms.',
-    tools: ['Captation Photo & Vidéo', 'Premiere Pro', 'Formats courts (Reels)', 'Étalonnage'],
-    toolsEn: ['Photo & video shooting', 'Premiere Pro', 'Short-form video (Reels)', 'Colour grading']
-  },
-  {
-    id: 'gest-projet',
-    number: '06',
-    titleFr: 'Gestion de Projet Média',
-    titleEn: 'Media Project Management',
-    descFr: "Coordination d'initiatives pluridisciplinaires, méthodologies agiles, cadrage des besoins et pilotage rigoureux du brief à la livraison.",
-    descEn: 'Coordinating cross-functional media initiatives with agile workflows, scoping requirements from brief to final delivery.',
-    tools: ['Gestion de projet Agile', 'Notion & Jira', 'Cahier des charges'],
-    toolsEn: ['Agile project management', 'Notion & Jira', 'Project specifications']
-  }
-];
+import { useSite } from '../content/ContentContext';
 
 export function SkillsSection() {
   const { lang } = useLanguage();
+  const { skills } = useSite();
   const [activeSkillId, setActiveSkillId] = useState<string | null>(null);
   // On paper every skill is open (there's no hover to reveal them)
   const printing = usePrinting();
@@ -158,7 +86,7 @@ export function SkillsSection() {
           onMouseLeave={closeOnLeave}
           className="divide-y divide-black/10 dark:divide-white/10 border-y border-black/10 dark:border-white/10"
         >
-          {SKILLS_DATA.map((skill, index) => {
+          {skills.map((skill, index) => {
             const isOpen = printing || activeSkillId === skill.id;
             const panelId = `skill-panel-${skill.id}`;
 
@@ -218,7 +146,7 @@ export function SkillsSection() {
                               : 'text-neutral-900 dark:text-white group-hover:text-[var(--accent)]'
                           }`}
                         >
-                          {lang === 'fr' ? skill.titleFr : skill.titleEn}
+                          {skill.title}
                         </span>
                       </button>
                     </h3>
@@ -236,12 +164,12 @@ export function SkillsSection() {
                             className="space-y-4 overflow-hidden"
                           >
                             <p className="text-sm sm:text-base text-neutral-600 dark:text-[#A1A1AA] leading-relaxed max-w-2xl">
-                              {lang === 'fr' ? skill.descFr : skill.descEn}
+                              {skill.desc}
                             </p>
 
                             {/* Tags des outils */}
                             <div className="flex flex-wrap gap-2 pt-1 pb-1">
-                              {(lang === 'fr' ? skill.tools : skill.toolsEn).map((tool) => (
+                              {skill.tools.map((tool) => (
                                 <span
                                   key={tool}
                                   className="h-7 px-3 rounded-full text-xs font-medium inline-flex items-center bg-black/[0.05] text-neutral-800 dark:bg-white/[0.08] dark:text-neutral-200"

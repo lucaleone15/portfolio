@@ -4,8 +4,7 @@ import { ArrowUpRight01Icon, Copy01Icon, Folder01Icon, HashtagIcon, Linkedin02Ic
 import { Icon } from './Icon';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
-import { getCustomProjects } from '../data/projectsStorage';
-import { USER_INFO } from '../data/portfolioData';
+import { useContact, useProjects } from '../content/ContentContext';
 import { alternatePath, hiddenPath, projectPath, SectionId, sectionPath, useRouter } from '../router';
 
 /**
@@ -13,6 +12,7 @@ import { alternatePath, hiddenPath, projectPath, SectionId, sectionPath, useRout
  * dependencies stay out of the initial bundle.
  */
 export default function CommandPaletteDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
+  const contact = useContact();
   const setOpen = onOpenChange;
   const [copied, setCopied] = useState(false);
   const [search, setSearch] = useState('');
@@ -23,7 +23,7 @@ export default function CommandPaletteDialog({ open, onOpenChange }: { open: boo
   const { lang } = useLanguage();
   const { theme, toggleTheme } = useTheme();
   const { route, navigate } = useRouter();
-  const projects = lang === 'fr' ? getCustomProjects().fr : getCustomProjects().en;
+  const projects = useProjects();
 
   const run = (action: () => void) => {
     setOpen(false);
@@ -32,7 +32,7 @@ export default function CommandPaletteDialog({ open, onOpenChange }: { open: boo
 
   const copyEmail = async () => {
     try {
-      await navigator.clipboard.writeText(USER_INFO.email);
+      await navigator.clipboard.writeText(contact.email);
       setCopied(true);
       // Keep the palette open a beat so the confirmation is seen
       setTimeout(() => {
@@ -40,7 +40,7 @@ export default function CommandPaletteDialog({ open, onOpenChange }: { open: boo
         setOpen(false);
       }, 700);
     } catch {
-      run(() => (window.location.href = `mailto:${USER_INFO.email}`));
+      run(() => (window.location.href = `mailto:${contact.email}`));
     }
   };
 
@@ -153,7 +153,7 @@ export default function CommandPaletteDialog({ open, onOpenChange }: { open: boo
             ) : (
               <>
                 {lang === 'fr' ? "Copier l'email" : 'Copy email'}
-                <span className="ml-auto text-xs text-neutral-400 dark:text-[#A1A1AA]">{USER_INFO.email}</span>
+                <span className="ml-auto text-xs text-neutral-400 dark:text-[#A1A1AA]">{contact.email}</span>
               </>
             )}
           </Command.Item>
@@ -173,14 +173,14 @@ export default function CommandPaletteDialog({ open, onOpenChange }: { open: boo
           </Command.Item>
           <Command.Item
             value="cv curriculum resume voir view télécharger download"
-            onSelect={() => run(() => window.open(USER_INFO.cv, '_blank', 'noopener'))}
+            onSelect={() => run(() => window.open(contact.cv, '_blank', 'noopener'))}
             className={item}
           >
             <Icon icon={Pdf02Icon} className="w-4 h-4 shrink-0 opacity-60" />
             {lang === 'fr' ? 'Voir le CV' : 'View CV'}
             <span className="ml-auto text-xs text-neutral-400 dark:text-[#A1A1AA]">PDF</span>
           </Command.Item>
-          <Command.Item value="linkedin" onSelect={() => run(() => window.open(USER_INFO.linkedin, '_blank', 'noopener'))} className={item}>
+          <Command.Item value="linkedin" onSelect={() => run(() => window.open(contact.linkedin, '_blank', 'noopener'))} className={item}>
             <Icon icon={Linkedin02Icon} className="w-4 h-4 shrink-0 opacity-60" />
             LinkedIn
             <Icon icon={ArrowUpRight01Icon} className="w-3.5 h-3.5 ml-auto opacity-50" />
