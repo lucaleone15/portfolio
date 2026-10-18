@@ -7,6 +7,7 @@ import {createAnalyticsHandler} from './server/analytics';
 import {createPodiumHandler} from './server/podium';
 import {createAdminRoutes} from './server/admin/routes';
 import {devEnv} from './server/devEnv';
+import {createMessageStore} from './server/messages';
 import {execSync} from 'node:child_process';
 import {readFileSync} from 'node:fs';
 import type {IncomingMessage, ServerResponse} from 'node:http';
@@ -16,7 +17,7 @@ import type {IncomingMessage, ServerResponse} from 'node:http';
  * server/index.ts): POST /api/contact and the first-party analytics.
  */
 function siteApi(env: Record<string, string>): Plugin {
-  const contact = createContactHandler(env);
+  const contact = createContactHandler(env, {messages: createMessageStore(path.resolve(process.cwd(), env.DATA_DIR || '.data'))});
   const analytics = createAnalyticsHandler(env);
   const podium = createPodiumHandler();
   const notFound = (_req: IncomingMessage, res: ServerResponse) => {

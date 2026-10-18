@@ -7,6 +7,8 @@ import { createGit, runCommand } from './git';
 import { createPublisher } from './publish';
 import { createPublishRoutes } from './publishRoutes';
 import { createStatsRoutes } from './statsRoutes';
+import { createMessageRoutes } from './messageRoutes';
+import { createMessageStore } from '../messages';
 
 type Env = Record<string, string | undefined>;
 
@@ -33,6 +35,6 @@ export function createAdminRoutes(env: Env, deps: AdminDeps) {
     },
     onPublished: deps.onPublished,
   });
-  const routes: ApiRoute[] = [createContentRoutes(draft, stagingDir), createUploadRoutes(deps.dataDir), createPublishRoutes(publisher, draft), createStatsRoutes(deps.dataDir, draft)];
+  const routes: ApiRoute[] = [createContentRoutes(draft, stagingDir), createUploadRoutes(deps.dataDir), createPublishRoutes(publisher, draft), createStatsRoutes(deps.dataDir, draft), createMessageRoutes(createMessageStore(deps.dataDir))];
   return createAdminHandler(env, deps, routes);
 }

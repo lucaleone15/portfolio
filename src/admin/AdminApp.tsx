@@ -13,6 +13,7 @@ import { ProjectsList } from './pages/ProjectsList';
 import { ProjectEditor } from './pages/ProjectEditor';
 import { SiteEditor, isSiteTab } from './pages/SiteEditor';
 import { StatsPage } from './pages/StatsPage';
+import { MessagesPage, getUnread } from './pages/MessagesPage';
 
 export function AdminApp() {
   const [signedIn, setSignedIn] = useState<boolean | null>(null);
@@ -43,6 +44,15 @@ function Workspace({ onSignOut }: { onSignOut: () => void }) {
   const { path, query } = useAdminPath();
   const changes = new Set([...state.changed, ...state.pending]).size;
   const [publishing, setPublishing] = useState(false);
+  const [unread, setUnread] = useState(0);
+
+  // New messages, for the tab's badge
+  useEffect(() => {
+    const check = () => getUnread().then((r) => setUnread(r.unread), () => {});
+    check();
+    const id = setInterval(check, 60_000);
+    return () => clearInterval(id);
+  }, []);
 
   let page = <ProjectsList />;
   const project = /^\/projets\/([a-z0-9-]+)$/.exec(path);
@@ -54,10 +64,15 @@ function Workspace({ onSignOut }: { onSignOut: () => void }) {
     page = <StatsPage />;
     section = 'stats';
   }
+  if (path === '/messages') {
+    page = <MessagesPage onUnread={setUnread} />;
+    section = 'messages';
+  }
 
   return (
     <Shell
       section={section}
+      unread={unread}
       onSignOut={() => void signOutAfterSaving(client, () => logout().catch(() => {})).then(onSignOut)}
       status={<SaveIndicator state={state.saveState} onReload={() => void client.load()} />}
       publish={
