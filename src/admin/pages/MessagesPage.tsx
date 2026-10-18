@@ -55,6 +55,9 @@ const when = (iso: string) => {
 };
 const fullDate = (iso: string) => new Date(iso).toLocaleString('fr-CH', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 
+/** The address in a mailto: link, everything but the @ encoded (no extra recipients or headers) */
+const mailtoAddress = (email: string) => encodeURIComponent(email).replace(/%40/g, '@');
+
 function replyHref(m: Message) {
   const subject = m.lang === 'en' ? `Re: your message${m.subject ? ` (${m.subject})` : ''}` : `Re : votre message${m.subject ? ` (${m.subject})` : ''}`;
   const quoted = m.message
@@ -62,7 +65,7 @@ function replyHref(m: Message) {
     .map((l) => `> ${l}`)
     .join('\n');
   const body = `${m.lang === 'en' ? `Hello ${m.name},` : `Bonjour ${m.name},`}\n\n\n\n${quoted}`;
-  return `mailto:${m.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  return `mailto:${mailtoAddress(m.email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
 export function MessagesView({ api: io, onUnread }: { api: MessagesApi; onUnread: (n: number) => void }) {
@@ -70,6 +73,7 @@ export function MessagesView({ api: io, onUnread }: { api: MessagesApi; onUnread
   const [error, setError] = useState(false);
   const [tab, setTab] = useState<Tab>('inbox');
   const [openId, setOpenId] = useState<string | null>(null);
+  const [failed, setFailed] = useState(false);
 
   const reload = useCallback(async () => {
     try {
@@ -93,8 +97,13 @@ export function MessagesView({ api: io, onUnread }: { api: MessagesApi; onUnread
   const open = messages?.find((m) => m.id === openId) ?? null;
 
   const setStatus = async (m: Message, status: MessageStatus) => {
+    setFailed(false);
     setMessages((all) => all?.map((x) => (x.id === m.id ? { ...x, status } : x)) ?? null);
-    await io.setStatus(m.id, status);
+    try {
+      await io.setStatus(m.id, status);
+    } catch {
+      setFailed(true);
+    }
     void reload();
   };
   const select = (m: Message) => {
@@ -106,8 +115,21 @@ export function MessagesView({ api: io, onUnread }: { api: MessagesApi; onUnread
   if (!messages) return <p className="text-sm text-neutral-500">Chargement…</p>;
 
   const count = (t: Tab) => (t === 'unread' ? messages.filter((m) => m.status === 'new').length : 0);
+  // A message in the last 30 days whose notification email didn't go out: the mail settings need a look
+  const mailBroken = messages.some((m) => m.emailed === false && Date.now() - Date.parse(m.receivedAt) < 30 * 86_400_000);
 
   return (
+    <>
+    {mailBroken && (
+      <p role="alert" className="mb-4 rounded-2xl bg-amber-500/10 px-4 py-3 text-sm text-amber-800 dark:text-amber-300">
+        <strong>Les emails de notification ne partent plus</strong> pour certains messages récents : ils sont bien ici, mais vérifie les réglages SMTP du serveur.
+      </p>
+    )}
+    {failed && (
+      <p role="alert" className="mb-4 text-sm font-semibold text-[var(--accent)]">
+        La modification n’a pas pu être enregistrée.
+      </p>
+    )}
     <div className="md:grid md:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] md:gap-6">
       <div className={open ? 'hidden md:block' : ''}>
         <div className="-mx-4 mb-4 flex gap-1 overflow-x-auto px-4 md:mx-0 md:px-0" role="tablist" aria-label="Dossiers">
@@ -167,7 +189,7 @@ export function MessagesView({ api: io, onUnread }: { api: MessagesApi; onUnread
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="min-w-0">
               <h2 className="font-syne text-2xl font-extrabold tracking-tight">{open.name}</h2>
-              <a href={`mailto:${open.email}`} className="text-sm font-semibold text-[var(--accent)] underline-offset-2 hover:underline">
+              <a href={`mailto:${mailtoAddress(open.email)}`} className="text-sm font-semibold text-[var(--accent)] underline-offset-2 hover:underline">
                 {open.email}
               </a>
             </div>
@@ -209,6 +231,7 @@ export function MessagesView({ api: io, onUnread }: { api: MessagesApi; onUnread
         <div className="hidden items-center justify-center rounded-2xl border border-dashed border-[var(--color-border)] p-10 text-sm text-neutral-500 dark:border-white/10 md:flex">Choisis un message.</div>
       )}
     </div>
+    </>
   );
 }
 

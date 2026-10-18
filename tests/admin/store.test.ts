@@ -149,3 +149,23 @@ test('signing out sends pending edits first', async () => {
   await signOutAfterSaving({ flush: async () => void order.push('flush') }, async () => void order.push('logout'));
   expect(order).toEqual(['flush', 'logout']);
 });
+
+test('reloading after a background publish keeps what was just typed', async () => {
+  const api = fakeApi();
+  const store = createDraftClient(api, { debounceMs: 800, retryMs: 3000 });
+  await store.load();
+  store.update('project:hug', (p) => void (p.name = 'Tapé à l’instant'));
+  await store.saveThenReload();
+  expect(api.saves.map((s) => s.ref)).toEqual(['project:hug']);
+});
+
+test('dropping pending edits cancels their saves (before throwing the draft away)', async () => {
+  const api = fakeApi();
+  const store = createDraftClient(api, { debounceMs: 800, retryMs: 3000 });
+  await store.load();
+  store.update('project:hug', (p) => void (p.name = 'Jeté'));
+  store.dropPending();
+  await vi.advanceTimersByTimeAsync(2000);
+  expect(api.saves).toEqual([]);
+  expect(store.getState().saveState).toBe('saved');
+});

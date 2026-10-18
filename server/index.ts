@@ -210,7 +210,11 @@ function sendNotFound(req: http.IncomingMessage, res: http.ServerResponse) {
 // Statistics, podium scores, contact messages and the admin's draft; DATA_DIR can put them
 // outside the site folder, out of reach of a deploy
 const dataDir = env.DATA_DIR ? path.resolve(env.DATA_DIR) : path.join(ROOT, '.data');
-const contact = createContactHandler(env, { messages: createMessageStore(dataDir) });
+const messages = createMessageStore(dataDir);
+// The 12-month retention stated in the privacy policy holds even if nobody opens the atelier
+messages.prune();
+setInterval(() => messages.prune(), 86_400_000).unref();
+const contact = createContactHandler(env, { messages });
 const analytics = createAnalyticsHandler(env, dataDir);
 const podium = createPodiumHandler(dataDir);
 const admin = createAdminRoutes(env, {

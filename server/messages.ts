@@ -27,36 +27,58 @@ export interface Message {
 
 export const MESSAGE_STATUSES: MessageStatus[] = ['new', 'read', 'replied', 'archived'];
 const RETENTION_MS = 365 * 86_400_000;
+/** A flood can't fill the disk: past this, the oldest messages go */
+const MAX_MESSAGES = 2000;
 
-export function createMessageStore(dataDir: string, opts: { now?: () => number } = {}) {
+export function createMessageStore(dataDir: string, opts: { now?: () => number; max?: number } = {}) {
   const now = opts.now ?? Date.now;
+  const max = opts.max ?? MAX_MESSAGES;
   const file = path.join(dataDir, 'messages.json');
 
-  const load = (): Message[] => {
-    try {
-      const all = JSON.parse(fs.readFileSync(file, 'utf8')) as Message[];
-      return all.filter((m) => now() - Date.parse(m.receivedAt) < RETENTION_MS);
-    } catch {
-      return [];
-    }
-  };
   const save = (all: Message[]) => {
     fs.mkdirSync(dataDir, { recursive: true });
     const tmp = `${file}.${process.pid}.tmp`;
     fs.writeFileSync(tmp, JSON.stringify(all, null, 2), { mode: 0o600 });
     fs.renameSync(tmp, file);
   };
+  const load = (): Message[] => {
+    let raw: string;
+    try {
+      raw = fs.readFileSync(file, 'utf8');
+    } catch (err) {
+      if ((err as NodeJS.ErrnoException).code === 'ENOENT') return [];
+      throw err;
+    }
+    let all: Message[];
+    try {
+      all = JSON.parse(raw);
+      if (!Array.isArray(all)) throw new Error('not a list');
+    } catch {
+      // Damaged: set aside (never overwritten), and start a new inbox
+      const aside = `${file}.damaged-${new Date(now()).toISOString().replace(/[:.]/g, '-')}`;
+      fs.renameSync(file, aside);
+      console.error(`[messages] ${file} was damaged, moved to ${aside}`);
+      return [];
+    }
+    const kept = all.filter((m) => now() - Date.parse(m.receivedAt) < RETENTION_MS);
+    // Past the retention period: deleted from the file too, not just hidden
+    if (kept.length !== all.length) save(kept);
+    return kept;
+  };
 
   return {
     add(input: Omit<Message, 'id' | 'receivedAt' | 'status'>): Message {
       const m: Message = { id: crypto.randomUUID(), receivedAt: new Date(now()).toISOString(), status: 'new', ...input };
-      save([m, ...load()]);
+      save([m, ...load()].sort((x, y) => y.receivedAt.localeCompare(x.receivedAt)).slice(0, max));
       return m;
     },
     /** Newest first; past the retention period they're gone (and dropped from the file) */
     list(): Message[] {
-      const all = load().sort((a, b) => b.receivedAt.localeCompare(a.receivedAt));
-      return all;
+      return load().sort((a, b) => b.receivedAt.localeCompare(a.receivedAt));
+    },
+    /** Drops expired messages from the file (also run once a day by the server) */
+    prune(): void {
+      load();
     },
     unread(): number {
       return load().filter((m) => m.status === 'new').length;

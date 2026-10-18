@@ -156,7 +156,9 @@ export function createDraftStore(deps: { repoRoot: string; dir: string }) {
       if (!fs.existsSync(file)) throw new DraftError('missing');
       fs.rmSync(file);
       const index = readIndex();
-      writePage('index', { ...index, order: index.order.filter((x) => x !== id), hidden: index.hidden.filter((x) => x !== id) });
+      // Old addresses of a deleted project would only lead to a 404: freed for reuse
+      const redirects = Object.fromEntries(Object.entries(index.redirects).filter(([, v]) => v !== id));
+      writePage('index', { order: index.order.filter((x) => x !== id), hidden: index.hidden.filter((x) => x !== id), redirects });
       const base = loadBase();
       // A project created again at this address starts over from revision 0
       delete base.revisions[projectRef(id)];

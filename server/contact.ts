@@ -27,7 +27,9 @@ type Env = Record<string, string | undefined>;
 const MAX_BODY_BYTES = 20_000;
 const RATE_WINDOW_MS = 10 * 60 * 1000;
 const RATE_MAX = 5;
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+// No characters that would mean something in a mailto: link (?, &, =, quotes…): a reply
+// from the atelier can't be made to carry extra recipients
+const EMAIL_RE = /^[^\s@?&=,;:<>"'()[\]\\]+@[^\s@?&=,;:<>"'()[\]\\]+\.[^\s@?&=,;:<>"'()[\]\\]{2,}$/;
 const CONFIRM_WINDOW_MS = 24 * 60 * 60 * 1000;
 const CONFIRM_MAX = 3;
 // Topics offered by the form (FR and EN); anything else is dropped
@@ -186,10 +188,17 @@ export function createContactHandler(env: Env, deps: { messages?: MessageStore }
         html: mail.html,
       });
       logDelivery('notification', owner, info);
-      if (stored) deps.messages?.update(stored, { emailed: true });
     } catch (err) {
       console.error('[contact] send failed:', err);
       return stored ? json(res, 200, { ok: true, confirmed: false }) : json(res, 502, { error: 'send_failed' });
+    }
+
+    if (stored) {
+      try {
+        deps.messages?.update(stored, { emailed: true });
+      } catch (err) {
+        console.error('[contact] could not mark the message as emailed:', err);
+      }
     }
 
     // The message is delivered: the confirmation is a courtesy and may fail on its own

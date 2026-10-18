@@ -50,9 +50,9 @@ const CONTENT: Record<'fr' | 'en', { label: string; title: string; intro: string
         body: [
           'Lorsque vous utilisez le formulaire, les données suivantes sont traitées :',
           ['votre nom ;', 'votre adresse email ;', 'le sujet choisi et votre message.'],
-          'Elles servent uniquement à vous répondre. Elles sont envoyées par email à ma boîte de messagerie (hébergée chez Infomaniak, en Suisse). Une copie est aussi enregistrée sur le serveur du site (en Suisse), dans un espace privé auquel moi seul ai accès, pour suivre les demandes ; elle est supprimée automatiquement 12 mois après la réception du message.',
+          'Elles servent uniquement à vous répondre. Elles sont envoyées par email à ma boîte de messagerie (hébergée chez Infomaniak, en Suisse). Une copie est aussi enregistrée sur le serveur du site (en Suisse), dans un espace privé auquel moi seul ai accès, pour suivre les demandes : votre message, avec sa date, sa langue et la page d’où il a été envoyé. Cette copie est supprimée automatiquement 12 mois après la réception du message.',
           'Votre adresse IP est utilisée temporairement, en mémoire et sans être enregistrée, pour limiter les envois abusifs (5 messages par 10 minutes).',
-          'Les messages sont conservés le temps nécessaire au traitement de votre demande et au suivi de nos échanges, au maximum deux ans après le dernier contact, sauf obligation légale contraire.',
+          'Dans ma boîte de messagerie, les messages sont conservés le temps nécessaire au traitement de votre demande et au suivi de nos échanges, au maximum deux ans après le dernier contact, sauf obligation légale contraire.',
         ],
       },
       {
@@ -142,9 +142,9 @@ const CONTENT: Record<'fr' | 'en', { label: string; title: string; intro: string
         body: [
           'When you use the contact form, the following data is processed:',
           ['your name;', 'your email address;', 'the topic you chose and your message.'],
-          'It is only used to reply to you. It is sent by email to my mailbox (hosted by Infomaniak, in Switzerland). A copy is also kept on the site’s server (in Switzerland), in a private area only I can access, to keep track of requests; it is deleted automatically 12 months after the message was received.',
+          'It is only used to reply to you. It is sent by email to my mailbox (hosted by Infomaniak, in Switzerland). A copy is also kept on the site’s server (in Switzerland), in a private area only I can access, to keep track of requests: your message, with its date, language and the page it was sent from. This copy is deleted automatically 12 months after the message was received.',
           'Your IP address is used temporarily, in memory and without being recorded, to limit abuse (5 messages per 10 minutes).',
-          'Messages are kept for as long as needed to handle your request and follow up on our exchange, at most two years after the last contact, unless the law requires otherwise.',
+          'In my mailbox, messages are kept for as long as needed to handle your request and follow up on our exchange, at most two years after the last contact, unless the law requires otherwise.',
         ],
       },
       {
