@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs && npm run build:server",
+    "build": "npm run build:site && npm run build:admin && npm run build:server",
     "start": "node dist-server/index.mjs",
     "preview": "vite preview",
     "clean": "rm -rf dist dist-ssr dist-server",
@@ -15,7 +15,9 @@
     "images": "python3 scripts/make-image-variants.py",
     "test": "vitest run",
     "test:watch": "vitest",
-    "admin:setup": "node dist-server/admin/setup.mjs"
+    "admin:setup": "node dist-server/admin/setup.mjs",
+    "build:site": "vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
+    "build:admin": "vite build --config vite.admin.config.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "6.3.1",

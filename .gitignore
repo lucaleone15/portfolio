@@ -14,3 +14,8 @@ coverage/
 
 # Brainstorm mockups (local)
 .superpowers/
+
+# Admin bundle and the publish staging folders
+dist-admin
+dist-next
+dist-prev
