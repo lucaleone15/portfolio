@@ -11,7 +11,7 @@ import { slugify } from '../slug';
 import { newProject } from '../templates';
 import { adminNavigate } from '../nav';
 import { useDraftClient, useDraftState, useStaged } from '../DraftContext';
-import { Button, Dialog, Pill, fieldClass, labelClass } from '../ui';
+import { Button, Dialog, Pill, fieldClass, labelClass, pageClass } from '../ui';
 import { ContentTabs } from './SiteEditor';
 
 const RENAME_ERRORS: Record<string, string> = {
@@ -46,9 +46,9 @@ export function ProjectsList() {
     client.update<typeof index>('index', (i) => void (i.hidden = i.hidden.includes(id) ? i.hidden.filter((x) => x !== id) : [...i.hidden, id]));
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8 md:px-8 md:py-10">
+    <div className={pageClass}>
       <ContentTabs current="projets" />
-      <div className="flex flex-wrap items-end justify-between gap-4">
+      <div className="flex max-w-4xl flex-wrap items-end justify-between gap-4">
         <div>
           <p className="eyebrow text-[var(--accent)]">Contenu</p>
           <h1 className="mt-2 font-syne text-3xl font-extrabold tracking-tight md:text-4xl">Tes projets</h1>
@@ -63,7 +63,7 @@ export function ProjectsList() {
 
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
         <SortableContext items={order} strategy={verticalListSortingStrategy}>
-          <ol className="mt-8 space-y-3">
+          <ol className="mt-8 max-w-4xl space-y-3">
             {order.map((id, i) => (
               <ProjectRow
                 key={id}

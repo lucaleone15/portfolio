@@ -1,6 +1,9 @@
 import type { ReactNode } from 'react';
 import { Button, Monogram } from './ui';
 import { adminNavigate } from './nav';
+import type { IconSvgElement } from '@hugeicons/react';
+import { ChartColumnIcon, Logout03Icon, Mail01Icon, PencilEdit02Icon } from '@hugeicons/core-free-icons';
+import { Icon } from '../components/Icon';
 import { THEME_LABEL, useTheme, type ThemeChoice } from './theme';
 
 function ThemeIcon({ theme }: { theme: ThemeChoice }) {
@@ -44,10 +47,10 @@ function ThemeButton({ withLabel = false }: { withLabel?: boolean }) {
 
 export type Section = 'contenu' | 'stats' | 'messages';
 
-const NAV: { id: Section; label: string; to: string }[] = [
-  { id: 'contenu', label: 'Contenu', to: '/' },
-  { id: 'stats', label: 'Statistiques', to: '/stats' },
-  { id: 'messages', label: 'Messages', to: '/messages' },
+const NAV: { id: Section; label: string; to: string; icon: IconSvgElement }[] = [
+  { id: 'contenu', label: 'Contenu', to: '/', icon: PencilEdit02Icon },
+  { id: 'stats', label: 'Statistiques', to: '/stats', icon: ChartColumnIcon },
+  { id: 'messages', label: 'Messages', to: '/messages', icon: Mail01Icon },
 ];
 
 /**
@@ -90,7 +93,10 @@ export function Shell({
               aria-current={section === item.id ? 'page' : undefined}
               className={`flex min-h-11 items-center justify-between rounded-xl px-3 font-syne text-sm font-bold transition ${section === item.id ? 'bg-[rgba(var(--accent-rgb),0.1)] text-[var(--accent)]' : 'text-neutral-600 hover:bg-[var(--color-surface)] dark:text-[#A1A1AA] dark:hover:bg-white/5'}`}
             >
-              {item.label}
+              <span className="flex items-center gap-2.5">
+                <Icon icon={item.icon} className="size-[18px]" />
+                {item.label}
+              </span>
               {item.id === 'messages' && unread > 0 && (
                 <span className="grid min-w-5 place-items-center rounded-full bg-[var(--accent)] px-1.5 text-[11px] text-[var(--accent-contrast-text)]">{unread}</span>
               )}
@@ -99,7 +105,8 @@ export function Shell({
         </nav>
         <div className="mt-auto space-y-1">
           <ThemeButton withLabel />
-          <Button variant="quiet" onClick={onSignOut} className="w-full justify-start">
+          <Button variant="quiet" onClick={onSignOut} className="w-full justify-start gap-2.5 px-3 font-sans">
+            <Icon icon={Logout03Icon} className="size-[18px]" />
             Se déconnecter
           </Button>
         </div>
@@ -133,13 +140,15 @@ export function Shell({
             aria-current={section === item.id ? 'page' : undefined}
             className={`relative flex min-h-16 flex-1 flex-col items-center justify-center gap-0.5 text-xs font-bold ${section === item.id ? 'text-[var(--accent)]' : 'text-neutral-500 dark:text-[#A1A1AA]'}`}
           >
+            <Icon icon={item.icon} className="size-5" />
             {item.label}
             {item.id === 'messages' && unread > 0 && (
               <span className="absolute right-[calc(50%-2.4rem)] top-2.5 grid min-w-4 place-items-center rounded-full bg-[var(--accent)] px-1 text-[10px] text-[var(--accent-contrast-text)]">{unread}</span>
             )}
           </button>
         ))}
-        <button type="button" onClick={onSignOut} className="flex min-h-16 flex-1 items-center justify-center text-xs font-bold text-neutral-500 dark:text-[#A1A1AA]">
+        <button type="button" onClick={onSignOut} className="flex min-h-16 flex-1 flex-col items-center justify-center gap-0.5 text-xs font-bold text-neutral-500 dark:text-[#A1A1AA]">
+          <Icon icon={Logout03Icon} className="size-5" />
           Quitter
         </button>
       </nav>

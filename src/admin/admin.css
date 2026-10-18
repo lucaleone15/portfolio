@@ -1,3 +1,8 @@
+/* The scrollbar's room is always kept: pages of different heights don't shift sideways */
+html {
+  scrollbar-gutter: stable;
+}
+
 /* Admin preview (Page mode, src/admin/page/PageView.tsx): what can be clicked to edit */
 .admin-preview [data-edit] {
   cursor: text;

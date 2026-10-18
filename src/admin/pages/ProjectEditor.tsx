@@ -11,7 +11,7 @@ import { PageView } from '../page/PageView';
 import type { Block } from '../../content/schema';
 import { useDraftClient, useDraftState, useStaged } from '../DraftContext';
 import { adminNavigate } from '../nav';
-import { Button, Dialog } from '../ui';
+import { Button, Dialog, pageClass } from '../ui';
 
 export type Mode = 'page' | 'structure';
 
@@ -159,7 +159,7 @@ export function ProjectEditor({ id, query }: { key?: string; id: string; query: 
 
   return (
     <MediaContext.Provider value={media}>
-      <div className="mx-auto max-w-6xl px-4 py-6 md:px-8 md:py-8">
+      <div className={pageClass}>
         <EditorBar title={project.name} back={() => adminNavigate('/')} mode={mode} lang={lang} onMode={setMode} onLang={setLang} />
         <WritingRules />
         {mode === 'structure' ? (
