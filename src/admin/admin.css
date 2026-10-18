@@ -1,6 +1,8 @@
 /* Admin preview (Page mode, src/admin/page/PageView.tsx): what can be clicked to edit */
 .admin-preview [data-edit] {
   cursor: text;
+  /* Some site texts let the pointer through (labels over images, the hero's content layer) */
+  pointer-events: auto;
   border-radius: 6px;
   transition: box-shadow 0.15s;
 }
@@ -12,4 +14,8 @@
 }
 .admin-preview .admin-flash {
   box-shadow: 0 0 0 3px var(--accent);
+}
+/* Labels laid over an image (before / after slider): above the slider's invisible control */
+.admin-preview .absolute[data-edit] {
+  z-index: 5;
 }

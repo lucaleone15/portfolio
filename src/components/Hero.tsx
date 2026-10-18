@@ -92,7 +92,7 @@ export function Hero() {
             <span className="block font-serif leading-[1.05] tracking-[-0.035em] text-[min(2rem,calc((100vw-3rem)/11.8))] sm:text-[min(3rem,calc((100vw-5rem)/11.8))] md:text-[min(3.75rem,calc((100vw-5rem)/11.8))] lg:text-[min(4.5rem,calc((100vw-5rem)/11.8))] xl:text-[min(5.6rem,calc(64rem/11.8))] text-neutral-900 dark:text-white">
               <span {...edit('hero.headline')} className="block">
                 {`${hero.headline.before} `}
-                <span className="font-extrabold text-[var(--accent)]">{hero.headline.accent}</span>
+                <span {...edit('hero.headline.accent')} className="font-extrabold text-[var(--accent)]">{hero.headline.accent}</span>
               </span>
               <span {...edit('hero.outcomes')} className="block">
                 {`${hero.headline.joiner} `}
@@ -110,6 +110,7 @@ export function Hero() {
             <p {...edit('hero.availability')} className="text-neutral-900 dark:text-white">
               {hero.availability.before}
               <Link
+                {...edit('hero.availability.link')}
                 href={sectionPath(lang, 'contact')}
                 onClick={() => window.dispatchEvent(new CustomEvent(PRESELECT_TOPIC_EVENT, { detail: BACHELOR_TOPIC_INDEX }))}
                 className="pointer-events-auto whitespace-nowrap font-semibold underline decoration-[var(--accent)] decoration-2 underline-offset-[0.2em] hover:text-[var(--accent)] transition-colors"

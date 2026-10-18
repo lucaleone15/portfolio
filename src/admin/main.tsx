@@ -5,17 +5,12 @@ import '@fontsource-variable/syne';
 import '../index.css';
 import './admin.css';
 import { AdminApp } from './AdminApp';
+import { applySavedTheme } from './theme';
 
-// Light / dark follows the system (no inline script: the site's CSP allows none here)
-const dark = window.matchMedia('(prefers-color-scheme: dark)');
-const applyTheme = () => {
-  document.documentElement.classList.toggle('dark', dark.matches);
-  document.documentElement.style.colorScheme = dark.matches ? 'dark' : 'light';
-};
-// The page behind the app (overscroll on phones) follows the theme too
+// Light / dark: the device's, unless chosen in the atelier (src/admin/theme.ts). No inline
+// script: the site's CSP allows none here
 document.body.classList.add('bg-[var(--color-paper)]', 'dark:bg-[#0A0A0C]');
-applyTheme();
-dark.addEventListener('change', applyTheme);
+applySavedTheme();
 
 createRoot(document.getElementById('admin')!).render(
   <StrictMode>

@@ -10,7 +10,7 @@ import { imageSrcSet } from '../data/images';
 import { PROJECT_KIND_LABEL } from '../data/portfolioData';
 import { projectMediaTransition } from '../viewTransitions';
 import type { CaseBlock, CaseFigure, CaseImage, CaseStep, CaseStudy as CaseStudyData } from '../data/caseStudies/types';
-import { EditSlot, EditWrap, useEditAttrs } from '../content/edit';
+import { EditSlot, EditWrap, useEditAt, useEditAttrs } from '../content/edit';
 
 /**
  * Case study page told as a scroll story. One template for every project: the content
@@ -76,8 +76,13 @@ function Picture({
   );
 }
 
-function Caption({ children }: { children: ReactNode }) {
-  return <figcaption className="mt-3 text-sm text-neutral-500 dark:text-[#A1A1AA]">{children}</figcaption>;
+function Caption({ children, path }: { children: ReactNode; path?: string }) {
+  const at = useEditAt();
+  return (
+    <figcaption {...(path ? at(path) : {})} className="mt-3 text-sm text-neutral-500 dark:text-[#A1A1AA]">
+      {children}
+    </figcaption>
+  );
 }
 
 function Prose({ text }: { text: string }) {
@@ -131,25 +136,27 @@ function Counter({ figure }: { figure: CaseFigure }) {
 }
 
 function Figures({ items, source }: { items: CaseFigure[]; source?: string }) {
+  const at = useEditAt();
   return (
     <div className="py-6 sm:py-10">
       <dl className={`grid gap-x-8 gap-y-10 ${items.length > 3 ? 'sm:grid-cols-2 lg:grid-cols-4' : items.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'}`}>
-        {items.map((f) => (
+        {items.map((f, i) => (
           <Reveal key={f.label}>
             <dt className="sr-only">{f.label}</dt>
             <dd>
               <span
+                {...at(`items.${i}`)}
                 className={`block font-serif font-extrabold tracking-tight leading-none ${items.length > 3 ? 'text-[clamp(2.4rem,4.4vw,3.8rem)]' : items.length > 2 ? 'text-[clamp(3rem,6vw,5rem)]' : 'text-[clamp(3.5rem,9vw,7.5rem)]'}`}
                 style={{ color: 'var(--pa-text)' }}
               >
                 <Counter figure={f} />
               </span>
-              <span className="mt-3 block max-w-xs text-base text-neutral-600 dark:text-[#A1A1AA]">{f.label}</span>
+              <span {...at(`items.${i}.label`)} className="mt-3 block max-w-xs text-base text-neutral-600 dark:text-[#A1A1AA]">{f.label}</span>
             </dd>
           </Reveal>
         ))}
       </dl>
-      {source && <p className="mt-8 text-xs text-neutral-500 dark:text-[#A1A1AA]">{source}</p>}
+      {source && <p {...at('source')} className="mt-8 text-xs text-neutral-500 dark:text-[#A1A1AA]">{source}</p>}
     </div>
   );
 }
@@ -175,6 +182,7 @@ function StepVisual({ step, frame, active }: { step: CaseStep; frame: 'screen' |
 }
 
 function Steps({ steps, frame = 'plain' }: { steps: CaseStep[]; frame?: 'screen' | 'plain' | 'mockup' }) {
+  const at = useEditAt();
   const [active, setActive] = useState(0);
   const refs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -232,7 +240,7 @@ function Steps({ steps, frame = 'plain' }: { steps: CaseStep[]; frame?: 'screen'
                 <p className="index-number text-lg text-neutral-500 dark:text-white/60">
                   {String(i + 1).padStart(2, '0')} / {String(steps.length).padStart(2, '0')}
                 </p>
-                <p className="mt-3 text-lg sm:text-xl leading-relaxed text-neutral-800 dark:text-[#E4E4E7]">{s.text}</p>
+                <p {...at(`steps.${i}.text`)} className="mt-3 text-lg sm:text-xl leading-relaxed text-neutral-800 dark:text-[#E4E4E7]">{s.text}</p>
               </div>
             </div>
           </li>
@@ -245,6 +253,7 @@ function Steps({ steps, frame = 'plain' }: { steps: CaseStep[]; frame?: 'screen'
 /* ---------- Before / after slider ---------- */
 
 function Compare({ block }: { block: Extract<CaseBlock, { type: 'compare' }> }) {
+  const at = useEditAt();
   const [pos, setPos] = useState(50);
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-120px' });
@@ -276,8 +285,8 @@ function Compare({ block }: { block: Extract<CaseBlock, { type: 'compare' }> }) 
               ⇆
             </span>
           </div>
-          <span className="glass-media pointer-events-none absolute top-3 left-3 rounded-full px-3 py-1 text-xs font-bold">{block.beforeLabel}</span>
-          <span className="glass-media pointer-events-none absolute top-3 right-3 rounded-full px-3 py-1 text-xs font-bold">{block.afterLabel}</span>
+          <span {...at('beforeLabel')} className="glass-media pointer-events-none absolute top-3 left-3 rounded-full px-3 py-1 text-xs font-bold">{block.beforeLabel}</span>
+          <span {...at('afterLabel')} className="glass-media pointer-events-none absolute top-3 right-3 rounded-full px-3 py-1 text-xs font-bold">{block.afterLabel}</span>
           {/* A native range input: drag, click, keyboard and screen readers for free */}
           <input
             type="range"
@@ -292,7 +301,7 @@ function Compare({ block }: { block: Extract<CaseBlock, { type: 'compare' }> }) 
             className="absolute inset-0 h-full w-full cursor-ew-resize opacity-0"
           />
         </div>
-        <Caption>{block.caption}</Caption>
+        <Caption path="caption">{block.caption}</Caption>
       </figure>
     </Reveal>
   );
@@ -301,6 +310,7 @@ function Compare({ block }: { block: Extract<CaseBlock, { type: 'compare' }> }) 
 /* ---------- Architecture: the diagram builds itself, node by node ---------- */
 
 function Architecture({ block }: { block: Extract<CaseBlock, { type: 'architecture' }> }) {
+  const at = useEditAt();
   const appear = (step: number) => ({
     initial: { opacity: 0 },
     whileInView: { opacity: 1 },
@@ -317,9 +327,9 @@ function Architecture({ block }: { block: Extract<CaseBlock, { type: 'architectu
             className={`rounded-2xl p-5 ${n.highlight ? 'text-[var(--pa-on)]' : 'bg-black/[0.04] dark:bg-white/[0.06]'}`}
             style={n.highlight ? { backgroundColor: 'var(--pa)' } : undefined}
           >
-            <p className={`eyebrow ${n.highlight ? '' : 'opacity-70'}`}>{n.sub}</p>
-            <p className="mt-1 text-xl font-bold">{n.title}</p>
-            <p className={`mt-3 text-sm leading-relaxed ${n.highlight ? '' : 'opacity-85'}`}>{n.note}</p>
+            <p {...at(`nodes.${i}.sub`)} className={`eyebrow ${n.highlight ? '' : 'opacity-70'}`}>{n.sub}</p>
+            <p {...at(`nodes.${i}.title`)} className="mt-1 text-xl font-bold">{n.title}</p>
+            <p {...at(`nodes.${i}.note`)} className={`mt-3 text-sm leading-relaxed ${n.highlight ? '' : 'opacity-85'}`}>{n.note}</p>
           </motion.div>,
           i < block.nodes.length - 1 && (
             <motion.div
@@ -330,14 +340,14 @@ function Architecture({ block }: { block: Extract<CaseBlock, { type: 'architectu
             >
               <span className="md:hidden">↕ {block.links[i]}</span>
               <span className="hidden md:flex flex-col items-center gap-1">
-                <span>{block.links[i]}</span>
+                <span {...at(`links.${i}`)}>{block.links[i]}</span>
                 <span className="text-lg leading-none">⇄</span>
               </span>
             </motion.div>
           ),
         ])}
       </div>
-      <Caption>{block.caption}</Caption>
+      <Caption path="caption">{block.caption}</Caption>
     </figure>
   );
 }
@@ -377,7 +387,7 @@ function Video({ block }: { block: Extract<CaseBlock, { type: 'video' }> }) {
           aria-label={block.caption}
           className="w-full h-auto rounded-2xl bg-black"
         />
-        <Caption>{block.caption}</Caption>
+        <Caption path="caption">{block.caption}</Caption>
       </figure>
     </Reveal>
   );
@@ -387,6 +397,7 @@ function Video({ block }: { block: Extract<CaseBlock, { type: 'video' }> }) {
 
 function Block({ block }: { block: CaseBlock; key?: string | number }) {
   const { lang } = useLanguage();
+  const at = useEditAt();
   switch (block.type) {
     case 'figures':
       return <Figures items={block.items} source={block.source} />;
@@ -410,7 +421,7 @@ function Block({ block }: { block: CaseBlock; key?: string | number }) {
                 </div>
               ))}
             </div>
-            <Caption>{block.caption}</Caption>
+            <Caption path="caption">{block.caption}</Caption>
           </figure>
         </Reveal>
       );
@@ -421,7 +432,7 @@ function Block({ block }: { block: CaseBlock; key?: string | number }) {
             <Reveal key={im.src} delay={i * 0.08} className="w-[72%] shrink-0 snap-start sm:w-auto">
               <figure>
                 <Picture image={im} sizes="(min-width: 640px) 360px, 72vw" className="w-full aspect-[3/4] object-cover rounded-2xl" />
-                {im.caption && <Caption>{im.caption}</Caption>}
+                {im.caption && <Caption path={`items.${i}.caption`}>{im.caption}</Caption>}
               </figure>
             </Reveal>
           ))}
@@ -443,11 +454,11 @@ function Block({ block }: { block: CaseBlock; key?: string | number }) {
                 ) : (
                   <Picture image={im} sizes={cols === 1 ? '(min-width: 1152px) 1088px, 100vw' : cols === 5 ? '(min-width: 1024px) 220px, 33vw' : '(min-width: 1024px) 360px, 50vw'} className={`w-full h-auto ${block.narrow ? '' : 'rounded-xl shadow-[0_20px_40px_-20px_rgba(0,0,0,0.4)]'}`} />
                 )}
-                {im.caption && <Caption>{im.caption}</Caption>}
+                {im.caption && <Caption path={`items.${i}.caption`}>{im.caption}</Caption>}
               </Reveal>
             ))}
           </div>
-          {block.caption && <Caption>{block.caption}</Caption>}
+          {block.caption && <Caption path="caption">{block.caption}</Caption>}
         </figure>
       );
     }
@@ -463,7 +474,7 @@ function Block({ block }: { block: CaseBlock; key?: string | number }) {
             ) : (
               pic
             )}
-            {block.image.caption && <Caption>{block.image.caption}</Caption>}
+            {block.image.caption && <Caption path="image.caption">{block.image.caption}</Caption>}
           </figure>
         </Reveal>
       );
@@ -474,6 +485,7 @@ function Block({ block }: { block: CaseBlock; key?: string | number }) {
           <figure className="mx-auto max-w-4xl text-center">
             {/* Short quotes go giant; longer ones stay readable */}
             <blockquote
+              {...at('text')}
               className={`font-serif font-extrabold leading-[1.15] tracking-tight text-neutral-900 dark:text-white ${
                 block.text.length > 80 ? 'text-[clamp(1.6rem,3.4vw,2.6rem)]' : 'text-[clamp(2rem,5vw,4rem)]'
               }`}
@@ -482,7 +494,7 @@ function Block({ block }: { block: CaseBlock; key?: string | number }) {
               {nbsp(block.text)}
               <span style={{ color: 'var(--pa-text)' }}>&nbsp;»</span>
             </blockquote>
-            <figcaption className="mt-6 text-sm font-semibold text-neutral-500 dark:text-[#A1A1AA]">{block.source}</figcaption>
+            <figcaption {...at('source')} className="mt-6 text-sm font-semibold text-neutral-500 dark:text-[#A1A1AA]">{block.source}</figcaption>
           </figure>
         </Reveal>
       );
@@ -490,14 +502,14 @@ function Block({ block }: { block: CaseBlock; key?: string | number }) {
       return (
         <Reveal className="py-6">
           <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {block.members.map((m) => (
+            {block.members.map((m, i) => (
               <li
                 key={m.name}
                 className={`rounded-2xl p-5 ${m.me ? 'text-[var(--pa-on)]' : 'bg-black/[0.04] dark:bg-white/[0.06]'}`}
                 style={m.me ? { backgroundColor: 'var(--pa)' } : undefined}
               >
-                <p className="font-bold">{m.name}</p>
-                <p className={`mt-1 text-sm ${m.me ? 'opacity-90' : 'text-neutral-600 dark:text-[#A1A1AA]'}`}>{m.role}</p>
+                <p {...at(`members.${i}.name`)} className="font-bold">{m.name}</p>
+                <p {...at(`members.${i}.role`)} className={`mt-1 text-sm ${m.me ? 'opacity-90' : 'text-neutral-600 dark:text-[#A1A1AA]'}`}>{m.role}</p>
               </li>
             ))}
           </ul>
@@ -644,7 +656,7 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
                 <ProjectLogo project={project} scale={1.3} eager />
               </span>
             )}
-            <span className="inline-flex h-7 items-center rounded-full bg-black/[0.06] px-3 font-syne text-xs font-bold text-neutral-800 dark:bg-white/[0.1] dark:text-white">
+            <span {...edit('kind')} className="inline-flex h-7 items-center rounded-full bg-black/[0.06] px-3 font-syne text-xs font-bold text-neutral-800 dark:bg-white/[0.1] dark:text-white">
               {PROJECT_KIND_LABEL[project.kind][lang]}
             </span>
           </div>
@@ -760,7 +772,7 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
         <ul className="mt-5 grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
           {study.credits.map((c, i) => (
             <li key={c.name} className="text-sm">
-              <span className="font-bold text-neutral-900 dark:text-white">{c.name}</span>
+              <span {...edit(`study.credits.${i}.name`)} className="font-bold text-neutral-900 dark:text-white">{c.name}</span>
               <span {...edit(`study.credits.${i}.role`)} className="text-neutral-600 dark:text-[#A1A1AA]"> · {c.role}</span>
             </li>
           ))}

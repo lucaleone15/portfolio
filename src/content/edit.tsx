@@ -14,6 +14,8 @@ interface EditApi {
 }
 
 const EditContext = createContext<EditApi | null>(null);
+/** The path of the block being rendered (set by EditWrap), for paths relative to it */
+const EditBase = createContext('');
 
 export function EditProvider({ value, children }: { value: EditApi | null; children: ReactNode }) {
   return <EditContext.Provider value={value}>{children}</EditContext.Provider>;
@@ -26,12 +28,20 @@ export function useEditAttrs(): (path: string) => { 'data-edit'?: string } {
   return useContext(EditContext) ? (path) => ({ 'data-edit': path }) : none;
 }
 
+/** Inside a block: edit('items.0.label') → data-edit="<block path>.items.0.label" */
+export function useEditAt(): (rel: string) => { 'data-edit'?: string } {
+  const base = useContext(EditBase);
+  return useContext(EditContext) ? (rel) => ({ 'data-edit': `${base}.${rel}` }) : none;
+}
+
 export function EditWrap({ path, children }: { path: string; children: ReactNode; key?: string | number }) {
   if (!useContext(EditContext)) return <>{children}</>;
   return (
-    <div data-edit={path} className="admin-editable">
-      {children}
-    </div>
+    <EditBase.Provider value={path}>
+      <div data-edit={path} className="admin-editable">
+        {children}
+      </div>
+    </EditBase.Provider>
   );
 }
 

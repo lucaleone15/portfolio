@@ -23,3 +23,13 @@ test('in the admin every text has its path and every gap between blocks a "+"', 
   const slots = hug.study.sections.reduce((n, s) => n + s.content.length + 1, 0);
   expect(html.match(/data-slot=""/g)).toHaveLength(slots);
 });
+
+test('texts inside blocks have their own paths (figure labels, captions, quotes, team roles…)', () => {
+  const html = renderToString(<EditProvider value={{ onInsert: () => {} }}>{page()}</EditProvider>);
+  expect(html).toContain('data-edit="study.sections.0.content.1.items.0.label"');
+  expect(html).toContain('data-edit="study.sections.2.content.1.items.0.caption"');
+  expect(html).toContain('data-edit="study.sections.3.content.0.beforeLabel"');
+  expect(html).toContain('data-edit="study.sections.3.content.1.steps.0.text"');
+  expect(html).toMatch(/data-edit="study\.sections\.\d+\.content\.\d+\.text"[^>]*>(?:<span[^>]*>«)/);
+  expect(html).toContain('data-edit="kind"');
+});

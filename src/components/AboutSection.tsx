@@ -186,8 +186,8 @@ export function AboutSection() {
                       {...edit(`about.languages.${idx}`)}
                       className="h-8 px-3.5 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-black font-syne text-xs font-bold inline-flex items-center gap-1.5 shadow-xs select-none"
                     >
-                      <span>{item.name}</span>
-                      <span className="font-sans text-white/60 dark:text-black/60 font-medium">· {item.level}</span>
+                      <span {...edit(`about.languages.${idx}.name`)}>{item.name}</span>
+                      <span {...edit(`about.languages.${idx}.level`)} className="font-sans text-white/60 dark:text-black/60 font-medium">· {item.level}</span>
                     </div>
                   ))}
                 </div>
@@ -319,7 +319,7 @@ export function AboutSection() {
                       {item.institution} · {item.location}
                     </p>
                     {item.details && item.details.trim().length > 0 && (
-                      <div className="text-xs sm:text-sm text-neutral-600 dark:text-[#A1A1AA] mt-3 space-y-2 leading-relaxed">
+                      <div {...edit(`about.education.${idx}.details`)} className="text-xs sm:text-sm text-neutral-600 dark:text-[#A1A1AA] mt-3 space-y-2 leading-relaxed">
                         {item.details.split('\n\n').map((paragraph, pIdx) => (
                           <p key={pIdx}>{paragraph}</p>
                         ))}
