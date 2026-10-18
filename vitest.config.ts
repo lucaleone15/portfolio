@@ -9,5 +9,7 @@ export default defineConfig({
     environmentMatchGlobs: [['tests/admin/**', 'jsdom']],
     globals: true,
     setupFiles: ['tests/setup.ts'],
+    // A real origin, so jsdom provides localStorage
+    environmentOptions: { jsdom: { url: 'http://localhost/' } },
   },
 });

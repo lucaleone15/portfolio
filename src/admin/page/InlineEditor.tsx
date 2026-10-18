@@ -7,14 +7,29 @@ import { setEn, setFr, type Txt } from '../../content/txt';
  * that element's own typography, following it when the page scrolls. Each keystroke goes to the
  * draft (the page underneath re-renders); Escape or a click elsewhere closes it.
  */
-export function InlineEditor({ target: clicked, path, value, lang, onChange, onClose }: { target: HTMLElement; path: string; value: Txt; lang: Language; onChange: (v: Txt) => void; onClose: () => void }) {
+export function InlineEditor({
+  target: clicked,
+  path,
+  value,
+  lang,
+  onChange,
+  onClose,
+}: {
+  target: HTMLElement;
+  path: string;
+  /** A text in both languages, or a plain one (a person's name) */
+  value: Txt | string;
+  lang: Language;
+  onChange: (v: Txt | string) => void;
+  onClose: () => void;
+}) {
   // React may replace the element while its text changes (lists keyed by that text): follow the
   // element now showing this path
   const target = clicked.isConnected ? clicked : (document.querySelector<HTMLElement>(`[data-edit="${path}"]`) ?? clicked);
   const box = useRef<HTMLTextAreaElement>(null);
   const [rect, setRect] = useState(() => target.getBoundingClientRect());
   const style = useRef(window.getComputedStyle(target));
-  const text = lang === 'fr' ? value.fr : value.en;
+  const text = typeof value === 'string' ? value : lang === 'fr' ? value.fr : value.en;
 
   useLayoutEffect(() => {
     const update = () => setRect(target.getBoundingClientRect());
@@ -57,7 +72,7 @@ export function InlineEditor({ target: clicked, path, value, lang, onChange, onC
       aria-label="Modifier le texte"
       rows={1}
       value={text}
-      onChange={(e) => onChange(lang === 'fr' ? setFr(value, e.target.value) : setEn(value, e.target.value))}
+      onChange={(e) => onChange(typeof value === 'string' ? e.target.value : lang === 'fr' ? setFr(value, e.target.value) : setEn(value, e.target.value))}
       onKeyDown={(e) => e.key === 'Escape' && onClose()}
       onBlur={onClose}
       style={{

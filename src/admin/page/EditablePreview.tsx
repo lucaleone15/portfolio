@@ -47,10 +47,12 @@ export function EditablePreview({
     const el = target.closest<HTMLElement>('[data-edit]');
     if (!el) return;
     const path = el.dataset.edit!;
-    if (isTxt(getAt(doc, path))) setEditing({ path, el });
+    const v = getAt(doc, path);
+    // Texts in both languages, and people's names (plain text), are written in place
+    if (isTxt(v) || (typeof v === 'string' && /\.name$/.test(path))) setEditing({ path, el });
     else onOpen(path);
   };
-  const value = editing ? (getAt(doc, editing.path) as Txt | undefined) : undefined;
+  const value = editing ? (getAt(doc, editing.path) as Txt | string | undefined) : undefined;
 
   return (
     <div onClickCapture={onClick} className="admin-preview overflow-hidden rounded-3xl border border-[var(--color-border)] dark:border-white/10">
@@ -63,7 +65,7 @@ export function EditablePreview({
           </ContentProvider>
         </StaticLanguageProvider>
       </StaticRouterProvider>
-      {editing && value && <InlineEditor target={editing.el} path={editing.path} value={value} lang={lang} onChange={(v) => onEdit(editing.path, v)} onClose={() => setEditing(null)} />}
+      {editing && value !== undefined && <InlineEditor target={editing.el} path={editing.path} value={value} lang={lang} onChange={(v) => onEdit(editing.path, v)} onClose={() => setEditing(null)} />}
     </div>
   );
 }

@@ -173,9 +173,10 @@ export function SkillsSection() {
 
                             {/* Tags des outils */}
                             <div className="flex flex-wrap gap-2 pt-1 pb-1">
-                              {skill.tools.map((tool) => (
+                              {skill.tools.map((tool, t) => (
                                 <span
                                   key={tool}
+                                  {...edit(`skills.${index}.tools.${t}`)}
                                   className="h-7 px-3 rounded-full text-xs font-medium inline-flex items-center bg-black/[0.05] text-neutral-800 dark:bg-white/[0.08] dark:text-neutral-200"
                                 >
                                   {tool}
