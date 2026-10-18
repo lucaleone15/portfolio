@@ -19,3 +19,6 @@ coverage/
 dist-admin
 dist-next
 dist-prev
+
+# Design docs and plans (local only)
+docs/superpowers/
