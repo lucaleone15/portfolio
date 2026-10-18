@@ -2,17 +2,16 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import { ArrowDown01Icon, FilterHorizontalIcon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
-import { getCustomProjects } from '../data/projectsStorage';
+import { useProjects } from '../content/ContentContext';
 import { ProjectCard } from './ProjectCard';
 import { useLanguage } from '../context/LanguageContext';
 
 export function ProjectsSection() {
   const [selectedFilter, setSelectedFilter] = useState<string>('all');
   const [showAllFilterPills, setShowAllFilterPills] = useState<boolean>(false);
-  const projectsData = getCustomProjects();
   const { lang, t } = useLanguage();
 
-  const currentProjects = lang === 'fr' ? projectsData.fr : projectsData.en;
+  const currentProjects = useProjects();
 
   // Dynamically compute category filters based on current projects
   const uniqueCategories = Array.from(new Set(currentProjects.map((p) => p.category).filter(Boolean)));

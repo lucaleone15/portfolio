@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, FormEvent } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
-import { USER_INFO } from '../data/portfolioData';
+import { useContact } from '../content/ContentContext';
 import { useLanguage } from '../context/LanguageContext';
 import { Link, privacyPath, sectionPath } from '../router';
 import { Add01Icon, ArrowUpRight01Icon, Call02Icon, Copy01Icon, Linkedin02Icon, Loading03Icon, Mail01Icon, Tick02Icon } from '@hugeicons/core-free-icons';
@@ -18,6 +18,7 @@ export const BACHELOR_TOPIC_INDEX = 2;
 
 
 export function ContactSection() {
+  const contact = useContact();
   const { lang, t } = useLanguage();
   const [copied, setCopied] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -500,15 +501,15 @@ export function ContactSection() {
               className="lg:col-start-8 lg:col-span-5 lg:row-start-3"
               icon={<Icon icon={Call02Icon} className="w-5 h-5" />}
               label={lang === 'fr' ? 'Téléphone' : 'Phone'}
-              value={USER_INFO.phone}
-              href={`tel:${USER_INFO.phone.replace(/\s/g, '')}`}
+              value={contact.phone}
+              href={`tel:${contact.phone.replace(/\s/g, '')}`}
             />
             <ContactRow
               className="lg:col-start-8 lg:col-span-5 lg:row-start-4"
               icon={<Icon icon={Linkedin02Icon} className="w-5 h-5" />}
               label="LinkedIn"
               value="in/leone-luca"
-              href={USER_INFO.linkedin}
+              href={contact.linkedin}
               external
             />
           </ul>
@@ -537,7 +538,7 @@ export function ContactSection() {
               {t('nav.about')}
             </Link>
             <a
-              href={USER_INFO.linkedin}
+              href={contact.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="whitespace-nowrap font-medium hover:text-white transition-colors"

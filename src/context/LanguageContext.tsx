@@ -9,7 +9,7 @@ interface LanguageContextType {
   t: (key: string) => string;
 }
 
-export const translations = {
+const translations = {
   fr: {
     // Navigation
     'nav.projects': 'Projets',
@@ -32,7 +32,6 @@ export const translations = {
     // About Section
     'about.index': '02',
     'about.title': 'À propos',
-    'about.bio': "Étudiant en dernière année de Bachelor en ingénierie des médias à la HEIG-VD, je me forme à la communication digitale, au design et aux technologies web, avec une approche qui combine créativité et technique.\n\nJ’aime concevoir des projets numériques de A à Z, de l’idée à sa réalisation : création de contenus, communication sur les réseaux sociaux, identité visuelle, UI/UX, conception de sites web et développement de projets digitaux.\n\nEn parallèle de mes études, je travaille comme community manager pour le Karting de Vuiteboeuf, où je mets en pratique ces compétences à travers la création de contenus photo et vidéo, la gestion des réseaux sociaux et le développement de la présence digitale de la marque.\n\nCurieux et polyvalent, j’aime apprendre, expérimenter avec de nouveaux outils et transformer des idées en projets concrets. Toujours intéressé par de nouvelles collaborations et opportunités dans le digital.",
     'about.educationTitle': 'Formation et parcours',
     'about.experienceTitle': 'Expériences professionnelles',
     'about.languagesTitle': 'Langues',
@@ -67,7 +66,6 @@ export const translations = {
     // About Section
     'about.index': '02',
     'about.title': 'About me',
-    'about.bio': "As a final-year Bachelor student in Media Engineering at HEIG-VD, I specialize in digital communication, design, and web technologies, with an approach that bridges creativity and technical execution.\n\nI love crafting digital projects from A to Z, from initial concept to deployment: content creation, social media strategy, visual identity, UI/UX, website design, and interactive media.\n\nAlongside my studies, I work as a community manager for Karting de Vuiteboeuf, applying these skills through photo and video production, social media management, and expanding the brand's digital presence.\n\nCurious and versatile, I thrive on learning, experimenting with new tools, and turning ideas into tangible digital realities. Always open to new collaborations and digital opportunities.",
     'about.educationTitle': 'Education & Academic Journey',
     'about.experienceTitle': 'Professional Experience',
     'about.languagesTitle': 'Languages',

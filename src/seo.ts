@@ -1,6 +1,9 @@
 import { Language } from './types';
-import { PROJECTS_EN, PROJECTS_FR, UNIFIED_PROJECTS, USER_INFO } from './data/portfolioData';
-import { getCaseStudy, type CaseBlock } from './data/caseStudies';
+import { USER_INFO } from './data/portfolioData';
+import type { CaseBlock } from './data/caseStudies/types';
+import { CONTENT } from './content/load';
+import { projectSeo, toCaseStudy, toProject, toSite, visibleProjects } from './content/localize';
+import { SITE_PAGES } from './content/schema';
 import { homePath, pathFor, privacyPath, projectPath, Route, SECTION_IDS, SectionId, sectionPath } from './router';
 
 /**
@@ -17,7 +20,8 @@ const OG_IMAGE_URL = `${SITE_URL}/og-image.jpg`;
 
 const abs = (path: string) => `${SITE_URL}${path}`;
 
-const projectsFor = (lang: Language) => (lang === 'fr' ? PROJECTS_FR : PROJECTS_EN);
+const projectsFor = (lang: Language) => visibleProjects(CONTENT, lang).map((p) => toProject(p, lang));
+const getCaseStudy = (slug: string, lang: Language) => (CONTENT.projects[slug] ? toCaseStudy(CONTENT.projects[slug], lang) : null);
 
 export interface HeadData {
   lang: Language;
@@ -40,7 +44,7 @@ export function getAllRoutes(): Route[] {
   return langs.flatMap((lang) => [
     { name: 'home', lang } as Route,
     ...SECTION_IDS.map((section) => ({ name: 'home', lang, section }) as Route),
-    ...UNIFIED_PROJECTS.map((p) => ({ name: 'project', lang, slug: p.id }) as Route),
+    ...CONTENT.index.order.map((id) => ({ name: 'project', lang, slug: id }) as Route),
     { name: 'privacy', lang } as Route,
     { name: 'stand', lang } as Route,
     { name: 'podium', lang } as Route,
@@ -58,60 +62,14 @@ function alternatesFor(route: Route) {
 }
 
 /**
- * Page titles and meta descriptions, checked against Google's display limits: titles ≤ 60
+ * Page titles and meta descriptions (content/site.json → seo, and each project's seo), written against Google's display limits: titles ≤ 60
  * characters and ≤ 580 px (Arial 20 px, what fits before truncation), descriptions 120–160
  * characters and ≤ 920 px (two lines of Arial 14 px). Each one is unique, describes its page
  * in plain words, puts the key information first (mobile cuts sooner) and ends titles with the name.
  */
 export const META: Record<string, Record<Language, { title: string; description: string }>> = {
-  "home": {
-    fr: { title: "Luca Leone · Portfolio en ingénierie des médias, HEIG-VD", description: "Portfolio de Luca Leone, étudiant en ingénierie des médias à la HEIG-VD : communication digitale, UX/UI et développement web." },
-    en: { title: "Luca Leone · Media Engineering portfolio, HEIG-VD", description: "Portfolio of Luca Leone, Media Engineering student at HEIG-VD in Switzerland: digital communication, UX/UI design and web development." },
-  },
-  "projets": {
-    fr: { title: "Projets · Communication, UX/UI et web | Luca Leone", description: "Six projets de Luca Leone : plateforme web pour les HUG, réseaux du Karting de Vuiteboeuf, app OceanSight, boutique DriveGear et plus." },
-    en: { title: "Projects · Communication, UX/UI and web | Luca Leone", description: "Six projects by Luca Leone: a web platform for the HUG, Karting de Vuiteboeuf’s social media, the OceanSight app and more." },
-  },
-  "a-propos": {
-    fr: { title: "À propos de Luca Leone · Étudiant en ingénierie des médias", description: "Luca Leone, étudiant en ingénierie des médias à la HEIG-VD et community manager au Karting de Vuiteboeuf : parcours et langues." },
-    en: { title: "About Luca Leone · Media Engineering student, HEIG-VD", description: "Luca Leone, Media Engineering student at HEIG-VD and community manager at Karting de Vuiteboeuf: education, experience, languages." },
-  },
-  "contact": {
-    fr: { title: "Contacter Luca Leone · Travail de Bachelor, stage, projet", description: "Écrivez à Luca Leone pour un travail de Bachelor, un stage, un emploi ou un projet en communication digitale, UX/UI ou web." },
-    en: { title: "Contact Luca Leone · Bachelor thesis, internship, project", description: "Write to Luca Leone about a Bachelor thesis, an internship, a job or a project in digital communication, UX/UI or web development." },
-  },
-  "privacy": {
-    fr: { title: "Politique de confidentialité · Portfolio de Luca Leone", description: "Les données traitées par le portfolio de Luca Leone et vos droits : aucun cookie, aucun suivi publicitaire, hébergé en Suisse." },
-    en: { title: "Privacy policy · Luca Leone’s portfolio, Media Engineering", description: "What data Luca Leone’s portfolio processes, and your rights: no cookies, no advertising tracking, hosted in Switzerland." },
-  },
-  "notfound": {
-    fr: { title: "Page introuvable · Portfolio de Luca Leone, HEIG-VD", description: "Cette page n’existe pas ou plus. Découvrez les projets de Luca Leone en communication digitale, UX/UI et développement web." },
-    en: { title: "Page not found · Luca Leone’s portfolio, HEIG-VD", description: "This page doesn’t exist anymore. Browse Luca Leone’s projects in digital communication, UX/UI design and web development." },
-  },
-  "hug": {
-    fr: { title: "HUG : plateforme web pour le don du sang | Luca Leone", description: "Pour les HUG, une enquête en ligne qui vérifie l’éligibilité au don du sang avant l’inscription. Laravel et Vue, noté 6/6." },
-    en: { title: "HUG: a blood donation web platform | Luca Leone", description: "For the Geneva University Hospitals, an online survey that checks blood donation eligibility before booking. Graded 6/6." },
-  },
-  "karting-vuiteboeuf": {
-    fr: { title: "Karting de Vuiteboeuf : réseaux sociaux | Luca Leone", description: "Community manager du Karting de Vuiteboeuf : photo, vidéo, Instagram et TikTok, et une app qui publie les résultats. 329’000 vues depuis mai." },
-    en: { title: "Karting de Vuiteboeuf: social media | Luca Leone", description: "Community manager at Karting de Vuiteboeuf: photo, video, Instagram, TikTok, and an app that posts race results. 329,000 views since May." },
-  },
-  "oceansight": {
-    fr: { title: "OceanSight : app contre les déchets marins | Luca Leone", description: "OceanSight, app mobile pour signaler les déchets marins et rejoindre une mission de nettoyage. Recherche UX, prototype Figma." },
-    en: { title: "OceanSight: a marine waste reporting app | Luca Leone", description: "OceanSight, a mobile app to report marine waste and join a clean-up mission. UX research, Figma prototype and user tests, graded 6/6." },
-  },
-  "etoile-blanche": {
-    fr: { title: "L’Étoile Blanche : com’ d’un restaurant | Luca Leone", description: "Nouvelle communication pour L’Étoile Blanche à Lausanne : quatre cartes, affichage pour l’afterwork, anecdotes et réseaux sociaux." },
-    en: { title: "L’Étoile Blanche: restaurant communication | Luca Leone", description: "A new communication for L’Étoile Blanche in Lausanne: four menus, an after-work poster campaign, anecdote cards and social media." },
-  },
-  "drivegear": {
-    fr: { title: "DriveGear : boutique e-commerce automobile | Luca Leone", description: "DriveGear, boutique en ligne pour passionnés d’automobile, créée seul de A à Z : marque, WooCommerce, SEO et réseaux. Noté 5.9/6." },
-    en: { title: "DriveGear: an automotive e-commerce store | Luca Leone", description: "DriveGear, an online store for car enthusiasts built solo from A to Z: brand, WooCommerce, SEO and social. Graded 5.9/6." },
-  },
-  "f1-pitwall": {
-    fr: { title: "F1 PitWall : app second écran pour la F1 | Luca Leone", description: "F1 PitWall, concept d’app qui place les fans de F1 sur le muret des stands : télémétrie, circuit en direct et prédictions par IA." },
-    en: { title: "F1 PitWall: a second-screen app for F1 | Luca Leone", description: "F1 PitWall, an app concept that puts Formula 1 fans on the pit wall: telemetry, a live track map and AI race predictions." },
-  },
+  ...Object.fromEntries(SITE_PAGES.map((page) => [page, { fr: toSite(CONTENT.site, 'fr').seo[page], en: toSite(CONTENT.site, 'en').seo[page] }])),
+  ...Object.fromEntries(Object.values(CONTENT.projects).map((p) => [p.id, { fr: projectSeo(p, 'fr'), en: projectSeo(p, 'en') }])),
 };
 
 const HOME_COPY = {

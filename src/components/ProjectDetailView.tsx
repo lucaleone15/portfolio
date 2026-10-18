@@ -8,7 +8,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { Link, projectPath, useRouter } from '../router';
 import { projectMediaTransition } from '../viewTransitions';
 import { CaseStudy } from './CaseStudy';
-import { getCaseStudy } from '../data/caseStudies';
+import { useCaseStudy } from '../content/ContentContext';
 import { imageSrcSet, smallImage } from '../data/images';
 
 interface ProjectDetailViewProps {
@@ -54,7 +54,7 @@ export function ProjectDetailView({
   const nextHref = projectPath(lang, nextProject.id);
 
   // Every project has one (App treats a project without a case study as not found)
-  const caseStudy = getCaseStudy(project.id, lang);
+  const caseStudy = useCaseStudy(project.id);
   if (!caseStudy) return null;
 
   return (

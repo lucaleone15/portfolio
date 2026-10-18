@@ -19,10 +19,9 @@ import { watchPrinting } from './print';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { AccentProvider } from './context/AccentContext';
-import { getCustomProjects } from './data/projectsStorage';
 import { homePath, RouterProvider, SECTION_IDS, sectionPath, useRouter } from './router';
 import { getHeadData } from './seo';
-import { getCaseStudy } from './data/caseStudies';
+import { ContentProvider, useCaseStudy, useProjects } from './content/ContentContext';
 
 const ROBOTS_INDEX = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
 
@@ -41,14 +40,14 @@ function useDocumentHead() {
 }
 
 function PortfolioApp() {
-  const projectsData = getCustomProjects();
   const { lang } = useLanguage();
   const { route, syncPath } = useRouter();
   useEffect(watchPrinting, []);
 
-  const allProjects = lang === 'fr' ? projectsData.fr : projectsData.en;
+  const allProjects = useProjects();
   const selectedProject =
     route.name === 'project' ? allProjects.find((p) => p.id === route.slug) ?? null : null;
+  const selectedStudy = useCaseStudy(selectedProject?.id ?? '');
 
   useDocumentHead();
 
@@ -61,7 +60,7 @@ function PortfolioApp() {
   }, [view]);
 
   // Unknown URLs (or a removed project slug) get a real 404 page
-  const notFound = route.name === 'notFound' || (route.name === 'project' && (!selectedProject || !getCaseStudy(selectedProject.id, lang)));
+  const notFound = route.name === 'notFound' || (route.name === 'project' && (!selectedProject || !selectedStudy));
 
   // The intro curtain only plays when the visit starts on the home page: someone opening a
   // shared project link shouldn't wait for it. Decided once, on first render.
@@ -164,7 +163,9 @@ export default function App({ initialUrl }: { initialUrl?: string }) {
         <ThemeProvider>
           <AccentProvider>
             <LanguageProvider>
-              <PortfolioApp />
+              <ContentProvider>
+                <PortfolioApp />
+              </ContentProvider>
             </LanguageProvider>
           </AccentProvider>
         </ThemeProvider>

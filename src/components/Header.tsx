@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { ArrowUpRight01Icon, Cancel01Icon, Linkedin02Icon, Menu01Icon, Moon02Icon, Sun03Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
 import { motion, AnimatePresence, useScroll } from 'motion/react';
-import { USER_INFO } from '../data/portfolioData';
+import { useContact } from '../content/ContentContext';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { CommandPaletteHint } from './CommandPalette';
@@ -34,6 +34,7 @@ function ThemeToggle() {
 }
 
 export function Header({ activeSection }: HeaderProps) {
+  const contact = useContact();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { lang, t } = useLanguage();
   const { route } = useRouter();
@@ -258,7 +259,7 @@ export function Header({ activeSection }: HeaderProps) {
 
               <div className="flex gap-2">
                 <a
-                  href={USER_INFO.linkedin}
+                  href={contact.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 py-2.5 rounded-full bg-black/[0.05] hover:bg-black hover:text-white dark:bg-white/[0.08] dark:hover:bg-white dark:hover:text-black text-neutral-900 dark:text-white font-bold inline-flex items-center justify-center gap-1.5 transition-colors text-xs cursor-pointer"
@@ -269,7 +270,7 @@ export function Header({ activeSection }: HeaderProps) {
                 </a>
 
                 <a
-                  href={`mailto:${USER_INFO.email}`}
+                  href={`mailto:${contact.email}`}
                   className="flex-1 py-2.5 rounded-full bg-neutral-900 text-white hover:bg-[var(--accent)] hover:text-[var(--accent-contrast-text)] dark:bg-white dark:text-black dark:hover:bg-[var(--accent)] dark:hover:text-[var(--accent-contrast-text)] font-bold inline-flex items-center justify-center gap-1 shadow-xs transition-colors text-xs cursor-pointer"
                 >
                   <span>Email</span>

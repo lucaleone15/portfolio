@@ -1,20 +1,15 @@
 import { ArrowUpRight01Icon, Pdf02Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
 import { motion } from 'motion/react';
-import { EDUCATION_TIMELINE, EDUCATION_TIMELINE_EN, EXPERIENCE_TIMELINE, EXPERIENCE_TIMELINE_EN, LANGUAGES, USER_INFO } from '../data/portfolioData';
+import { useContact, useSite } from '../content/ContentContext';
 import { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
 export function AboutSection() {
   const { lang, t } = useLanguage();
 
-  const education = lang === 'fr' ? EDUCATION_TIMELINE : EDUCATION_TIMELINE_EN;
-  const experience = lang === 'fr' ? EXPERIENCE_TIMELINE : EXPERIENCE_TIMELINE_EN;
-  const languages = LANGUAGES[lang];
-
-  const passions = lang === 'fr'
-    ? ['Automobile', 'Sport', 'Voyage', 'Technologies']
-    : ['Automotive', 'Sports', 'Travel', 'Technology'];
+  const { bio, education, experience, languages, passions } = useSite().about;
+  const contact = useContact();
 
   // Scroll-linked details (GSAP loaded on demand): bio words sharpen while read,
   // timeline rails draw and their dots light up as each step is passed
@@ -105,7 +100,7 @@ export function AboutSection() {
 
           {/* CV: same place and style as the projects filter button */}
           <a
-            href={USER_INFO.cv}
+            href={contact.cv}
             target="_blank"
             rel="noopener"
             className="glass font-syne group px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-neutral-900 dark:text-white inline-flex items-center gap-2 cursor-pointer active:scale-[0.97]"
@@ -162,7 +157,7 @@ export function AboutSection() {
 
             {/* Bio: each word sharpens from faint to full as it scrolls through the reading zone */}
             <div data-bio className="space-y-4">
-              {t('about.bio').split('\n\n').map((paragraph, idx) => (
+              {bio.split('\n\n').map((paragraph, idx) => (
                 <p key={idx} className="text-base sm:text-lg text-neutral-800 dark:text-[#E4E4E7] leading-relaxed">
                   {paragraph.split(' ').map((word, w) => (
                     <span key={w} data-word>
