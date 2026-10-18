@@ -6,6 +6,7 @@ import zlib from 'node:zlib';
 import { createContactHandler } from './contact';
 import { createAnalyticsHandler } from './analytics';
 import { createPodiumHandler } from './podium';
+import { canonicalPagePath, loadRedirects } from './canonical';
 
 /**
  * Production server (replaces `vite preview`, which Vite says isn't meant for production).
@@ -184,13 +185,7 @@ function send(req: http.IncomingMessage, res: http.ServerResponse, file: string,
   res.end(req.method === 'HEAD' ? undefined : body);
 }
 
-/** The one spelling of a page path that the site links to and declares canonical */
-function canonicalPagePath(pathname: string) {
-  let p = pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
-  if (p === '/en') p = '/en/';
-  else if (p.length > 1 && p.endsWith('/') && p !== '/en/') p = p.slice(0, -1);
-  return p.replace(/^(\/(?:en\/)?(?:projets|projects)\/)hug-sangsationnel$/, '$1hug');
-}
+let redirects = loadRedirects(ROOT);
 
 const contact = createContactHandler(env);
 // Statistics and podium scores; DATA_DIR can put them outside the site folder, out of reach of a deploy
@@ -215,7 +210,7 @@ const server = http.createServer((req, res) => {
   // x/, /en) and renamed project URLs (old links, shared or indexed, keep working)
   if (req.method === 'GET' || req.method === 'HEAD') {
     const { pathname, search } = new URL(req.url ?? '/', 'http://localhost');
-    const target = canonicalPagePath(pathname);
+    const target = canonicalPagePath(pathname, redirects);
     if (target !== pathname) {
       res.statusCode = 301;
       res.setHeader('Location', target + search);

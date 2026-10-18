@@ -1,6 +1,8 @@
 import React, { createContext, useContext } from 'react';
 import { Language } from '../types';
-import { alternatePath, useRouter } from '../router';
+import { alternatePath, sectionPath, useRouter } from '../router';
+import { useContent } from '../content/ContentContext';
+import { visibleProjects } from '../content/localize';
 
 
 interface LanguageContextType {
@@ -91,8 +93,15 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const { route, navigate } = useRouter();
   const lang = route.lang;
 
+  const content = useContent();
   const setLang = (newLang: Language) => {
-    if (newLang !== lang) navigate(alternatePath(route, newLang), { keepScroll: true });
+    if (newLang === lang) return;
+    // A project that doesn't exist in that language: its list of projects instead
+    if (route.name === 'project' && !visibleProjects(content, newLang).some((p) => p.id === route.slug)) {
+      navigate(sectionPath(newLang, 'projets'));
+      return;
+    }
+    navigate(alternatePath(route, newLang), { keepScroll: true });
   };
 
   const t = (key: string): string => {
