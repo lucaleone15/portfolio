@@ -5,7 +5,7 @@ import { ArrowUpRight01Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
 import { useLanguage } from '../context/LanguageContext';
 
-interface SkillItem {
+export interface SkillItem {
   id: string;
   number: string;
   titleFr: string;
@@ -16,7 +16,7 @@ interface SkillItem {
   toolsEn: string[];
 }
 
-const SKILLS_DATA: SkillItem[] = [
+export const SKILLS_DATA: SkillItem[] = [
   {
     id: 'ui-ux',
     number: '01',

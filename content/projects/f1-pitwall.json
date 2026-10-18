@@ -1,0 +1,638 @@
+{
+  "id": "f1-pitwall",
+  "kind": "school",
+  "name": "F1 PitWall",
+  "number": "06",
+  "year": "2025",
+  "imageUrl": "/images/f1-pitwall-apercu.webp",
+  "stack": [
+    {
+      "fr": "Concept produit",
+      "en": "Product concept",
+      "enOf": "2588abea"
+    },
+    {
+      "fr": "UI design",
+      "en": "UI design",
+      "enOf": "c40cb2fb"
+    },
+    {
+      "fr": "Données & IA",
+      "en": "Data & AI",
+      "enOf": "a00d86f9"
+    },
+    {
+      "fr": "Figma",
+      "en": "Figma",
+      "enOf": "c40cfa4b"
+    }
+  ],
+  "accentColor": "#C8102E",
+  "accentColorDark": "#F23845",
+  "logo": {
+    "src": "/images/logos/f1-pitwall.webp",
+    "srcDark": "/images/logos/f1-pitwall-dark.webp",
+    "width": 1792,
+    "height": 160,
+    "display": 18
+  },
+  "video": "/videos/f1-pitwall-dive.mp4",
+  "card": {
+    "subtitle": {
+      "fr": "Application de second écran pour la Formule 1",
+      "en": "A second-screen app for Formula 1",
+      "enOf": "7b4b4e01"
+    },
+    "category": {
+      "fr": "UX/UI design",
+      "en": "UX/UI design",
+      "enOf": "6c8d968b"
+    },
+    "hook": {
+      "fr": "Et si on regardait la course comme un ingénieur ?",
+      "en": "What if you watched the race like an engineer?",
+      "enOf": "6307a1bf"
+    },
+    "badge": {
+      "fr": "Projet solo",
+      "en": "Solo project",
+      "enOf": "2246846a"
+    },
+    "summary": {
+      "fr": "Concept d’une application qui donne aux fans de Formule 1 les données et la stratégie du muret des stands, en direct.",
+      "en": "Concept for an app that brings the pit wall’s data and strategy to Formula 1 fans, live.",
+      "enOf": "3b867ae8"
+    },
+    "overview": {
+      "fr": "Projet individuel du cours WebDon : une app de second écran qui affiche le classement détaillé, la télémétrie, la position des pilotes sur le circuit, et des prédictions de course basées sur l’IA et la simulation.",
+      "en": "Individual project for the WebDon course: a second-screen app showing detailed standings, telemetry, drivers’ positions on track, and race predictions powered by AI and simulation.",
+      "enOf": "b9f173b1"
+    }
+  },
+  "seo": {
+    "title": {
+      "fr": "F1 PitWall : app second écran pour la F1 | Luca Leone",
+      "en": "F1 PitWall: a second-screen app for F1 | Luca Leone",
+      "enOf": "34eb193d"
+    },
+    "description": {
+      "fr": "F1 PitWall, concept d’app qui place les fans de F1 sur le muret des stands : télémétrie, circuit en direct et prédictions par IA.",
+      "en": "F1 PitWall, an app concept that puts Formula 1 fans on the pit wall: telemetry, a live track map and AI race predictions.",
+      "enOf": "c1717497"
+    }
+  },
+  "study": {
+    "kicker": {
+      "fr": "UX/UI design · Données & IA",
+      "en": "UX/UI design · Data & AI",
+      "enOf": "f6a227f2"
+    },
+    "title": {
+      "fr": "F1 PitWall",
+      "en": "F1 PitWall",
+      "enOf": "379186d5"
+    },
+    "hook": {
+      "fr": "Ce que l’on voit d’une course dépend entièrement de ce que la réalisation TV décide de montrer.",
+      "en": "What we see of a race depends entirely on what the TV director decides to show.",
+      "enOf": "709d37bb"
+    },
+    "intro": {
+      "fr": "J’ai imaginé une application de second écran qui place les fans de Formule 1 sur le muret des stands : classement détaillé, télémétrie, circuit en direct et prédictions de course.",
+      "en": "I designed a second-screen app that puts Formula 1 fans on the pit wall: detailed standings, telemetry, a live track map and race predictions.",
+      "enOf": "464ef236"
+    },
+    "meta": [
+      {
+        "label": {
+          "fr": "Contexte",
+          "en": "Context",
+          "enOf": "4debab7b"
+        },
+        "value": {
+          "fr": "Cours WebDon, HEIG-VD",
+          "en": "WebDon course, HEIG-VD",
+          "enOf": "6238c88c"
+        }
+      },
+      {
+        "label": {
+          "fr": "Année",
+          "en": "Year",
+          "enOf": "26a73d12"
+        },
+        "value": {
+          "fr": "2025",
+          "en": "2025",
+          "enOf": "41293f26"
+        }
+      },
+      {
+        "label": {
+          "fr": "Durée",
+          "en": "Duration",
+          "enOf": "2e6ca78a"
+        },
+        "value": {
+          "fr": "Novembre 2025",
+          "en": "November 2025",
+          "enOf": "f8f7dddc"
+        }
+      },
+      {
+        "label": {
+          "fr": "Mon rôle",
+          "en": "My role",
+          "enOf": "4f1073ea"
+        },
+        "value": {
+          "fr": "Concept, données et UI",
+          "en": "Concept, data and UI",
+          "enOf": "bef78b18"
+        }
+      },
+      {
+        "label": {
+          "fr": "Équipe",
+          "en": "Team",
+          "enOf": "b3e19a1e"
+        },
+        "value": {
+          "fr": "Projet solo",
+          "en": "Solo project",
+          "enOf": "2246846a"
+        }
+      },
+      {
+        "label": {
+          "fr": "Outils",
+          "en": "Tools",
+          "enOf": "e7781d3b"
+        },
+        "value": {
+          "fr": "Figma, Ergast, FastF1, OpenF1",
+          "en": "Figma, Ergast, FastF1, OpenF1",
+          "enOf": "047f3255"
+        }
+      }
+    ],
+    "brief": [
+      {
+        "label": {
+          "fr": "Le problème",
+          "en": "The problem",
+          "enOf": "e89fc97b"
+        },
+        "text": {
+          "fr": "Les fans restent spectateurs : les données de course leur échappent.",
+          "en": "Fans stay spectators: race data is out of their reach.",
+          "enOf": "1a79b029"
+        }
+      },
+      {
+        "label": {
+          "fr": "Ma réponse",
+          "en": "My answer",
+          "enOf": "24ca2121"
+        },
+        "text": {
+          "fr": "Une app qui rend visibles la course et sa stratégie, en direct.",
+          "en": "An app that makes the race and its strategy visible, live.",
+          "enOf": "29228e6c"
+        }
+      },
+      {
+        "label": {
+          "fr": "Le résultat",
+          "en": "The result",
+          "enOf": "4f44b406"
+        },
+        "text": {
+          "fr": "5.5/6, pour un concept jugé « original et ambitieux ».",
+          "en": "5.5/6, for a concept called “original and ambitious”.",
+          "enOf": "814bc4ee"
+        }
+      }
+    ],
+    "sections": [
+      {
+        "id": "probleme",
+        "nav": {
+          "fr": "Le problème",
+          "en": "The problem",
+          "enOf": "e89fc97b"
+        },
+        "title": {
+          "fr": "Des spectateurs passifs",
+          "en": "Passive spectators",
+          "enOf": "41ef0d59"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Je suis passionné de Formule 1 depuis tout petit. Mais devant une course, il me manque quelque chose : les statistiques, les images et les caméras embarquées sont choisies par la F1 ou par les diffuseurs. Impossible de suivre ce qui m’intéresse vraiment.",
+              "en": "I’ve loved Formula 1 since I was a kid. But watching a race, something is missing: stats, images and onboard cameras are chosen by F1 or the broadcasters. There’s no way to follow what really interests me.",
+              "enOf": "cd8a2397"
+            }
+          },
+          {
+            "type": "text",
+            "text": {
+              "fr": "Pendant ce temps, sur le muret des stands, des ingénieurs analysent la course en temps réel et prennent les décisions qui la font basculer. Mon idée : donner aux fans un accès à ce point de vue.",
+              "en": "Meanwhile, on the pit wall, engineers analyse the race in real time and make the calls that decide it. My idea: give fans access to that point of view.",
+              "enOf": "09ae5bf4"
+            }
+          },
+          {
+            "type": "gallery",
+            "items": [
+              {
+                "src": "/images/case/f1-pitwall/slide-probleme.webp",
+                "width": 1600,
+                "height": 900,
+                "alt": {
+                  "fr": "Diapositive : « Ce que l’on voit dépend entièrement de ce que la réalisation TV décide de nous montrer »",
+                  "en": "Slide: “What we see depends entirely on what the TV director decides to show us”",
+                  "enOf": "3eebb82f"
+                }
+              },
+              {
+                "src": "/images/case/f1-pitwall/slide-pitwall.webp",
+                "width": 1600,
+                "height": 900,
+                "alt": {
+                  "fr": "Diapositive : les ingénieurs d’une écurie sur le muret des stands, devant leurs écrans",
+                  "en": "Slide: a team’s engineers on the pit wall, in front of their screens",
+                  "enOf": "674cdb51"
+                }
+              }
+            ],
+            "cols": 2
+          }
+        ]
+      },
+      {
+        "id": "app",
+        "nav": {
+          "fr": "L’app",
+          "en": "The app",
+          "enOf": "76d6dafd"
+        },
+        "title": {
+          "fr": "Visualiser, analyser, prédire",
+          "en": "Visualise, analyse, predict",
+          "enOf": "5b2da12a"
+        },
+        "content": [
+          {
+            "type": "steps",
+            "steps": [
+              {
+                "text": {
+                  "fr": "L’accueil montre la course en cours ou la prochaine, le calendrier et les classements. On rejoint la course en un geste.",
+                  "en": "The home screen shows the race in progress or the next one, the calendar and the standings. You join the race in one tap.",
+                  "enOf": "b02a1bd7"
+                },
+                "image": {
+                  "src": "/images/case/f1-pitwall/app-accueil-mockup.webp",
+                  "width": 1600,
+                  "height": 1200,
+                  "alt": {
+                    "fr": "Deux écrans d’accueil : la course en cours et le compte à rebours de la prochaine",
+                    "en": "Two home screens: the race in progress and the countdown to the next one",
+                    "enOf": "585cd4f6"
+                  }
+                }
+              },
+              {
+                "text": {
+                  "fr": "Le classement va plus loin que la TV : l’âge et le type de pneus, le rythme par secteur. Et le circuit montre la position de chaque pilote, les zones DRS, la météo et les incidents.",
+                  "en": "The standings go further than TV: tyre age and compound, pace per sector. And the track map shows every driver’s position, DRS zones, weather and incidents.",
+                  "enOf": "8ded1f01"
+                },
+                "image": {
+                  "src": "/images/case/f1-pitwall/app-classement-circuit-mockup.webp",
+                  "width": 1600,
+                  "height": 1200,
+                  "alt": {
+                    "fr": "Deux écrans : le classement détaillé en direct et la carte du circuit avec les pilotes",
+                    "en": "Two screens: detailed live standings and the track map with the drivers",
+                    "enOf": "e86a3c1b"
+                  }
+                }
+              },
+              {
+                "text": {
+                  "fr": "La télémétrie traduit les données brutes en courbes lisibles : vitesse, accélération, freinage. Et on peut comparer la trajectoire de deux pilotes, virage par virage.",
+                  "en": "Telemetry turns raw data into readable curves: speed, throttle, braking. And you can compare two drivers’ lines, corner by corner.",
+                  "enOf": "ef9d33e3"
+                },
+                "image": {
+                  "src": "/images/case/f1-pitwall/app-telemetrie-mockup.webp",
+                  "width": 1600,
+                  "height": 1200,
+                  "alt": {
+                    "fr": "Deux écrans : les courbes de télémétrie d’un pilote et la comparaison de trajectoire entre deux pilotes",
+                    "en": "Two screens: a driver’s telemetry curves and a line comparison between two drivers",
+                    "enOf": "a60b790b"
+                  }
+                }
+              },
+              {
+                "text": {
+                  "fr": "La caméra embarquée et les radios entre le pilote et son équipe, parfois avant qu’elles ne passent à la TV.",
+                  "en": "The onboard camera and the radio between drivers and their team, sometimes before it airs on TV.",
+                  "enOf": "161d0fcf"
+                },
+                "image": {
+                  "src": "/images/case/f1-pitwall/app-onboard-radio-mockup.webp",
+                  "width": 1600,
+                  "height": 1200,
+                  "alt": {
+                    "fr": "Deux écrans : la caméra embarquée d’un pilote et le fil des messages radio",
+                    "en": "Two screens: a driver’s onboard camera and the radio message feed",
+                    "enOf": "80520591"
+                  }
+                }
+              },
+              {
+                "text": {
+                  "fr": "Les prédictions et le simulateur : chances de victoire, fenêtres d’arrêt, scénarios « et si » et sa propre stratégie à tester.",
+                  "en": "Predictions and the simulator: chances of winning, pit windows, “what if” scenarios and your own strategy to test.",
+                  "enOf": "5904ac6a"
+                },
+                "image": {
+                  "src": "/images/case/f1-pitwall/app-predictions-mockup.webp",
+                  "width": 1600,
+                  "height": 1200,
+                  "alt": {
+                    "fr": "Deux écrans : les prédictions de classement final et le simulateur de stratégie",
+                    "en": "Two screens: final standing predictions and the strategy simulator",
+                    "enOf": "02cc2e49"
+                  }
+                }
+              }
+            ],
+            "frame": "mockup"
+          }
+        ]
+      },
+      {
+        "id": "donnees",
+        "nav": {
+          "fr": "Les données",
+          "en": "The data",
+          "enOf": "0a11d5d7"
+        },
+        "title": {
+          "fr": "Des données bien réelles",
+          "en": "Real data underneath",
+          "enOf": "ea59a9cb"
+        },
+        "tone": "accent",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Le concept repose sur des sources qui existent : Ergast pour l’historique des résultats, FastF1 pour la télémétrie, OpenF1 pour un prototype, et un flux officiel sous licence pour la version finale. Pour chaque écran, j’ai décrit précisément les données qu’il recevrait, du classement en direct aux résultats du modèle.",
+              "en": "The concept relies on sources that exist: Ergast for historical results, FastF1 for telemetry, OpenF1 for a prototype, and a licensed official feed for the final version. For every screen, I described exactly the data it would receive, from the live standings to the model’s output.",
+              "enOf": "850c1502"
+            }
+          },
+          {
+            "type": "image",
+            "image": {
+              "src": "/images/case/f1-pitwall/slide-second-ecran.webp",
+              "width": 1600,
+              "height": 900,
+              "alt": {
+                "fr": "La course sur une télévision, et l’app PitWall dans la main d’un fan avec le classement en direct",
+                "en": "The race on a TV, and the PitWall app in a fan’s hand showing the live standings",
+                "enOf": "8a4cdf6f"
+              },
+              "caption": {
+                "fr": "Un second écran : la course à la TV, le muret des stands dans la main.",
+                "en": "A second screen: the race on TV, the pit wall in your hand.",
+                "enOf": "915f661f"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "ia",
+        "nav": {
+          "fr": "Les prédictions",
+          "en": "The predictions",
+          "enOf": "f3596bad"
+        },
+        "title": {
+          "fr": "Prédire la fin de la course",
+          "en": "Predicting the end of the race",
+          "enOf": "9a860d95"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Pour les prédictions, j’ai proposé un modèle hybride. LightGBM estime le temps au tour de chaque pilote, avec sa marge d’incertitude, à partir de son rythme, de ses pneus, de la météo et de son historique sur le circuit. Puis une simulation Monte-Carlo joue des milliers de fins de course, en tenant compte des arrêts, du trafic et des voitures de sécurité.",
+              "en": "For the predictions, I proposed a hybrid model. LightGBM estimates each driver’s lap time, with its uncertainty, from their pace, tyres, the weather and their track history. Then a Monte-Carlo simulation plays out thousands of race endings, accounting for pit stops, traffic and safety cars.",
+              "enOf": "5604e775"
+            }
+          },
+          {
+            "type": "architecture",
+            "nodes": [
+              {
+                "title": {
+                  "fr": "Données",
+                  "en": "Data",
+                  "enOf": "ad46bf1b"
+                },
+                "sub": {
+                  "fr": "Ergast · FastF1 · live",
+                  "en": "Ergast · FastF1 · live",
+                  "enOf": "df621b68"
+                },
+                "note": {
+                  "fr": "Rythme, pneus, météo, historique du circuit",
+                  "en": "Pace, tyres, weather, track history",
+                  "enOf": "50905f12"
+                }
+              },
+              {
+                "title": {
+                  "fr": "LightGBM",
+                  "en": "LightGBM",
+                  "enOf": "6b69ca59"
+                },
+                "sub": {
+                  "fr": "Machine learning",
+                  "en": "Machine learning",
+                  "enOf": "9971a84c"
+                },
+                "note": {
+                  "fr": "Temps au tour attendu et incertitude",
+                  "en": "Expected lap time and uncertainty",
+                  "enOf": "15df9e2c"
+                },
+                "highlight": true
+              },
+              {
+                "title": {
+                  "fr": "Monte-Carlo",
+                  "en": "Monte-Carlo",
+                  "enOf": "5a04f3f4"
+                },
+                "sub": {
+                  "fr": "Simulation",
+                  "en": "Simulation",
+                  "enOf": "4e6c5d36"
+                },
+                "note": {
+                  "fr": "Des milliers de fins de course simulées",
+                  "en": "Thousands of simulated race endings",
+                  "enOf": "94539ae6"
+                }
+              }
+            ],
+            "links": [
+              {
+                "fr": "features",
+                "en": "features",
+                "enOf": "5f8383ca"
+              },
+              {
+                "fr": "distribution",
+                "en": "distribution",
+                "enOf": "3498512b"
+              }
+            ],
+            "caption": {
+              "fr": "Le modèle capte la performance, la simulation gère la stratégie et les imprévus.",
+              "en": "The model captures performance; the simulation handles strategy and the unexpected.",
+              "enOf": "40708f68"
+            }
+          },
+          {
+            "type": "text",
+            "text": {
+              "fr": "Le même principe recommande la meilleure stratégie d’arrêts : zéro, un ou deux arrêts sont simulés, et l’app affiche les trois meilleures options avec le gain attendu.",
+              "en": "The same approach recommends the best pit strategy: zero, one or two stops are simulated, and the app shows the three best options with the expected gain.",
+              "enOf": "2d37f288"
+            }
+          }
+        ]
+      },
+      {
+        "id": "resultats",
+        "nav": {
+          "fr": "Résultats",
+          "en": "Results",
+          "enOf": "89638ae2"
+        },
+        "title": {
+          "fr": "Résultats",
+          "en": "Results",
+          "enOf": "89638ae2"
+        },
+        "content": [
+          {
+            "type": "figures",
+            "items": [
+              {
+                "value": 5.5,
+                "suffix": {
+                  "fr": "/6",
+                  "en": "/6",
+                  "enOf": "99d258b8"
+                },
+                "label": {
+                  "fr": "note du projet",
+                  "en": "project grade",
+                  "enOf": "77457686"
+                }
+              },
+              {
+                "value": 5,
+                "label": {
+                  "fr": "vues : accueil, classement, circuit, télémétrie, stratégie",
+                  "en": "views: home, standings, track, telemetry, strategy",
+                  "enOf": "5791d2f0"
+                }
+              },
+              {
+                "value": 3,
+                "label": {
+                  "fr": "sources de données ouvertes pour un premier prototype",
+                  "en": "open data sources for a first prototype",
+                  "enOf": "07719ac8"
+                }
+              }
+            ]
+          },
+          {
+            "type": "quote",
+            "text": {
+              "fr": "Concept original et ambitieux, une exploitation des données remarquable et des aspects techniques solides.",
+              "en": "An original and ambitious concept, remarkable use of data and solid technical aspects.",
+              "enOf": "4b7d6c04"
+            },
+            "source": {
+              "fr": "Retour de l’enseignant",
+              "en": "Feedback from the teacher",
+              "enOf": "5503b2d0"
+            }
+          }
+        ]
+      },
+      {
+        "id": "retenu",
+        "nav": {
+          "fr": "Ce que je retiens",
+          "en": "What I take away",
+          "enOf": "efd73be7"
+        },
+        "title": {
+          "fr": "Ce que je retiens",
+          "en": "What I take away",
+          "enOf": "efd73be7"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Partir d’une passion m’a poussé loin dans les données et les algorithmes. Le retour m’a aussi appris à simplifier : l’interface était trop chargée, et la valeur du concept aurait gagné à être démontrée par des cas d’usage concrets.",
+              "en": "Starting from a passion pushed me deep into data and algorithms. The feedback also taught me to simplify: the interface was too busy, and the concept’s value would have been clearer with concrete use cases.",
+              "enOf": "25ef1b28"
+            }
+          },
+          {
+            "type": "text",
+            "text": {
+              "fr": "La suite logique : un premier prototype sur les données ouvertes, puis des tests avec de vrais fans pour alléger l’interface.",
+              "en": "The logical next step: a first prototype on open data, then tests with real fans to lighten the interface.",
+              "enOf": "ec9e5505"
+            }
+          }
+        ]
+      }
+    ],
+    "credits": [
+      {
+        "name": "Luca Leone",
+        "role": {
+          "fr": "Projet solo",
+          "en": "Solo project",
+          "enOf": "2246846a"
+        }
+      }
+    ],
+    "creditsNote": {
+      "fr": "Cours WebDon du Bachelor en Ingénierie des médias, HEIG-VD. Données et marques de Formule 1 utilisées à titre d’exemple.",
+      "en": "WebDon course of the Bachelor in Media Engineering, HEIG-VD. Formula 1 data and brands used for illustration only.",
+      "enOf": "e188cd5b"
+    }
+  }
+}

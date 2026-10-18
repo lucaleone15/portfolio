@@ -9,7 +9,7 @@ interface LanguageContextType {
   t: (key: string) => string;
 }
 
-const translations = {
+export const translations = {
   fr: {
     // Navigation
     'nav.projects': 'Projets',

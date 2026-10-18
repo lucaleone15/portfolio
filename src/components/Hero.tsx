@@ -10,7 +10,7 @@ import { introPending, onIntroLifted } from './IntroCurtain';
 // What the ideas become. The longest line ("en contenus engageants.") is 11.6× the font size
 // (measured in the page), so the headline size is derived from the available width ÷ 11.8:
 // every outcome stays on one line, from a 360px phone to a wide screen.
-const OUTCOMES = {
+export const OUTCOMES = {
   fr: ['expériences digitales', 'interfaces intuitives', 'contenus engageants', 'identités visuelles', 'sites web sur mesure'],
   en: ['digital experiences', 'intuitive interfaces', 'engaging content', 'visual identities', 'custom websites'],
 };

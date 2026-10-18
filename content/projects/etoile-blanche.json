@@ -1,0 +1,682 @@
+{
+  "id": "etoile-blanche",
+  "kind": "school-client",
+  "name": "Étoile Blanche",
+  "number": "04",
+  "year": "2026",
+  "imageUrl": "/images/etoile-blanche-apercu.webp",
+  "stack": [
+    {
+      "fr": "Identité & print",
+      "en": "Identity & print",
+      "enOf": "83d9a2d6"
+    },
+    {
+      "fr": "Réseaux sociaux",
+      "en": "Social media",
+      "enOf": "e4049b6a"
+    },
+    {
+      "fr": "Campagne d’affichage",
+      "en": "Poster campaign",
+      "enOf": "62adb164"
+    },
+    {
+      "fr": "Canva & Figma",
+      "en": "Canva & Figma",
+      "enOf": "408bd2a6"
+    }
+  ],
+  "accentColor": "#AB2328",
+  "accentColorDark": "#E0484E",
+  "logo": {
+    "src": "/images/logos/etoile-blanche-logo.webp",
+    "srcDark": "/images/logos/etoile-blanche-logo-dark.webp",
+    "width": 709,
+    "height": 160,
+    "display": 34
+  },
+  "video": "/videos/etoile-blanche-dive.mp4",
+  "card": {
+    "subtitle": {
+      "fr": "Communication d’un restaurant lausannois",
+      "en": "Communication for a Lausanne restaurant",
+      "enOf": "2dd3513b"
+    },
+    "category": {
+      "fr": "Communication digitale",
+      "en": "Digital communication",
+      "enOf": "7b9f1e66"
+    },
+    "hook": {
+      "fr": "Une nouvelle direction, une nouvelle image.",
+      "en": "New owners, a new image.",
+      "enOf": "0235ea21"
+    },
+    "badge": {
+      "fr": "Chef de projet",
+      "en": "Project lead",
+      "enOf": "d33d37ce"
+    },
+    "summary": {
+      "fr": "Refonte de la communication du restaurant L’Étoile Blanche à Lausanne : cartes, affichage, anecdotes et réseaux sociaux, autour d’un message rassembleur.",
+      "en": "A new communication for L’Étoile Blanche restaurant in Lausanne: menus, posters, anecdote cards and social media, built around one welcoming message.",
+      "enOf": "d4428f13"
+    },
+    "overview": {
+      "fr": "Projet de l’agence étudiante Zest pour le restaurant L’Étoile Blanche à Lausanne, repris par une nouvelle direction : refonte des cartes, campagne d’affichage pour l’afterwork, affichettes « anecdotes » et contenus pour les réseaux sociaux.",
+      "en": "A project by the student agency Zest for L’Étoile Blanche, a Lausanne restaurant taken over by new owners: redesigned menus, a poster campaign for the after-work, “anecdote” cards and social media content.",
+      "enOf": "70944e18"
+    }
+  },
+  "seo": {
+    "title": {
+      "fr": "L’Étoile Blanche : com’ d’un restaurant | Luca Leone",
+      "en": "L’Étoile Blanche: restaurant communication | Luca Leone",
+      "enOf": "bb8d8ea0"
+    },
+    "description": {
+      "fr": "Nouvelle communication pour L’Étoile Blanche à Lausanne : quatre cartes, affichage pour l’afterwork, anecdotes et réseaux sociaux.",
+      "en": "A new communication for L’Étoile Blanche in Lausanne: four menus, an after-work poster campaign, anecdote cards and social media.",
+      "enOf": "eb6bb5e8"
+    }
+  },
+  "study": {
+    "kicker": {
+      "fr": "Communication digitale · Print & réseaux sociaux",
+      "en": "Digital communication · Print & social media",
+      "enOf": "35263cdb"
+    },
+    "title": {
+      "fr": "L’Étoile Blanche",
+      "en": "L’Étoile Blanche",
+      "enOf": "3d58d5c1"
+    },
+    "hook": {
+      "fr": "Un restaurant repris par une nouvelle direction, et une image à réinventer.",
+      "en": "A restaurant under new management, and an image to reinvent.",
+      "enOf": "2136d09a"
+    },
+    "intro": {
+      "fr": "Avec l’agence étudiante Zest, nous avons repensé la communication de L’Étoile Blanche, à Lausanne : ses cartes, son affichage et ses réseaux sociaux, autour d’un seul message.",
+      "en": "With the student agency Zest, we reimagined the communication of L’Étoile Blanche in Lausanne: its menus, its posters and its social media, around a single message.",
+      "enOf": "1ab32afe"
+    },
+    "meta": [
+      {
+        "label": {
+          "fr": "Contexte",
+          "en": "Context",
+          "enOf": "4debab7b"
+        },
+        "value": {
+          "fr": "Projet d’agence, HEIG-VD",
+          "en": "Agency project, HEIG-VD",
+          "enOf": "fa5ecc6f"
+        }
+      },
+      {
+        "label": {
+          "fr": "Année",
+          "en": "Year",
+          "enOf": "26a73d12"
+        },
+        "value": {
+          "fr": "2026",
+          "en": "2026",
+          "enOf": "40293d93"
+        }
+      },
+      {
+        "label": {
+          "fr": "Client",
+          "en": "Client",
+          "enOf": "d5a6163e"
+        },
+        "value": {
+          "fr": "Restaurant L’Étoile Blanche, Lausanne",
+          "en": "L’Étoile Blanche restaurant, Lausanne",
+          "enOf": "3b4689f7"
+        }
+      },
+      {
+        "label": {
+          "fr": "Mon rôle",
+          "en": "My role",
+          "enOf": "4f1073ea"
+        },
+        "value": {
+          "fr": "Vision globale et cohérence du projet",
+          "en": "Overall vision and consistency",
+          "enOf": "63d2bd1d"
+        }
+      },
+      {
+        "label": {
+          "fr": "Équipe",
+          "en": "Team",
+          "enOf": "b3e19a1e"
+        },
+        "value": {
+          "fr": "Agence Zest, 5 étudiants",
+          "en": "Zest agency, 5 students",
+          "enOf": "d8c99d62"
+        }
+      },
+      {
+        "label": {
+          "fr": "Outils",
+          "en": "Tools",
+          "enOf": "e7781d3b"
+        },
+        "value": {
+          "fr": "Canva, Figma",
+          "en": "Canva, Figma",
+          "enOf": "d1afad18"
+        }
+      }
+    ],
+    "brief": [
+      {
+        "label": {
+          "fr": "Le défi",
+          "en": "The challenge",
+          "enOf": "92280470"
+        },
+        "text": {
+          "fr": "Une nouvelle direction, et une communication qui ne la reflétait pas encore.",
+          "en": "New owners, and a communication that didn’t reflect them yet.",
+          "enOf": "b723a57c"
+        }
+      },
+      {
+        "label": {
+          "fr": "Notre réponse",
+          "en": "Our answer",
+          "enOf": "1afb29a5"
+        },
+        "text": {
+          "fr": "Un message, « l’endroit qui rassemble », décliné du menu jusqu’à Instagram.",
+          "en": "One message, “the place that brings people together”, from the menu to Instagram.",
+          "enOf": "ad05dd0b"
+        }
+      },
+      {
+        "label": {
+          "fr": "Le résultat",
+          "en": "The result",
+          "enOf": "4f44b406"
+        },
+        "text": {
+          "fr": "Quatre cartes, une campagne d’affichage, des anecdotes et des contenus pour trois réseaux.",
+          "en": "Four menus, a poster campaign, anecdote cards and content for three social networks.",
+          "enOf": "93268f04"
+        }
+      }
+    ],
+    "sections": [
+      {
+        "id": "agence",
+        "nav": {
+          "fr": "L’agence",
+          "en": "The agency",
+          "enOf": "e98d1bb5"
+        },
+        "title": {
+          "fr": "Une agence, un client",
+          "en": "One agency, one client",
+          "enOf": "72db194a"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Pour ce projet, nous avons monté Zest, une agence de cinq étudiants. Le nom vient du zeste de citron, pour la fraîcheur ; le slogan, « la comm’ qui a du jus », donne le ton.",
+              "en": "For this project, we set up Zest, an agency of five students. The name comes from lemon zest, for freshness; the tagline, “comms with a kick”, sets the tone.",
+              "enOf": "e6b84da1"
+            }
+          },
+          {
+            "type": "text",
+            "text": {
+              "fr": "Notre client : L’Étoile Blanche, un café-restaurant lausannois repris par une nouvelle direction, qui voulait mettre en avant l’établissement et la nouvelle équipe. Avec Sacha Loskov, j’étais chargé de la vision globale : que chaque support raconte la même histoire.",
+              "en": "Our client: L’Étoile Blanche, a Lausanne café-restaurant taken over by new owners, who wanted to showcase the place and the new team. With Sacha Loskov, I was in charge of the overall vision: making every medium tell the same story.",
+              "enOf": "8c739df7"
+            }
+          }
+        ]
+      },
+      {
+        "id": "message",
+        "nav": {
+          "fr": "Le message",
+          "en": "The message",
+          "enOf": "1a6b50dd"
+        },
+        "title": {
+          "fr": "Un seul message",
+          "en": "A single message",
+          "enOf": "4723d2ec"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Avant de dessiner quoi que ce soit, nous avons cherché ce qui relierait tous les supports. L’Étoile Blanche est ouverte du café du matin à l’apéro et au souper : on peut s’y retrouver à toute heure.",
+              "en": "Before designing anything, we looked for what would tie every medium together. L’Étoile Blanche is open from morning coffee to drinks and dinner: people can meet there at any time.",
+              "enOf": "17ce69c9"
+            }
+          },
+          {
+            "type": "quote",
+            "text": {
+              "fr": "L’Étoile Blanche, l’endroit qui rassemble.",
+              "en": "L’Étoile Blanche, the place that brings people together.",
+              "enOf": "3bcbf74c"
+            },
+            "source": {
+              "fr": "Le message clé de la campagne",
+              "en": "The campaign’s key message",
+              "enOf": "7dfe34c7"
+            }
+          }
+        ]
+      },
+      {
+        "id": "cartes",
+        "nav": {
+          "fr": "Les cartes",
+          "en": "The menus",
+          "enOf": "03a9b2e3"
+        },
+        "title": {
+          "fr": "Quatre cartes, un même univers",
+          "en": "Four menus, one world",
+          "enOf": "c9a768d9"
+        },
+        "content": [
+          {
+            "type": "steps",
+            "steps": [
+              {
+                "text": {
+                  "fr": "Le menu sert aussi de set de table. Des titres massifs aux courbes rétro, une typographie classique pour les plats : l’héritage de la brasserie, en plus moderne.",
+                  "en": "The menu doubles as a placemat. Bold retro titles, a classic typeface for the dishes: the brasserie heritage, made more modern.",
+                  "enOf": "d6486eab"
+                },
+                "image": {
+                  "src": "/images/case/etoile-blanche/menu-terrasse-2.webp",
+                  "width": 1184,
+                  "height": 864,
+                  "alt": {
+                    "fr": "Menu rouge et blanc posé en set de table, avec un café et un croissant",
+                    "en": "Red and white menu used as a placemat, with a coffee and a croissant",
+                    "enOf": "2f2e86e5"
+                  }
+                }
+              },
+              {
+                "text": {
+                  "fr": "La carte des boissons reprend les mêmes codes en inversant les couleurs.",
+                  "en": "The drinks menu uses the same codes with the colours reversed.",
+                  "enOf": "e3304100"
+                },
+                "image": {
+                  "src": "/images/case/etoile-blanche/boissons-2.webp",
+                  "width": 864,
+                  "height": 1184,
+                  "alt": {
+                    "fr": "Carte des boissons rouge et crème sur une table, avec un cocktail",
+                    "en": "Red and cream drinks menu on a table, with a cocktail",
+                    "enOf": "3869c3fa"
+                  }
+                }
+              },
+              {
+                "text": {
+                  "fr": "Les suggestions changent chaque semaine : nous en avons fait un gabarit facile à mettre à jour, qui invite aussi les clients du midi à revenir pour l’afterwork.",
+                  "en": "The specials change every week, so we made them an easy-to-update template that also invites lunch guests back for the after-work.",
+                  "enOf": "3d9b1ae4"
+                },
+                "image": {
+                  "src": "/images/case/etoile-blanche/suggestions-2.webp",
+                  "width": 864,
+                  "height": 1184,
+                  "alt": {
+                    "fr": "Carte des suggestions de la semaine, posée sur une table du restaurant",
+                    "en": "Weekly specials menu on a restaurant table",
+                    "enOf": "2b505c5d"
+                  }
+                }
+              },
+              {
+                "text": {
+                  "fr": "La carte des bricoles se plie en étoile : fermée, elle montre les catégories ; ouverte, tout le menu de l’afterwork.",
+                  "en": "The bar-snacks menu folds into a star: closed, it shows the categories; open, the whole after-work menu.",
+                  "enOf": "3ca0b822"
+                },
+                "image": {
+                  "src": "/images/case/etoile-blanche/bricoles-etoile-2.webp",
+                  "width": 992,
+                  "height": 1072,
+                  "alt": {
+                    "fr": "Carte des bricoles pliée en étoile, fermée puis ouverte sur une table",
+                    "en": "Star-folded bar-snacks menu, closed then open on a table",
+                    "enOf": "a1e85bd2"
+                  }
+                }
+              }
+            ],
+            "frame": "plain"
+          }
+        ]
+      },
+      {
+        "id": "affichage",
+        "nav": {
+          "fr": "L’affichage",
+          "en": "The posters",
+          "enOf": "1fbe7486"
+        },
+        "title": {
+          "fr": "L’afterwork, jusque dans la rue",
+          "en": "Taking the after-work to the street",
+          "enOf": "3afc5801"
+        },
+        "tone": "accent",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Pour faire connaître l’afterwork, notre première idée était d’utiliser les grands panneaux d’affichage de la ville. Trop cher : plus de 25’000 francs par semaine. Nous avons gardé l’idée en passant par l’affichage libre, dans les quartiers de bureaux voisins, avec des flèches qui mènent jusqu’au restaurant.",
+              "en": "To promote the after-work, our first idea was the city’s large billboards. Too expensive: more than 25,000 francs a week. We kept the idea using free poster spaces in the nearby office districts, with arrows leading to the restaurant.",
+              "enOf": "268953e7"
+            }
+          },
+          {
+            "type": "gallery",
+            "items": [
+              {
+                "src": "/images/case/etoile-blanche/affiche-blanche.webp",
+                "width": 900,
+                "height": 1778,
+                "alt": {
+                  "fr": "Affiche blanche « L’after-work, c’est à l’Étoile Blanche », avec une flèche et la distance",
+                  "en": "White poster “The after-work is at L’Étoile Blanche”, with an arrow and the distance",
+                  "enOf": "770094b5"
+                }
+              },
+              {
+                "src": "/images/case/etoile-blanche/affiche-rouge.webp",
+                "width": 900,
+                "height": 1778,
+                "alt": {
+                  "fr": "Affiche rouge « L’after-work, c’est à l’Étoile Blanche », avec une flèche et la distance",
+                  "en": "Red poster “The after-work is at L’Étoile Blanche”, with an arrow and the distance",
+                  "enOf": "8678576c"
+                }
+              }
+            ],
+            "cols": 2,
+            "narrow": true
+          },
+          {
+            "type": "text",
+            "text": {
+              "fr": "Dans le restaurant, des affichettes « Le saviez-vous ? » racontent des anecdotes sur l’établissement, son équipe et son histoire : de quoi lancer la conversation.",
+              "en": "Inside the restaurant, “Did you know?” cards tell stories about the place, its team and its history: a way to start a conversation.",
+              "enOf": "4b06bd85"
+            }
+          },
+          {
+            "type": "gallery",
+            "items": [
+              {
+                "src": "/images/case/etoile-blanche/anecdote-mur-2.webp",
+                "width": 1184,
+                "height": 864,
+                "alt": {
+                  "fr": "Affichette rouge « Le saviez-vous ? » sur un mur couvert de vieilles affiches",
+                  "en": "Red “Did you know?” card on a wall covered with old posters",
+                  "enOf": "9c3fec30"
+                }
+              },
+              {
+                "src": "/images/case/etoile-blanche/anecdote-salle-2.webp",
+                "width": 1184,
+                "height": 864,
+                "alt": {
+                  "fr": "Salle du restaurant avec des affichettes d’anecdotes sur les colonnes",
+                  "en": "Restaurant dining room with anecdote cards on the columns",
+                  "enOf": "4ebdf977"
+                }
+              }
+            ],
+            "cols": 2
+          }
+        ]
+      },
+      {
+        "id": "reseaux",
+        "nav": {
+          "fr": "Les réseaux",
+          "en": "Social media",
+          "enOf": "1536c252"
+        },
+        "title": {
+          "fr": "Une nouvelle ère sur les réseaux",
+          "en": "A new era on social media",
+          "enOf": "780ed39b"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Sur Instagram, TikTok et Facebook, les nouveaux contenus marquent une rupture avec les anciens : mêmes couleurs et mêmes typographies que les cartes, et un message qui revient, on peut venir à toute heure.",
+              "en": "On Instagram, TikTok and Facebook, the new content breaks with the old: the same colours and typefaces as the menus, and one recurring message, you can drop by at any time.",
+              "enOf": "dc167555"
+            }
+          },
+          {
+            "type": "gallery",
+            "items": [
+              {
+                "src": "/images/case/etoile-blanche/post-1.webp",
+                "width": 700,
+                "height": 875,
+                "alt": {
+                  "fr": "Publication « On se fait une pause ? » avec un café",
+                  "en": "Post “Coffee break?” with a cup of coffee",
+                  "enOf": "672000d8"
+                }
+              },
+              {
+                "src": "/images/case/etoile-blanche/post-2.webp",
+                "width": 700,
+                "height": 875,
+                "alt": {
+                  "fr": "Publication « Ici, on partage bien plus qu’un repas » avec des amis à table",
+                  "en": "Post “Here, we share much more than a meal” with friends at a table",
+                  "enOf": "689fdb2f"
+                }
+              },
+              {
+                "src": "/images/case/etoile-blanche/post-3.webp",
+                "width": 700,
+                "height": 875,
+                "alt": {
+                  "fr": "Publication avec la façade du restaurant",
+                  "en": "Post with the restaurant’s façade",
+                  "enOf": "1949eddd"
+                }
+              },
+              {
+                "src": "/images/case/etoile-blanche/post-4.webp",
+                "width": 700,
+                "height": 875,
+                "alt": {
+                  "fr": "Publication « Tu viens profiter en terrasse ? »",
+                  "en": "Post “Fancy the terrace?”",
+                  "enOf": "27bd1737"
+                }
+              }
+            ],
+            "cols": 4
+          },
+          {
+            "type": "video",
+            "src": "/images/case/etoile-blanche/reel.mp4",
+            "poster": "/images/case/etoile-blanche/reel-poster.webp",
+            "width": 720,
+            "height": 900,
+            "caption": {
+              "fr": "Un des reels de la campagne.",
+              "en": "One of the campaign’s reels.",
+              "enOf": "71095d7f"
+            }
+          },
+          {
+            "type": "image",
+            "image": {
+              "src": "/images/case/etoile-blanche/calendrier.webp",
+              "width": 1600,
+              "height": 900,
+              "alt": {
+                "fr": "Calendrier éditorial de janvier, avec les publications planifiées par type",
+                "en": "January editorial calendar, with posts planned by type",
+                "enOf": "b8227bde"
+              },
+              "caption": {
+                "fr": "Le calendrier éditorial, pour planifier stories, posts et reels.",
+                "en": "The editorial calendar, to plan stories, posts and reels.",
+                "enOf": "2e222fa8"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "resultats",
+        "nav": {
+          "fr": "La livraison",
+          "en": "The handover",
+          "enOf": "76d761fd"
+        },
+        "title": {
+          "fr": "Un playbook pour durer",
+          "en": "A playbook built to last",
+          "enOf": "74c0edb1"
+        },
+        "content": [
+          {
+            "type": "figures",
+            "items": [
+              {
+                "value": 4,
+                "label": {
+                  "fr": "cartes repensées",
+                  "en": "menus redesigned",
+                  "enOf": "5e83f67b"
+                }
+              },
+              {
+                "value": 3,
+                "label": {
+                  "fr": "réseaux sociaux : Instagram, TikTok, Facebook",
+                  "en": "social networks: Instagram, TikTok, Facebook",
+                  "enOf": "d5db1216"
+                }
+              },
+              {
+                "value": 2,
+                "label": {
+                  "fr": "campagnes print : affichage et anecdotes",
+                  "en": "print campaigns: posters and anecdotes",
+                  "enOf": "0c1864a6"
+                }
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": {
+              "fr": "Nous avons remis au restaurant un playbook qui explique chaque support, et tous les fichiers modifiables sur Canva et Figma : l’équipe peut changer un prix, une photo ou une suggestion sans repasser par nous.",
+              "en": "We handed the restaurant a playbook explaining every medium, plus every file editable in Canva and Figma: the team can change a price, a photo or a special without going through us.",
+              "enOf": "806efc4e"
+            }
+          }
+        ]
+      },
+      {
+        "id": "retenu",
+        "nav": {
+          "fr": "Ce que je retiens",
+          "en": "What I take away",
+          "enOf": "efd73be7"
+        },
+        "title": {
+          "fr": "Ce que je retiens",
+          "en": "What I take away",
+          "enOf": "efd73be7"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Garder la vue d’ensemble m’a appris qu’une identité forte tient moins à un beau visuel qu’à la cohérence de tous. Et l’affichage m’a rappelé qu’une bonne idée doit aussi tenir dans le budget du client.",
+              "en": "Keeping the big picture taught me that a strong identity is less about one beautiful visual than about everything fitting together. And the posters reminded me that a good idea also has to fit the client’s budget.",
+              "enOf": "7d17dafd"
+            }
+          }
+        ]
+      }
+    ],
+    "credits": [
+      {
+        "name": "Luca Leone",
+        "role": {
+          "fr": "Vision globale et cohérence",
+          "en": "Overall vision and consistency",
+          "enOf": "3d092e9e"
+        }
+      },
+      {
+        "name": "Sacha Loskov",
+        "role": {
+          "fr": "Vision globale et cohérence",
+          "en": "Overall vision and consistency",
+          "enOf": "3d092e9e"
+        }
+      },
+      {
+        "name": "Romain Blanchard",
+        "role": {
+          "fr": "Supports print",
+          "en": "Print media",
+          "enOf": "1e764612"
+        }
+      },
+      {
+        "name": "Ryad Ait-Slimane",
+        "role": {
+          "fr": "Supports digitaux",
+          "en": "Digital media",
+          "enOf": "6176944a"
+        }
+      },
+      {
+        "name": "Cindy Demont",
+        "role": {
+          "fr": "Supports digitaux",
+          "en": "Digital media",
+          "enOf": "6176944a"
+        }
+      }
+    ],
+    "creditsNote": {
+      "fr": "Agence Zest, Bachelor en Ingénierie des médias, HEIG-VD, pour le restaurant L’Étoile Blanche à Lausanne.",
+      "en": "Zest agency, Bachelor in Media Engineering, HEIG-VD, for L’Étoile Blanche restaurant in Lausanne.",
+      "enOf": "c18ce3c8"
+    }
+  }
+}

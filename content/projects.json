@@ -1,0 +1,14 @@
+{
+  "order": [
+    "hug",
+    "karting-vuiteboeuf",
+    "oceansight",
+    "etoile-blanche",
+    "drivegear",
+    "f1-pitwall"
+  ],
+  "hidden": [],
+  "redirects": {
+    "hug-sangsationnel": "hug"
+  }
+}

@@ -1,0 +1,555 @@
+{
+  "contact": {
+    "name": "Luca Leone",
+    "email": "luca@luca-leone.ch",
+    "phone": "+41 79 868 72 04",
+    "linkedin": "https://linkedin.com/in/leone-luca",
+    "cv": "/pdf/CV-LucaLeone2026.pdf"
+  },
+  "hero": {
+    "eyebrow": {
+      "fr": "Étudiant en ingénierie des médias · HEIG-VD",
+      "en": "Media Engineering student · HEIG-VD",
+      "enOf": "b1691b99"
+    },
+    "headline": {
+      "before": {
+        "fr": "Je transforme des",
+        "en": "I turn",
+        "enOf": "62f2f7df"
+      },
+      "accent": {
+        "fr": "idées",
+        "en": "ideas",
+        "enOf": "3317fd3b"
+      },
+      "joiner": {
+        "fr": "en",
+        "en": "into",
+        "enOf": "411a658a"
+      }
+    },
+    "outcomes": [
+      {
+        "fr": "expériences digitales",
+        "en": "digital experiences",
+        "enOf": "a6b19eee"
+      },
+      {
+        "fr": "interfaces intuitives",
+        "en": "intuitive interfaces",
+        "enOf": "a9c491f5"
+      },
+      {
+        "fr": "contenus engageants",
+        "en": "engaging content",
+        "enOf": "e73a8173"
+      },
+      {
+        "fr": "identités visuelles",
+        "en": "visual identities",
+        "enOf": "9bbe6330"
+      },
+      {
+        "fr": "sites web sur mesure",
+        "en": "custom websites",
+        "enOf": "923aa56a"
+      }
+    ],
+    "lead": {
+      "fr": "De A à Z, avec une approche qui allie créativité et technique : contenus, réseaux sociaux, identité visuelle, UI/UX et développement web.",
+      "en": "End to end, with an approach that blends creativity and technique: content, social media, visual identity, UI/UX and web development.",
+      "enOf": "7219fbeb"
+    },
+    "availability": {
+      "before": {
+        "fr": "Je cherche actuellement une entreprise pour réaliser mon ",
+        "en": "I'm currently looking for a company to host my ",
+        "enOf": "3f3ef303"
+      },
+      "link": {
+        "fr": "travail de Bachelor",
+        "en": "Bachelor thesis",
+        "enOf": "bca239dd"
+      },
+      "after": {
+        "fr": ".",
+        "en": ".",
+        "enOf": "2b0c98f1"
+      }
+    }
+  },
+  "about": {
+    "bio": {
+      "fr": "Étudiant en dernière année de Bachelor en ingénierie des médias à la HEIG-VD, je me forme à la communication digitale, au design et aux technologies web, avec une approche qui combine créativité et technique.\n\nJ’aime concevoir des projets numériques de A à Z, de l’idée à sa réalisation : création de contenus, communication sur les réseaux sociaux, identité visuelle, UI/UX, conception de sites web et développement de projets digitaux.\n\nEn parallèle de mes études, je travaille comme community manager pour le Karting de Vuiteboeuf, où je mets en pratique ces compétences à travers la création de contenus photo et vidéo, la gestion des réseaux sociaux et le développement de la présence digitale de la marque.\n\nCurieux et polyvalent, j’aime apprendre, expérimenter avec de nouveaux outils et transformer des idées en projets concrets. Toujours intéressé par de nouvelles collaborations et opportunités dans le digital.",
+      "en": "As a final-year Bachelor student in Media Engineering at HEIG-VD, I specialize in digital communication, design, and web technologies, with an approach that bridges creativity and technical execution.\n\nI love crafting digital projects from A to Z, from initial concept to deployment: content creation, social media strategy, visual identity, UI/UX, website design, and interactive media.\n\nAlongside my studies, I work as a community manager for Karting de Vuiteboeuf, applying these skills through photo and video production, social media management, and expanding the brand's digital presence.\n\nCurious and versatile, I thrive on learning, experimenting with new tools, and turning ideas into tangible digital realities. Always open to new collaborations and digital opportunities.",
+      "enOf": "df1bc326"
+    },
+    "languages": [
+      {
+        "name": {
+          "fr": "Français",
+          "en": "French",
+          "enOf": "f8f1b0d6"
+        },
+        "level": {
+          "fr": "Langue maternelle",
+          "en": "Native language",
+          "enOf": "784826d6"
+        }
+      },
+      {
+        "name": {
+          "fr": "Anglais",
+          "en": "English",
+          "enOf": "b715c1ec"
+        },
+        "level": {
+          "fr": "Niveau C1",
+          "en": "C1 Level",
+          "enOf": "634c022d"
+        }
+      },
+      {
+        "name": {
+          "fr": "Italien",
+          "en": "Italian",
+          "enOf": "1030cd2f"
+        },
+        "level": {
+          "fr": "Niveau B2",
+          "en": "B2 Level",
+          "enOf": "4a4e1969"
+        }
+      }
+    ],
+    "passions": [
+      {
+        "fr": "Automobile",
+        "en": "Automotive",
+        "enOf": "1829dae8"
+      },
+      {
+        "fr": "Sport",
+        "en": "Sports",
+        "enOf": "bbc39b8d"
+      },
+      {
+        "fr": "Voyage",
+        "en": "Travel",
+        "enOf": "ac70e210"
+      },
+      {
+        "fr": "Technologies",
+        "en": "Technology",
+        "enOf": "999d3447"
+      }
+    ],
+    "education": [
+      {
+        "period": {
+          "fr": "2024 - 2027",
+          "en": "2024 - 2027",
+          "enOf": "a04b342f"
+        },
+        "title": {
+          "fr": "Bachelor of Science en ingénierie des médias",
+          "en": "Bachelor of Science in Media Engineering",
+          "enOf": "7c0b79c1"
+        },
+        "institution": "HEIG-VD",
+        "location": {
+          "fr": "Yverdon-les-Bains, Suisse",
+          "en": "Yverdon-les-Bains, Switzerland",
+          "enOf": "b5b76e1d"
+        },
+        "details": {
+          "fr": "Stratégie & innovation numérique, développement web, marketing et design d'interfaces utilisateur (UX/UI).",
+          "en": "Digital strategy & innovation, web development, marketing, and user interface design (UX/UI).",
+          "enOf": "57cc7a57"
+        }
+      },
+      {
+        "period": {
+          "fr": "2023 - 2024",
+          "en": "2023 - 2024",
+          "enOf": "2d23503d"
+        },
+        "title": {
+          "fr": "Maturité professionnelle spécialisée en communication et information",
+          "en": "Specialized Baccalaureate in Communication & Information",
+          "enOf": "60603a1f"
+        },
+        "institution": "ERACOM",
+        "location": {
+          "fr": "Lausanne, Suisse",
+          "en": "Lausanne, Switzerland",
+          "enOf": "e8f9a65c"
+        },
+        "details": {
+          "fr": "Communication visuelle, médias interactifs, création de contenus print & digitaux, formats audiovisuels.",
+          "en": "Visual communication, interactive media, print & digital content creation, audiovisual formats.",
+          "enOf": "f07d43e3"
+        }
+      },
+      {
+        "period": {
+          "fr": "2020 – 2023",
+          "en": "2020 – 2023",
+          "enOf": "77b27035"
+        },
+        "title": {
+          "fr": "Certificat d'école de culture générale en communication et information",
+          "en": "General Culture Certificate in Communication & Information",
+          "enOf": "b3ddbcb2"
+        },
+        "institution": "Gymnase d'Yverdon",
+        "location": {
+          "fr": "Yverdon-les-Bains, Suisse",
+          "en": "Yverdon-les-Bains, Switzerland",
+          "enOf": "b5b76e1d"
+        },
+        "details": {
+          "fr": "",
+          "en": "",
+          "enOf": "811c9dc5"
+        }
+      }
+    ],
+    "experience": [
+      {
+        "period": {
+          "fr": "Mai 2026 - Aujourd’hui",
+          "en": "May 2026 - Present",
+          "enOf": "67c344be"
+        },
+        "title": {
+          "fr": "Responsable communication digitale & création de contenus",
+          "en": "Digital Communication & Content Creation Manager",
+          "enOf": "80b63cef"
+        },
+        "company": "Karting de Vuiteboeuf",
+        "location": {
+          "fr": "Vuitebœuf, Vaud, Suisse · Hybride",
+          "en": "Vuitebœuf, Vaud, Switzerland · Hybrid",
+          "enOf": "b45261b4"
+        },
+        "description": {
+          "fr": "Stratégie de marque & réseaux sociaux (Instagram, TikTok), création et production de contenus photo et vidéo sur circuit, promotion des offres et événements.",
+          "en": "Brand strategy & social media (Instagram, TikTok), on-track photo/video production, and event campaigns.",
+          "enOf": "c5634fb6"
+        }
+      },
+      {
+        "period": {
+          "fr": "Juillet 2022 (1 mois)",
+          "en": "July 2022 (1 month)",
+          "enOf": "a8387488"
+        },
+        "title": {
+          "fr": "Stagiaire",
+          "en": "Intern",
+          "enOf": "7767ead2"
+        },
+        "company": "Groupe AFH Automobile",
+        "location": {
+          "fr": "Yverdon-les-Bains, Suisse · Sur site",
+          "en": "Yverdon-les-Bains, Switzerland · On-site",
+          "enOf": "dfa57595"
+        },
+        "description": {
+          "fr": "Découverte des métiers du commerce automobile, accueil clients, soutien administratif et gestion de la communication commerciale.",
+          "en": "Customer relations, administrative support, and commercial digital communication management.",
+          "enOf": "16f0d70e"
+        }
+      }
+    ]
+  },
+  "skills": [
+    {
+      "id": "ui-ux",
+      "number": "01",
+      "title": {
+        "fr": "UI/UX Design",
+        "en": "UI/UX Design",
+        "enOf": "302729b9"
+      },
+      "desc": {
+        "fr": "Conception d'interfaces intuitives et ergonomiques, wireframes, prototypes interactifs haute fidélité et design systems modulaires.",
+        "en": "Designing intuitive and ergonomic interfaces, wireframes, high-fidelity interactive prototypes, and modular design systems.",
+        "enOf": "122a6b7a"
+      },
+      "tools": [
+        {
+          "fr": "Figma",
+          "en": "Figma",
+          "enOf": "c40cfa4b"
+        },
+        {
+          "fr": "Prototypage",
+          "en": "Prototyping",
+          "enOf": "b5839499"
+        },
+        {
+          "fr": "Design Systems",
+          "en": "Design Systems",
+          "enOf": "7b1079a5"
+        },
+        {
+          "fr": "Tests utilisateurs",
+          "en": "User testing",
+          "enOf": "4fed1c62"
+        }
+      ]
+    },
+    {
+      "id": "web-dev",
+      "number": "02",
+      "title": {
+        "fr": "Développement Web",
+        "en": "Web Development",
+        "enOf": "c6357aef"
+      },
+      "desc": {
+        "fr": "Intégration et développement d'applications web sur mesure, modernes, véloces et pensées pour répondre précisément aux besoins de chaque projet.",
+        "en": "Developing modern, fast, and tailored web applications crafted to match the specific requirements of each project.",
+        "enOf": "a471411a"
+      },
+      "tools": [
+        {
+          "fr": "JavaScript",
+          "en": "JavaScript",
+          "enOf": "6636d68a"
+        },
+        {
+          "fr": "Vue.js",
+          "en": "Vue.js",
+          "enOf": "fff9acfc"
+        },
+        {
+          "fr": "Laravel",
+          "en": "Laravel",
+          "enOf": "e3f40d32"
+        },
+        {
+          "fr": "Tailwind CSS",
+          "en": "Tailwind CSS",
+          "enOf": "95625012"
+        },
+        {
+          "fr": "PHP",
+          "en": "PHP",
+          "enOf": "9ff9d50f"
+        }
+      ]
+    },
+    {
+      "id": "comm-digitale",
+      "number": "03",
+      "title": {
+        "fr": "Communication Digitale",
+        "en": "Digital Communication",
+        "enOf": "a429f086"
+      },
+      "desc": {
+        "fr": "Élaboration de stratégies de contenu numérique, gestion de communautés et déploiement de campagnes multicanales engageantes.",
+        "en": "Developing digital content strategies, managing social channels, and launching engaging multi-platform campaigns.",
+        "enOf": "2064dbf3"
+      },
+      "tools": [
+        {
+          "fr": "Stratégie Social Media",
+          "en": "Social media strategy",
+          "enOf": "be1c3e7e"
+        },
+        {
+          "fr": "Instagram & TikTok",
+          "en": "Instagram & TikTok",
+          "enOf": "a3fdd899"
+        },
+        {
+          "fr": "Community Management",
+          "en": "Community management",
+          "enOf": "cf0ebac1"
+        },
+        {
+          "fr": "Storytelling",
+          "en": "Storytelling",
+          "enOf": "25756d0b"
+        }
+      ]
+    },
+    {
+      "id": "dir-art",
+      "number": "04",
+      "title": {
+        "fr": "Direction Artistique",
+        "en": "Art Direction",
+        "enOf": "cbcf7e7d"
+      },
+      "desc": {
+        "fr": "Création d'identités visuelles singulières, déclinaison de chartes graphiques, typographie soignée et cohérence de marque.",
+        "en": "Crafting distinctive brand identities, editorial visual guidelines, refined typography, and overall brand coherence.",
+        "enOf": "553f2dbb"
+      },
+      "tools": [
+        {
+          "fr": "Identité visuelle",
+          "en": "Visual identity",
+          "enOf": "c040b36e"
+        },
+        {
+          "fr": "Illustrator & Photoshop",
+          "en": "Illustrator & Photoshop",
+          "enOf": "eef936dc"
+        },
+        {
+          "fr": "Typographie",
+          "en": "Typography",
+          "enOf": "df8602bb"
+        }
+      ]
+    },
+    {
+      "id": "prod-video",
+      "number": "05",
+      "title": {
+        "fr": "Production Audiovisuelle",
+        "en": "Audiovisual Production",
+        "enOf": "3a0fd9c3"
+      },
+      "desc": {
+        "fr": "Captation photo, tournage et montage vidéo dynamique sur le terrain, étalonnage et formats courts optimisés pour le web et les réseaux.",
+        "en": "Photography, dynamic on-site video filming and editing, color grading, and short-form storytelling tailored for social platforms.",
+        "enOf": "9f002cbe"
+      },
+      "tools": [
+        {
+          "fr": "Captation Photo & Vidéo",
+          "en": "Photo & video shooting",
+          "enOf": "04b52bcf"
+        },
+        {
+          "fr": "Premiere Pro",
+          "en": "Premiere Pro",
+          "enOf": "3b0605e1"
+        },
+        {
+          "fr": "Formats courts (Reels)",
+          "en": "Short-form video (Reels)",
+          "enOf": "6f9843fd"
+        },
+        {
+          "fr": "Étalonnage",
+          "en": "Colour grading",
+          "enOf": "108d5f3d"
+        }
+      ]
+    },
+    {
+      "id": "gest-projet",
+      "number": "06",
+      "title": {
+        "fr": "Gestion de Projet Média",
+        "en": "Media Project Management",
+        "enOf": "d30ceaf3"
+      },
+      "desc": {
+        "fr": "Coordination d'initiatives pluridisciplinaires, méthodologies agiles, cadrage des besoins et pilotage rigoureux du brief à la livraison.",
+        "en": "Coordinating cross-functional media initiatives with agile workflows, scoping requirements from brief to final delivery.",
+        "enOf": "3853ed98"
+      },
+      "tools": [
+        {
+          "fr": "Gestion de projet Agile",
+          "en": "Agile project management",
+          "enOf": "4cf02ba7"
+        },
+        {
+          "fr": "Notion & Jira",
+          "en": "Notion & Jira",
+          "enOf": "ac59569e"
+        },
+        {
+          "fr": "Cahier des charges",
+          "en": "Project specifications",
+          "enOf": "54a4a060"
+        }
+      ]
+    }
+  ],
+  "seo": {
+    "home": {
+      "title": {
+        "fr": "Luca Leone · Portfolio en ingénierie des médias, HEIG-VD",
+        "en": "Luca Leone · Media Engineering portfolio, HEIG-VD",
+        "enOf": "4506697f"
+      },
+      "description": {
+        "fr": "Portfolio de Luca Leone, étudiant en ingénierie des médias à la HEIG-VD : communication digitale, UX/UI et développement web.",
+        "en": "Portfolio of Luca Leone, Media Engineering student at HEIG-VD in Switzerland: digital communication, UX/UI design and web development.",
+        "enOf": "0102e1a8"
+      }
+    },
+    "projets": {
+      "title": {
+        "fr": "Projets · Communication, UX/UI et web | Luca Leone",
+        "en": "Projects · Communication, UX/UI and web | Luca Leone",
+        "enOf": "d666ec44"
+      },
+      "description": {
+        "fr": "Six projets de Luca Leone : plateforme web pour les HUG, réseaux du Karting de Vuiteboeuf, app OceanSight, boutique DriveGear et plus.",
+        "en": "Six projects by Luca Leone: a web platform for the HUG, Karting de Vuiteboeuf’s social media, the OceanSight app and more.",
+        "enOf": "20708f79"
+      }
+    },
+    "a-propos": {
+      "title": {
+        "fr": "À propos de Luca Leone · Étudiant en ingénierie des médias",
+        "en": "About Luca Leone · Media Engineering student, HEIG-VD",
+        "enOf": "94df5dbf"
+      },
+      "description": {
+        "fr": "Luca Leone, étudiant en ingénierie des médias à la HEIG-VD et community manager au Karting de Vuiteboeuf : parcours et langues.",
+        "en": "Luca Leone, Media Engineering student at HEIG-VD and community manager at Karting de Vuiteboeuf: education, experience, languages.",
+        "enOf": "83bbdece"
+      }
+    },
+    "contact": {
+      "title": {
+        "fr": "Contacter Luca Leone · Travail de Bachelor, stage, projet",
+        "en": "Contact Luca Leone · Bachelor thesis, internship, project",
+        "enOf": "535878af"
+      },
+      "description": {
+        "fr": "Écrivez à Luca Leone pour un travail de Bachelor, un stage, un emploi ou un projet en communication digitale, UX/UI ou web.",
+        "en": "Write to Luca Leone about a Bachelor thesis, an internship, a job or a project in digital communication, UX/UI or web development.",
+        "enOf": "3b4f65a9"
+      }
+    },
+    "privacy": {
+      "title": {
+        "fr": "Politique de confidentialité · Portfolio de Luca Leone",
+        "en": "Privacy policy · Luca Leone’s portfolio, Media Engineering",
+        "enOf": "8294c490"
+      },
+      "description": {
+        "fr": "Les données traitées par le portfolio de Luca Leone et vos droits : aucun cookie, aucun suivi publicitaire, hébergé en Suisse.",
+        "en": "What data Luca Leone’s portfolio processes, and your rights: no cookies, no advertising tracking, hosted in Switzerland.",
+        "enOf": "fcc24c0d"
+      }
+    },
+    "notfound": {
+      "title": {
+        "fr": "Page introuvable · Portfolio de Luca Leone, HEIG-VD",
+        "en": "Page not found · Luca Leone’s portfolio, HEIG-VD",
+        "enOf": "ed7e6cef"
+      },
+      "description": {
+        "fr": "Cette page n’existe pas ou plus. Découvrez les projets de Luca Leone en communication digitale, UX/UI et développement web.",
+        "en": "This page doesn’t exist anymore. Browse Luca Leone’s projects in digital communication, UX/UI design and web development.",
+        "enOf": "c9aea7c6"
+      }
+    }
+  }
+}
