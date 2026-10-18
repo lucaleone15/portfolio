@@ -75,6 +75,8 @@ export default defineConfig(({ isSsrBuild, mode }) => {
     build: {
       // The SSR bundle (dist-ssr) is only used by scripts/prerender.mjs: no need to copy public/
       copyPublicDir: !isSsrBuild,
+      // Publish from the admin builds next to the live site, then swaps (server/admin/publish.ts)
+      ...(isSsrBuild ? {} : { outDir: process.env.BUILD_OUT_DIR || 'dist' }),
       // Fonts are always real files: tiny subsets would otherwise be inlined as data: URIs,
       // which the production CSP (font-src 'self') rightly blocks
       assetsInlineLimit: (filePath: string) => (/\.(woff2?|ttf|otf)$/.test(filePath) ? false : undefined),
