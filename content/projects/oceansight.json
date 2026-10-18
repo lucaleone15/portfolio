@@ -1,0 +1,647 @@
+{
+  "id": "oceansight",
+  "kind": "school",
+  "name": "OceanSight",
+  "number": "03",
+  "year": "2026",
+  "imageUrl": "/images/oceansight-apercu.webp",
+  "stack": [
+    {
+      "fr": "UI/UX Design",
+      "en": "UI/UX Design",
+      "enOf": "302729b9"
+    },
+    {
+      "fr": "Figma & Prototypage",
+      "en": "Figma & Prototyping",
+      "enOf": "3637fcc7"
+    },
+    {
+      "fr": "Tests utilisateurs",
+      "en": "User Testing",
+      "enOf": "4fed1c62"
+    },
+    {
+      "fr": "Design Mobile",
+      "en": "Mobile Design",
+      "enOf": "b1b4fd0f"
+    }
+  ],
+  "accentColor": "#275F5F",
+  "accentColorDark": "#2EBBA6",
+  "logo": {
+    "src": "/images/logos/oceansight.webp",
+    "srcDark": "/images/logos/oceansight-dark.webp",
+    "width": 482,
+    "height": 160,
+    "display": 40
+  },
+  "video": "/videos/oceansight-dive.mp4",
+  "card": {
+    "subtitle": {
+      "fr": "Application mobile de signalement des déchets marins",
+      "en": "Mobile app for marine waste reporting",
+      "enOf": "8c440b23"
+    },
+    "category": {
+      "fr": "UX/UI design",
+      "en": "UX/UI design",
+      "enOf": "6c8d968b"
+    },
+    "hook": {
+      "fr": "11 millions de tonnes de plastique par an.",
+      "en": "11 million tonnes of plastic a year.",
+      "enOf": "74b61967"
+    },
+    "badge": {
+      "fr": "Designer UX/UI",
+      "en": "UX/UI designer",
+      "enOf": "e2136e94"
+    },
+    "summary": {
+      "fr": "Conception d'une application mobile collaborative simplifiant le signalement des déchets marins et encourageant l'action collective.",
+      "en": "Design of a collaborative mobile application that simplifies marine waste reporting and encourages collective action.",
+      "enOf": "6931e3c5"
+    },
+    "overview": {
+      "fr": "Projet UI/UX réalisé dans le cadre d'un semestre à la HEIG-VD avec Sacha Loskov et Romain Blanchard. OceanSight propose une plateforme collaborative permettant de signaler des déchets marins, de rejoindre des missions de nettoyage, de découvrir les espèces menacées et de suivre son impact grâce à des statistiques et des achievements. Le projet s'est appuyé sur une démarche UX itérative intégrant prototypage, tests utilisateurs et amélioration continue de l'expérience.",
+      "en": "UI/UX project developed over a semester at HEIG-VD with Sacha Loskov and Romain Blanchard. OceanSight is a collaborative platform designed to report marine waste, join clean-up missions, discover endangered species and track personal impact through statistics and achievements. The project followed an iterative UX approach combining prototyping, user testing and continuous improvements to the experience.",
+      "enOf": "a357944e"
+    }
+  },
+  "seo": {
+    "title": {
+      "fr": "OceanSight : app contre les déchets marins | Luca Leone",
+      "en": "OceanSight: a marine waste reporting app | Luca Leone",
+      "enOf": "01f37088"
+    },
+    "description": {
+      "fr": "OceanSight, app mobile pour signaler les déchets marins et rejoindre une mission de nettoyage. Recherche UX, prototype Figma.",
+      "en": "OceanSight, a mobile app to report marine waste and join a clean-up mission. UX research, Figma prototype and user tests, graded 6/6.",
+      "enOf": "aed100a0"
+    }
+  },
+  "study": {
+    "kicker": {
+      "fr": "UX/UI design · Application mobile",
+      "en": "UX/UI design · Mobile app",
+      "enOf": "82f5f29e"
+    },
+    "title": {
+      "fr": "OceanSight",
+      "en": "OceanSight",
+      "enOf": "497eb472"
+    },
+    "hook": {
+      "fr": "Les gens de la mer voient les déchets. Ils ne savent pas à qui les signaler.",
+      "en": "People at sea see the waste. They don’t know who to report it to.",
+      "enOf": "49861a2d"
+    },
+    "intro": {
+      "fr": "Avec Sacha Loskov et Romain Blanchard, j’ai conçu une app mobile qui permet à n’importe qui de signaler des filets fantômes et des îles de plastique, puis de rejoindre une mission pour les ramasser.",
+      "en": "With Sacha Loskov and Romain Blanchard, I designed a mobile app that lets anyone report ghost nets and plastic islands, then join a mission to clean them up.",
+      "enOf": "1865e3f9"
+    },
+    "meta": [
+      {
+        "label": {
+          "fr": "Contexte",
+          "en": "Context",
+          "enOf": "4debab7b"
+        },
+        "value": {
+          "fr": "Cours Bases UI/UX, HEIG-VD",
+          "en": "UI/UX Fundamentals course, HEIG-VD",
+          "enOf": "dcf15d37"
+        }
+      },
+      {
+        "label": {
+          "fr": "Année",
+          "en": "Year",
+          "enOf": "26a73d12"
+        },
+        "value": {
+          "fr": "2026",
+          "en": "2026",
+          "enOf": "40293d93"
+        }
+      },
+      {
+        "label": {
+          "fr": "Durée",
+          "en": "Duration",
+          "enOf": "2e6ca78a"
+        },
+        "value": {
+          "fr": "Un semestre",
+          "en": "One semester",
+          "enOf": "926bc39a"
+        }
+      },
+      {
+        "label": {
+          "fr": "Mon rôle",
+          "en": "My role",
+          "enOf": "4f1073ea"
+        },
+        "value": {
+          "fr": "UX/UI design, de la recherche au prototype",
+          "en": "UX/UI design, from research to prototype",
+          "enOf": "c07b546a"
+        }
+      },
+      {
+        "label": {
+          "fr": "Équipe",
+          "en": "Team",
+          "enOf": "b3e19a1e"
+        },
+        "value": {
+          "fr": "3 étudiants",
+          "en": "3 students",
+          "enOf": "5aeb8da3"
+        }
+      },
+      {
+        "label": {
+          "fr": "Outils",
+          "en": "Tools",
+          "enOf": "e7781d3b"
+        },
+        "value": {
+          "fr": "Figma, FigJam",
+          "en": "Figma, FigJam",
+          "enOf": "dd770129"
+        }
+      }
+    ],
+    "brief": [
+      {
+        "label": {
+          "fr": "Le problème",
+          "en": "The problem",
+          "enOf": "e89fc97b"
+        },
+        "text": {
+          "fr": "Pêcheurs, plaisanciers et ONG croisent des déchets en mer sans savoir comment les signaler.",
+          "en": "Fishers, sailors and NGOs come across waste at sea without knowing how to report it.",
+          "enOf": "b90289fb"
+        }
+      },
+      {
+        "label": {
+          "fr": "Notre réponse",
+          "en": "Our answer",
+          "enOf": "1afb29a5"
+        },
+        "text": {
+          "fr": "Une app collaborative : signaler, rejoindre une mission, suivre son impact.",
+          "en": "A collaborative app: report, join a mission, track your impact.",
+          "enOf": "5a12e09c"
+        }
+      },
+      {
+        "label": {
+          "fr": "Le résultat",
+          "en": "The result",
+          "enOf": "4f44b406"
+        },
+        "text": {
+          "fr": "6/6 en UX et 5.4/6 en UI, après des tests avec cinq personnes.",
+          "en": "6/6 in UX and 5.4/6 in UI, after testing with five people.",
+          "enOf": "8f5faee8"
+        }
+      }
+    ],
+    "sections": [
+      {
+        "id": "constat",
+        "nav": {
+          "fr": "Le constat",
+          "en": "The issue",
+          "enOf": "f4e12c38"
+        },
+        "title": {
+          "fr": "Un océan qui se vide",
+          "en": "An ocean running empty",
+          "enOf": "06d608b3"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Le cours nous demandait de choisir un des Objectifs de développement durable de l’ONU et d’y répondre par le design. Après trois mind maps, nous avons retenu la vie aquatique : la pollution y est aussi souvent invisible, et c’est là qu’une app pouvait agir vite.",
+              "en": "The course asked us to pick one of the UN Sustainable Development Goals and answer it through design. After three mind maps, we chose life below water: pollution there is often invisible, and that’s where an app could act quickly.",
+              "enOf": "9cbe4328"
+            }
+          },
+          {
+            "type": "figures",
+            "items": [
+              {
+                "value": 11,
+                "suffix": {
+                  "fr": " mio",
+                  "en": " mio",
+                  "enOf": "33aaa1e6"
+                },
+                "label": {
+                  "fr": "de tonnes de plastique finissent en mer chaque année",
+                  "en": "tonnes of plastic end up in the sea every year",
+                  "enOf": "10f7ae9a"
+                }
+              },
+              {
+                "value": 6500,
+                "label": {
+                  "fr": "espèces aquatiques menacées",
+                  "en": "aquatic species under threat",
+                  "enOf": "7895b37a"
+                }
+              },
+              {
+                "value": 17,
+                "suffix": {
+                  "fr": " %",
+                  "en": "%",
+                  "enOf": "acc5aaae"
+                },
+                "label": {
+                  "fr": "de biomasse marine en moins d’ici 2100",
+                  "en": "less marine biomass by 2100",
+                  "enOf": "34b37481"
+                }
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": {
+              "fr": "Nous nous sommes concentrés sur deux fléaux concrets : les filets de pêche abandonnés, qui continuent de piéger des animaux, et les îles flottantes de plastique.",
+              "en": "We focused on two concrete threats: abandoned fishing nets, which keep trapping animals, and floating islands of plastic.",
+              "enOf": "5ebb143e"
+            }
+          }
+        ]
+      },
+      {
+        "id": "recherche",
+        "nav": {
+          "fr": "Les utilisateurs",
+          "en": "The users",
+          "enOf": "52224d75"
+        },
+        "title": {
+          "fr": "Trois profils, un même blocage",
+          "en": "Three profiles, one roadblock",
+          "enOf": "462e600a"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Nous avons interrogé le problème à travers trois profils : un pêcheur qui refuse d’abandonner ses filets mais se sent impuissant, un plaisancier qui croise des déchets sans savoir à qui s’adresser, et une responsable d’ONG submergée par des signalements imprécis.",
+              "en": "We looked at the problem through three profiles: a fisher who refuses to abandon his nets but feels powerless, a sailor who comes across waste without knowing who to contact, and an NGO coordinator swamped with imprecise reports.",
+              "enOf": "a597c835"
+            }
+          },
+          {
+            "type": "text",
+            "text": {
+              "fr": "Tous butaient sur le même point : ils voient le problème, mais rien ne leur permet de le signaler simplement, ni de passer à l’action.",
+              "en": "They all hit the same wall: they see the problem, but nothing lets them report it simply, or take action.",
+              "enOf": "7f210c8d"
+            }
+          }
+        ]
+      },
+      {
+        "id": "idee",
+        "nav": {
+          "fr": "L’idée",
+          "en": "The idea",
+          "enOf": "18484b59"
+        },
+        "title": {
+          "fr": "Trois idées, une seule retenue",
+          "en": "Three ideas, one kept",
+          "enOf": "22c13afc"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Tout est parti de mind maps sur papier autour de trois objectifs de l’ONU, puis d’une question : comment simplifier le signalement des filets abandonnés et des îles de plastique ? Nous avons exploré trois pistes : un éco-score qui récompense les pêcheurs, un outil qui prédit les zones d’accumulation grâce aux courants marins, et une app de signalement ouverte à tous.",
+              "en": "It all started with paper mind maps around three UN goals, then one question: how can we simplify the reporting of abandoned nets and plastic islands? We explored three leads: an eco-score that rewards fishers, a tool that predicts accumulation zones from ocean currents, and a reporting app open to everyone.",
+              "enOf": "df0d91f7"
+            }
+          },
+          {
+            "type": "text",
+            "text": {
+              "fr": "Nous avons gardé la troisième. C’est la plus accessible, celle qui rassemble le plus de monde autour d’une même cause, et chaque signalement crée une donnée géolocalisée utile aux ONG comme aux scientifiques.",
+              "en": "We kept the third. It is the most accessible, the one that rallies the most people around a common cause, and every report creates geolocated data useful to NGOs and scientists alike.",
+              "enOf": "428daed1"
+            }
+          }
+        ]
+      },
+      {
+        "id": "app",
+        "nav": {
+          "fr": "L’app",
+          "en": "The app",
+          "enOf": "76d6dafd"
+        },
+        "title": {
+          "fr": "L’app",
+          "en": "The app",
+          "enOf": "76d6dafd"
+        },
+        "content": [
+          {
+            "type": "steps",
+            "steps": [
+              {
+                "text": {
+                  "fr": "Rejoindre la communauté : un compte suffit pour signaler et participer.",
+                  "en": "Join the community: one account is enough to report and take part.",
+                  "enOf": "bc7a14bf"
+                },
+                "image": {
+                  "src": "/images/case/oceansight/app-1-accueil-mockup.webp",
+                  "width": 1600,
+                  "height": 1200,
+                  "alt": {
+                    "fr": "Écran d’accueil « Join us » sur une photo de déchets plastiques en mer",
+                    "en": "“Join us” welcome screen over a photo of plastic waste at sea",
+                    "enOf": "cb52dfb2"
+                  }
+                }
+              },
+              {
+                "text": {
+                  "fr": "Trouver une mission sur la carte ou dans une liste, filtrée par région, type de déchet ou difficulté.",
+                  "en": "Find a mission on the map or in a list, filtered by region, type of waste or difficulty.",
+                  "enOf": "210dd116"
+                },
+                "image": {
+                  "src": "/images/case/oceansight/app-2-carte-mockup.webp",
+                  "width": 1600,
+                  "height": 1200,
+                  "alt": {
+                    "fr": "Deux écrans : la carte des missions et la liste des missions avec leurs photos",
+                    "en": "Two screens: the mission map and the list of missions with their photos",
+                    "enOf": "9816bdc9"
+                  }
+                }
+              },
+              {
+                "text": {
+                  "fr": "Chaque mission indique le lieu, la date et ce qui a été vu. On la rejoint en un geste.",
+                  "en": "Each mission shows the place, the date and what was spotted. You join it in one tap.",
+                  "enOf": "a5b5775d"
+                },
+                "image": {
+                  "src": "/images/case/oceansight/app-3-mission-mockup.webp",
+                  "width": 1600,
+                  "height": 1200,
+                  "alt": {
+                    "fr": "Écran de détail d’une mission : photo, type de déchet, lieu, date et description",
+                    "en": "Mission detail screen: photo, type of waste, place, date and description",
+                    "enOf": "4e18cfab"
+                  }
+                }
+              },
+              {
+                "text": {
+                  "fr": "Après une mission, le rapport documente l’action et les espèces sauvées, avec leur fiche.",
+                  "en": "After a mission, the report documents the action and the species saved, each with its own card.",
+                  "enOf": "0bf0e3eb"
+                },
+                "image": {
+                  "src": "/images/case/oceansight/app-4-rapport-mockup.webp",
+                  "width": 1600,
+                  "height": 1200,
+                  "alt": {
+                    "fr": "Deux écrans : le détail d’une mission et la liste des espèces sauvées",
+                    "en": "Two screens: mission details and the list of saved species",
+                    "enOf": "78c98294"
+                  }
+                }
+              },
+              {
+                "text": {
+                  "fr": "Le profil montre son impact : missions réalisées, kilos de plastique retirés, espèces sauvées, badges.",
+                  "en": "The profile shows your impact: missions completed, kilos of plastic removed, species saved, badges.",
+                  "enOf": "82b78611"
+                },
+                "image": {
+                  "src": "/images/case/oceansight/app-5-profil-mockup.webp",
+                  "width": 1600,
+                  "height": 1200,
+                  "alt": {
+                    "fr": "Écran du profil avec les badges, les statistiques et le nombre de missions réalisées",
+                    "en": "Profile screen with badges, statistics and the number of missions completed",
+                    "enOf": "c4691469"
+                  }
+                }
+              }
+            ],
+            "frame": "mockup"
+          }
+        ]
+      },
+      {
+        "id": "design",
+        "nav": {
+          "fr": "Le design",
+          "en": "The design",
+          "enOf": "394e7620"
+        },
+        "title": {
+          "fr": "Une identité couleur océan",
+          "en": "An ocean-coloured identity",
+          "enOf": "64881c52"
+        },
+        "tone": "accent",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Pour l’interface, nous avons construit un design system complet : une palette de dix teintes de vert d’eau, une typographie hiérarchisée et une bibliothèque de composants réutilisables, des cartes de mission aux filtres.",
+              "en": "For the interface, we built a complete design system: a palette of ten sea-green shades, a clear type hierarchy and a library of reusable components, from mission cards to filters.",
+              "enOf": "dcc7132a"
+            }
+          },
+          {
+            "type": "gallery",
+            "items": [
+              {
+                "src": "/images/case/oceansight/logo.webp",
+                "width": 1600,
+                "height": 900,
+                "alt": {
+                  "fr": "Logo OceanSight : un globe et le nom de l’app sur fond vert d’eau",
+                  "en": "OceanSight logo: a globe and the app name on a sea-green background",
+                  "enOf": "0ccc1e18"
+                }
+              },
+              {
+                "src": "/images/case/oceansight/design-typo-couleurs.webp",
+                "width": 1600,
+                "height": 900,
+                "alt": {
+                  "fr": "Échelle typographique et palette de dix teintes de vert d’eau",
+                  "en": "Type scale and a palette of ten sea-green shades",
+                  "enOf": "84bde771"
+                }
+              },
+              {
+                "src": "/images/case/oceansight/design-composants.webp",
+                "width": 1600,
+                "height": 900,
+                "alt": {
+                  "fr": "Composants de l’interface : cartes de mission, filtres, tri et carte",
+                  "en": "Interface components: mission cards, filters, sorting and map",
+                  "enOf": "e4d293a8"
+                }
+              }
+            ],
+            "cols": 3
+          }
+        ]
+      },
+      {
+        "id": "tests",
+        "nav": {
+          "fr": "Tests et résultats",
+          "en": "Tests and results",
+          "enOf": "eeff9ef2"
+        },
+        "title": {
+          "fr": "Tests et résultats",
+          "en": "Tests and results",
+          "enOf": "eeff9ef2"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Cinq personnes ont testé le prototype. Leurs retours, comme faire défiler les espèces ou valider ses filtres avec un bouton, nous ont permis d’intégrer quatre améliorations avant la fin.",
+              "en": "Five people tested the prototype. Their feedback, such as scrolling through species or confirming filters with a button, let us build in four improvements before the end.",
+              "enOf": "2b22d66b"
+            }
+          },
+          {
+            "type": "figures",
+            "items": [
+              {
+                "value": 6,
+                "suffix": {
+                  "fr": "/6",
+                  "en": "/6",
+                  "enOf": "99d258b8"
+                },
+                "label": {
+                  "fr": "note en UX",
+                  "en": "UX grade",
+                  "enOf": "2934fbcd"
+                }
+              },
+              {
+                "value": 5.4,
+                "suffix": {
+                  "fr": "/6",
+                  "en": "/6",
+                  "enOf": "99d258b8"
+                },
+                "label": {
+                  "fr": "note en UI",
+                  "en": "UI grade",
+                  "enOf": "1834e10a"
+                }
+              }
+            ]
+          },
+          {
+            "type": "quote",
+            "text": {
+              "fr": "Le design system est solide et démontre une bonne compréhension des principes d’accessibilité, de grille et de Gestalt.",
+              "en": "The design system is solid and shows a good understanding of accessibility, grid and Gestalt principles.",
+              "enOf": "75597922"
+            },
+            "source": {
+              "fr": "Retour des enseignants",
+              "en": "Feedback from the teachers",
+              "enOf": "0f875253"
+            }
+          }
+        ]
+      },
+      {
+        "id": "retenu",
+        "nav": {
+          "fr": "Ce que je retiens",
+          "en": "What I take away",
+          "enOf": "efd73be7"
+        },
+        "title": {
+          "fr": "Ce que je retiens",
+          "en": "What I take away",
+          "enOf": "efd73be7"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "J’ai suivi pour la première fois une vraie démarche UX de bout en bout : de la recherche aux personas, de l’idée au prototype, puis aux tests. Les retours des testeurs ont été précieux, chaque friction relevée nous a fait progresser.",
+              "en": "For the first time, I followed a real UX process end to end: from research to personas, from the idea to the prototype, then to testing. The testers’ feedback was invaluable; every friction they found made us better.",
+              "enOf": "d3163f56"
+            }
+          },
+          {
+            "type": "text",
+            "text": {
+              "fr": "Je suis fier du chemin parcouru avec Sacha et Romain, et encore plus de ce que nous avons appris ensemble.",
+              "en": "I’m proud of the road we travelled with Sacha and Romain, and even more of what we learned together.",
+              "enOf": "cd7d2f17"
+            }
+          }
+        ]
+      }
+    ],
+    "credits": [
+      {
+        "name": "Luca Leone",
+        "role": {
+          "fr": "UX/UI design",
+          "en": "UX/UI design",
+          "enOf": "6c8d968b"
+        }
+      },
+      {
+        "name": "Sacha Loskov",
+        "role": {
+          "fr": "UX/UI design",
+          "en": "UX/UI design",
+          "enOf": "6c8d968b"
+        }
+      },
+      {
+        "name": "Romain Blanchard",
+        "role": {
+          "fr": "UX/UI design",
+          "en": "UX/UI design",
+          "enOf": "6c8d968b"
+        }
+      }
+    ],
+    "creditsNote": {
+      "fr": "Cours Bases UI/UX du Bachelor en Ingénierie des médias, HEIG-VD. Accompagnement : Marie Kuter et Patrick Donaldson.",
+      "en": "UI/UX Fundamentals course of the Bachelor in Media Engineering, HEIG-VD. Supervised by Marie Kuter and Patrick Donaldson.",
+      "enOf": "d9ee2857"
+    }
+  }
+}

@@ -1,0 +1,973 @@
+{
+  "id": "karting-vuiteboeuf",
+  "kind": "pro",
+  "name": "Karting de Vuiteboeuf",
+  "number": "02",
+  "year": "2026",
+  "imageUrl": "/images/karting-vuiteboeuf-apercu.webp",
+  "stack": [
+    {
+      "fr": "Stratégie Social Media",
+      "en": "Social Media Strategy",
+      "enOf": "be1c3e7e"
+    },
+    {
+      "fr": "Instagram & TikTok",
+      "en": "Instagram & TikTok",
+      "enOf": "a3fdd899"
+    },
+    {
+      "fr": "Photo & Vidéo",
+      "en": "Photo & Video",
+      "enOf": "05d0a0ee"
+    },
+    {
+      "fr": "Premiere Pro",
+      "en": "Premiere Pro",
+      "enOf": "3b0605e1"
+    },
+    {
+      "fr": "Automatisation (React, Electron)",
+      "en": "Automation (React, Electron)",
+      "enOf": "24215589"
+    }
+  ],
+  "accentColor": "#D31432",
+  "accentColorDark": "#F4505F",
+  "logo": {
+    "src": "/images/logos/karting-vuiteboeuf.webp",
+    "srcDark": "/images/logos/karting-vuiteboeuf-dark.webp",
+    "width": 709,
+    "height": 160,
+    "display": 34
+  },
+  "video": "/videos/karting-vuiteboeuf-dive.mp4",
+  "card": {
+    "subtitle": {
+      "fr": "Communication digitale & création de contenus",
+      "en": "Digital communication & content creation",
+      "enOf": "78068ab3"
+    },
+    "category": {
+      "fr": "Communication digitale",
+      "en": "Digital communication",
+      "enOf": "7b9f1e66"
+    },
+    "hook": {
+      "fr": "De la piste à 329’000 vues.",
+      "en": "From the track to 329,000 views.",
+      "enOf": "bff8dda6"
+    },
+    "badge": {
+      "fr": "Community manager",
+      "en": "Community manager",
+      "enOf": "a7264631"
+    },
+    "summary": {
+      "fr": "Développement de la présence digitale du Karting de Vuiteboeuf à travers la création de contenus, la gestion des réseaux sociaux et la promotion des offres et événements.",
+      "en": "Developing Karting de Vuiteboeuf's digital presence through content creation, social media management and the promotion of offers and events.",
+      "enOf": "c1dfecc0"
+    },
+    "overview": {
+      "fr": "Accompagnement du Karting de Vuiteboeuf dans le développement de son image et de sa présence en ligne. De la conception à la publication, je prends en charge la création de contenus photo et vidéo, l'animation d'Instagram et TikTok ainsi que la communication autour des offres, événements, compétitions et activités du circuit.",
+      "en": "Supporting Karting de Vuiteboeuf in developing its digital image and online presence. From concept to publication, I manage photo and video content creation, Instagram and TikTok activity, as well as communication around offers, events, competitions and activities at the circuit.",
+      "enOf": "5a6b015d"
+    }
+  },
+  "seo": {
+    "title": {
+      "fr": "Karting de Vuiteboeuf : réseaux sociaux | Luca Leone",
+      "en": "Karting de Vuiteboeuf: social media | Luca Leone",
+      "enOf": "4a6608a3"
+    },
+    "description": {
+      "fr": "Community manager du Karting de Vuiteboeuf : photo, vidéo, Instagram et TikTok, et une app qui publie les résultats. 329’000 vues depuis mai.",
+      "en": "Community manager at Karting de Vuiteboeuf: photo, video, Instagram, TikTok, and an app that posts race results. 329,000 views since May.",
+      "enOf": "c77acc17"
+    }
+  },
+  "study": {
+    "kicker": {
+      "fr": "Communication digitale · Photo & vidéo",
+      "en": "Digital communication · Photo & video",
+      "enOf": "9d5f76c6"
+    },
+    "title": {
+      "fr": "Karting de Vuiteboeuf",
+      "en": "Karting de Vuiteboeuf",
+      "enOf": "3cdf0800"
+    },
+    "hook": {
+      "fr": "Faire ressentir la vitesse d’un circuit à travers l’écran d’un téléphone.",
+      "en": "Making people feel the speed of a race track through a phone screen.",
+      "enOf": "a8dce9c7"
+    },
+    "intro": {
+      "fr": "Depuis mai 2026, je gère la communication digitale du Karting de Vuiteboeuf : la stratégie, les prises de vue sur la piste, le montage et la publication sur Instagram et TikTok.",
+      "en": "Since May 2026, I’ve been running the digital communication of Karting de Vuiteboeuf: strategy, shooting on the track, editing and publishing on Instagram and TikTok.",
+      "enOf": "1bf3bfcc"
+    },
+    "meta": [
+      {
+        "label": {
+          "fr": "Contexte",
+          "en": "Context",
+          "enOf": "4debab7b"
+        },
+        "value": {
+          "fr": "Emploi en parallèle des études",
+          "en": "Part-time job alongside my studies",
+          "enOf": "a48abca5"
+        }
+      },
+      {
+        "label": {
+          "fr": "Année",
+          "en": "Year",
+          "enOf": "26a73d12"
+        },
+        "value": {
+          "fr": "2026",
+          "en": "2026",
+          "enOf": "40293d93"
+        }
+      },
+      {
+        "label": {
+          "fr": "Durée",
+          "en": "Duration",
+          "enOf": "2e6ca78a"
+        },
+        "value": {
+          "fr": "Depuis mai 2026, en cours",
+          "en": "Since May 2026, ongoing",
+          "enOf": "61fc4693"
+        }
+      },
+      {
+        "label": {
+          "fr": "Mon rôle",
+          "en": "My role",
+          "enOf": "4f1073ea"
+        },
+        "value": {
+          "fr": "Community manager : stratégie, photo, vidéo, publication",
+          "en": "Community manager: strategy, photo, video, publishing",
+          "enOf": "e67ea536"
+        }
+      },
+      {
+        "label": {
+          "fr": "Équipe",
+          "en": "Team",
+          "enOf": "b3e19a1e"
+        },
+        "value": {
+          "fr": "Seul, avec l’équipe du karting",
+          "en": "Solo, with the karting staff",
+          "enOf": "0e2937be"
+        }
+      },
+      {
+        "label": {
+          "fr": "Outils",
+          "en": "Tools",
+          "enOf": "e7781d3b"
+        },
+        "value": {
+          "fr": "Premiere Pro, Instagram, TikTok ; React et Electron pour l’app",
+          "en": "Premiere Pro, Instagram, TikTok; React and Electron for the app",
+          "enOf": "3e4688be"
+        }
+      }
+    ],
+    "links": [
+      {
+        "label": {
+          "fr": "Instagram",
+          "en": "Instagram",
+          "enOf": "0f95701b"
+        },
+        "href": "https://www.instagram.com/kartingvuiteboeuf/"
+      },
+      {
+        "label": {
+          "fr": "TikTok",
+          "en": "TikTok",
+          "enOf": "c8a113f3"
+        },
+        "href": "https://www.tiktok.com/@kartingvuiteboeuf"
+      },
+      {
+        "label": {
+          "fr": "Facebook",
+          "en": "Facebook",
+          "enOf": "ac37c251"
+        },
+        "href": "https://www.facebook.com/KartingVuiteboeuf/"
+      }
+    ],
+    "brief": [
+      {
+        "label": {
+          "fr": "Le problème",
+          "en": "The problem",
+          "enOf": "e89fc97b"
+        },
+        "text": {
+          "fr": "Une offre attractive, mais une présence en ligne irrégulière et peu variée.",
+          "en": "An attractive offer, but an irregular and repetitive online presence.",
+          "enOf": "60a08428"
+        }
+      },
+      {
+        "label": {
+          "fr": "Ma réponse",
+          "en": "My answer",
+          "enOf": "24ca2121"
+        },
+        "text": {
+          "fr": "Des contenus réguliers, tournés sur la piste, et des rendez-vous qui reviennent.",
+          "en": "Regular content shot on the track, and formats that come back.",
+          "enOf": "f4c8e1a4"
+        }
+      },
+      {
+        "label": {
+          "fr": "Le résultat",
+          "en": "The result",
+          "enOf": "4f44b406"
+        },
+        "text": {
+          "fr": "Depuis mai : 329’000 vues sur Instagram (+73 %) et des vues Facebook multipliées par près de six (+479 %).",
+          "en": "Since May: 329,000 views on Instagram (+73%) and Facebook views up nearly sixfold (+479%).",
+          "enOf": "3cc3c4b0"
+        }
+      }
+    ],
+    "sections": [
+      {
+        "id": "contexte",
+        "nav": {
+          "fr": "Le karting",
+          "en": "The track",
+          "enOf": "036e4f04"
+        },
+        "title": {
+          "fr": "Un circuit qui méritait d’être vu",
+          "en": "A track that deserved to be seen",
+          "enOf": "c8828dd4"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Le Karting de Vuiteboeuf, dans le canton de Vaud, propose un circuit de 1600 mètres, en intérieur comme en extérieur, pour les familles, les groupes, les entreprises et les pilotes de compétition. Mais aujourd’hui, on choisit ses loisirs en ligne, et sa présence sur les réseaux ne rendait pas justice à la piste.",
+              "en": "Karting de Vuiteboeuf, in the canton of Vaud, offers a 1,600-metre circuit, indoors and outdoors, for families, groups, companies and racing drivers. But people now choose their activities online, and its social media didn’t do the track justice.",
+              "enOf": "3b6af882"
+            }
+          },
+          {
+            "type": "figures",
+            "items": [
+              {
+                "value": 1600,
+                "suffix": {
+                  "fr": " m",
+                  "en": " m",
+                  "enOf": "64c53956"
+                },
+                "label": {
+                  "fr": "de circuit, en intérieur et en extérieur",
+                  "en": "of track, indoors and outdoors",
+                  "enOf": "06d9c9a8"
+                }
+              },
+              {
+                "value": 11,
+                "suffix": {
+                  "fr": " k",
+                  "en": "k",
+                  "enOf": "66c53c7c"
+                },
+                "label": {
+                  "fr": "abonnés sur Instagram",
+                  "en": "Instagram followers",
+                  "enOf": "f1bc2ced"
+                }
+              },
+              {
+                "value": 4,
+                "prefix": {
+                  "fr": "3 à ",
+                  "en": "3 to ",
+                  "enOf": "e1d28a76"
+                },
+                "label": {
+                  "fr": "publications par semaine visées",
+                  "en": "posts a week targeted",
+                  "enOf": "1862e16e"
+                }
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": {
+              "fr": "Les objectifs étaient clairs : gagner en visibilité, attirer de nouveaux clients, moderniser l’image du karting et remplir les créneaux plus calmes, le mardi et le jeudi.",
+              "en": "The goals were clear: more visibility, new customers, a more modern image, and fuller quiet slots on Tuesdays and Thursdays.",
+              "enOf": "8af1eb02"
+            }
+          }
+        ]
+      },
+      {
+        "id": "strategie",
+        "nav": {
+          "fr": "La stratégie",
+          "en": "The strategy",
+          "enOf": "3cc41426"
+        },
+        "title": {
+          "fr": "Une stratégie avant les images",
+          "en": "Strategy before images",
+          "enOf": "8de63f89"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "J’ai commencé par une proposition écrite pour la direction. Deux plateformes complémentaires : Instagram pour la crédibilité, les infos et les événements ; TikTok pour toucher vite un public plus jeune. Et quatre messages à faire passer : les sensations, l’immersion, une activité accessible à tous et le plaisir de la compétition.",
+              "en": "I started with a written proposal for the management. Two complementary platforms: Instagram for credibility, information and events; TikTok to reach a younger audience fast. And four messages to get across: thrills, immersion, an activity open to everyone, and the fun of competition.",
+              "enOf": "47972631"
+            }
+          },
+          {
+            "type": "text",
+            "text": {
+              "fr": "Pour les publications, j’ai écrit un guide de ton : des descriptions courtes, directes, qui donnent une information plutôt que d’empiler les adjectifs. Le karting doit parler à ses clients, pas sonner comme une publicité.",
+              "en": "For the captions, I wrote a tone-of-voice guide: short, direct descriptions that give information instead of piling up adjectives. The karting should speak to its customers, not sound like an ad.",
+              "enOf": "d998989c"
+            }
+          }
+        ]
+      },
+      {
+        "id": "terrain",
+        "nav": {
+          "fr": "Sur la piste",
+          "en": "On the track",
+          "enOf": "2304387b"
+        },
+        "title": {
+          "fr": "Tout se passe sur la piste",
+          "en": "It all happens on the track",
+          "enOf": "1c55ce07"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Les contenus se fabriquent sur le circuit : prises de vue pendant les courses, vidéos embarquées, interviews du staff et moments de vie du karting.",
+              "en": "Content is made at the circuit: shooting during races, onboard videos, staff interviews and everyday moments of karting life.",
+              "enOf": "84b37ae1"
+            }
+          },
+          {
+            "type": "gallery",
+            "items": [
+              {
+                "src": "/images/case/karting/photo-08.webp",
+                "width": 1000,
+                "height": 1500,
+                "alt": {
+                  "fr": "File de karts au départ de la Sprint Junior Cup",
+                  "en": "Line of karts at the start of the Sprint Junior Cup",
+                  "enOf": "ce23da7a"
+                }
+              },
+              {
+                "src": "/images/case/karting/photo-12.webp",
+                "width": 1000,
+                "height": 1500,
+                "alt": {
+                  "fr": "Jeune pilote casqué de vert dans son kart, de près",
+                  "en": "Close-up of a young driver in a green helmet in his kart",
+                  "enOf": "eb0c9d1f"
+                }
+              },
+              {
+                "src": "/images/case/karting/photo-11.webp",
+                "width": 1000,
+                "height": 1500,
+                "alt": {
+                  "fr": "Kart numéro 217 attaquant un virage",
+                  "en": "Kart number 217 attacking a bend",
+                  "enOf": "d62e4d8f"
+                }
+              },
+              {
+                "src": "/images/case/karting/photo-09.webp",
+                "width": 1000,
+                "height": 1500,
+                "alt": {
+                  "fr": "Commissaire au drapeau rouge au bord de la piste",
+                  "en": "Marshal with a red flag at the trackside",
+                  "enOf": "2b9d52f5"
+                }
+              },
+              {
+                "src": "/images/case/karting/photo-07.webp",
+                "width": 1000,
+                "height": 1500,
+                "alt": {
+                  "fr": "Kart seul dans un virage de la piste extérieure",
+                  "en": "A lone kart in a bend of the outdoor track",
+                  "enOf": "b7afac14"
+                }
+              },
+              {
+                "src": "/images/case/karting/photo-10.webp",
+                "width": 1000,
+                "height": 1500,
+                "alt": {
+                  "fr": "Pilote sortant du paddock couvert vers la piste",
+                  "en": "Driver leaving the covered paddock for the track",
+                  "enOf": "6871de9e"
+                }
+              },
+              {
+                "src": "/images/case/karting/photo-13.webp",
+                "width": 1000,
+                "height": 1500,
+                "alt": {
+                  "fr": "Kart passant devant les arbres, de loin",
+                  "en": "Kart passing in front of the trees, from afar",
+                  "enOf": "f83129b5"
+                }
+              },
+              {
+                "src": "/images/case/karting/photo-14.webp",
+                "width": 1000,
+                "height": 1500,
+                "alt": {
+                  "fr": "Kart dans un virage, un commissaire en arrière-plan",
+                  "en": "Kart in a bend, a marshal in the background",
+                  "enOf": "3535a121"
+                }
+              },
+              {
+                "src": "/images/case/karting/photo-15.webp",
+                "width": 1000,
+                "height": 1500,
+                "alt": {
+                  "fr": "Kart dans un virage, l’herbe au premier plan",
+                  "en": "Kart in a bend, grass in the foreground",
+                  "enOf": "c61cd66a"
+                }
+              },
+              {
+                "src": "/images/case/karting/photo-06.webp",
+                "width": 1000,
+                "height": 1500,
+                "alt": {
+                  "fr": "Coach de l’ASK débriefant devant le tableau des chronos",
+                  "en": "ASK coach debriefing in front of the lap-time board",
+                  "enOf": "a2899533"
+                }
+              },
+              {
+                "src": "/images/case/karting/photo-05.webp",
+                "width": 1000,
+                "height": 1500,
+                "alt": {
+                  "fr": "Coach de l’ASK expliquant un tracé à un jeune pilote",
+                  "en": "ASK coach explaining a racing line to a young driver",
+                  "enOf": "2d8e3d64"
+                }
+              },
+              {
+                "src": "/images/case/karting/photo-04.webp",
+                "width": 1000,
+                "height": 1500,
+                "alt": {
+                  "fr": "Pilote en combinaison Red Bull dans le paddock intérieur",
+                  "en": "Driver in a Red Bull suit in the indoor paddock",
+                  "enOf": "c34f95e7"
+                }
+              },
+              {
+                "src": "/images/case/karting/photo-01.webp",
+                "width": 1000,
+                "height": 1500,
+                "alt": {
+                  "fr": "Supercar exposée devant le karting lors du Karting for Smile",
+                  "en": "Supercar on display in front of the karting at Karting for Smile",
+                  "enOf": "41e4e5dc"
+                }
+              },
+              {
+                "src": "/images/case/karting/photo-02.webp",
+                "width": 1000,
+                "height": 1500,
+                "alt": {
+                  "fr": "Portière papillon ouverte d’une supercar sur le parking",
+                  "en": "Open butterfly door of a supercar in the car park",
+                  "enOf": "3012f1e2"
+                }
+              },
+              {
+                "src": "/images/case/karting/photo-03.webp",
+                "width": 1000,
+                "height": 1500,
+                "alt": {
+                  "fr": "Jante et étrier jaunes d’une Porsche, voitures de collection derrière",
+                  "en": "Yellow brake caliper of a Porsche, classic cars behind",
+                  "enOf": "dd2989cd"
+                }
+              }
+            ],
+            "cols": 5
+          }
+        ]
+      },
+      {
+        "id": "formats",
+        "nav": {
+          "fr": "Les formats",
+          "en": "The formats",
+          "enOf": "9b316537"
+        },
+        "title": {
+          "fr": "Des rendez-vous qui reviennent",
+          "en": "Formats that come back",
+          "enOf": "e5193862"
+        },
+        "content": [
+          {
+            "type": "steps",
+            "steps": [
+              {
+                "text": {
+                  "fr": "Chaque mois, les meilleurs chronos de la piste. Les pilotes attendent le classement et le partagent.",
+                  "en": "Every month, the fastest laps on the track. Drivers wait for the ranking and share it.",
+                  "enOf": "712d2e6e"
+                },
+                "image": {
+                  "src": "/images/case/karting/posts-chronos-mockup.webp",
+                  "width": 1600,
+                  "height": 1200,
+                  "alt": {
+                    "fr": "Deux publications : les meilleurs chronos RX250 du mois et une vidéo embarquée « Envie de progresser ? »",
+                    "en": "Two posts: the month’s fastest RX250 laps and an onboard video “Want to improve?”",
+                    "enOf": "44ed741a"
+                  }
+                }
+              },
+              {
+                "text": {
+                  "fr": "Les offres et activités sont mieux mises en avant, comme l’Académie suisse de karting pour les jeunes pilotes.",
+                  "en": "Offers and activities are better showcased, like the Swiss Karting Academy for young drivers.",
+                  "enOf": "8ca5bec9"
+                },
+                "image": {
+                  "src": "/images/case/karting/posts-ask-mockup.webp",
+                  "width": 1600,
+                  "height": 1200,
+                  "alt": {
+                    "fr": "Deux publications : l’Académie suisse de karting et un événement caritatif sur le circuit",
+                    "en": "Two posts: the Swiss Karting Academy and a charity event at the circuit",
+                    "enOf": "69412791"
+                  }
+                }
+              },
+              {
+                "text": {
+                  "fr": "Des formats vidéo plus personnels, comme les interviews de celles et ceux qui font vivre le karting.",
+                  "en": "More personal video formats, like interviews with the people who keep the karting running.",
+                  "enOf": "90788f46"
+                },
+                "image": {
+                  "src": "/images/case/karting/posts-reels-mockup.webp",
+                  "width": 1600,
+                  "height": 1200,
+                  "alt": {
+                    "fr": "Deux reels : une interview d’un membre du staff et une vidéo embarquée",
+                    "en": "Two reels: an interview with a staff member and an onboard video",
+                    "enOf": "470bba9d"
+                  }
+                }
+              }
+            ],
+            "frame": "mockup"
+          },
+          {
+            "type": "text",
+            "text": {
+              "fr": "Rappels de course, résultats en carrousel, photos de course, promotions de la semaine : ces formats récurrents donnent aux abonnés une raison de revenir.",
+              "en": "Race reminders, results carousels, race photos, weekly deals: these recurring formats give followers a reason to come back.",
+              "enOf": "19358b7f"
+            }
+          }
+        ]
+      },
+      {
+        "id": "identite",
+        "nav": {
+          "fr": "L’identité",
+          "en": "The identity",
+          "enOf": "d7e00fe4"
+        },
+        "title": {
+          "fr": "Une image qui se reconnaît",
+          "en": "An image you recognise",
+          "enOf": "9db1cfe3"
+        },
+        "tone": "accent",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Toutes les publications partagent maintenant les mêmes codes : le rouge du karting, une typographie de course et des gabarits réutilisables, jusqu’aux carrousels de résultats. Réseaux sociaux, site et supports racontent enfin la même chose.",
+              "en": "Every post now shares the same codes: the karting red, a racing typeface and reusable templates, right down to the results carousels. Social media, website and printed media finally tell the same story.",
+              "enOf": "f60e326a"
+            }
+          },
+          {
+            "type": "gallery",
+            "items": [
+              {
+                "src": "/images/case/karting/resultats-photos-1.webp",
+                "width": 800,
+                "height": 1000,
+                "alt": {
+                  "fr": "Couverture du carrousel « Les résultats Sprint, 1er septembre 2026 »",
+                  "en": "Carousel cover “Sprint results, 1 September 2026”",
+                  "enOf": "6d166d68"
+                }
+              },
+              {
+                "src": "/images/case/karting/resultats-photos-2.webp",
+                "width": 800,
+                "height": 1000,
+                "alt": {
+                  "fr": "Slide « Photo de groupe » : les pilotes de la soirée réunis sur le podium",
+                  "en": "“Group photo” slide: the evening’s drivers together on the podium",
+                  "enOf": "eb167673"
+                }
+              },
+              {
+                "src": "/images/case/karting/resultats-photos-3.webp",
+                "width": 800,
+                "height": 1000,
+                "alt": {
+                  "fr": "Podium de la Sprint RX250, première manche, avec la photo des trois premiers, puis le classement",
+                  "en": "Podium of the Sprint RX250, first heat, with photos of the top three, then the standings",
+                  "enOf": "0bdd7d15"
+                }
+              },
+              {
+                "src": "/images/case/karting/resultats-photos-4.webp",
+                "width": 800,
+                "height": 1000,
+                "alt": {
+                  "fr": "Podium de la Sprint 270cc, première manche, avec la photo des trois premiers, puis le classement",
+                  "en": "Podium of the Sprint 270cc, first heat, with photos of the top three, then the standings",
+                  "enOf": "c99039ff"
+                }
+              }
+            ],
+            "cols": 4,
+            "caption": {
+              "fr": "Le carrousel des résultats Sprint du 1er septembre : la couverture, la photo de groupe, puis un podium par course, avec la photo de chaque pilote.",
+              "en": "The Sprint results carousel of 1 September: the cover, the group photo, then a podium per race, with each driver’s photo.",
+              "enOf": "6fd76611"
+            }
+          },
+          {
+            "type": "text",
+            "text": {
+              "fr": "Ces carrousels de résultats, je ne les monte plus à la main : ils sortent d’une application que j’ai développée.",
+              "en": "I no longer put these results carousels together by hand: they come out of an app I developed.",
+              "enOf": "8aa06833"
+            }
+          }
+        ]
+      },
+      {
+        "id": "automatisation",
+        "nav": {
+          "fr": "L’automatisation",
+          "en": "Automation",
+          "enOf": "a3d85042"
+        },
+        "title": {
+          "fr": "Une app pour publier les résultats",
+          "en": "An app to publish the results",
+          "enOf": "470c4822"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Après chaque course, les classements paraissent sur SWS, la plateforme des championnats de karting, puis il fallait les recopier dans les visuels. Un week-end peut compter jusqu’à huit courses : c’était long, répétitif, et la moindre faute dans un nom se voyait.",
+              "en": "After each race, the standings are published on SWS, the karting championship platform, and then had to be copied into the visuals. A weekend can hold up to eight races: it was slow, repetitive, and the slightest typo in a name showed.",
+              "enOf": "2e64f6bc"
+            }
+          },
+          {
+            "type": "text",
+            "text": {
+              "fr": "J’ai donc conçu et développé une application pour Mac qui fait ce travail, en quatre semaines, entre juin et juillet.",
+              "en": "So I designed and developed a Mac app that does the job, in four weeks, between June and July.",
+              "enOf": "a96e97b8"
+            }
+          },
+          {
+            "type": "steps",
+            "steps": [
+              {
+                "text": {
+                  "fr": "Un clic sur « Mettre à jour » récupère le calendrier, les résultats et les classements du circuit sur SWS (je valide moi-même la vérification anti-robot du site). L’app signale ce qui a changé depuis la dernière fois.",
+                  "en": "One click on “Mettre à jour” fetches the track’s calendar, results and standings from SWS (I pass the site’s anti-bot check myself). The app flags what has changed since last time.",
+                  "enOf": "015e84f8"
+                },
+                "image": {
+                  "src": "/images/case/karting/app-mise-a-jour-mockup-2.webp",
+                  "width": 1600,
+                  "height": 1200,
+                  "alt": {
+                    "fr": "Application Karting Vuiteboeuf : calendrier des courses et bandeau « 8 nouveaux résultats · 4 changements de classement »",
+                    "en": "Karting Vuiteboeuf app: race calendar and a banner reading “8 new results · 4 standings changes”",
+                    "enOf": "692cf801"
+                  }
+                }
+              },
+              {
+                "text": {
+                  "fr": "Je coche les courses d’un même événement, et l’app prépare le carrousel : une couverture, puis le podium et le classement de chaque course, les noms remis dans l’ordre prénom-nom et le drapeau de chaque pilote.",
+                  "en": "I tick the races of one event, and the app builds the carousel: a cover, then the podium and standings of each race, names put back in first-name order and each driver’s flag.",
+                  "enOf": "7f8c4aba"
+                },
+                "image": {
+                  "src": "/images/case/karting/app-selection-mockup-2.webp",
+                  "width": 1600,
+                  "height": 1200,
+                  "alt": {
+                    "fr": "Section Résultats de l’application, quatre courses Junior Cup cochées et le bouton « Générer les visuels (4) »",
+                    "en": "Results section of the app, four Junior Cup races ticked and the “Generate visuals (4)” button",
+                    "enOf": "a5515dcb"
+                  }
+                }
+              },
+              {
+                "text": {
+                  "fr": "Pour mettre un visage sur chaque place, j’importe la photo du podium et je place un cadre sur chacun des trois premiers : l’app découpe la photo et met chaque pilote à sa place. La photo de groupe peut aussi s’ajouter en slide, juste après la couverture. (Ici, une photo et des noms fictifs.)",
+                  "en": "To put a face on each place, I import the podium photo and draw a frame on each of the top three: the app crops the photo and puts every driver in their spot. The group photo can also go in as a slide, right after the cover. (Here, a made-up photo and names.)",
+                  "enOf": "1feba121"
+                },
+                "image": {
+                  "src": "/images/case/karting/app-podium-mockup-2.webp",
+                  "width": 1600,
+                  "height": 1200,
+                  "alt": {
+                    "fr": "Recadrage d’une photo de podium dans l’app : un cadre de couleur sur chacun des trois pilotes, avec son nom (photo et noms fictifs pour l’exemple)",
+                    "en": "Cropping a podium photo in the app: a coloured frame on each of the three drivers, with their name (photo and names made up for the example)",
+                    "enOf": "77ec2cb5"
+                  }
+                }
+              }
+            ],
+            "frame": "mockup"
+          },
+          {
+            "type": "text",
+            "text": {
+              "fr": "Les mêmes données s’exportent aussi en Excel, CSV, PDF, JSON ou vers un agenda. Les résultats sortent plus vite, toujours au même format, et sans erreur de recopie.",
+              "en": "The same data also exports to Excel, CSV, PDF, JSON or a calendar. Results go out faster, always in the same format, and without copying mistakes.",
+              "enOf": "c01fb0c6"
+            }
+          },
+          {
+            "type": "figures",
+            "items": [
+              {
+                "value": 22,
+                "label": {
+                  "fr": "mises à jour depuis fin juin",
+                  "en": "updates since late June",
+                  "enOf": "dbd795a9"
+                }
+              },
+              {
+                "value": 46,
+                "label": {
+                  "fr": "courses suivies au calendrier",
+                  "en": "races tracked on the calendar",
+                  "enOf": "cc83dfb6"
+                }
+              },
+              {
+                "value": 6,
+                "label": {
+                  "fr": "formats d’export, images comprises",
+                  "en": "export formats, images included",
+                  "enOf": "2315e9b5"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "resultats",
+        "nav": {
+          "fr": "Résultats",
+          "en": "Results",
+          "enOf": "89638ae2"
+        },
+        "title": {
+          "fr": "Ce qui a changé",
+          "en": "What changed",
+          "enOf": "c0a9d4e1"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Avant, les contenus étaient moins réguliers, les formats plus limités et la communication moins diversifiée. Aujourd’hui : des formats variés, des rendez-vous récurrents, plus de photo et de vidéo, des offres mieux mises en avant et une image cohérente.",
+              "en": "Before, content was less regular, formats were more limited and communication less varied. Today: varied formats, recurring events, more photo and video, better-showcased offers and a consistent image.",
+              "enOf": "22738184"
+            }
+          },
+          {
+            "type": "figures",
+            "items": [
+              {
+                "value": 329,
+                "suffix": {
+                  "fr": " k",
+                  "en": "k",
+                  "enOf": "66c53c7c"
+                },
+                "label": {
+                  "fr": "vues sur Instagram depuis mai, +73 %",
+                  "en": "Instagram views since May, up 73%",
+                  "enOf": "6255b065"
+                }
+              },
+              {
+                "value": 89,
+                "prefix": {
+                  "fr": "+",
+                  "en": "+",
+                  "enOf": "2e0c9daa"
+                },
+                "suffix": {
+                  "fr": " %",
+                  "en": "%",
+                  "enOf": "acc5aaae"
+                },
+                "label": {
+                  "fr": "d’interactions sur Instagram",
+                  "en": "Instagram interactions",
+                  "enOf": "326e2949"
+                }
+              },
+              {
+                "value": 118,
+                "suffix": {
+                  "fr": " k",
+                  "en": "k",
+                  "enOf": "66c53c7c"
+                },
+                "label": {
+                  "fr": "vues sur le reel le plus regardé",
+                  "en": "views on the most-watched reel",
+                  "enOf": "4eecbb0c"
+                }
+              },
+              {
+                "value": 479,
+                "prefix": {
+                  "fr": "+",
+                  "en": "+",
+                  "enOf": "2e0c9daa"
+                },
+                "suffix": {
+                  "fr": " %",
+                  "en": "%",
+                  "enOf": "acc5aaae"
+                },
+                "label": {
+                  "fr": "de vues sur Facebook",
+                  "en": "Facebook views",
+                  "enOf": "9a5401bb"
+                }
+              }
+            ]
+          },
+          {
+            "type": "quote",
+            "text": {
+              "fr": "Merci pour le travail, super boulot. Continue comme ça !",
+              "en": "Thanks for the work, great job. Keep it up!",
+              "enOf": "92807506"
+            },
+            "source": {
+              "fr": "Retour de la direction du karting",
+              "en": "Feedback from the karting management",
+              "enOf": "28cb466e"
+            }
+          }
+        ]
+      },
+      {
+        "id": "retenu",
+        "nav": {
+          "fr": "Ce que je retiens",
+          "en": "What I take away",
+          "enOf": "efd73be7"
+        },
+        "title": {
+          "fr": "Ce que je retiens",
+          "en": "What I take away",
+          "enOf": "efd73be7"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Travailler pour un vrai client, chaque semaine, m’apprend à tenir un rythme et à penser chaque publication comme une partie d’un tout. Les prochaines étapes : continuer à tester de nouveaux formats et faire évoluer la communication au fil des projets.",
+              "en": "Working for a real client every week teaches me to keep a pace and to think of every post as part of a whole. Next: keep testing new formats and let the communication grow with each project.",
+              "enOf": "e9506acc"
+            }
+          },
+          {
+            "type": "text",
+            "text": {
+              "fr": "Cinq mois, et ce n’est que le début.",
+              "en": "Five months in, and it’s only the beginning.",
+              "enOf": "26383154"
+            }
+          }
+        ]
+      }
+    ],
+    "credits": [
+      {
+        "name": "Luca Leone",
+        "role": {
+          "fr": "Community manager",
+          "en": "Community manager",
+          "enOf": "a7264631"
+        }
+      }
+    ],
+    "creditsNote": {
+      "fr": "Emploi au Karting de Vuiteboeuf (VD), en parallèle du Bachelor en Ingénierie des médias, HEIG-VD.",
+      "en": "Job at Karting de Vuiteboeuf (Vaud), alongside the Bachelor in Media Engineering, HEIG-VD.",
+      "enOf": "65be5949"
+    }
+  }
+}

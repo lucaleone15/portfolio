@@ -1,0 +1,543 @@
+{
+  "id": "drivegear",
+  "kind": "school",
+  "name": "DriveGear",
+  "number": "05",
+  "year": "2025",
+  "imageUrl": "/images/drivegear-apercu.webp",
+  "stack": [
+    {
+      "fr": "E-Commerce",
+      "en": "E-Commerce",
+      "enOf": "eb768c64"
+    },
+    {
+      "fr": "WordPress & WooCommerce",
+      "en": "WordPress & WooCommerce",
+      "enOf": "e6ebd06a"
+    },
+    {
+      "fr": "UI/UX Design",
+      "en": "UI/UX Design",
+      "enOf": "302729b9"
+    }
+  ],
+  "accentColor": "#2A2A72",
+  "accentColorDark": "#009FFD",
+  "logo": {
+    "src": "/images/logos/drivegear.webp",
+    "srcDark": "/images/logos/drivegear-dark.webp",
+    "width": 1111,
+    "height": 160,
+    "display": 22
+  },
+  "video": "/videos/drivegear-dive.mp4",
+  "card": {
+    "subtitle": {
+      "fr": "Boutique e-commerce automobile",
+      "en": "Automotive e-commerce store",
+      "enOf": "524c9b59"
+    },
+    "category": {
+      "fr": "E-commerce",
+      "en": "E-commerce",
+      "enOf": "f1a53444"
+    },
+    "hook": {
+      "fr": "Du logo au premier panier.",
+      "en": "From logo to first checkout.",
+      "enOf": "7db22644"
+    },
+    "badge": {
+      "fr": "Projet solo",
+      "en": "Solo project",
+      "enOf": "2246846a"
+    },
+    "summary": {
+      "fr": "Conception d'une boutique e-commerce spécialisée dans l'univers automobile, développée sur WordPress et WooCommerce.",
+      "en": "Design of an e-commerce store dedicated to the automotive world, built with WordPress and WooCommerce.",
+      "enOf": "30ae1ced"
+    },
+    "overview": {
+      "fr": "Création de DriveGear, une boutique en ligne dédiée aux passionnés d'automobile. Le projet porte sur la conception de l'expérience utilisateur, la structuration du catalogue, l'identité visuelle et la mise en place de la boutique avec WordPress et WooCommerce. Une attention particulière a été portée à la clarté de la navigation, à la présentation des produits et à la cohérence de l'ensemble de l'expérience d'achat.",
+      "en": "Creation of DriveGear, an online store dedicated to automotive enthusiasts. The project focused on user experience, catalogue structure, visual identity and the implementation of the online store using WordPress and WooCommerce. Particular attention was given to clear navigation, product presentation and a consistent purchasing experience.",
+      "enOf": "33f45d1b"
+    }
+  },
+  "seo": {
+    "title": {
+      "fr": "DriveGear : boutique e-commerce automobile | Luca Leone",
+      "en": "DriveGear: an automotive e-commerce store | Luca Leone",
+      "enOf": "f13af2c4"
+    },
+    "description": {
+      "fr": "DriveGear, boutique en ligne pour passionnés d’automobile, créée seul de A à Z : marque, WooCommerce, SEO et réseaux. Noté 5.9/6.",
+      "en": "DriveGear, an online store for car enthusiasts built solo from A to Z: brand, WooCommerce, SEO and social. Graded 5.9/6.",
+      "enOf": "992f3891"
+    }
+  },
+  "study": {
+    "kicker": {
+      "fr": "E-commerce · Marque & boutique en ligne",
+      "en": "E-commerce · Brand & online store",
+      "enOf": "350f628c"
+    },
+    "title": {
+      "fr": "DriveGear",
+      "en": "DriveGear",
+      "enOf": "6b1c6b08"
+    },
+    "hook": {
+      "fr": "Une boutique auto suisse, du nom de domaine à la première campagne.",
+      "en": "A Swiss car store, from the domain name to the first campaign.",
+      "enOf": "0c1d0398"
+    },
+    "intro": {
+      "fr": "Seul, j’ai créé DriveGear de A à Z : la marque, la boutique WooCommerce, les fiches produits, les contenus, la newsletter et les réseaux sociaux.",
+      "en": "On my own, I built DriveGear from A to Z: the brand, the WooCommerce store, the product pages, the content, the newsletter and the social media.",
+      "enOf": "74555dc3"
+    },
+    "meta": [
+      {
+        "label": {
+          "fr": "Contexte",
+          "en": "Context",
+          "enOf": "4debab7b"
+        },
+        "value": {
+          "fr": "Cours E-commerce, HEIG-VD",
+          "en": "E-commerce course, HEIG-VD",
+          "enOf": "f71ed62a"
+        }
+      },
+      {
+        "label": {
+          "fr": "Année",
+          "en": "Year",
+          "enOf": "26a73d12"
+        },
+        "value": {
+          "fr": "2025",
+          "en": "2025",
+          "enOf": "41293f26"
+        }
+      },
+      {
+        "label": {
+          "fr": "Durée",
+          "en": "Duration",
+          "enOf": "2e6ca78a"
+        },
+        "value": {
+          "fr": "Un semestre",
+          "en": "One semester",
+          "enOf": "926bc39a"
+        }
+      },
+      {
+        "label": {
+          "fr": "Mon rôle",
+          "en": "My role",
+          "enOf": "4f1073ea"
+        },
+        "value": {
+          "fr": "Tout : stratégie, design, boutique, marketing",
+          "en": "Everything: strategy, design, store, marketing",
+          "enOf": "2c666465"
+        }
+      },
+      {
+        "label": {
+          "fr": "Équipe",
+          "en": "Team",
+          "enOf": "b3e19a1e"
+        },
+        "value": {
+          "fr": "Projet solo",
+          "en": "Solo project",
+          "enOf": "2246846a"
+        }
+      },
+      {
+        "label": {
+          "fr": "Outils",
+          "en": "Tools",
+          "enOf": "e7781d3b"
+        },
+        "value": {
+          "fr": "WordPress, WooCommerce, Yoast, GA4, Notion",
+          "en": "WordPress, WooCommerce, Yoast, GA4, Notion",
+          "enOf": "3155bcc5"
+        }
+      }
+    ],
+    "brief": [
+      {
+        "label": {
+          "fr": "L’idée",
+          "en": "The idea",
+          "enOf": "18484b59"
+        },
+        "text": {
+          "fr": "Une boutique qui parle à la fois aux passionnés d’automobile et aux conducteurs du quotidien.",
+          "en": "A store that speaks to car enthusiasts and everyday drivers alike.",
+          "enOf": "15e913e6"
+        }
+      },
+      {
+        "label": {
+          "fr": "Mon rôle",
+          "en": "My role",
+          "enOf": "4f1073ea"
+        },
+        "text": {
+          "fr": "Tout construire seul : marque, boutique, catalogue, contenus et promotion.",
+          "en": "Build everything on my own: brand, store, catalogue, content and promotion.",
+          "enOf": "6ccd8003"
+        }
+      },
+      {
+        "label": {
+          "fr": "Le résultat",
+          "en": "The result",
+          "enOf": "4f44b406"
+        },
+        "text": {
+          "fr": "Une boutique complète et fonctionnelle, notée 5.9/6.",
+          "en": "A complete, working store, graded 5.9/6.",
+          "enOf": "2030388c"
+        }
+      }
+    ],
+    "sections": [
+      {
+        "id": "idee",
+        "nav": {
+          "fr": "L’idée",
+          "en": "The idea",
+          "enOf": "18484b59"
+        },
+        "title": {
+          "fr": "Une boutique pour passionnés",
+          "en": "A store for car lovers",
+          "enOf": "5c2ce61e"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Le cours demandait de lancer une vraie boutique en ligne, de A à Z. J’ai choisi l’automobile, une passion : les boutiques existantes sont soit très techniques, soit génériques, et rarement pensées pour la Suisse.",
+              "en": "The course asked us to launch a real online store, from A to Z. I chose cars, a passion of mine: existing stores are either highly technical or generic, and rarely designed for Switzerland.",
+              "enOf": "87de183b"
+            }
+          },
+          {
+            "type": "text",
+            "text": {
+              "fr": "DriveGear mélange trois façons de vendre : des produits d’entretien en vente directe, des gadgets comme les dashcams en affiliation, et des objets lifestyle, t-shirts et posters, imprimés à la demande. Deux profils m’ont guidé : le passionné qui veut afficher sa passion, et le conducteur pragmatique qui veut des accessoires fiables et une livraison rapide.",
+              "en": "DriveGear mixes three ways of selling: care products sold directly, gadgets such as dashcams through affiliate links, and lifestyle items, t-shirts and posters, printed on demand. Two profiles guided me: the enthusiast who wants to show his passion, and the pragmatic driver who wants reliable accessories and fast delivery.",
+              "enOf": "01029960"
+            }
+          }
+        ]
+      },
+      {
+        "id": "marque",
+        "nav": {
+          "fr": "La marque",
+          "en": "The brand",
+          "enOf": "dad27a5b"
+        },
+        "title": {
+          "fr": "Une marque à créer",
+          "en": "A brand to create",
+          "enOf": "450684ed"
+        },
+        "tone": "accent",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "J’ai dessiné le logo, choisi la palette et la typographie, puis mis en scène les produits aux couleurs de la marque, pour que la boutique ait une vraie identité, entre passion automobile et lifestyle.",
+              "en": "I drew the logo, chose the palette and typeface, then staged the products in the brand’s colours, so the store would have a real identity, between car culture and lifestyle.",
+              "enOf": "e67febf2"
+            }
+          },
+          {
+            "type": "gallery",
+            "items": [
+              {
+                "src": "/images/case/drivegear/logo-ligne.webp",
+                "width": 1200,
+                "height": 900,
+                "alt": {
+                  "fr": "Logo DriveGear en version horizontale, lettres noires géométriques",
+                  "en": "Horizontal DriveGear logo, geometric black letters",
+                  "enOf": "984819f0"
+                }
+              },
+              {
+                "src": "/images/case/drivegear/couleurs.webp",
+                "width": 1600,
+                "height": 1131,
+                "alt": {
+                  "fr": "Palette de couleurs de DriveGear : rouge, bleu, bleu nuit, noir et bleu très clair",
+                  "en": "DriveGear colour palette: red, blue, navy, black and very light blue",
+                  "enOf": "258f74ba"
+                }
+              }
+            ],
+            "cols": 2
+          },
+          {
+            "type": "gallery",
+            "items": [
+              {
+                "src": "/images/case/drivegear/produit-spray-studio.webp",
+                "width": 1000,
+                "height": 1000,
+                "alt": {
+                  "fr": "Flacon de rénovateur intérieur DriveGear en studio, sur fond gris",
+                  "en": "DriveGear interior restorer bottle in a studio, on a grey background",
+                  "enOf": "58c75919"
+                }
+              },
+              {
+                "src": "/images/case/drivegear/produit-spray-interieur.webp",
+                "width": 1000,
+                "height": 1000,
+                "alt": {
+                  "fr": "Rénovateur intérieur DriveGear utilisé dans l’habitacle d’une voiture",
+                  "en": "DriveGear interior restorer used inside a car",
+                  "enOf": "918c4fac"
+                }
+              },
+              {
+                "src": "/images/case/drivegear/produit-parfum.webp",
+                "width": 1000,
+                "height": 1000,
+                "alt": {
+                  "fr": "Désodorisant premium DriveGear et sa boîte posés dans une voiture",
+                  "en": "DriveGear premium air freshener and its box inside a car",
+                  "enOf": "6bebbaa5"
+                }
+              }
+            ],
+            "cols": 3
+          }
+        ]
+      },
+      {
+        "id": "boutique",
+        "nav": {
+          "fr": "La boutique",
+          "en": "The store",
+          "enOf": "75e02218"
+        },
+        "title": {
+          "fr": "La boutique",
+          "en": "The store",
+          "enOf": "75e02218"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Peu de catégories, une hiérarchie claire et des appels à l’action toujours visibles : la navigation a été pensée pour qu’on comprenne l’offre en quelques secondes, sans la surcharge des grandes plateformes.",
+              "en": "Few categories, a clear hierarchy and calls to action always in sight: navigation is designed so you understand the offer in seconds, without the clutter of the big marketplaces.",
+              "enOf": "93072123"
+            }
+          },
+          {
+            "type": "steps",
+            "steps": [
+              {
+                "text": {
+                  "fr": "L’accueil pose l’univers : votre route, votre style, votre passion.",
+                  "en": "The home page sets the tone: your road, your style, your passion.",
+                  "enOf": "2f8ac76d"
+                },
+                "image": {
+                  "src": "/images/case/drivegear/site-accueil-mockup-2.webp",
+                  "width": 1600,
+                  "height": 1200,
+                  "alt": {
+                    "fr": "Page d’accueil de DriveGear avec une voiture de sport jaune",
+                    "en": "DriveGear home page with a yellow sports car",
+                    "enOf": "9cd7bf78"
+                  }
+                }
+              },
+              {
+                "text": {
+                  "fr": "Chacune des 30 fiches produits est rédigée et optimisée pour le référencement : description, caractéristiques et photos.",
+                  "en": "Each of the 30 product pages is written and optimised for search: description, specifications and photos.",
+                  "enOf": "fc1bf096"
+                },
+                "image": {
+                  "src": "/images/case/drivegear/site-produit-mockup-2.webp",
+                  "width": 1600,
+                  "height": 1200,
+                  "alt": {
+                    "fr": "Fiche produit d’un spray rénovateur pour plastiques, avec prix et boutons d’achat",
+                    "en": "Product page of a plastic restorer spray, with price and buy buttons",
+                    "enOf": "d4dbb89b"
+                  }
+                }
+              },
+              {
+                "text": {
+                  "fr": "Le panier et le paiement fonctionnent de bout en bout, avec PayPal et le virement.",
+                  "en": "Cart and checkout work end to end, with PayPal and bank transfer.",
+                  "enOf": "3fd61fa3"
+                },
+                "image": {
+                  "src": "/images/case/drivegear/site-panier-mockup-2.webp",
+                  "width": 1600,
+                  "height": 1200,
+                  "alt": {
+                    "fr": "Page du panier avec deux produits, le total et le bouton de paiement PayPal",
+                    "en": "Cart page with two products, the total and the PayPal button",
+                    "enOf": "7ae7452a"
+                  }
+                }
+              }
+            ],
+            "frame": "mockup"
+          }
+        ]
+      },
+      {
+        "id": "croissance",
+        "nav": {
+          "fr": "Faire venir",
+          "en": "Bringing traffic",
+          "enOf": "ac0f4e34"
+        },
+        "title": {
+          "fr": "Faire venir les clients",
+          "en": "Bringing customers in",
+          "enOf": "4c1dc878"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Une boutique ne sert à rien si personne ne la trouve. J’ai optimisé le référencement avec Yoast et la Search Console, écrit des articles de blog avec l’aide de l’IA, mis en place une newsletter avec pop-up, double confirmation et mail de bienvenue, ouvert Instagram, Facebook, TikTok et WhatsApp, et conçu une campagne publicitaire suivie dans Google Analytics.",
+              "en": "A store is useless if nobody finds it. I optimised search with Yoast and Search Console, wrote blog articles with the help of AI, set up a newsletter with a pop-up, double opt-in and welcome email, opened Instagram, Facebook, TikTok and WhatsApp, and designed an ad campaign tracked in Google Analytics.",
+              "enOf": "1fb969b8"
+            }
+          }
+        ]
+      },
+      {
+        "id": "resultats",
+        "nav": {
+          "fr": "Résultats",
+          "en": "Results",
+          "enOf": "89638ae2"
+        },
+        "title": {
+          "fr": "Résultats",
+          "en": "Results",
+          "enOf": "89638ae2"
+        },
+        "content": [
+          {
+            "type": "figures",
+            "items": [
+              {
+                "value": 5.9,
+                "suffix": {
+                  "fr": "/6",
+                  "en": "/6",
+                  "enOf": "99d258b8"
+                },
+                "label": {
+                  "fr": "note du projet",
+                  "en": "project grade",
+                  "enOf": "77457686"
+                }
+              },
+              {
+                "value": 30,
+                "label": {
+                  "fr": "produits au catalogue",
+                  "en": "products in the catalogue",
+                  "enOf": "888365fa"
+                }
+              },
+              {
+                "value": 3,
+                "label": {
+                  "fr": "modèles de vente dans une même boutique",
+                  "en": "sales models in a single store",
+                  "enOf": "e11582bf"
+                }
+              }
+            ]
+          },
+          {
+            "type": "quote",
+            "text": {
+              "fr": "Globalement, c’est un excellent travail.",
+              "en": "Overall, it’s excellent work.",
+              "enOf": "21e18ab5"
+            },
+            "source": {
+              "fr": "Retour du professeur",
+              "en": "Feedback from the professor",
+              "enOf": "6163a83b"
+            }
+          }
+        ]
+      },
+      {
+        "id": "retenu",
+        "nav": {
+          "fr": "Ce que je retiens",
+          "en": "What I take away",
+          "enOf": "efd73be7"
+        },
+        "title": {
+          "fr": "Ce que je retiens",
+          "en": "What I take away",
+          "enOf": "efd73be7"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "fr": "Le plus stimulant a été d’explorer les coulisses du e-commerce : comprendre comment vente directe, affiliation et impression à la demande se complètent, et construire une identité de marque du logo jusqu’à la boutique.",
+              "en": "The most exciting part was exploring the backstage of e-commerce: understanding how direct sales, affiliate links and print-on-demand complement each other, and building a brand identity from the logo all the way to the store.",
+              "enOf": "cc6e4218"
+            }
+          },
+          {
+            "type": "text",
+            "text": {
+              "fr": "Gérer seul 30 produits demande déjà une rigueur de chaque instant. Ça m’a donné une idée vertigineuse de ce que gèrent les grandes enseignes.",
+              "en": "Running 30 products on my own already takes constant rigour. It gave me a dizzying idea of what the big retailers manage.",
+              "enOf": "d6cec952"
+            }
+          }
+        ]
+      }
+    ],
+    "credits": [
+      {
+        "name": "Luca Leone",
+        "role": {
+          "fr": "Projet solo",
+          "en": "Solo project",
+          "enOf": "2246846a"
+        }
+      }
+    ],
+    "creditsNote": {
+      "fr": "Cours E-commerce du Bachelor en Ingénierie des médias, HEIG-VD, avec le professeur Arnaud Dufour.",
+      "en": "E-commerce course of the Bachelor in Media Engineering, HEIG-VD, with Professor Arnaud Dufour.",
+      "enOf": "29a67052"
+    }
+  }
+}

@@ -190,10 +190,11 @@ export const SITE_PAGES = ['home', 'projets', 'a-propos', 'contact', 'privacy', 
 
 export const SiteSchema = z.object({
   contact: z
-    .object({ email: str('Email'), phone: str('Téléphone'), linkedin: str('LinkedIn'), cv: str('CV (PDF)') })
+    .object({ name: str('Nom'), email: str('Email'), phone: str('Téléphone'), linkedin: str('LinkedIn'), cv: str('CV (PDF)') })
     .describe('Contact'),
   hero: z
     .object({
+      eyebrow: txt('Ligne au-dessus du titre'),
       headline: z
         .object({ before: txt('Début du titre'), accent: txt('Mot en couleur'), joiner: txt('Liaison avant les mots qui défilent') })
         .describe('Titre'),
