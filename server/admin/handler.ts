@@ -128,7 +128,7 @@ export function createAdminHandler(env: Env, deps: AdminDeps, apiRoutes: ApiRout
     }
   };
 
-  const withBase = (raw: string) => raw.replace('<head>', `<head><base href="${P}/">`);
+  const withBase = (raw: string) => raw.replace('<head>', `<head><base href="${P}/" data-admin>`);
 
   const servePage = (req: IncomingMessage, res: ServerResponse) => {
     if (deps.servePage) return deps.servePage(req, res, withBase);

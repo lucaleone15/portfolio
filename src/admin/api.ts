@@ -38,15 +38,14 @@ export async function api<T = void>(method: string, path: string, body?: unknown
 
 export const login = (password: string, code: string) => api('POST', 'login', { password, code });
 export const logout = () => api('POST', 'logout');
+/** Signed in only if the admin API itself answers 204 (any other page, e.g. an HTML fallback, is not it) */
 export async function me(): Promise<boolean> {
-  try {
-    await api('GET', 'me');
-    return true;
-  } catch (err) {
-    if (err instanceof ApiError && err.status === 404) return false;
-    throw err;
-  }
+  const res = await fetch(apiUrl('me'), { credentials: 'same-origin', headers: { 'X-Admin': '1' } });
+  return res.status === 204;
 }
+
+/** The server marks the admin page it serves (<base data-admin>); without it the admin isn't set up */
+export const adminConfigured = () => !!document.querySelector('base[data-admin]');
 
 
 export const getContent = () => api<ContentResponse & { staged: string[] }>('GET', 'content');

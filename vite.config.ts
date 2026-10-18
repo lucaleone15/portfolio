@@ -40,6 +40,9 @@ function siteApi(env: Record<string, string>): Plugin {
         : undefined,
     });
     server.middlewares.use(admin as never);
+    // admin.html only ever through ADMIN_PATH (Vite would otherwise serve it at /admin and /admin.html)
+    server.middlewares.use(((req: IncomingMessage, res: ServerResponse, next: () => void) =>
+      /^\/admin(\.html)?\/?(\?|$)/.test(req.url ?? '') ? notFound(req, res) : next()) as never);
     server.middlewares.use(contact as never);
     server.middlewares.use(analytics as never);
     server.middlewares.use(podium as never);

@@ -40,7 +40,7 @@ test('the page is served with its base, and its assets', async () => {
   expect((await fetch(`${srv.base}/atelier`, { redirect: 'manual' })).status).toBe(301);
   const page = await fetch(`${srv.base}/atelier/projets/hug`);
   expect(page.status).toBe(200);
-  expect(await page.text()).toContain('<base href="/atelier/">');
+  expect(await page.text()).toContain('<base href="/atelier/" data-admin>');
   expect(await (await fetch(`${srv.base}/atelier/assets/app.js`)).text()).toBe('console.log(1)');
   expect((await fetch(`${srv.base}/atelier/assets/..%2f..%2fadmin.html`)).status).toBe(404);
 });

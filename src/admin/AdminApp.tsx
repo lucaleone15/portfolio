@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { logout, me } from './api';
+import { adminConfigured, logout, me } from './api';
+import { Monogram } from './ui';
 import { Login } from './Login';
 import { Shell } from './Shell';
 import { Button, Dialog, SaveIndicator } from './ui';
@@ -17,6 +18,8 @@ export function AdminApp() {
   useEffect(() => {
     me().then(setSignedIn, () => setSignedIn(false));
   }, []);
+
+  if (!adminConfigured()) return <NotSetUp />;
 
   if (signedIn === null) return <div className="min-h-dvh bg-[var(--color-paper)] dark:bg-[#0A0A0C]" />;
   if (!signedIn) return <Login onSignedIn={() => setSignedIn(true)} />;
@@ -74,5 +77,21 @@ function Workspace({ onSignOut }: { onSignOut: () => void }) {
         )}
       </Dialog>
     </Shell>
+  );
+}
+
+/** The page was reached without the server's admin (no ADMIN_* settings, or not under ADMIN_PATH) */
+function NotSetUp() {
+  return (
+    <div className="flex min-h-dvh items-center justify-center bg-[var(--color-paper)] px-4 text-neutral-900 dark:bg-[#0A0A0C] dark:text-white">
+      <div className="max-w-md">
+        <Monogram size={44} />
+        <h1 className="mt-6 font-syne text-2xl font-extrabold">L’atelier n’est pas configuré ici</h1>
+        <p className="mt-3 text-sm leading-relaxed text-neutral-600 dark:text-[#A1A1AA]">
+          Lance <code>npm run build && npm run admin:setup</code>, copie les lignes affichées dans <code>.env</code> avec une adresse, par exemple{' '}
+          <code>ADMIN_PATH=/atelier</code>, relance <code>npm run dev</code>, puis ouvre cette adresse (avec le <code>/</code> final).
+        </p>
+      </div>
+    </div>
   );
 }
