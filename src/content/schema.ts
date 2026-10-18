@@ -79,8 +79,8 @@ export const BlockSchema = z.discriminatedUnion('type', [
   z
     .object({
       type: z.literal('video'),
-      src: str('Fichier vidéo'),
-      poster: str("Image d'aperçu"),
+      src: str('Fichier vidéo (vidéo)'),
+      poster: str("Image d'aperçu (image)"),
       width: z.number().int().positive().describe('Largeur'),
       height: z.number().int().positive().describe('Hauteur'),
       caption: txt('Légende'),
@@ -156,12 +156,12 @@ export const StoredProjectSchema = z
     name: str('Nom'),
     number: str('Numéro'),
     year: str('Année'),
-    imageUrl: str('Couverture'),
+    imageUrl: str('Couverture (image)'),
     stack: z.array(txt('Outil')).describe('Outils'),
     accentColor: str('Couleur du projet').optional(),
     accentColorDark: str('Couleur du projet (thème sombre)').optional(),
     logo: LogoSchema.optional(),
-    video: str('Vidéo au survol').optional(),
+    video: str('Vidéo au survol (vidéo)').optional(),
     card: z
       .object({
         subtitle: txt('Sous-titre'),
@@ -196,7 +196,7 @@ export const SITE_PAGES = ['home', 'projets', 'a-propos', 'contact', 'privacy', 
 
 export const SiteSchema = z.object({
   contact: z
-    .object({ name: str('Nom'), email: str('Email'), phone: str('Téléphone'), linkedin: str('LinkedIn'), cv: str('CV (PDF)') })
+    .object({ name: str('Nom'), email: str('Email'), phone: str('Téléphone'), linkedin: str('LinkedIn'), cv: str('CV (pdf)') })
     .describe('Contact'),
   hero: z
     .object({

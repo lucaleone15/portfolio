@@ -6,6 +6,7 @@ import { Button, SaveIndicator } from './ui';
 import { useAdminPath } from './nav';
 import { DraftProvider, useDraftClient, useDraftState } from './DraftContext';
 import { ProjectsList } from './pages/ProjectsList';
+import { ProjectEditor } from './pages/ProjectEditor';
 
 export function AdminApp() {
   const [signedIn, setSignedIn] = useState<boolean | null>(null);
@@ -32,12 +33,12 @@ export function AdminApp() {
 function Workspace({ onSignOut }: { onSignOut: () => void }) {
   const client = useDraftClient();
   const state = useDraftState();
-  const { path } = useAdminPath();
+  const { path, query } = useAdminPath();
   const changes = new Set([...state.changed, ...state.pending]).size;
 
   let page = <ProjectsList />;
   const project = /^\/projets\/([a-z0-9-]+)$/.exec(path);
-  if (project) page = <p className="px-4 py-10 md:px-8">Éditeur de {project[1]} (à venir)</p>;
+  if (project) page = <ProjectEditor key={project[1]} id={project[1]} query={query} />;
 
   return (
     <Shell
