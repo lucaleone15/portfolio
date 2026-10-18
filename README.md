@@ -115,7 +115,6 @@ npm start               # http://localhost:3000
 | `SMTP_PASS` | Mot de passe de la boîte ou mot de passe d'application | — (requis) |
 | `CONTACT_TO` | Destinataire des messages | `SMTP_USER` |
 | `SMTP_FROM` | Adresse d'expédition | `SMTP_USER` |
-| `STATS_KEY` | Clé d'accès au tableau de bord `/stats` (longue chaîne aléatoire) | — (tableau désactivé) |
 | `PORT` | Port du serveur de production | `3000` |
 | `DATA_DIR` | Dossier des statistiques, du podium, du brouillon et des images en attente de l'admin (chemin absolu conseillé, hors du dossier du site) | `.data/` |
 | `ADMIN_PATH` | Adresse de l'admin, difficile à deviner (ex. `/atelier-7k2q9`), jamais liée nulle part | — (admin désactivé) |
@@ -141,7 +140,7 @@ npm start
 
 Points d'attention :
 
-1. **`.env`** présent sur le serveur (SMTP, `STATS_KEY`, et les variables `ADMIN_*` pour le dashboard : voir [Dashboard admin](#dashboard-admin)).
+1. **`.env`** présent sur le serveur (SMTP et les variables `ADMIN_*` du dashboard : voir [Dashboard admin](#dashboard-admin)).
 2. Les données (statistiques `hits.ndjson`, scores `podium.json`) doivent **persister** entre deux déploiements. Le plus sûr : `DATA_DIR` vers un dossier **hors du site** (ex. `DATA_DIR=/srv/customer/portfolio-data`), qu'aucun déploiement ne touche. Sinon, `.data/` est ignoré par git (un `git pull` ne le touche pas), mais ne jamais l'envoyer depuis sa machine (il contient les visites locales) ni supprimer le dossier du site pour le redéployer.
 3. Derrière un proxy (Nginx, Caddy, hébergeur…), le serveur lit l'IP réelle via `X-Forwarded-For` (limitation anti-spam du formulaire).
 4. HTTPS est géré par le proxy / l'hébergeur ; le serveur envoie déjà `Strict-Transport-Security`.
@@ -189,7 +188,8 @@ Après une mise en ligne qui change l'image d'aperçu, la rafraîchir sur Linked
 │   ├── contact.ts             POST /api/contact
 │   ├── contactEmails.ts       Emails du formulaire (notification + confirmation signée)
 │   ├── mailTest.ts            Test d'envoi de la confirmation (npm run mail:test)
-│   ├── analytics.ts           Statistiques internes + /stats
+│   ├── analytics.ts           Statistiques internes (enregistrement des pages vues)
+│   ├── stats.ts               Calcul des statistiques affichées dans l'atelier
 │   ├── canonical.ts           Une URL par page, redirections des projets renommés
 │   └── admin/                 Admin : connexion (mot de passe + TOTP), brouillon, images, publication git
 ├── scripts/
@@ -296,7 +296,7 @@ Statistiques internes et respectueuses de la vie privée (`server/analytics.ts`)
 
 - une ligne par page vue dans `.data/hits.ndjson` : date, page, site de provenance — **ni cookie, ni adresse IP** ;
 - robots ignorés, visiteurs « Do Not Track » non comptés ;
-- tableau de bord sur **`/stats?key=<STATS_KEY>`** (30 derniers jours : pages vues par jour, projets ouverts, provenance), et la même chose en JSON sur `/api/stats?key=…`.
+- consultées dans l'**atelier**, onglet Statistiques : pages vues sur 7, 30 ou 90 jours comparées à la période précédente, par jour, projets les plus vus (FR + EN), provenance, pages, part en anglais. (L'ancienne page `/stats?key=…` n'existe plus.)
 
 ### Serveur de production
 

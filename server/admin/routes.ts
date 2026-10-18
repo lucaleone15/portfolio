@@ -6,6 +6,7 @@ import { createUploadRoutes } from './uploadRoutes';
 import { createGit, runCommand } from './git';
 import { createPublisher } from './publish';
 import { createPublishRoutes } from './publishRoutes';
+import { createStatsRoutes } from './statsRoutes';
 
 type Env = Record<string, string | undefined>;
 
@@ -32,6 +33,6 @@ export function createAdminRoutes(env: Env, deps: AdminDeps) {
     },
     onPublished: deps.onPublished,
   });
-  const routes: ApiRoute[] = [createContentRoutes(draft, stagingDir), createUploadRoutes(deps.dataDir), createPublishRoutes(publisher, draft)];
+  const routes: ApiRoute[] = [createContentRoutes(draft, stagingDir), createUploadRoutes(deps.dataDir), createPublishRoutes(publisher, draft), createStatsRoutes(deps.dataDir, draft)];
   return createAdminHandler(env, deps, routes);
 }

@@ -22,7 +22,7 @@ import { createAdminRoutes } from './admin/routes';
  *   its canonical one (x.html, x/index.html, trailing slash, renamed projects)
  * - POST /api/contact (server/contact.ts) and first-party analytics (server/analytics.ts)
  *
- * Env (.env in the project root): PORT (default 3000), SMTP_* / CONTACT_TO, STATS_KEY, DATA_DIR
+ * Env (.env in the project root): PORT (default 3000), SMTP_* / CONTACT_TO, DATA_DIR, ADMIN_*
  * (default .data/).
  */
 
