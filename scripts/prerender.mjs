@@ -8,7 +8,8 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const root = process.cwd();
-const dist = path.join(root, 'dist');
+// BUILD_OUT_DIR: the admin's Publish builds into dist-next, then swaps it with dist
+const dist = path.join(root, process.env.BUILD_OUT_DIR || 'dist');
 const ssrEntry = path.join(root, 'dist-ssr', 'entry-server.js');
 
 const { render, getAllRoutes, getHeadData, renderHeadTags, renderSitemap, projectImagePaths, pathFor, USER_INFO, CONTENT, DERIVED_FILES, fillDerivedFile } = await import(
