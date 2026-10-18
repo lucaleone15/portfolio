@@ -152,3 +152,11 @@ test('no conflict when the draft and the repo already hold the same page', () =>
   write('content/projects/a.json', project('a', 'Pareil'));
   expect(s.conflicts()).toEqual([]);
 });
+
+test('deleting a project frees the old addresses that pointed to it', () => {
+  write('content/projects.json', { order: ['a', 'b'], hidden: [], redirects: { vieux: 'a' } });
+  const s = store();
+  s.remove('a');
+  expect(s.read().content.index.redirects).toEqual({});
+  expect(s.write('project:vieux', project('vieux'), 0).revision).toBe(1);
+});

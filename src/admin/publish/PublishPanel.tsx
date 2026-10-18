@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { Content } from '../../content/schema';
 import { isEnglishReady } from '../../content/localize';
 import { projectIdOf, type PageRef } from '../../content/pages';
-import type { PublishStatus, PublishSummary } from '../api';
+import { ApiError, type PublishStatus, type PublishSummary } from '../api';
 import { Button, Pill } from '../ui';
 
 export interface PublishApi {
@@ -13,14 +13,20 @@ export interface PublishApi {
   discard?: () => Promise<void>;
 }
 
-/** Follows a publish to its end (panel closed while it ran): the final state */
-export async function waitForPublish(getPublish: () => Promise<PublishSummary>, intervalMs = 3000): Promise<PublishStatus['state']> {
+/**
+ * Follows a publish to its end (panel closed while it ran): the final state, or 'unknown' when
+ * signed out or the server stays unreachable (no endless loop).
+ */
+export async function waitForPublish(getPublish: () => Promise<PublishSummary>, intervalMs = 3000, maxErrors = 20): Promise<PublishStatus['state'] | 'unknown'> {
+  let errors = 0;
   for (;;) {
     try {
       const { status } = await getPublish();
+      errors = 0;
       if (status.state !== 'running') return status.state;
-    } catch {
-      // network hiccup: ask again
+    } catch (err) {
+      if (err instanceof ApiError && err.status === 404) return 'unknown';
+      if (++errors >= maxErrors) return 'unknown';
     }
     await new Promise((r) => setTimeout(r, intervalMs));
   }
@@ -94,6 +100,7 @@ export function PublishPanel({
   const [status, setStatus] = useState<PublishStatus | null>(null);
   const [resolved, setResolved] = useState<Set<string>>(new Set());
   const [offline, setOffline] = useState(false);
+  const [discardFailed, setDiscardFailed] = useState(false);
   const alive = useRef(true);
 
   const load = async () => {
@@ -254,6 +261,11 @@ export function PublishPanel({
         </div>
       )}
 
+      {discardFailed && (
+        <p role="alert" className="text-sm font-semibold text-[var(--accent)]">
+          Le brouillon n’a pas pu être annulé. Réessaie.
+        </p>
+      )}
       <div className="flex flex-wrap justify-end gap-3">
         {api.discard && summary.changed.length > 0 && (
           <Button
@@ -261,7 +273,13 @@ export function PublishPanel({
             className="mr-auto"
             onClick={async () => {
               if (!window.confirm('Annuler toutes les modifications du brouillon ? Le site en ligne ne change pas, mais le brouillon est perdu.')) return;
-              await api.discard!();
+              setDiscardFailed(false);
+              try {
+                await api.discard!();
+              } catch {
+                setDiscardFailed(true);
+                return;
+              }
               onDiscarded?.();
               onClose();
             }}

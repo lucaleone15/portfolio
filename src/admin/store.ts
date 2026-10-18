@@ -182,6 +182,19 @@ export function createDraftClient(api: DraftApi, opts: { debounceMs: number; ret
       schedule(ref);
     },
     flush: () => flush(),
+    /** After a publish: send what's pending, then reload — unless some edit still couldn't be saved */
+    async saveThenReload() {
+      await flush();
+      if (!state.pending.size) await this.load();
+    },
+    /** Forgets the edits waiting to be saved (the draft is about to be thrown away) */
+    dropPending() {
+      for (const t of timers.values()) clearTimeout(t);
+      timers.clear();
+      if (retryTimer) clearTimeout(retryTimer);
+      retryTimer = null;
+      set({ pending: new Set(), saveState: 'saved' });
+    },
     async resumeAfterLogin() {
       set({ saveState: state.pending.size ? 'saving' : 'saved' });
       await flush();

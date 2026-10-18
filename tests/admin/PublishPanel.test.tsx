@@ -103,3 +103,15 @@ test('the whole draft can be thrown away, after a confirmation', async () => {
   expect(confirm).toHaveBeenCalled();
   confirm.mockRestore();
 });
+
+test('a failed discard is reported, not swallowed', async () => {
+  const api = fakeApi({ state: 'done' });
+  api.discard = async () => {
+    throw new Error('offline');
+  };
+  const confirm = vi.spyOn(window, 'confirm').mockReturnValue(true);
+  renderPanel(api);
+  fireEvent.click(await screen.findByRole('button', { name: 'Annuler toutes les modifications' }));
+  expect(await screen.findByText('Le brouillon n’a pas pu être annulé. Réessaie.')).toBeTruthy();
+  confirm.mockRestore();
+});

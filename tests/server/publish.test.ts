@@ -229,3 +229,4 @@ test('after a publish, uploads nobody uses any more are cleared after a day', as
   expect(fs.existsSync(old)).toBe(false);
   expect(fs.existsSync(recent)).toBe(true); // maybe in an edit not saved yet
 });
+

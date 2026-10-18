@@ -38,3 +38,21 @@ test('the inbox: list with the unread count, change a status, delete — only wi
   expect(store.list()).toEqual([]);
   await srv.close();
 });
+
+test('a status change with no body is refused cleanly (422)', async () => {
+  const repo = tmpDir('repo');
+  const data = tmpDir('data');
+  const put = (rel: string, d: unknown) => {
+    fs.mkdirSync(path.dirname(path.join(repo, rel)), { recursive: true });
+    fs.writeFileSync(path.join(repo, rel), JSON.stringify(d, null, 2) + '\n');
+  };
+  put('content/site.json', realContent().site);
+  put('content/projects.json', { order: [], hidden: [], redirects: {} });
+  execFileSync('git', ['init', '-q'], { cwd: repo });
+  const m = createMessageStore(data).add({ name: 'A', email: 'a@example.com', subject: '', message: 'x', lang: 'fr', page: '/' });
+  const srv = await serve(createAdminRoutes(await testEnv(), { dataDir: data, repoRoot: repo, distAdmin: tmpDir('da'), notFound, onPublished: () => {} }));
+  const cookie = await login(srv.base);
+  const res = await fetch(`${srv.base}/atelier/api/messages/${m.id}`, { method: 'PATCH', headers: { Cookie: cookie, 'X-Admin': '1', 'Content-Type': 'application/json' }, body: 'null' });
+  expect(res.status).toBe(422);
+  await srv.close();
+});

@@ -47,3 +47,44 @@ test('the contact form keeps the message even without email settings, and ignore
   expect((await post({ ...sample, email: 'pas-un-email' })).status).toBe(422);
   await srv.close();
 });
+
+test('expired messages are removed from the file itself, even with no new message', () => {
+  const dir = tmpDir('msg');
+  let clock = Date.parse('2025-09-01T10:00:00Z');
+  const store = () => createMessageStore(dir, { now: () => clock });
+  store().add(sample);
+  clock = Date.parse('2026-10-18T10:00:00Z');
+  store().list();
+  expect(fs.readFileSync(path.join(dir, 'messages.json'), 'utf8')).not.toContain('Camille');
+});
+
+test('a damaged messages file is set aside, never overwritten', () => {
+  const dir = tmpDir('msg');
+  fs.writeFileSync(path.join(dir, 'messages.json'), '{"oops":');
+  const store = createMessageStore(dir);
+  store.add(sample);
+  const aside = fs.readdirSync(dir).filter((f) => f.startsWith('messages.json.damaged-'));
+  expect(aside).toHaveLength(1);
+  expect(fs.readFileSync(path.join(dir, aside[0]), 'utf8')).toBe('{"oops":');
+  expect(store.list()).toHaveLength(1);
+});
+
+test('the inbox keeps at most 2000 messages (the oldest go first)', () => {
+  const dir = tmpDir('msg');
+  let clock = Date.parse('2026-10-01T10:00:00Z');
+  const store = createMessageStore(dir, { now: () => clock, max: 3 });
+  for (const n of ['un', 'deux', 'trois', 'quatre']) {
+    clock += 1000;
+    store.add({ ...sample, name: n });
+  }
+  expect(store.list().map((m) => m.name)).toEqual(['quatre', 'trois', 'deux']);
+});
+
+test('an email address that could smuggle recipients into a reply is refused', async () => {
+  const messages = createMessageStore(tmpDir('msg'));
+  const srv = await serve(createContactHandler({}, { messages }) as never);
+  const res = await fetch(`${srv.base}/api/contact`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...sample, email: 'x@a.com?cc=y%40b.com' }) });
+  expect(res.status).toBe(422);
+  expect(messages.list()).toEqual([]);
+  await srv.close();
+});

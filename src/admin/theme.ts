@@ -1,6 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
 
-/** The atelier's light / dark choice: follows the device unless set, remembered on this device */
+/**
+ * The atelier's light / dark choice: follows the device unless set, remembered on this device.
+ * One shared state for every theme button, and one listener on the device's appearance.
+ */
 export type ThemeChoice = 'system' | 'light' | 'dark';
 
 const KEY = 'atelier:theme';
@@ -35,25 +38,38 @@ export function applyTheme(t: ThemeChoice, deviceDark: boolean) {
 
 const media = () => window.matchMedia('(prefers-color-scheme: dark)');
 
-/** The current choice and a function to switch to the next one */
-export function useTheme(): [ThemeChoice, () => void] {
-  const [theme, setTheme] = useState<ThemeChoice>(readTheme);
-  useEffect(() => {
-    const mq = media();
-    const apply = () => applyTheme(theme, mq.matches);
-    apply();
-    mq.addEventListener('change', apply);
-    return () => mq.removeEventListener('change', apply);
-  }, [theme]);
-  return [
-    theme,
-    () => {
-      const next = nextTheme(theme);
-      saveTheme(next);
-      setTheme(next);
-    },
-  ];
+let current: ThemeChoice | null = null;
+const listeners = new Set<() => void>();
+let watching = false;
+
+function choice(): ThemeChoice {
+  if (current === null) current = readTheme();
+  return current;
 }
 
-/** Before the first render, so the page doesn't flash in the wrong theme */
-export const applySavedTheme = () => applyTheme(readTheme(), media().matches);
+function setChoice(t: ThemeChoice) {
+  current = t;
+  saveTheme(t);
+  applyTheme(t, media().matches);
+  listeners.forEach((fn) => fn());
+}
+
+/** Applies the saved choice and follows the device's appearance from then on (once) */
+export function applySavedTheme() {
+  applyTheme(choice(), media().matches);
+  if (watching) return;
+  watching = true;
+  media().addEventListener('change', (e) => applyTheme(choice(), e.matches));
+}
+
+/** The current choice and a function to switch to the next one */
+export function useTheme(): [ThemeChoice, () => void] {
+  const theme = useSyncExternalStore(
+    (fn) => {
+      listeners.add(fn);
+      return () => listeners.delete(fn);
+    },
+    choice,
+  );
+  return [theme, () => setChoice(nextTheme(theme))];
+}

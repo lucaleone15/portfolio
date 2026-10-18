@@ -45,3 +45,27 @@ test('an empty inbox says so', async () => {
   render(<MessagesView api={fakeApi([])} onUnread={() => {}} />);
   expect(await screen.findByText('Aucun message pour l’instant.')).toBeTruthy();
 });
+
+test('when notification emails stopped going out, the inbox says so', async () => {
+  const api = fakeApi([{ ...msg('a', 'new', 'Camille', new Date().toISOString()), emailed: false }]);
+  render(<MessagesView api={api} onUnread={() => {}} />);
+  expect(await screen.findByText(/emails de notification ne partent plus/)).toBeTruthy();
+});
+
+test('a status change that fails is undone and reported', async () => {
+  const api = fakeApi([msg('a', 'read', 'Camille')]);
+  api.setStatus = async () => {
+    throw new Error('offline');
+  };
+  render(<MessagesView api={api} onUnread={() => {}} />);
+  fireEvent.click(await screen.findByText('Camille'));
+  fireEvent.click(screen.getByRole('button', { name: 'Archiver' }));
+  expect(await screen.findByText('La modification n’a pas pu être enregistrée.')).toBeTruthy();
+});
+
+test('the reply link encodes the address', async () => {
+  const api = fakeApi([{ ...msg('a', 'read', 'Camille'), email: 'c+x@example.com' }]);
+  render(<MessagesView api={api} onUnread={() => {}} />);
+  fireEvent.click(await screen.findByText('Camille'));
+  expect(screen.getByRole('link', { name: /Répondre/ }).getAttribute('href')).toMatch(/^mailto:c%2Bx@example\.com\?/);
+});

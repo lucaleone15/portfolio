@@ -115,7 +115,12 @@ export function createPublisher(deps: {
     // Not discard(): pages saved while the site was building stay in the draft
     deps.draft.settle();
     for (const src of uploads) fs.rmSync(path.join(deps.stagingDir, src), { force: true });
-    pruneStaged(deps.stagingDir, JSON.stringify(deps.draft.read().content));
+    // Housekeeping: an error here must not turn a publish that is live into a "failed" one
+    try {
+      pruneStaged(deps.stagingDir, JSON.stringify(deps.draft.read().content));
+    } catch (err) {
+      console.error('[admin] cleaning up old uploads failed', err);
+    }
     status = { state: 'done', finishedAt: new Date().toISOString(), published: changed };
   };
 

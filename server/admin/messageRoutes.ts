@@ -21,8 +21,9 @@ export function createMessageRoutes(store: MessageStore): ApiRoute {
     const m = /^\/messages\/([\w-]+)$/.exec(route);
     if (!m) return false;
     if (req.method === 'PATCH') {
-      const { status } = await ctx.json<{ status: MessageStatus }>();
-      if (!MESSAGE_STATUSES.includes(status)) {
+      const body = await ctx.json<{ status?: MessageStatus } | null>();
+      const status = body?.status;
+      if (!status || !MESSAGE_STATUSES.includes(status)) {
         ctx.send(422, { error: 'status' });
         return true;
       }

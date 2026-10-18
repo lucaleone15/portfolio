@@ -45,10 +45,17 @@ function Workspace({ onSignOut }: { onSignOut: () => void }) {
   const changes = new Set([...state.changed, ...state.pending]).size;
   const [publishing, setPublishing] = useState(false);
   // Closed while a publish runs: follow it, then reload the draft (revisions, "Publier · N")
+  const [backgroundFailed, setBackgroundFailed] = useState(false);
   const closePublishing = () => {
     setPublishing(false);
     void getPublish().then(
-      (r) => r.status.state === 'running' && waitForPublish(getPublish).then(() => client.load()),
+      (r) =>
+        r.status.state === 'running' &&
+        waitForPublish(getPublish).then((end) => {
+          if (end === 'failed') setBackgroundFailed(true);
+          // What was typed meanwhile is sent first: the reload never drops it
+          return client.saveThenReload();
+        }),
       () => {},
     );
   };
@@ -90,11 +97,30 @@ function Workspace({ onSignOut }: { onSignOut: () => void }) {
       }
     >
       {page}
+      {backgroundFailed && (
+        <div role="alert" className="fixed inset-x-4 bottom-20 z-40 mx-auto flex max-w-lg items-center gap-3 rounded-2xl bg-neutral-900 px-4 py-3 text-sm text-white shadow-xl dark:bg-white dark:text-neutral-900 md:bottom-6">
+          <span className="flex-1">La publication a échoué. Ouvre « Publier » pour voir pourquoi.</span>
+          <button type="button" className="font-bold underline" onClick={() => (setBackgroundFailed(false), setPublishing(true))}>
+            Voir
+          </button>
+          <button type="button" aria-label="Fermer" onClick={() => setBackgroundFailed(false)}>
+            ✕
+          </button>
+        </div>
+      )}
       {state.saveState === 'signedOut' && <Login overlay onSignedIn={() => void client.resumeAfterLogin()} />}
       <Dialog open={publishing} title="Publier" onClose={closePublishing}>
         {publishing && state.loaded && (
           <PublishPanel
-            api={{ getPublish, startPublish, resolveConflict, discard: discardDraft }}
+            api={{
+              getPublish,
+              startPublish,
+              resolveConflict,
+              discard: async () => {
+                client.dropPending();
+                await discardDraft();
+              },
+            }}
             flush={client.flush}
             navigate={(to) => {
               setPublishing(false);

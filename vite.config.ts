@@ -17,9 +17,11 @@ import type {IncomingMessage, ServerResponse} from 'node:http';
  * server/index.ts): POST /api/contact and the first-party analytics.
  */
 function siteApi(env: Record<string, string>): Plugin {
-  const contact = createContactHandler(env, {messages: createMessageStore(path.resolve(process.cwd(), env.DATA_DIR || '.data'))});
-  const analytics = createAnalyticsHandler(env);
-  const podium = createPodiumHandler();
+  // Same data folder as the production server (DATA_DIR), so the atelier's statistics and inbox see it
+  const dataDir = path.resolve(process.cwd(), env.DATA_DIR || '.data');
+  const contact = createContactHandler(env, {messages: createMessageStore(dataDir)});
+  const analytics = createAnalyticsHandler(env, dataDir);
+  const podium = createPodiumHandler(dataDir);
   const notFound = (_req: IncomingMessage, res: ServerResponse) => {
     res.statusCode = 404;
     res.end('Not found');
