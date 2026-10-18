@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { adminConfigured, logout, me } from './api';
 import { Monogram } from './ui';
 import { Login } from './Login';
-import { Shell } from './Shell';
+import { Shell, type Section } from './Shell';
 import { Button, Dialog, SaveIndicator } from './ui';
 import { PublishPanel } from './publish/PublishPanel';
 import { getPublish, resolveConflict, startPublish } from './api';
@@ -12,6 +12,7 @@ import { signOutAfterSaving } from './store';
 import { ProjectsList } from './pages/ProjectsList';
 import { ProjectEditor } from './pages/ProjectEditor';
 import { SiteEditor, isSiteTab } from './pages/SiteEditor';
+import { StatsPage } from './pages/StatsPage';
 
 export function AdminApp() {
   const [signedIn, setSignedIn] = useState<boolean | null>(null);
@@ -48,9 +49,15 @@ function Workspace({ onSignOut }: { onSignOut: () => void }) {
   if (project) page = <ProjectEditor key={project[1]} id={project[1]} query={query} />;
   const siteTab = /^\/site\/([a-z-]+)$/.exec(path)?.[1];
   if (siteTab && isSiteTab(siteTab)) page = <SiteEditor key={siteTab} tab={siteTab} query={query} />;
+  let section: Section = 'contenu';
+  if (path === '/stats') {
+    page = <StatsPage />;
+    section = 'stats';
+  }
 
   return (
     <Shell
+      section={section}
       onSignOut={() => void signOutAfterSaving(client, () => logout().catch(() => {})).then(onSignOut)}
       status={<SaveIndicator state={state.saveState} onReload={() => void client.load()} />}
       publish={

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Button, Monogram, Pill } from './ui';
+import { Button, Monogram } from './ui';
 import { adminNavigate } from './nav';
 import { THEME_LABEL, useTheme, type ThemeChoice } from './theme';
 
@@ -42,10 +42,12 @@ function ThemeButton({ withLabel = false }: { withLabel?: boolean }) {
   );
 }
 
-const NAV = [
-  { id: 'contenu', label: 'Contenu', to: '/', ready: true },
-  { id: 'stats', label: 'Statistiques', to: '', ready: false },
-  { id: 'messages', label: 'Messages', to: '', ready: false },
+export type Section = 'contenu' | 'stats' | 'messages';
+
+const NAV: { id: Section; label: string; to: string }[] = [
+  { id: 'contenu', label: 'Contenu', to: '/' },
+  { id: 'stats', label: 'Statistiques', to: '/stats' },
+  { id: 'messages', label: 'Messages', to: '/messages' },
 ];
 
 /**
@@ -54,11 +56,16 @@ const NAV = [
  */
 export function Shell({
   children,
+  section,
+  unread = 0,
   status,
   publish,
   onSignOut,
 }: {
   children: ReactNode;
+  section: Section;
+  /** New messages, shown on the Messages tab */
+  unread?: number;
   /** Save state, shown next to Publish */
   status?: ReactNode;
   publish?: ReactNode;
@@ -75,23 +82,20 @@ export function Shell({
           </span>
         </a>
         <nav className="flex flex-col gap-1" aria-label="Sections">
-          {NAV.map((item) =>
-            item.ready ? (
-              <a
-                key={item.id}
-                href="./"
-                onClick={(e) => (e.preventDefault(), adminNavigate(item.to))}
-                aria-current="page"
-                className="flex min-h-11 items-center rounded-xl bg-[rgba(var(--accent-rgb),0.1)] px-3 font-syne text-sm font-bold text-[var(--accent)]"
-              >
-                {item.label}
-              </a>
-            ) : (
-              <span key={item.id} aria-disabled="true" className="flex min-h-11 items-center justify-between rounded-xl px-3 text-sm font-semibold text-neutral-400 dark:text-white/30">
-                {item.label} <Pill>bientôt</Pill>
-              </span>
-            ),
-          )}
+          {NAV.map((item) => (
+            <a
+              key={item.id}
+              href="./"
+              onClick={(e) => (e.preventDefault(), adminNavigate(item.to))}
+              aria-current={section === item.id ? 'page' : undefined}
+              className={`flex min-h-11 items-center justify-between rounded-xl px-3 font-syne text-sm font-bold transition ${section === item.id ? 'bg-[rgba(var(--accent-rgb),0.1)] text-[var(--accent)]' : 'text-neutral-600 hover:bg-[var(--color-surface)] dark:text-[#A1A1AA] dark:hover:bg-white/5'}`}
+            >
+              {item.label}
+              {item.id === 'messages' && unread > 0 && (
+                <span className="grid min-w-5 place-items-center rounded-full bg-[var(--accent)] px-1.5 text-[11px] text-[var(--accent-contrast-text)]">{unread}</span>
+              )}
+            </a>
+          ))}
         </nav>
         <div className="mt-auto space-y-1">
           <ThemeButton withLabel />
@@ -125,12 +129,14 @@ export function Shell({
           <button
             key={item.id}
             type="button"
-            disabled={!item.ready}
-            onClick={() => item.ready && adminNavigate(item.to)}
-            className={`flex min-h-16 flex-1 flex-col items-center justify-center gap-0.5 text-xs font-bold ${item.ready ? 'text-[var(--accent)]' : 'text-neutral-400 dark:text-white/30'}`}
+            onClick={() => adminNavigate(item.to)}
+            aria-current={section === item.id ? 'page' : undefined}
+            className={`relative flex min-h-16 flex-1 flex-col items-center justify-center gap-0.5 text-xs font-bold ${section === item.id ? 'text-[var(--accent)]' : 'text-neutral-500 dark:text-[#A1A1AA]'}`}
           >
             {item.label}
-            {!item.ready && <span className="text-[9px] font-semibold uppercase tracking-wider">bientôt</span>}
+            {item.id === 'messages' && unread > 0 && (
+              <span className="absolute right-[calc(50%-2.4rem)] top-2.5 grid min-w-4 place-items-center rounded-full bg-[var(--accent)] px-1 text-[10px] text-[var(--accent-contrast-text)]">{unread}</span>
+            )}
           </button>
         ))}
         <button type="button" onClick={onSignOut} className="flex min-h-16 flex-1 items-center justify-center text-xs font-bold text-neutral-500 dark:text-[#A1A1AA]">

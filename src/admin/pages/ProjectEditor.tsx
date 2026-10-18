@@ -20,7 +20,7 @@ export function caseFolderOf(p: StoredProject): string {
   return /\/images\/case\/([a-z0-9-]+)\//.exec(JSON.stringify(p.study))?.[1] ?? p.id;
 }
 
-function Segmented<T extends string>({ value, options, onChange, label }: { value: T; options: [T, string][]; onChange: (v: T) => void; label: string }) {
+export function Segmented<T extends string>({ value, options, onChange, label }: { value: T; options: [T, string][]; onChange: (v: T) => void; label: string }) {
   return (
     <div role="radiogroup" aria-label={label} className="inline-flex rounded-full border border-[var(--color-border)] p-1 dark:border-white/10">
       {options.map(([v, text]) => (
