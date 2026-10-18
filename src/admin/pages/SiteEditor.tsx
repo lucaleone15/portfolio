@@ -15,6 +15,7 @@ import { EditablePreview } from '../page/EditablePreview';
 import { withPreviewSrcs } from '../page/PageView';
 import { EditorBar, type Mode } from './ProjectEditor';
 import { useDraftClient, useDraftState, useStaged } from '../DraftContext';
+import { pageClass } from '../ui';
 import { adminNavigate } from '../nav';
 
 // No intro curtain in the admin: the hero shows at once
@@ -143,7 +144,7 @@ export function SiteEditor({ tab, query }: { key?: string; tab: SiteTab; query: 
 
   return (
     <MediaContext.Provider value={media}>
-      <div className="mx-auto max-w-6xl px-4 py-6 md:px-8 md:py-8">
+      <div className={pageClass}>
         <ContentTabs current={tab} />
         <EditorBar title={TABS[tab].label} back={() => adminNavigate('/')} mode={mode} lang={lang} onMode={setMode} onLang={setLang} pageMode={!!TABS[tab].page} />
         <SiteEditorView tab={tab} mode={mode} lang={lang} content={mode === 'page' ? content : state.content} onChange={onChange} onOpen={setDrawer} />

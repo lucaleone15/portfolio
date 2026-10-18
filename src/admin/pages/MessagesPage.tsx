@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { api } from '../api';
-import { Button, Pill } from '../ui';
+import { Button, Pill, pageClass } from '../ui';
 
 /**
  * Messages: the contact form's inbox (server/messages.ts). Opening a message marks it read;
@@ -237,7 +237,7 @@ export function MessagesView({ api: io, onUnread }: { api: MessagesApi; onUnread
 
 export function MessagesPage({ onUnread }: { onUnread: (n: number) => void }) {
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 md:px-8 md:py-10">
+    <div className={pageClass}>
       <p className="eyebrow text-[var(--accent)]">Messages</p>
       <h1 className="mb-6 mt-2 font-syne text-3xl font-extrabold tracking-tight md:text-4xl">Formulaire de contact</h1>
       <MessagesView api={messagesApi} onUnread={onUnread} />

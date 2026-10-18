@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { api } from '../api';
+import { pageClass } from '../ui';
 import { Segmented } from './ProjectEditor';
 
 /**
@@ -214,7 +215,7 @@ export function StatsPage() {
   }, [days]);
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 md:px-8 md:py-10">
+    <div className={pageClass}>
       <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="eyebrow text-[var(--accent)]">Statistiques</p>

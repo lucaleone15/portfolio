@@ -49,6 +49,9 @@ export function Pill({ children, tone = 'muted' }: { children: ReactNode; tone?:
 export const fieldClass =
   'w-full min-h-11 rounded-xl border border-[var(--color-border)] dark:border-white/10 bg-white dark:bg-white/[0.04] px-3.5 py-2.5 text-base text-neutral-900 dark:text-white placeholder:text-neutral-400 outline-none transition focus:border-[var(--accent)] focus:ring-4 focus:ring-[rgba(var(--accent-rgb),0.15)]';
 
+/** Every atelier page's frame: same width and margins, so switching tabs never shifts the layout */
+export const pageClass = 'mx-auto w-full max-w-6xl px-4 py-6 md:px-8 md:py-8';
+
 export const labelClass = 'mb-1.5 block text-[11px] font-bold uppercase tracking-[0.14em] text-neutral-500 dark:text-[#A1A1AA]';
 
 
