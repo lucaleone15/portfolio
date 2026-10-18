@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import '@fontsource-variable/plus-jakarta-sans';
 import '@fontsource-variable/syne';
 import '../index.css';
+import './admin.css';
 import { AdminApp } from './AdminApp';
 
 // Light / dark follows the system (no inline script: the site's CSP allows none here)

@@ -170,7 +170,7 @@ export function StructureView({
   );
 }
 
-function Panel({ project, lang, selection, onEdit, onSelect }: { project: StoredProject; lang: Language; selection: string; onEdit: (path: string, v: unknown) => void; onSelect: (p: string) => void }) {
+export function Panel({ project, lang, selection, onEdit, onSelect }: { project: StoredProject; lang: Language; selection: string; onEdit: (path: string, v: unknown) => void; onSelect: (p: string) => void }) {
   const group = GROUPS.find((g) => g.id === selection);
   const block = /^study\.sections\.(\d+)\.content\.(\d+)$/.exec(selection);
   const section = /^study\.sections\.(\d+)$/.exec(selection);

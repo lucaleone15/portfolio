@@ -8,5 +8,6 @@ export default defineConfig({
     environment: 'node',
     environmentMatchGlobs: [['tests/admin/**', 'jsdom']],
     globals: true,
+    setupFiles: ['tests/setup.ts'],
   },
 });

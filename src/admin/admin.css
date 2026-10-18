@@ -1,0 +1,15 @@
+/* Admin preview (Page mode, src/admin/page/PageView.tsx): what can be clicked to edit */
+.admin-preview [data-edit] {
+  cursor: text;
+  border-radius: 6px;
+  transition: box-shadow 0.15s;
+}
+.admin-preview [data-edit]:hover {
+  box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.45);
+}
+.admin-preview .admin-editable {
+  cursor: pointer;
+}
+.admin-preview .admin-flash {
+  box-shadow: 0 0 0 3px var(--accent);
+}

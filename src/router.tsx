@@ -278,6 +278,15 @@ export function RouterProvider({ initialUrl, children }: { initialUrl?: string; 
   return <RouterContext.Provider value={value}>{children}</RouterContext.Provider>;
 }
 
+/** A fixed page with no history and no navigation: the admin's preview of a page */
+export function StaticRouterProvider({ url, children }: { url: string; children: ReactNode }) {
+  const value = useMemo<RouterContextValue>(
+    () => ({ route: parsePath(new URL(url, 'https://luca-leone.ch').pathname), hash: '', navigate: () => {}, syncPath: () => {} }),
+    [url],
+  );
+  return <RouterContext.Provider value={value}>{children}</RouterContext.Provider>;
+}
+
 export function useRouter(): RouterContextValue {
   const ctx = useContext(RouterContext);
   if (!ctx) throw new Error('useRouter must be used within a RouterProvider');

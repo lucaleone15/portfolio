@@ -116,4 +116,11 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   );
 };
 
+/** A fixed language with no router behind it: the admin's preview */
+export const StaticLanguageProvider: React.FC<{ lang: Language; children: React.ReactNode }> = ({ lang, children }) => (
+  <LanguageContext.Provider value={{ lang, setLang: () => {}, t: (key: string) => (translations[lang] as Record<string, string>)[key] || key }}>
+    {children}
+  </LanguageContext.Provider>
+);
+
 export const useLanguage = () => useContext(LanguageContext);

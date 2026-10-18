@@ -1,14 +1,17 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { Language } from '../../types';
 import { projectRef } from '../../content/pages';
 import type { StoredProject } from '../../content/schema';
 import { upload } from '../api';
 import { MediaContext, type Media } from '../fields/FieldEditor';
 import { setAt } from '../fields/schemaWalk';
-import { StructureView, selectionFor } from '../structure/StructureView';
+import { Panel, StructureView, selectionFor } from '../structure/StructureView';
+import { BLOCK_TYPES, emptyBlock } from '../structure/blockTemplates';
+import { PageView } from '../page/PageView';
+import type { Block } from '../../content/schema';
 import { useDraftClient, useDraftState, useStaged } from '../DraftContext';
 import { adminNavigate } from '../nav';
-import { Button } from '../ui';
+import { Button, Dialog } from '../ui';
 
 export type Mode = 'page' | 'structure';
 
@@ -106,9 +109,30 @@ export function ProjectEditor({ id, query }: { key?: string; id: string; query: 
     [preview, addStaged, folder],
   );
 
+  const [drawer, setDrawer] = useState(false);
+  const [inserting, setInserting] = useState<{ section: number; at: number } | null>(null);
+
   useEffect(() => {
     if (query.get('path')) setSelection(selectionFor(query.get('path')!));
   }, [query]);
+
+  // Back in Page mode, the part selected in Structure scrolls into view and flashes once
+  useEffect(() => {
+    if (mode !== 'page') return;
+    const el = document.querySelector<HTMLElement>(`.admin-preview [data-edit="${CSS.escape(selection)}"], .admin-preview [data-edit^="${CSS.escape(selection)}."]`);
+    if (!el) return;
+    el.scrollIntoView({ block: 'center' });
+    el.classList.add('admin-flash');
+    const t = setTimeout(() => el.classList.remove('admin-flash'), 1200);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode]);
+
+  const onOpen = useCallback((path: string) => {
+    setSelection(selectionFor(path));
+    setDrawer(true);
+  }, []);
+  const onInsert = useCallback((section: number, at: number) => setInserting({ section, at }), []);
 
   if (!state.loaded) return <p className="px-4 py-10 text-sm text-neutral-500 md:px-8">Chargement…</p>;
   if (!project) {
@@ -123,6 +147,15 @@ export function ProjectEditor({ id, query }: { key?: string; id: string; query: 
   }
 
   const edit = (path: string, value: unknown) => client.update(projectRef(id), (draft) => setAt(draft, path, value));
+  const insert = (type: Block['type']) => {
+    if (!inserting) return;
+    const { section, at } = inserting;
+    const blocks = [...project.study.sections[section].content];
+    blocks.splice(at, 0, emptyBlock(type));
+    edit(`study.sections.${section}.content`, blocks);
+    setInserting(null);
+    onOpen(`study.sections.${section}.content.${at}`);
+  };
 
   return (
     <MediaContext.Provider value={media}>
@@ -132,8 +165,37 @@ export function ProjectEditor({ id, query }: { key?: string; id: string; query: 
         {mode === 'structure' ? (
           <StructureView project={project} lang={lang} selection={selection} onSelect={setSelection} onEdit={edit} />
         ) : (
-          <p className="text-sm text-neutral-500">Mode Page : à venir.</p>
+          <>
+            <div className="mb-4 flex flex-wrap gap-2">
+              {[['carte', 'Carte de l’accueil'], ['seo', 'Référencement']].map(([g, label]) => (
+                <Button key={g} onClick={() => onOpen(g)}>
+                  {label}
+                </Button>
+              ))}
+              <p className="ml-auto self-center text-xs text-neutral-500 dark:text-[#A1A1AA]">Clique sur un texte pour l’écrire, sur un bloc pour le régler.</p>
+            </div>
+            <PageView project={project} content={state.content} lang={lang} preview={preview} onEdit={edit} onOpen={onOpen} onInsert={onInsert} />
+          </>
         )}
+        {mode === 'page' && drawer && (
+          <div className="fixed inset-0 z-40 flex justify-end bg-black/20 backdrop-blur-[1px]" onClick={(e) => e.target === e.currentTarget && setDrawer(false)}>
+            <aside className="h-full w-full overflow-y-auto bg-[var(--color-paper)] px-5 pb-24 pt-5 shadow-2xl dark:bg-[#0F0F12] sm:max-w-xl sm:px-8">
+              <button type="button" onClick={() => setDrawer(false)} className="mb-4 min-h-11 font-syne text-sm font-bold text-[var(--accent)]">
+                Fermer ✕
+              </button>
+              <Panel project={project} lang={lang} selection={selection} onEdit={edit} onSelect={setSelection} />
+            </aside>
+          </div>
+        )}
+        <Dialog open={!!inserting} title="Ajouter un bloc" onClose={() => setInserting(null)}>
+          <div className="grid grid-cols-2 gap-2">
+            {BLOCK_TYPES.map((b) => (
+              <Button key={b.type} onClick={() => insert(b.type)} className="justify-start">
+                {b.label}
+              </Button>
+            ))}
+          </div>
+        </Dialog>
       </div>
     </MediaContext.Provider>
   );

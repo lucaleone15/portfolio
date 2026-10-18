@@ -10,6 +10,7 @@ import { imageSrcSet } from '../data/images';
 import { PROJECT_KIND_LABEL } from '../data/portfolioData';
 import { projectMediaTransition } from '../viewTransitions';
 import type { CaseBlock, CaseFigure, CaseImage, CaseStep, CaseStudy as CaseStudyData } from '../data/caseStudies/types';
+import { EditSlot, EditWrap, useEditAttrs } from '../content/edit';
 
 /**
  * Case study page told as a scroll story. One template for every project: the content
@@ -626,6 +627,8 @@ function Hero({ project, study }: { project: Project; study: CaseStudyData }) {
 
 export function CaseStudy({ project, study }: { project: Project; study: CaseStudyData; key?: string }) {
   const { lang } = useLanguage();
+  // Admin preview only (Page mode): data-edit paths on what can be edited in place
+  const edit = useEditAttrs();
   const newTab = lang === 'fr' ? '(nouvel onglet)' : '(opens in a new tab)';
   const images = useMemo(() => caseImages(project, study), [project, study]);
   return (
@@ -645,20 +648,21 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
               {PROJECT_KIND_LABEL[project.kind][lang]}
             </span>
           </div>
-          <p className="mt-4 eyebrow sm:text-sm" style={{ color: 'var(--pa-text)' }}>
+          <p {...edit('study.kicker')} className="mt-4 eyebrow sm:text-sm" style={{ color: 'var(--pa-text)' }}>
             {study.kicker}
           </p>
-          <h1 className="mt-4 text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.02] text-neutral-900 dark:text-white">
+          <h1 {...edit('study.title')} className="mt-4 text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.02] text-neutral-900 dark:text-white">
             {study.title}
           </h1>
-          <p className="mt-6 max-w-4xl font-serif text-2xl sm:text-3xl lg:text-4xl font-bold leading-[1.2] tracking-tight text-neutral-900 dark:text-white">
+          <p {...edit('study.hook')} className="mt-6 max-w-4xl font-serif text-2xl sm:text-3xl lg:text-4xl font-bold leading-[1.2] tracking-tight text-neutral-900 dark:text-white">
             {study.hook}
           </p>
-          <p className="mt-5 max-w-3xl text-lg sm:text-xl leading-relaxed text-neutral-600 dark:text-[#A1A1AA]">{study.intro}</p>
+          <p {...edit('study.intro')} className="mt-5 max-w-3xl text-lg sm:text-xl leading-relaxed text-neutral-600 dark:text-[#A1A1AA]">{study.intro}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             {study.links?.map((link, i) => (
               <a
                 key={link.href}
+                {...edit(`study.links.${i}.label`)}
                 href={link.href}
                 target="_blank"
                 rel="noopener"
@@ -677,10 +681,10 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
 
         <Reveal delay={0.1}>
           <dl className="mt-12 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-black/10 dark:border-white/10 pt-8 md:grid-cols-3 lg:grid-cols-6">
-            {study.meta.map((m) => (
+            {study.meta.map((m, i) => (
               <div key={m.label}>
-                <dt className="eyebrow text-neutral-500 dark:text-[#A1A1AA]">{m.label}</dt>
-                <dd className="mt-2 text-sm font-semibold leading-snug text-neutral-900 dark:text-white">{m.value}</dd>
+                <dt {...edit(`study.meta.${i}.label`)} className="eyebrow text-neutral-500 dark:text-[#A1A1AA]">{m.label}</dt>
+                <dd {...edit(`study.meta.${i}.value`)} className="mt-2 text-sm font-semibold leading-snug text-neutral-900 dark:text-white">{m.value}</dd>
               </div>
             ))}
           </dl>
@@ -689,6 +693,7 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
 
       {/* Same view-transition name as the project card: the card image morphs into this one */}
       <div
+        {...edit(study.hero ? 'study.hero' : 'imageUrl')}
         style={projectMediaTransition(project.id)}
         className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl sm:rounded-3xl bg-neutral-200 dark:bg-[#141418] shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
       >
@@ -699,8 +704,8 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
       <section aria-label={lang === 'fr' ? 'En bref' : 'In short'} className="mt-12 sm:mt-16 grid gap-px overflow-hidden rounded-2xl bg-black/[0.06] dark:bg-white/[0.08] md:grid-cols-3">
         {study.brief.map((b, i) => (
           <Reveal key={b.label} delay={i * 0.08} className="bg-[#F9F9FB] dark:bg-[#0A0A0C] p-6 sm:p-8">
-            <p className="eyebrow" style={{ color: 'var(--pa-text)' }}>{b.label}</p>
-            <p className="mt-3 text-lg font-semibold leading-snug text-neutral-900 dark:text-white">{b.text}</p>
+            <p {...edit(`study.brief.${i}.label`)} className="eyebrow" style={{ color: 'var(--pa-text)' }}>{b.label}</p>
+            <p {...edit(`study.brief.${i}.text`)} className="mt-3 text-lg font-semibold leading-snug text-neutral-900 dark:text-white">{b.text}</p>
           </Reveal>
         ))}
       </section>
@@ -722,21 +727,27 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
               <span className="index-number shrink-0 text-2xl sm:text-4xl text-neutral-500 dark:text-white/40" aria-hidden="true">
                 {String(s + 1).padStart(2, '0')}
               </span>
-              <h2 id={`${section.id}-title`} className="max-w-4xl text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.08] text-neutral-900 dark:text-white">
+              <h2 {...edit(`study.sections.${s}.title`)} id={`${section.id}-title`} className="max-w-4xl text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.08] text-neutral-900 dark:text-white">
                 {section.title}
               </h2>
             </div>
           </Reveal>
           <div className="mt-8 space-y-6">
-            {section.content.map((item, i) =>
+            {section.content.map((item, i) => [
+              <EditSlot key={`slot-${i}`} section={s} at={i} />,
               typeof item === 'string' ? (
-                <Reveal key={i}>
-                  <Prose text={item} />
-                </Reveal>
+                <EditWrap key={i} path={`study.sections.${s}.content.${i}.text`}>
+                  <Reveal>
+                    <Prose text={item} />
+                  </Reveal>
+                </EditWrap>
               ) : (
-                <Block key={i} block={item} />
+                <EditWrap key={i} path={`study.sections.${s}.content.${i}`}>
+                  <Block block={item} />
+                </EditWrap>
               ),
-            )}
+            ])}
+            <EditSlot section={s} at={section.content.length} />
           </div>
         </section>
       ))}
@@ -747,14 +758,14 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
           {lang === 'fr' ? 'Crédits' : 'Credits'}
         </h2>
         <ul className="mt-5 grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
-          {study.credits.map((c) => (
+          {study.credits.map((c, i) => (
             <li key={c.name} className="text-sm">
               <span className="font-bold text-neutral-900 dark:text-white">{c.name}</span>
-              <span className="text-neutral-600 dark:text-[#A1A1AA]"> · {c.role}</span>
+              <span {...edit(`study.credits.${i}.role`)} className="text-neutral-600 dark:text-[#A1A1AA]"> · {c.role}</span>
             </li>
           ))}
         </ul>
-        {study.creditsNote && <p className="mt-6 text-sm text-neutral-600 dark:text-[#A1A1AA]">{study.creditsNote}</p>}
+        {study.creditsNote && <p {...edit('study.creditsNote')} className="mt-6 text-sm text-neutral-600 dark:text-[#A1A1AA]">{study.creditsNote}</p>}
       </section>
     </article>
     </LightboxProvider>
