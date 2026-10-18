@@ -7,6 +7,7 @@ import { createContactHandler } from './contact';
 import { createAnalyticsHandler } from './analytics';
 import { createPodiumHandler } from './podium';
 import { canonicalPagePath, loadRedirects } from './canonical';
+import { createAdminRoutes } from './admin/routes';
 
 /**
  * Production server (replaces `vite preview`, which Vite says isn't meant for production).
@@ -59,7 +60,7 @@ const MIME: Record<string, string> = {
 const COMPRESSIBLE = new Set(['.html', '.js', '.mjs', '.css', '.json', '.webmanifest', '.xml', '.txt', '.svg']);
 
 // CSP: allow the inline theme script in index.html by its hash (computed from the build)
-const inlineScriptHashes = (() => {
+const computeInlineScriptHashes = () => {
   try {
     const html = fs.readFileSync(path.join(DIST, 'index.html'), 'utf8');
     return [...html.matchAll(/<script(?![^>]*\bsrc=)(?![^>]*application\/ld\+json)[^>]*>([\s\S]*?)<\/script>/g)].map(
@@ -68,9 +69,11 @@ const inlineScriptHashes = (() => {
   } catch {
     return [];
   }
-})();
+};
 
-const SECURITY_HEADERS: Record<string, string> = {
+// Recomputed after a publish (reloadDist): the new build's index.html may differ
+let inlineScriptHashes = computeInlineScriptHashes();
+const securityHeaders = (): Record<string, string> => ({
   'Content-Security-Policy': [
     "default-src 'self'",
     `script-src 'self' ${inlineScriptHashes.join(' ')}`.trim(),
@@ -89,7 +92,8 @@ const SECURITY_HEADERS: Record<string, string> = {
   'X-Frame-Options': 'DENY',
   'Cross-Origin-Opener-Policy': 'same-origin',
   'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
-};
+});
+let SECURITY_HEADERS = securityHeaders();
 
 const compressedCache = new Map<string, Buffer>();
 
@@ -187,11 +191,33 @@ function send(req: http.IncomingMessage, res: http.ServerResponse, file: string,
 
 let redirects = loadRedirects(ROOT);
 
+/** After a publish swapped dist/: forget cached files, re-read the CSP hashes and the redirects */
+function reloadDist() {
+  compressedCache.clear();
+  inlineScriptHashes = computeInlineScriptHashes();
+  SECURITY_HEADERS = securityHeaders();
+  redirects = loadRedirects(ROOT);
+}
+
+/** The site's 404 page (the English one under /en/), with a real 404 status */
+function sendNotFound(req: http.IncomingMessage, res: http.ServerResponse) {
+  const urlPath = new URL(req.url ?? '/', 'http://localhost').pathname;
+  const en = urlPath === '/en' || urlPath.startsWith('/en/');
+  send(req, res, path.join(DIST, en ? '404-en.html' : '404.html'), 404);
+}
+
 const contact = createContactHandler(env);
 // Statistics and podium scores; DATA_DIR can put them outside the site folder, out of reach of a deploy
 const dataDir = env.DATA_DIR ? path.resolve(env.DATA_DIR) : path.join(ROOT, '.data');
 const analytics = createAnalyticsHandler(env, dataDir);
 const podium = createPodiumHandler(dataDir);
+const admin = createAdminRoutes(env, {
+  dataDir,
+  repoRoot: ROOT,
+  distAdmin: path.join(ROOT, 'dist-admin'),
+  notFound: sendNotFound,
+  onPublished: reloadDist,
+});
 
 const server = http.createServer((req, res) => {
   for (const [name, value] of Object.entries(SECURITY_HEADERS)) res.setHeader(name, value);
@@ -206,6 +232,11 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // The admin (ADMIN_PATH) has its own addresses: none of the site's rules below apply to it
+  admin(req, res, () => site(req, res));
+});
+
+function site(req: http.IncomingMessage, res: http.ServerResponse) {
   // One URL per page (301, query kept): the other spellings of a page (x.html, x/index.html,
   // x/, /en) and renamed project URLs (old links, shared or indexed, keep working)
   if (req.method === 'GET' || req.method === 'HEAD') {
@@ -234,12 +265,11 @@ const server = http.createServer((req, res) => {
       res.end('Not found');
       return;
     }
-    const en = urlPath === '/en' || urlPath.startsWith('/en/');
-    send(req, res, path.join(DIST, en ? '404-en.html' : '404.html'), 404);
+    sendNotFound(req, res);
   };
 
   analytics(req, res, () => contact(req, res, () => podium(req, res, next404)));
-});
+}
 
 const port = Number(env.PORT || 3000);
 server.listen(port, '0.0.0.0', () => console.log(`luca-leone.ch → http://localhost:${port}`));

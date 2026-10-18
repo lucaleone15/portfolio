@@ -5,8 +5,10 @@ import {defineConfig, loadEnv, type Plugin} from 'vite';
 import {createContactHandler} from './server/contact';
 import {createAnalyticsHandler} from './server/analytics';
 import {createPodiumHandler} from './server/podium';
+import {createAdminRoutes} from './server/admin/routes';
 import {execSync} from 'node:child_process';
 import {readFileSync} from 'node:fs';
+import type {IncomingMessage, ServerResponse} from 'node:http';
 
 /**
  * The site's own endpoints during `npm run dev` / `vite preview` (production uses
@@ -16,7 +18,28 @@ function siteApi(env: Record<string, string>): Plugin {
   const contact = createContactHandler(env);
   const analytics = createAnalyticsHandler(env);
   const podium = createPodiumHandler();
-  const mount = (server: { middlewares: { use: (fn: never) => void } }) => {
+  const notFound = (_req: IncomingMessage, res: ServerResponse) => {
+    res.statusCode = 404;
+    res.end('Not found');
+  };
+  const mount = (server: { middlewares: { use: (fn: never) => void }; transformIndexHtml?: (url: string, html: string) => Promise<string> }) => {
+    // The admin under ADMIN_PATH (dev: admin.html straight from Vite; preview: dist-admin)
+    const admin = createAdminRoutes(env, {
+      dataDir: path.resolve(process.cwd(), env.DATA_DIR || '.data'),
+      repoRoot: process.cwd(),
+      distAdmin: path.resolve(process.cwd(), 'dist-admin'),
+      notFound,
+      onPublished: () => {},
+      servePage: server.transformIndexHtml
+        ? (req, res, withBase) => {
+            server.transformIndexHtml!(req.url ?? '/', withBase(readFileSync('admin.html', 'utf8'))).then((html) => {
+              res.setHeader('Content-Type', 'text/html; charset=utf-8');
+              res.end(html);
+            }, () => notFound(req, res));
+          }
+        : undefined,
+    });
+    server.middlewares.use(admin as never);
     server.middlewares.use(contact as never);
     server.middlewares.use(analytics as never);
     server.middlewares.use(podium as never);
