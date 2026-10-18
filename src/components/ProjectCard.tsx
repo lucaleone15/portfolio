@@ -8,6 +8,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { Link, projectPath } from '../router';
 import { projectAccentVars } from '../data/portfolioData';
 import { imageSrcSet } from '../data/images';
+import { useEditAttrs } from '../content/edit';
 import { projectMediaTransition } from '../viewTransitions';
 
 // Hover: the image leans toward the pointer (Apple TV poster style). The photo is never
@@ -93,6 +94,8 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   const { lang, t } = useLanguage();
+  // Admin preview only: what can be edited in place
+  const edit = useEditAttrs();
   const [isHovered, setIsHovered] = useState(false);
   const imageContainerRef = useRef<HTMLDivElement>(null);
   // Pointer position inside the image: motion values update the transform directly (no re-render per mousemove)
@@ -241,7 +244,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               the morphing wrapper: only the photo flies to the project page. */}
           {project.hook && (
             <div className="pointer-events-none absolute inset-0 z-10 flex items-end overflow-hidden rounded-2xl bg-gradient-to-t from-black/75 via-black/25 via-35% to-transparent to-60% p-4 sm:p-6">
-              <p className="max-w-[85%] font-serif text-xl sm:text-2xl lg:text-[1.7rem] font-extrabold leading-[1.1] tracking-tight text-white [text-wrap:balance]">
+              <p {...edit('card.hook')} className="max-w-[85%] font-serif text-xl sm:text-2xl lg:text-[1.7rem] font-extrabold leading-[1.1] tracking-tight text-white [text-wrap:balance]">
                 {project.hook}
               </p>
             </div>
@@ -250,6 +253,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           {/* My role on the project (the category only drives the filter) */}
           <div className="absolute top-3.5 left-3.5 z-20 max-w-[calc(100%-28px)]">
             <span
+              {...edit(project.badge !== undefined ? 'card.badge' : 'card.category')}
               className="font-syne h-7 px-3.5 rounded-full text-[11px] sm:text-xs font-extrabold inline-flex items-center tracking-wide truncate max-w-full shadow-[0_4px_12px_-2px_rgba(0,0,0,0.35)]"
               style={{ backgroundColor: 'var(--pa)', color: 'var(--pa-on)' }}
             >
@@ -286,7 +290,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0 flex-1">
               {/* The brand's logo in place of the name (the name stays in the DOM) */}
-              <h3 className="flex min-h-9 sm:min-h-10 items-center font-sans text-xl sm:text-2xl font-bold text-neutral-900 dark:text-white tracking-tight truncate leading-snug uppercase">
+              <h3 {...edit('name')} className="flex min-h-9 sm:min-h-10 items-center font-sans text-xl sm:text-2xl font-bold text-neutral-900 dark:text-white tracking-tight truncate leading-snug uppercase">
                 <ProjectLogo project={project} />
               </h3>
               {/* Date directly below title with project's own accent */}
@@ -297,7 +301,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 >
                   {project.year}
                 </span>
-                <span className="text-xs font-medium text-neutral-500 dark:text-[#A1A1AA] truncate">{project.subtitle}</span>
+                <span {...edit('card.subtitle')} className="text-xs font-medium text-neutral-500 dark:text-[#A1A1AA] truncate">{project.subtitle}</span>
               </div>
             </div>
 

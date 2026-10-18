@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { PublishPanel, type PublishApi } from '../../src/admin/publish/PublishPanel';
 import { realContent } from '../content/fixtures';
@@ -73,4 +74,32 @@ test('success shows it is live', async () => {
   renderPanel(fakeApi({ state: 'done', published: ['project:hug'] }));
   fireEvent.click(await screen.findByRole('button', { name: 'Publier quand même' }));
   expect(await screen.findByText('C’est en ligne.')).toBeTruthy();
+});
+
+test('a progress check that fails is retried instead of hanging on "running"', async () => {
+  const api = fakeApi({ state: 'done', published: ['project:hug'] });
+  const get = api.getPublish;
+  let failOnce = true;
+  api.getPublish = async () => {
+    if (api.calls.includes('start') && failOnce) {
+      failOnce = false;
+      throw new TypeError('Failed to fetch');
+    }
+    return get();
+  };
+  renderPanel(api);
+  fireEvent.click(await screen.findByRole('button', { name: 'Publier quand même' }));
+  expect(await screen.findByText('C’est en ligne.')).toBeTruthy();
+});
+
+test('the whole draft can be thrown away, after a confirmation', async () => {
+  const api = fakeApi({ state: 'done' });
+  const discarded: string[] = [];
+  api.discard = async () => void discarded.push('yes');
+  const confirm = vi.spyOn(window, 'confirm').mockReturnValue(true);
+  renderPanel(api);
+  fireEvent.click(await screen.findByRole('button', { name: 'Annuler toutes les modifications' }));
+  await waitFor(() => expect(discarded).toEqual(['yes']));
+  expect(confirm).toHaveBeenCalled();
+  confirm.mockRestore();
 });
