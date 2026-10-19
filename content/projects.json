@@ -5,9 +5,12 @@
     "oceansight",
     "etoile-blanche",
     "drivegear",
-    "f1-pitwall"
+    "f1-pitwall",
+    "test-publication"
   ],
-  "hidden": [],
+  "hidden": [
+    "test-publication"
+  ],
   "redirects": {
     "hug-sangsationnel": "hug"
   }
