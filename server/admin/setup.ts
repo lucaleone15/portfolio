@@ -2,6 +2,7 @@ import crypto from 'node:crypto';
 import readline from 'node:readline';
 import qrcode from 'qrcode-terminal';
 import { base32Encode, hashPassword } from './auth';
+import { maskedOutput } from './maskedOutput';
 
 /**
  * npm run admin:setup — prints the .env lines for the admin sign-in: the password's hash and a
@@ -12,10 +13,9 @@ function ask(question: string): Promise<string> {
   return new Promise((resolve) => {
     const rl = readline.createInterface({ input: process.stdin, output: process.stdout, terminal: true });
     // Don't echo what is typed
-    const write = (rl as unknown as { _writeToOutput: (s: string) => void })._writeToOutput;
-    (rl as unknown as { _writeToOutput: (s: string) => void })._writeToOutput = (s: string) => {
-      if (s.startsWith(question)) write.call(rl, s);
-    };
+    const hooks = rl as unknown as { _writeToOutput: (s: string) => void };
+    const write = hooks._writeToOutput.bind(rl);
+    hooks._writeToOutput = maskedOutput(question, write);
     rl.question(question, (answer) => {
       rl.close();
       process.stdout.write('\n');
