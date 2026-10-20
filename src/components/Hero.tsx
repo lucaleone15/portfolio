@@ -7,7 +7,7 @@ import { Link, sectionPath } from '../router';
 import { BACHELOR_TOPIC_INDEX, PRESELECT_TOPIC_EVENT } from './ContactSection';
 import { introPending, onIntroLifted } from './IntroCurtain';
 import { useSite } from '../content/ContentContext';
-import { useEditAttrs } from '../content/edit';
+import { useEditAttrs, useEditing } from '../content/edit';
 
 // What the ideas become. The longest line ("en contenus engageants.") is 11.6× the font size
 // (measured in the page), so the headline size is derived from the available width ÷ 11.8:
@@ -55,6 +55,7 @@ export function Hero() {
   const { hero } = useSite();
   // Admin preview only: what can be edited in place
   const edit = useEditAttrs();
+  const editing = useEditing();
   // Hidden while the intro curtain covers the page, revealed the moment it lifts (or at once
   // when the hero mounts later, e.g. coming back from a project page)
   const [ready, setReady] = useState(() => !introPending());
@@ -68,7 +69,7 @@ export function Hero() {
 
   return (
     <section
-      className="relative min-h-[90dvh] print:min-h-0 print:pt-6 print:gap-10 pt-24 sm:pt-32 pb-10 sm:pb-14 overflow-hidden flex flex-col justify-between bg-[#F9F9FB] dark:bg-[#0A0A0C] transition-colors duration-300"
+      className="relative md:min-h-[90dvh] print:min-h-0 print:pt-6 print:gap-10 pt-28 sm:pt-32 pb-12 sm:pb-14 overflow-hidden flex flex-col justify-center md:justify-between bg-[#F9F9FB] dark:bg-[#0A0A0C] transition-colors duration-300"
     >
       {/* Accent gradient + grain (same texture as the intro curtain) */}
       <NeonBackdrop />
@@ -77,10 +78,12 @@ export function Hero() {
         <motion.div {...reveal()} className="max-w-5xl space-y-6 sm:space-y-8">
           {/* The page's single <h1>: identity label + positioning statement. The name is visible
               in the logo, so it's only repeated for screen readers and search engines. */}
-          {/* Identity line (same style as the section labels, e.g. "Compétences") */}
-          <p {...edit('hero.eyebrow')} className="eyebrow sm:text-base text-[var(--accent)]" aria-hidden="true">
-            {hero.eyebrow}
-          </p>
+          {/* Optional line above the title (left out when empty; the atelier shows where it goes) */}
+          {(hero.eyebrow || editing) && (
+            <p {...edit('hero.eyebrow')} className="eyebrow sm:text-base text-[var(--accent)]" aria-hidden="true">
+              {hero.eyebrow || '(ligne au-dessus du titre)'}
+            </p>
+          )}
 
           <h1 className="font-normal">
             {/* Name, field and school stay in the h1 for search engines and screen readers */}
@@ -106,23 +109,25 @@ export function Hero() {
               {hero.lead}
             </p>
             {/* Availability, written as a plain sentence; the key words link to the form with the
-                "Bachelor thesis" topic preselected */}
-            <p {...edit('hero.availability')} className="text-neutral-900 dark:text-white">
-              {hero.availability.before}
-              <Link
-                {...edit('hero.availability.link')}
-                href={sectionPath(lang, 'contact')}
-                onClick={() => window.dispatchEvent(new CustomEvent(PRESELECT_TOPIC_EVENT, { detail: BACHELOR_TOPIC_INDEX }))}
-                className="pointer-events-auto whitespace-nowrap font-semibold underline decoration-[var(--accent)] decoration-2 underline-offset-[0.2em] hover:text-[var(--accent)] transition-colors"
-              >
-                {hero.availability.link}
-              </Link>
-              {hero.availability.after}
-            </p>
+                "Bachelor thesis" topic preselected. Left out when its link text is empty. */}
+            {(hero.availability.link || editing) && (
+              <p {...edit('hero.availability')} className="text-neutral-900 dark:text-white">
+                {hero.availability.before}
+                <Link
+                  {...edit('hero.availability.link')}
+                  href={sectionPath(lang, 'contact')}
+                  onClick={() => window.dispatchEvent(new CustomEvent(PRESELECT_TOPIC_EVENT, { detail: BACHELOR_TOPIC_INDEX }))}
+                  className="pointer-events-auto whitespace-nowrap font-semibold underline decoration-[var(--accent)] decoration-2 underline-offset-[0.2em] hover:text-[var(--accent)] transition-colors"
+                >
+                  {hero.availability.link || '(lien)'}
+                </Link>
+                {hero.availability.after}
+              </p>
+            )}
           </div>
 
           {/* CTAs (the content layer lets the pointer through to the backdrop; buttons opt back in) */}
-          <div className="pt-2 sm:pt-4 flex flex-wrap items-center gap-3.5 sm:gap-4 pointer-events-auto">
+          <div className="pt-2 sm:pt-4 grid grid-cols-1 gap-3 sm:flex sm:flex-wrap sm:items-center sm:gap-4 pointer-events-auto">
             <Link
               href={sectionPath(lang, 'projets')}
               className="font-syne py-4 px-8 sm:px-9 rounded-full bg-[var(--accent)] text-[var(--accent-contrast-text)] hover:opacity-90 text-sm sm:text-base font-bold transition duration-200 inline-flex items-center justify-center cursor-pointer shadow-[0_10px_30px_-10px_rgba(var(--accent-rgb),0.7)] active:scale-[0.97]"
@@ -140,7 +145,8 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* Scrolling tools logos marquee */}
+      {/* Scrolling tools logos marquee. Phones: the text and the band sit together, centred in
+          the screen, instead of the text at the top and the band at the bottom. */}
       <motion.div {...reveal(0.15)} className="relative z-10 w-full mt-6">
         <HeroBandeau />
       </motion.div>

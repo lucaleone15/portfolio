@@ -20,7 +20,8 @@ export function ProjectsSection() {
     ...uniqueCategories.map((cat) => ({ id: cat, label: cat }))
   ];
 
-  // Mobile stack: as the next card slides over, the covered one recedes (scale + dim).
+  // Mobile stack: as the next card slides over, the covered one recedes a little (scale only:
+  // what still shows of it stays fully readable).
   // GSAP is loaded on demand; desktop and reduced motion keep the plain grid.
   const gridRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -35,8 +36,7 @@ export function ProjectsSection() {
           const cards = gsap.utils.toArray<HTMLElement>('[data-stack-card]');
           cards.slice(0, -1).forEach((card, i) => {
             gsap.to(card.querySelector('[data-stack-inner]'), {
-              scale: 0.9,
-              opacity: 0.35,
+              scale: 0.94,
               ease: 'none',
               scrollTrigger: { trigger: cards[i + 1], start: 'top bottom', end: 'top 76px', scrub: true },
             });
@@ -117,8 +117,9 @@ export function ProjectsSection() {
           {filteredProjects.map((project, idx) => (
             <motion.div
               key={project.id}
-              initial={{ opacity: 0, y: 35, scale: 0.98 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              // Rises and fades in without scaling: scaled text renders soft while it moves
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{
                 duration: 0.5,
