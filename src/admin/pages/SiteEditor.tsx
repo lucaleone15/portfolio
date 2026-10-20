@@ -16,6 +16,7 @@ import { withPreviewSrcs } from '../page/PageView';
 import { EditorBar, type Mode } from './ProjectEditor';
 import { useDraftClient, useDraftState, useStaged } from '../DraftContext';
 import { HealthCard } from '../health/HealthCard';
+import { PersonalSharePreview } from '../health/SharePreview';
 import { siteHealth } from '../../content/health';
 import { pageClass } from '../ui';
 import { adminNavigate } from '../nav';
@@ -159,7 +160,7 @@ export function SiteEditor({ tab, query }: { key?: string; tab: SiteTab; query: 
               url: lang === 'fr' ? 'luca-leone.ch' : 'luca-leone.ch › en',
               description: fillTemplate(state.content.site.seo.home.description[lang], state.content, lang),
             }}
-            share={<img src="/og-image.jpg" alt="Image de partage de toutes les pages du site" className="w-full" />}
+            share={<PersonalSharePreview site={state.content.site} lang={lang} />}
           />
         )}
         <SiteEditorView tab={tab} mode={mode} lang={lang} content={mode === 'page' ? content : state.content} onChange={onChange} onOpen={setDrawer} />

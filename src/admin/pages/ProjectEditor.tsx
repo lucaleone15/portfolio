@@ -178,7 +178,7 @@ export function ProjectEditor({ id, query }: { key?: string; id: string; query: 
             url: lang === 'fr' ? `luca-leone.ch › projets › ${project.id}` : `luca-leone.ch › en › projects › ${project.id}`,
             description: project.seo.description[lang],
           }}
-          share={<SharePreview project={project} lang={lang} preview={preview} />}
+          share={<SharePreview project={project} lang={lang} site={state.content.site} preview={preview} />}
         />
         {mode === 'structure' ? (
           <StructureView project={project} lang={lang} selection={selection} onSelect={setSelection} onEdit={edit} />
