@@ -5,7 +5,7 @@ import { CONTENT } from './content/load';
 import { projectSeo, toCaseStudy, toProject, toSite, visibleProjects } from './content/localize';
 import { SITE_PAGES } from './content/sitePages';
 import { fillTemplate } from './content/derived';
-import { projectShareImage, SHARE_SIZE } from './content/og';
+import { personalShareImage, projectShareImage, SHARE_SIZE } from './content/og';
 import { homePath, pathFor, privacyPath, projectPath, Route, SECTION_IDS, SectionId, sectionPath } from './router';
 
 /**
@@ -17,8 +17,8 @@ export const SITE_URL = 'https://luca-leone.ch';
 const PERSON_ID = `${SITE_URL}/#person`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 const PORTRAIT_URL = `${SITE_URL}/photo.jpeg`;
-/** Social preview (1200×630): wordmark on the site's gradient background */
-const OG_IMAGE_URL = `${SITE_URL}/og-image.jpg`;
+/** Every page but the projects: the personal share image of that language (src/content/og.ts) */
+const ogImageUrl = (lang: Language) => `${SITE_URL}${personalShareImage(CONTENT.site, lang)}`;
 
 const abs = (path: string) => `${SITE_URL}${path}`;
 
@@ -186,7 +186,7 @@ function homeHead(lang: Language): HeadData {
     canonical: url,
     alternates: alternatesFor({ name: 'home', lang }),
     ogType: 'profile',
-    image: OG_IMAGE_URL,
+    image: ogImageUrl(lang),
     imageAlt: copy.ogAlt,
     jsonLd: {
       '@context': 'https://schema.org',
@@ -293,7 +293,7 @@ function projectHead(lang: Language, slug: string): HeadData | null {
     alternates: alternatesFor({ name: 'project', lang, slug }),
     ogType: 'article',
     // The project's own share card (scripts/share-images.mjs), 1200×630
-    image: CONTENT.projects[slug] ? abs(projectShareImage(CONTENT.projects[slug], lang)) : images[0],
+    image: CONTENT.projects[slug] ? abs(projectShareImage(CONTENT.projects[slug], lang, CONTENT.site)) : images[0],
     imageAlt: `${project.name} – ${project.subtitle}`,
     jsonLd: {
       '@context': 'https://schema.org',
@@ -353,7 +353,7 @@ function privacyHead(lang: Language): HeadData {
     canonical: url,
     alternates: alternatesFor({ name: 'privacy', lang }),
     ogType: 'profile',
-    image: OG_IMAGE_URL,
+    image: ogImageUrl(lang),
     imageAlt: 'Luca Leone',
     // Useful to visitors, not a page anyone should land on from a search
     noindex: true,
@@ -390,7 +390,7 @@ function hiddenHead(lang: Language, name: 'stand' | 'podium'): HeadData {
     canonical: url,
     alternates: alternatesFor({ name, lang }),
     ogType: 'profile',
-    image: OG_IMAGE_URL,
+    image: ogImageUrl(lang),
     imageAlt: 'Luca Leone',
     jsonLd: null,
     noindex: true,
@@ -405,7 +405,7 @@ function notFoundHead(lang: Language): HeadData {
     canonical: abs(homePath(lang)),
     alternates: [],
     ogType: 'profile',
-    image: OG_IMAGE_URL,
+    image: ogImageUrl(lang),
     imageAlt: 'Luca Leone',
     jsonLd: null,
     noindex: true,
@@ -457,7 +457,7 @@ export function renderHeadTags(head: HeadData): string {
     `<meta property="og:locale" content="${ogLocale}" />`,
     `<meta property="og:locale:alternate" content="${ogLocaleAlt}" />`,
     `<meta property="og:image" content="${head.image}" />`,
-    ...(head.image === OG_IMAGE_URL || head.image.includes('/og/')
+    ...(head.image.includes('/og/')
       ? [`<meta property="og:image:width" content="${SHARE_SIZE.width}" />`, `<meta property="og:image:height" content="${SHARE_SIZE.height}" />`]
       : []),
     `<meta property="og:image:alt" content="${escapeAttr(head.imageAlt)}" />`,

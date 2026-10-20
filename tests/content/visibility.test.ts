@@ -46,3 +46,9 @@ test('a project page announces its own share image with its size', async () => {
   expect(tags).toContain('<meta property="og:image:width" content="1200" />');
   expect(tags).toContain('<meta property="og:image:height" content="630" />');
 });
+
+test('the other pages announce the personal share image of their language', async () => {
+  const { getHeadData, renderHeadTags } = await import('../../src/seo');
+  expect(renderHeadTags(getHeadData({ name: 'home', lang: 'en' }))).toMatch(/og:image" content="https:\/\/luca-leone\.ch\/og\/luca-leone-en-[0-9a-f]{8}\.jpg"/);
+  expect(renderHeadTags(getHeadData({ name: 'home', lang: 'fr', section: 'a-propos' }))).toMatch(/og:image" content="https:\/\/luca-leone\.ch\/og\/luca-leone-fr-[0-9a-f]{8}\.jpg"/);
+});
