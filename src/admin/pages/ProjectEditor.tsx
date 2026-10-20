@@ -8,6 +8,9 @@ import { setAt } from '../fields/schemaWalk';
 import { Panel, StructureView, selectionFor } from '../structure/StructureView';
 import { BLOCK_TYPES, emptyBlock } from '../structure/blockTemplates';
 import { PageView } from '../page/PageView';
+import { HealthCard } from '../health/HealthCard';
+import { SharePreview } from '../health/SharePreview';
+import { projectHealth } from '../../content/health';
 import type { Block } from '../../content/schema';
 import { useDraftClient, useDraftState, useStaged } from '../DraftContext';
 import { adminNavigate } from '../nav';
@@ -162,6 +165,21 @@ export function ProjectEditor({ id, query }: { key?: string; id: string; query: 
       <div className={pageClass}>
         <EditorBar title={project.name} back={() => adminNavigate('/')} mode={mode} lang={lang} onMode={setMode} onLang={setLang} />
         <WritingRules />
+        <HealthCard
+          health={projectHealth(project, lang, state.content)}
+          lang={lang}
+          onGo={(path) => {
+            setMode('structure');
+            setSelection(selectionFor(path));
+            setTimeout(() => document.querySelector(`[data-path="${path}"]`)?.scrollIntoView({ block: 'center' }), 80);
+          }}
+          google={{
+            title: project.seo.title[lang],
+            url: lang === 'fr' ? `luca-leone.ch › projets › ${project.id}` : `luca-leone.ch › en › projects › ${project.id}`,
+            description: project.seo.description[lang],
+          }}
+          share={<SharePreview project={project} lang={lang} preview={preview} />}
+        />
         {mode === 'structure' ? (
           <StructureView project={project} lang={lang} selection={selection} onSelect={setSelection} onEdit={edit} />
         ) : (

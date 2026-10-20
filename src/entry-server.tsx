@@ -16,4 +16,5 @@ export { USER_INFO } from './data/portfolioData';
 export { pathFor } from './router';
 export { CONTENT } from './content/load';
 export { checkContent } from './content/check';
+export { generateShareImages } from './content/shareImages';
 export { DERIVED_FILES, fillDerivedFile } from './content/derived';

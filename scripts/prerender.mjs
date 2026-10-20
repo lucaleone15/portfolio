@@ -12,7 +12,7 @@ const root = process.cwd();
 const dist = path.join(root, process.env.BUILD_OUT_DIR || 'dist');
 const ssrEntry = path.join(root, 'dist-ssr', 'entry-server.js');
 
-const { render, getAllRoutes, getHeadData, renderHeadTags, renderSitemap, projectImagePaths, pathFor, USER_INFO, CONTENT, DERIVED_FILES, fillDerivedFile, checkContent } = await import(
+const { render, getAllRoutes, getHeadData, renderHeadTags, renderSitemap, projectImagePaths, pathFor, USER_INFO, CONTENT, DERIVED_FILES, fillDerivedFile, checkContent, generateShareImages } = await import(
   pathToFileURL(ssrEntry).href
 );
 
@@ -109,5 +109,9 @@ for (const name of DERIVED_FILES) {
   fs.writeFileSync(file, fillDerivedFile(name, fs.readFileSync(path.join(root, 'public', name), 'utf8'), CONTENT));
   console.log(`wrote ${name}`);
 }
+
+// Share images: one per project and language (src/content/shareImages.ts)
+const shareImages = await generateShareImages(CONTENT, { publicDir: path.join(root, 'public'), outDir: dist });
+console.log(`wrote ${shareImages.length} share images`);
 
 fs.rmSync(path.join(root, 'dist-ssr'), { recursive: true, force: true });

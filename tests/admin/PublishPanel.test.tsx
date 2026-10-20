@@ -115,3 +115,9 @@ test('a failed discard is reported, not swallowed', async () => {
   expect(await screen.findByText('Le brouillon n’a pas pu être annulé. Réessaie.')).toBeTruthy();
   confirm.mockRestore();
 });
+
+test('the health of each changed page is shown before publishing', async () => {
+  renderPanel(fakeApi({ state: 'done' }));
+  expect(await screen.findByLabelText(/Santé FR : \d+ sur 100/)).toBeTruthy();
+  expect(screen.getByLabelText(/Santé EN : \d+ sur 100/)).toBeTruthy();
+});
