@@ -8,7 +8,8 @@ import path from 'node:path';
  * policy (src/components/PrivacyPolicy.tsx).
  */
 
-export type MessageStatus = 'new' | 'read' | 'replied' | 'archived';
+/** 'spam': judged doubtful when it arrived (no notification email); one click puts it back */
+export type MessageStatus = 'new' | 'read' | 'replied' | 'archived' | 'spam';
 
 export interface Message {
   id: string;
@@ -25,7 +26,7 @@ export interface Message {
   emailed?: boolean;
 }
 
-export const MESSAGE_STATUSES: MessageStatus[] = ['new', 'read', 'replied', 'archived'];
+export const MESSAGE_STATUSES: MessageStatus[] = ['new', 'read', 'replied', 'archived', 'spam'];
 const RETENTION_MS = 365 * 86_400_000;
 /** A flood can't fill the disk: past this, the oldest messages go */
 const MAX_MESSAGES = 2000;
@@ -67,7 +68,7 @@ export function createMessageStore(dataDir: string, opts: { now?: () => number; 
   };
 
   return {
-    add(input: Omit<Message, 'id' | 'receivedAt' | 'status'>): Message {
+    add(input: Omit<Message, 'id' | 'receivedAt' | 'status'> & { status?: MessageStatus }): Message {
       const m: Message = { id: crypto.randomUUID(), receivedAt: new Date(now()).toISOString(), status: 'new', ...input };
       save([m, ...load()].sort((x, y) => y.receivedAt.localeCompare(x.receivedAt)).slice(0, max));
       return m;

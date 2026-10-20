@@ -32,7 +32,7 @@ test('the inbox: list with the unread count, change a status, delete — only wi
 
   expect((await call('PATCH', `messages/${m.id}`, { status: 'replied' })).status).toBe(200);
   expect(store.list()[0].status).toBe('replied');
-  expect((await call('PATCH', `messages/${m.id}`, { status: 'spam' })).status).toBe(422);
+  expect((await call('PATCH', `messages/${m.id}`, { status: 'pirate' })).status).toBe(422);
   expect((await call('PATCH', 'messages/nope', { status: 'read' })).status).toBe(404);
   expect((await call('DELETE', `messages/${m.id}`)).status).toBe(204);
   expect(store.list()).toEqual([]);

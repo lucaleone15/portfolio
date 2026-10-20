@@ -7,7 +7,7 @@ import { Button, Pill, pageClass } from '../ui';
  * "Répondre" opens the mail app (and marks it answered); archive, or delete for good.
  */
 
-export type MessageStatus = 'new' | 'read' | 'replied' | 'archived';
+export type MessageStatus = 'new' | 'read' | 'replied' | 'archived' | 'spam';
 export interface Message {
   id: string;
   receivedAt: string;
@@ -35,17 +35,19 @@ export const messagesApi: MessagesApi = {
 
 export const getUnread = () => api<{ unread: number }>('GET', 'messages/unread');
 
-type Tab = 'inbox' | 'unread' | 'archived';
+type Tab = 'inbox' | 'unread' | 'archived' | 'spam';
 const TABS: [Tab, string][] = [
   ['inbox', 'Boîte de réception'],
   ['unread', 'Non lus'],
   ['archived', 'Archivés'],
+  ['spam', 'Spam probable'],
 ];
 const STATUS_PILL: Record<MessageStatus, [string, 'accent' | 'muted' | 'warn'] | null> = {
   new: ['nouveau', 'accent'],
   read: null,
   replied: ['répondu', 'muted'],
   archived: ['archivé', 'muted'],
+  spam: ['spam probable', 'warn'],
 };
 
 const when = (iso: string) => {
@@ -91,7 +93,9 @@ export function MessagesView({ api: io, onUnread }: { api: MessagesApi; onUnread
   }, [reload]);
 
   const shown = useMemo(
-    () => (messages ?? []).filter((m) => (tab === 'archived' ? m.status === 'archived' : tab === 'unread' ? m.status === 'new' : m.status !== 'archived')),
+    () => (messages ?? []).filter((m) =>
+        tab === 'archived' ? m.status === 'archived' : tab === 'spam' ? m.status === 'spam' : tab === 'unread' ? m.status === 'new' : m.status !== 'archived' && m.status !== 'spam',
+      ),
     [messages, tab],
   );
   const open = messages?.find((m) => m.id === openId) ?? null;
@@ -114,9 +118,9 @@ export function MessagesView({ api: io, onUnread }: { api: MessagesApi; onUnread
   if (error) return <p className="text-sm text-[var(--accent)]">Impossible de charger les messages.</p>;
   if (!messages) return <p className="text-sm text-neutral-500">Chargement…</p>;
 
-  const count = (t: Tab) => (t === 'unread' ? messages.filter((m) => m.status === 'new').length : 0);
+  const count = (t: Tab) => (t === 'unread' || t === 'spam' ? messages.filter((m) => m.status === (t === 'unread' ? 'new' : 'spam')).length : 0);
   // A message in the last 30 days whose notification email didn't go out: the mail settings need a look
-  const mailBroken = messages.some((m) => m.emailed === false && Date.now() - Date.parse(m.receivedAt) < 30 * 86_400_000);
+  const mailBroken = messages.some((m) => m.emailed === false && m.status !== 'spam' && Date.now() - Date.parse(m.receivedAt) < 30 * 86_400_000);
 
   return (
     <>
@@ -197,7 +201,7 @@ export function MessagesView({ api: io, onUnread }: { api: MessagesApi; onUnread
           </div>
           <p className="mt-2 text-xs text-neutral-500 dark:text-[#A1A1AA]">
             {fullDate(open.receivedAt)} · {open.lang === 'en' ? 'en anglais' : 'en français'} · depuis {open.page}
-            {open.emailed === false && ' · l’email de notification n’est pas parti'}
+            {open.status === 'spam' ? ' · classé spam probable à l’arrivée, aucun email envoyé' : open.emailed === false && ' · l’email de notification n’est pas parti'}
           </p>
           <p className="mt-6 whitespace-pre-wrap text-base leading-relaxed">{open.message}</p>
           <div className="mt-8 flex flex-wrap gap-2">
@@ -208,12 +212,18 @@ export function MessagesView({ api: io, onUnread }: { api: MessagesApi; onUnread
             >
               Répondre
             </a>
-            {open.status === 'archived' ? (
+            {open.status === 'spam' && <Button onClick={() => void setStatus(open, 'new')}>Pas un spam</Button>}
+            {open.status === 'spam' ? null : open.status === 'archived' ? (
               <Button onClick={() => void setStatus(open, 'read')}>Désarchiver</Button>
             ) : (
               <Button onClick={() => (void setStatus(open, 'archived'), setOpenId(null))}>Archiver</Button>
             )}
-            {open.status !== 'new' && <Button onClick={() => void setStatus(open, 'new')}>Marquer non lu</Button>}
+            {open.status !== 'new' && open.status !== 'spam' && <Button onClick={() => void setStatus(open, 'new')}>Marquer non lu</Button>}
+            {open.status !== 'spam' && open.status !== 'new' && open.status !== 'replied' && (
+              <Button variant="quiet" onClick={() => (void setStatus(open, 'spam'), setOpenId(null))}>
+                C’est un spam
+              </Button>
+            )}
             <Button
               variant="danger"
               onClick={async () => {
