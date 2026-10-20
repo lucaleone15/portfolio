@@ -232,7 +232,7 @@ export function NotFound() {
 
       <div className="relative max-w-7xl mx-auto px-6 sm:px-10 w-full pt-32 pb-0 lg:py-32">
         <div className="max-w-xl">
-          <p className="eyebrow sm:text-sm text-[var(--accent)] mb-6">{fr ? 'Erreur 404 · Sortie de piste' : 'Error 404 · Off track'}</p>
+          <p className="eyebrow sm:text-base text-[var(--accent)] mb-6">{fr ? 'Erreur 404 · Sortie de piste' : 'Error 404 · Off track'}</p>
           <h1 className="font-serif text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-[-0.035em] leading-[1.02] text-neutral-900 dark:text-white mb-6">
             {fr ? 'Sortie de piste' : 'Off track'}
             <span className="text-[var(--accent)]">.</span>

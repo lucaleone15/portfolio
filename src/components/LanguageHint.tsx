@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { Cancel01Icon } from '@hugeicons/core-free-icons';
+import { ArrowRight01Icon, Cancel01Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
 import { useLanguage } from '../context/LanguageContext';
 import { alternatePath, Link, useRouter } from '../router';
@@ -105,9 +105,7 @@ export function LanguageHint() {
             className="font-syne group inline-flex items-center gap-1.5 min-h-8 text-xs sm:text-sm font-bold"
           >
             {copy.text}
-            <span aria-hidden="true" className="text-[var(--accent)] transition-transform duration-200 group-hover:translate-x-0.5">
-              →
-            </span>
+            <Icon icon={ArrowRight01Icon} className="w-4 h-4 text-[var(--accent)] transition-transform duration-200 group-hover:translate-x-0.5" />
           </Link>
           <button
             type="button"

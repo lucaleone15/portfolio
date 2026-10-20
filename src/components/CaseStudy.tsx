@@ -660,7 +660,7 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
               {PROJECT_KIND_LABEL[project.kind][lang]}
             </span>
           </div>
-          <p {...edit('study.kicker')} className="mt-4 eyebrow sm:text-sm" style={{ color: 'var(--pa-text)' }}>
+          <p {...edit('study.kicker')} className="mt-4 eyebrow sm:text-base" style={{ color: 'var(--pa-text)' }}>
             {study.kicker}
           </p>
           <h1 {...edit('study.title')} className="mt-4 text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.02] text-neutral-900 dark:text-white">

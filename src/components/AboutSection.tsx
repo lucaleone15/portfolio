@@ -150,14 +150,9 @@ export function AboutSection() {
             transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-7 space-y-6"
           >
-            <div>
-              <div className="eyebrow text-neutral-500 dark:text-[#A1A1AA] pb-2 border-b border-black/[0.08] dark:border-white/[0.08] mb-3">
-                <span>{lang === 'fr' ? 'Profil & Vision' : 'Profile & Vision'}</span>
-              </div>
-              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-neutral-900 dark:text-white tracking-tight">
-                Luca Leone
-              </h3>
-            </div>
+            <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-neutral-900 dark:text-white tracking-tight">
+              Luca Leone
+            </h3>
 
             {/* Bio: each word sharpens from faint to full as it scrolls through the reading zone */}
             <div {...edit('about.bio')} data-bio className="space-y-4">
@@ -175,41 +170,33 @@ export function AboutSection() {
 
             {/* Langues & Centres d'intérêt */}
             <div className="pt-4 border-t border-black/[0.08] dark:border-white/[0.08] grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {/* Langues: only language name by default, level revealed on hover */}
+              {/* Langues: plain rows (not pills: nothing here is clickable) */}
               <div className="space-y-3">
                 <div className="eyebrow text-neutral-500 dark:text-[#A1A1AA]">
                   <span>{t('about.languagesTitle')}</span>
                 </div>
-                <div className="flex flex-wrap gap-2 sm:gap-2.5">
+                <ul className="divide-y divide-black/[0.06] dark:divide-white/[0.06]">
                   {languages.map((item, idx) => (
-                    <div
-                      key={`lang-${idx}`}
-                      {...edit(`about.languages.${idx}`)}
-                      className="h-8 px-3.5 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-black font-syne text-xs font-bold inline-flex items-center gap-1.5 shadow-xs select-none"
-                    >
-                      <span {...edit(`about.languages.${idx}.name`)}>{item.name}</span>
-                      <span {...edit(`about.languages.${idx}.level`)} className="font-sans text-white/60 dark:text-black/60 font-medium">· {item.level}</span>
-                    </div>
+                    <li key={`lang-${idx}`} {...edit(`about.languages.${idx}`)} className="flex items-baseline justify-between gap-4 py-2 first:pt-0">
+                      <span {...edit(`about.languages.${idx}.name`)} className="text-base font-semibold text-neutral-900 dark:text-white">{item.name}</span>
+                      <span {...edit(`about.languages.${idx}.level`)} className="text-sm text-neutral-500 dark:text-[#A1A1AA]">{item.level}</span>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
 
-              {/* Passions */}
+              {/* Passions: the same plain rows as the languages */}
               <div className="space-y-3">
                 <div className="eyebrow text-neutral-500 dark:text-[#A1A1AA]">
                   <span>{t('about.passionsTitle')}</span>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <ul className="divide-y divide-black/[0.06] dark:divide-white/[0.06]">
                   {passions.map((item, idx) => (
-                    <span
-                      key={`passion-${idx}`}
-                      {...edit(`about.passions.${idx}`)}
-                      className="h-8 px-3.5 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-black font-syne text-xs font-bold inline-flex items-center shadow-xs select-none"
-                    >
+                    <li key={`passion-${idx}`} {...edit(`about.passions.${idx}`)} className="py-2 first:pt-0 text-base font-semibold text-neutral-900 dark:text-white">
                       {item}
-                    </span>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             </div>
           </motion.div>
@@ -226,9 +213,9 @@ export function AboutSection() {
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className="lg:col-span-6 space-y-6"
             >
-              <div className="eyebrow text-neutral-500 dark:text-[#A1A1AA] pb-3 border-b border-black/[0.08] dark:border-white/[0.08]">
-                <span>{t('about.experienceTitle')}</span>
-              </div>
+              <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-900 dark:text-white pb-3 border-b border-black/[0.08] dark:border-white/[0.08]">
+                {t('about.experienceTitle')}
+              </h3>
 
               <div data-timeline className="relative space-y-8 pl-8">
                 {/* Rail + progress drawn by the scroll */}
@@ -298,9 +285,9 @@ export function AboutSection() {
               transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               className="lg:col-span-6 space-y-6"
             >
-              <div className="eyebrow text-neutral-500 dark:text-[#A1A1AA] pb-3 border-b border-black/[0.08] dark:border-white/[0.08]">
-                <span>{t('about.educationTitle')}</span>
-              </div>
+              <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-900 dark:text-white pb-3 border-b border-black/[0.08] dark:border-white/[0.08]">
+                {t('about.educationTitle')}
+              </h3>
 
               <div data-timeline className="relative space-y-8 pl-8">
                 {/* Rail + progress drawn by the scroll */}
