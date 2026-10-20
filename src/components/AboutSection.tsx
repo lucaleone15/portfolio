@@ -6,10 +6,28 @@ import { useEditAttrs, useEditing } from '../content/edit';
 import { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
+/**
+ * A bio paragraph: each word its own span (they sharpen while read); "**…**" marks what stands
+ * out, in bold (see .bio-mark). Spaces stay plain text, so punctuation right after a marked
+ * phrase sticks to it.
+ */
+function bioWords(paragraph: string) {
+  const words = (text: string) => text.split(/(\s+)/).map((piece, i) => (!piece || /^\s+$/.test(piece) ? piece : <span key={i} data-word>{piece}</span>));
+  return paragraph.split(/\*\*(.+?)\*\*/g).map((text, i) =>
+    i % 2 ? (
+      <strong key={i} className="bio-mark">
+        {words(text)}
+      </strong>
+    ) : (
+      <span key={i}>{words(text)}</span>
+    ),
+  );
+}
+
 export function AboutSection() {
   const { lang, t } = useLanguage();
 
-  const { bio, education, experience, languages, passions } = useSite().about;
+  const { bio, quote, education, experience, languages, passions } = useSite().about;
   const contact = useContact();
   // Admin preview only: what can be edited in place
   const edit = useEditAttrs();
@@ -116,8 +134,10 @@ export function AboutSection() {
           </a>
         </motion.div>
 
-        {/* Top Block: Photo + Presentation/Profil side-by-side */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center pb-16 border-b border-black/[0.08] dark:border-white/[0.08]">
+        {/* Top Block: photo + quote, bio, languages side by side. On large screens the photo
+            stretches to the column's height: its top on the quote's line, its bottom on the
+            last row. */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 lg:items-stretch pb-16 border-b border-black/[0.08] dark:border-white/[0.08]">
           {/* Photo: clean, zero overlay or badges */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -126,9 +146,11 @@ export function AboutSection() {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 flex justify-center lg:justify-start"
           >
-            <div className="relative rounded-2xl overflow-hidden bg-neutral-200 dark:bg-[#141416] aspect-[4/5] max-w-sm sm:max-w-md w-full shadow-2xl">
-              {/* Full-resolution original (1684×2528): even zoomed ×1.6 on the face, the screen
-                  still gets real pixels (a 900px copy looked soft once zoomed) */}
+            <div className="relative rounded-2xl overflow-hidden bg-neutral-200 dark:bg-[#141416] aspect-[4/5] lg:aspect-auto max-w-sm sm:max-w-md lg:max-w-none w-full shadow-2xl">
+              {/* Full-resolution original (1684×2528), sized so the frame always shows the same
+                  band of it, from 10% to 70% of its height: room above the hair (which starts at
+                  ~16%), cut at the chest, never the hands. Height 1/0.6, shifted up 0.1/0.6.
+                  Small screens: a 4:5 frame; large ones: the text column's height. */}
               <img
                 src="/photo.webp"
                 alt="Portrait de Luca Leone - Étudiant en ingénierie des médias"
@@ -137,7 +159,7 @@ export function AboutSection() {
                 loading="lazy"
                 decoding="async"
                 referrerPolicy="no-referrer"
-                className="w-full h-full object-cover object-[center_14%] scale-[1.6] transition-transform duration-700 ease-out hover:scale-[1.64]"
+                className="absolute left-1/2 -translate-x-1/2 top-[-16.7%] h-[166.7%] w-auto max-w-none transition-transform duration-700 ease-out hover:scale-[1.03]"
               />
             </div>
           </motion.div>
@@ -150,19 +172,24 @@ export function AboutSection() {
             transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-7 space-y-6"
           >
-            <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-neutral-900 dark:text-white tracking-tight">
-              Luca Leone
-            </h3>
+            {/* A sentence of his own, in red between guillemets, in its own block between two
+                hairlines (left out when empty) */}
+            {(quote || editing) && (
+              <blockquote
+                {...edit('about.quote')}
+                className="py-6 border-y border-black/[0.08] dark:border-white/[0.08] text-2xl sm:text-3xl font-extrabold tracking-tight leading-[1.18] text-[var(--accent)]"
+              >
+                <span aria-hidden="true">{lang === 'fr' ? '«\u202f' : '“'}</span>
+                {quote || '(citation)'}
+                <span aria-hidden="true">{lang === 'fr' ? '\u202f»' : '”'}</span>
+              </blockquote>
+            )}
 
             {/* Bio: each word sharpens from faint to full as it scrolls through the reading zone */}
             <div {...edit('about.bio')} data-bio className="space-y-4">
               {bio.split('\n\n').map((paragraph, idx) => (
                 <p key={idx} className="text-base sm:text-lg text-neutral-800 dark:text-[#E4E4E7] leading-relaxed">
-                  {paragraph.split(' ').map((word, w) => (
-                    <span key={w} data-word>
-                      {word}{' '}
-                    </span>
-                  ))}
+                  {bioWords(paragraph)}
                 </p>
               ))}
             </div>
@@ -177,7 +204,7 @@ export function AboutSection() {
                 </div>
                 <ul className="divide-y divide-black/[0.06] dark:divide-white/[0.06]">
                   {languages.map((item, idx) => (
-                    <li key={`lang-${idx}`} {...edit(`about.languages.${idx}`)} className="flex items-baseline justify-between gap-4 py-2 first:pt-0">
+                    <li key={`lang-${idx}`} {...edit(`about.languages.${idx}`)} className="flex items-baseline justify-between gap-4 py-2 first:pt-0 last:pb-0">
                       <span {...edit(`about.languages.${idx}.name`)} className="text-base font-semibold text-neutral-900 dark:text-white">{item.name}</span>
                       <span {...edit(`about.languages.${idx}.level`)} className="text-sm text-neutral-500 dark:text-[#A1A1AA]">{item.level}</span>
                     </li>
@@ -192,7 +219,7 @@ export function AboutSection() {
                 </div>
                 <ul className="divide-y divide-black/[0.06] dark:divide-white/[0.06]">
                   {passions.map((item, idx) => (
-                    <li key={`passion-${idx}`} {...edit(`about.passions.${idx}`)} className="py-2 first:pt-0 text-base font-semibold text-neutral-900 dark:text-white">
+                    <li key={`passion-${idx}`} {...edit(`about.passions.${idx}`)} className="py-2 first:pt-0 last:pb-0 text-base font-semibold text-neutral-900 dark:text-white">
                       {item}
                     </li>
                   ))}

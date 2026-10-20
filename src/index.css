@@ -293,11 +293,13 @@
 
 /* Per-project accent (set with projectAccentVars), from each project's own documents.
    --pa     buttons, badges AND accent texts: one colour per project and theme
-   --pa-on  text sitting on a --pa fill (white or dark, whichever reads) */
+   --pa-on  text sitting on a --pa fill (white or dark, whichever reads)
+   --pa-text accent text on the page: --pa, darkened on the light page when a bright colour
+            would be too pale to read (e.g. an electric blue) */
 .project-accent {
   --pa: var(--pa-l);
   --pa-on: var(--pa-on-l);
-  --pa-text: var(--pa);
+  --pa-text: var(--pa-text-l, var(--pa));
 }
 /* Dark theme: fills keep the brand's deep colour (white text stays readable on buttons and
    badges); the lighter variant is for text on the dark page, where the deep one is too dim */
@@ -374,6 +376,15 @@
   line-height: 1.25rem;
   font-weight: 600;
   letter-spacing: -0.005em;
+}
+
+/* What stands out in the About bio ("**…**"): bolder and at full contrast */
+.bio-mark {
+  font-weight: 600;
+  color: #0a0a0a;
+}
+.dark .bio-mark {
+  color: #fff;
 }
 
 /* Running numbers (sections, list items, steps): the "01 Projets" style of the home sections */

@@ -100,6 +100,7 @@ export interface LocalizedSite {
   };
   about: {
     bio: string;
+    quote: string;
     languages: { name: string; level: string }[];
     passions: string[];
     education: { period: string; title: string; institution: string; location: string; details: string }[];
