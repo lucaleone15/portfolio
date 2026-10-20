@@ -140,7 +140,7 @@ export function ProjectDetailView({
             </div>
 
             <div className="px-3 pb-4 sm:p-0 sm:pr-8 min-w-0">
-              <p className="eyebrow sm:text-sm" style={{ color: 'var(--pa-text)' }}>
+              <p className="eyebrow sm:text-base" style={{ color: 'var(--pa-text)' }}>
                 {lang === 'fr' ? 'Projet suivant' : 'Next project'}
                 <span className="text-neutral-600 dark:text-white/60"> · {nextProject.number}</span>
               </p>

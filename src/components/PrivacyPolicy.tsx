@@ -214,7 +214,7 @@ export function PrivacyPolicy() {
   return (
     <main id="main-content" className="relative z-10 pt-28 sm:pt-36 pb-24 sm:pb-32">
       <article className="max-w-3xl mx-auto px-6 sm:px-10">
-        <p className="eyebrow sm:text-sm text-[var(--accent)] mb-5">{c.label}</p>
+        <p className="eyebrow sm:text-base text-[var(--accent)] mb-5">{c.label}</p>
         <h1 className="font-serif text-4xl sm:text-6xl font-extrabold tracking-[-0.035em] leading-[1.05] text-neutral-900 dark:text-white mb-6">
           {c.title}
           <span className="text-[var(--accent)]">.</span>

@@ -94,7 +94,7 @@ export function StandPage() {
   return (
     <main id="main-content" className="relative z-10 pt-28 sm:pt-36 pb-24 sm:pb-32">
       <article className="max-w-4xl mx-auto px-6 sm:px-10">
-        <p className="eyebrow sm:text-sm text-[var(--accent)] mb-5">{fr ? 'Au stand · page cachée' : 'In the pits · hidden page'}</p>
+        <p className="eyebrow sm:text-base text-[var(--accent)] mb-5">{fr ? 'Au stand · page cachée' : 'In the pits · hidden page'}</p>
         <h1 className="font-serif text-4xl sm:text-6xl font-extrabold tracking-[-0.035em] leading-[1.05] text-neutral-900 dark:text-white mb-6">
           {fr ? 'Les coulisses du portfolio' : 'Behind the portfolio'}
           <span className="text-[var(--accent)]">.</span>

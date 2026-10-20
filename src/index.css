@@ -365,16 +365,15 @@
 }
 
 
-/* Small uppercase label over a title or a group: one style site-wide (body font; Syne is kept
-   for pills and buttons). Colour per use: muted inside a section, the accent above a page or
-   section title, which also gets sm:text-sm. */
+/* Small label over a title or a group, written as typed (no capitals, no spacing): one style
+   site-wide (body font; Syne is kept for pills and buttons). Colour per use: muted inside a
+   section, the accent above a page or section title, which also gets sm:text-base. */
 @utility eyebrow {
   font-family: var(--font-body);
-  font-size: 0.75rem;
-  line-height: 1rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
 }
 
 /* Running numbers (sections, list items, steps): the "01 Projets" style of the home sections */

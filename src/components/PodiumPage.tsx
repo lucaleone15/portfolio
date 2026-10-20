@@ -57,7 +57,7 @@ export function PodiumPage() {
   return (
     <main id="main-content" className="relative z-10 pt-28 sm:pt-36 pb-24 sm:pb-32">
       <article className="max-w-3xl mx-auto px-6 sm:px-10">
-        <p className="eyebrow sm:text-sm text-[var(--accent)] mb-5">{fr ? 'Lights out · page cachée' : 'Lights out · hidden page'}</p>
+        <p className="eyebrow sm:text-base text-[var(--accent)] mb-5">{fr ? 'Lights out · page cachée' : 'Lights out · hidden page'}</p>
         <h1 className="font-serif text-4xl sm:text-6xl font-extrabold tracking-[-0.035em] leading-[1.05] text-neutral-900 dark:text-white mb-6">
           {fr ? 'Les meilleurs départs' : 'The best starts'}
           <span className="text-[var(--accent)]">.</span>

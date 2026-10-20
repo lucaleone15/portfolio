@@ -37,7 +37,7 @@ const translations = {
     'about.educationTitle': 'Formation et parcours',
     'about.experienceTitle': 'Expériences professionnelles',
     'about.languagesTitle': 'Langues',
-    'about.passionsTitle': 'Centres d’intérêt & Passions',
+    'about.passionsTitle': 'Centres d’intérêt et passions',
 
     // Contact Section
     'contact.index': '03',
@@ -68,10 +68,10 @@ const translations = {
     // About Section
     'about.index': '02',
     'about.title': 'About me',
-    'about.educationTitle': 'Education & Academic Journey',
+    'about.educationTitle': 'Education and academic journey',
     'about.experienceTitle': 'Professional Experience',
     'about.languagesTitle': 'Languages',
-    'about.passionsTitle': 'Interests & Passions',
+    'about.passionsTitle': 'Interests and passions',
 
     // Contact Section
     'contact.index': '03',

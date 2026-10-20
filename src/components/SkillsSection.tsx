@@ -61,11 +61,6 @@ export function SkillsSection() {
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-3xl mb-12 sm:mb-16"
         >
-          <div className="flex items-center gap-2 mb-3">
-            <span className="eyebrow sm:text-sm text-[var(--accent)]">
-              {lang === 'fr' ? 'Compétences' : 'Skills & Capabilities'}
-            </span>
-          </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-neutral-900 dark:text-white leading-[1.18]">
             {lang === 'fr' ? (
               <>
