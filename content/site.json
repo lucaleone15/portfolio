@@ -8,9 +8,9 @@
   },
   "hero": {
     "eyebrow": {
-      "fr": "Étudiant en ingénierie des médias · HEIG-VD",
-      "en": "Media Engineering student · HEIG-VD",
-      "enOf": "b1691b99"
+      "fr": "",
+      "en": "",
+      "enOf": "811c9dc5"
     },
     "headline": {
       "before": {
@@ -63,27 +63,32 @@
     },
     "availability": {
       "before": {
-        "fr": "Je cherche actuellement une entreprise pour réaliser mon ",
-        "en": "I'm currently looking for a company to host my ",
-        "enOf": "3f3ef303"
+        "fr": "",
+        "en": "",
+        "enOf": "811c9dc5"
       },
       "link": {
-        "fr": "travail de Bachelor",
-        "en": "Bachelor thesis",
-        "enOf": "bca239dd"
+        "fr": "",
+        "en": "",
+        "enOf": "811c9dc5"
       },
       "after": {
-        "fr": ".",
-        "en": ".",
-        "enOf": "2b0c98f1"
+        "fr": "",
+        "en": "",
+        "enOf": "811c9dc5"
       }
     }
   },
   "about": {
     "bio": {
-      "fr": "Étudiant en dernière année de Bachelor en ingénierie des médias à la HEIG-VD, je me forme à la communication digitale, au design et aux technologies web, avec une approche qui combine créativité et technique.\n\nJ’aime concevoir des projets numériques de A à Z, de l’idée à sa réalisation : création de contenus, communication sur les réseaux sociaux, identité visuelle, UI/UX, conception de sites web et développement de projets digitaux.\n\nEn parallèle de mes études, je travaille comme community manager pour le Karting de Vuiteboeuf, où je mets en pratique ces compétences à travers la création de contenus photo et vidéo, la gestion des réseaux sociaux et le développement de la présence digitale de la marque.\n\nCurieux et polyvalent, j’aime apprendre, expérimenter avec de nouveaux outils et transformer des idées en projets concrets. Toujours intéressé par de nouvelles collaborations et opportunités dans le digital.",
-      "en": "As a final-year Bachelor student in Media Engineering at HEIG-VD, I specialize in digital communication, design, and web technologies, with an approach that bridges creativity and technical execution.\n\nI love crafting digital projects from A to Z, from initial concept to deployment: content creation, social media strategy, visual identity, UI/UX, website design, and interactive media.\n\nAlongside my studies, I work as a community manager for Karting de Vuiteboeuf, applying these skills through photo and video production, social media management, and expanding the brand's digital presence.\n\nCurious and versatile, I thrive on learning, experimenting with new tools, and turning ideas into tangible digital realities. Always open to new collaborations and digital opportunities.",
-      "enOf": "df1bc326"
+      "fr": "**Étudiant en dernière année de Bachelor en ingénierie des médias** à la HEIG-VD, je me forme à la communication digitale, au design et aux technologies web, avec une approche qui combine créativité et technique.\n\nJ’aime concevoir des projets numériques **de A à Z, de l’idée à sa réalisation** : création de contenus, communication sur les réseaux sociaux, identité visuelle, UI/UX, conception de sites web et développement de projets digitaux.\n\nEn parallèle de mes études, je travaille comme **community manager pour le Karting de Vuiteboeuf**, où je mets en pratique ces compétences à travers la création de contenus photo et vidéo, la gestion des réseaux sociaux et le développement de la présence digitale de la marque.\n\n**Curieux et polyvalent**, j’aime apprendre, expérimenter avec de nouveaux outils et transformer des idées en projets concrets. Toujours intéressé par de **nouvelles collaborations et opportunités** dans le digital.",
+      "en": "As a **final-year Bachelor student in Media Engineering** at HEIG-VD, I specialize in digital communication, design, and web technologies, with an approach that bridges creativity and technical execution.\n\nI love crafting digital projects **from A to Z, from initial concept to deployment**: content creation, social media strategy, visual identity, UI/UX, website design, and interactive media.\n\nAlongside my studies, I work as a **community manager for Karting de Vuiteboeuf**, applying these skills through photo and video production, social media management, and expanding the brand's digital presence.\n\n**Curious and versatile**, I thrive on learning, experimenting with new tools, and turning ideas into tangible digital realities. Always open to **new collaborations and digital opportunities**.",
+      "enOf": "fc64a762"
+    },
+    "quote": {
+      "fr": "De l’idée à la réalisation, entre créativité et technique.",
+      "en": "From idea to execution, where creativity meets technology.",
+      "enOf": "1fa87945"
     },
     "languages": [
       {
@@ -159,9 +164,9 @@
         },
         "institution": "HEIG-VD",
         "location": {
-          "fr": "Yverdon-les-Bains, Suisse",
-          "en": "Yverdon-les-Bains, Switzerland",
-          "enOf": "b5b76e1d"
+          "fr": "Yverdon-les-Bains",
+          "en": "Yverdon-les-Bains",
+          "enOf": "804385a9"
         },
         "details": {
           "fr": "Stratégie & innovation numérique, développement web, marketing et design d'interfaces utilisateur (UX/UI).",
@@ -182,9 +187,9 @@
         },
         "institution": "ERACOM",
         "location": {
-          "fr": "Lausanne, Suisse",
-          "en": "Lausanne, Switzerland",
-          "enOf": "e8f9a65c"
+          "fr": "Lausanne",
+          "en": "Lausanne",
+          "enOf": "63235318"
         },
         "details": {
           "fr": "Communication visuelle, médias interactifs, création de contenus print & digitaux, formats audiovisuels.",
@@ -205,9 +210,9 @@
         },
         "institution": "Gymnase d'Yverdon",
         "location": {
-          "fr": "Yverdon-les-Bains, Suisse",
-          "en": "Yverdon-les-Bains, Switzerland",
-          "enOf": "b5b76e1d"
+          "fr": "Yverdon-les-Bains",
+          "en": "Yverdon-les-Bains",
+          "enOf": "804385a9"
         },
         "details": {
           "fr": "",
@@ -230,9 +235,9 @@
         },
         "company": "Karting de Vuiteboeuf",
         "location": {
-          "fr": "Vuitebœuf, Vaud, Suisse · Hybride",
-          "en": "Vuitebœuf, Vaud, Switzerland · Hybrid",
-          "enOf": "b45261b4"
+          "fr": "",
+          "en": "",
+          "enOf": "811c9dc5"
         },
         "description": {
           "fr": "Stratégie de marque & réseaux sociaux (Instagram, TikTok), création et production de contenus photo et vidéo sur circuit, promotion des offres et événements.",
@@ -242,9 +247,9 @@
       },
       {
         "period": {
-          "fr": "Juillet 2022 (1 mois)",
-          "en": "July 2022 (1 month)",
-          "enOf": "a8387488"
+          "fr": "Juillet 2022",
+          "en": "July 2022",
+          "enOf": "ce4e4040"
         },
         "title": {
           "fr": "Stagiaire",
@@ -253,9 +258,9 @@
         },
         "company": "Groupe AFH Automobile",
         "location": {
-          "fr": "Yverdon-les-Bains, Suisse · Sur site",
-          "en": "Yverdon-les-Bains, Switzerland · On-site",
-          "enOf": "dfa57595"
+          "fr": "Yverdon-les-Bains",
+          "en": "Yverdon-les-Bains",
+          "enOf": "804385a9"
         },
         "description": {
           "fr": "Découverte des métiers du commerce automobile, accueil clients, soutien administratif et gestion de la communication commerciale.",
@@ -291,9 +296,9 @@
           "enOf": "b5839499"
         },
         {
-          "fr": "Design Systems",
-          "en": "Design Systems",
-          "enOf": "7b1079a5"
+          "fr": "Design system",
+          "en": "Design systems",
+          "enOf": "2a0d7874"
         },
         {
           "fr": "Tests utilisateurs",
@@ -332,14 +337,9 @@
           "enOf": "e3f40d32"
         },
         {
-          "fr": "Tailwind CSS",
-          "en": "Tailwind CSS",
-          "enOf": "95625012"
-        },
-        {
-          "fr": "PHP",
-          "en": "PHP",
-          "enOf": "9ff9d50f"
+          "fr": "WordPress",
+          "en": "WordPress",
+          "enOf": "2702dbdc"
         }
       ]
     },
@@ -358,19 +358,14 @@
       },
       "tools": [
         {
-          "fr": "Stratégie Social Media",
+          "fr": "Stratégie social media",
           "en": "Social media strategy",
-          "enOf": "be1c3e7e"
+          "enOf": "763deefe"
         },
         {
-          "fr": "Instagram & TikTok",
-          "en": "Instagram & TikTok",
-          "enOf": "a3fdd899"
-        },
-        {
-          "fr": "Community Management",
+          "fr": "Community management",
           "en": "Community management",
-          "enOf": "cf0ebac1"
+          "enOf": "a994d6e1"
         },
         {
           "fr": "Storytelling",
@@ -399,14 +394,14 @@
           "enOf": "c040b36e"
         },
         {
-          "fr": "Illustrator & Photoshop",
-          "en": "Illustrator & Photoshop",
-          "enOf": "eef936dc"
-        },
-        {
           "fr": "Typographie",
           "en": "Typography",
           "enOf": "df8602bb"
+        },
+        {
+          "fr": "Illustrator & Photoshop",
+          "en": "Illustrator & Photoshop",
+          "enOf": "eef936dc"
         }
       ]
     },
@@ -425,24 +420,24 @@
       },
       "tools": [
         {
-          "fr": "Captation Photo & Vidéo",
-          "en": "Photo & video shooting",
-          "enOf": "04b52bcf"
+          "fr": "Photographie",
+          "en": "Photography",
+          "enOf": "f8994877"
+        },
+        {
+          "fr": "Retouche photo",
+          "en": "Photo editing",
+          "enOf": "d94cfc0a"
+        },
+        {
+          "fr": "Montage vidéo",
+          "en": "Video editing",
+          "enOf": "d5653b05"
         },
         {
           "fr": "Premiere Pro",
           "en": "Premiere Pro",
           "enOf": "3b0605e1"
-        },
-        {
-          "fr": "Formats courts (Reels)",
-          "en": "Short-form video (Reels)",
-          "enOf": "6f9843fd"
-        },
-        {
-          "fr": "Étalonnage",
-          "en": "Colour grading",
-          "enOf": "108d5f3d"
         }
       ]
     },
@@ -461,19 +456,24 @@
       },
       "tools": [
         {
-          "fr": "Gestion de projet Agile",
-          "en": "Agile project management",
-          "enOf": "4cf02ba7"
+          "fr": "Analyse des besoins",
+          "en": "Needs analysis",
+          "enOf": "47a540cf"
         },
         {
-          "fr": "Notion & Jira",
-          "en": "Notion & Jira",
-          "enOf": "ac59569e"
+          "fr": "Objectifs",
+          "en": "Goals",
+          "enOf": "58b18c0a"
         },
         {
-          "fr": "Cahier des charges",
-          "en": "Project specifications",
-          "enOf": "54a4a060"
+          "fr": "Planification",
+          "en": "Planning",
+          "enOf": "5ecd648e"
+        },
+        {
+          "fr": "Coordination",
+          "en": "Coordination",
+          "enOf": "6790aa9a"
         }
       ]
     }
