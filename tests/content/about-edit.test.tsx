@@ -17,5 +17,5 @@ test('company / school and place each have their own path in the admin', () => {
 test('on the public site that line is unchanged (no extra elements)', () => {
   const html = renderToString(<AboutSection />);
   expect(html).not.toContain('data-edit');
-  expect(html).toContain('Karting de Vuiteboeuf<!-- --> <!-- -->· Vuitebœuf');
+  expect(html).toContain('Groupe AFH Automobile<!-- --> <!-- -->· Yverdon-les-Bains');
 });

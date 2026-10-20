@@ -214,7 +214,8 @@ export const SiteSchema = z.object({
     .describe('Hero'),
   about: z
     .object({
-      bio: txt('Bio (long)'),
+      bio: txt('Bio (long) · **mots** en gras'),
+      quote: txt('Citation (sans guillemets ; vide : pas de citation)'),
       languages: z.array(z.object({ name: txt('Langue'), level: txt('Niveau') }).describe('Langue')).describe('Langues'),
       passions: z.array(txt('Centre d’intérêt')).describe('Centres d’intérêt'),
       education: z
