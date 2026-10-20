@@ -145,6 +145,8 @@ Points d'attention :
 3. Derrière un proxy (Nginx, Caddy, hébergeur…), le serveur lit l'IP réelle via `X-Forwarded-For` (limitation anti-spam du formulaire).
 4. HTTPS est géré par le proxy / l'hébergeur ; le serveur envoie déjà `Strict-Transport-Security`.
 
+**Images de partage** (aperçu sur LinkedIn, WhatsApp…) : toutes les pages utilisent `public/og-image.jpg` (portrait, voir `scripts/og/`), sauf les projets, qui ont chacun la leur par langue, dessinée au build (`src/content/ShareCard.tsx`, générée par `src/content/shareImages.ts` avec satori + sharp, sans navigateur) à partir de la couverture, du logo, de l'accroche et de la couleur du projet. Le nom du fichier (`/og/<projet>-<langue>-<empreinte>.jpg`) change dès que ce qu'elle montre change, pour que les réseaux ne gardent pas l'ancienne en cache. Après une modification du dessin lui-même, augmenter `SHARE_CARD_VERSION` dans `src/content/og.ts`.
+
 Après une mise en ligne qui change l'image d'aperçu, la rafraîchir sur LinkedIn via le [Post Inspector](https://www.linkedin.com/post-inspector/).
 
 **Remplacer une image :** le serveur met les fichiers de `public/` en cache 30 jours. Une image modifiée doit donc changer de **nom** (ex. `HUG-cover.webp` → `HUG-cover-2.webp`), sinon les visiteurs gardent l'ancienne. Depuis l'admin, c'est automatique : chaque fichier envoyé reçoit un nom unique.
@@ -240,6 +242,7 @@ Un espace privé pour modifier tout le contenu sans toucher au code, sur ordinat
 - **Images** : envoyées depuis l'ordinateur ou la pellicule, converties en WebP sRGB (1920 px), variantes 640 / 1280 px pour les couvertures, nom unique. Vidéos MP4/WebM et PDF gardés tels quels.
 - **Statistiques** : pages vues sur 7, 30 ou 90 jours, comparées à la période précédente ; par jour, projets les plus vus (FR + EN), provenance, pages, part en anglais.
 - **Messages** : la boîte de réception du formulaire de contact (nouveau, lu, répondu, archivé), avec un compteur de non-lus. « Répondre » ouvre la messagerie avec le message cité et le marque comme répondu.
+- **Santé de la page** : en haut de chaque projet (et de l'onglet SEO des pages), une note sur 100 par langue avec ce qui la fait baisser (titre et description Google, couverture, accroche, `[À COMPLÉTER]` oubliés, textes alternatifs des images, version anglaise), l'aperçu dans Google et l'image de partage. Chaque point mène au champ concerné ; la note de chaque page modifiée est aussi affichée avant de publier. Rien n'est bloquant.
 - **Thème** clair, sombre ou celui de l'appareil (bouton dans la barre latérale ou en haut sur téléphone).
 
 ### Mise en place

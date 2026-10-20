@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Content } from '../../content/schema';
 import { isEnglishReady } from '../../content/localize';
+import { projectHealth, scoreTone, siteHealth } from '../../content/health';
 import { projectIdOf, type PageRef } from '../../content/pages';
 import { ApiError, type PublishStatus, type PublishSummary } from '../api';
 import { Button, Pill } from '../ui';
@@ -229,10 +230,30 @@ export function PublishPanel({
       <div>
         <p className="eyebrow text-neutral-500 dark:text-[#A1A1AA]">Ce qui change</p>
         {summary.changed.length ? (
-          <ul className="mt-2 space-y-1 text-sm font-semibold">
-            {summary.changed.map((c) => (
-              <li key={c.ref}>{c.label}</li>
-            ))}
+          <ul className="mt-2 space-y-1.5 text-sm font-semibold">
+            {summary.changed.map((c) => {
+              const id = projectIdOf(c.ref);
+              const p = id ? content.projects[id] : undefined;
+              const scores = p
+                ? (['fr', 'en'] as const).map((l) => [l, projectHealth(p, l, content).score] as const)
+                : c.ref === 'site'
+                  ? (['fr', 'en'] as const).map((l) => [l, siteHealth(content.site, l, content).score] as const)
+                  : [];
+              return (
+                <li key={c.ref} className="flex flex-wrap items-center gap-2">
+                  <span className="mr-auto">{c.label}</span>
+                  {scores.map(([l, s]) => (
+                    <span
+                      key={l}
+                      aria-label={`Santé ${l.toUpperCase()} : ${s} sur 100`}
+                      className={`rounded-full px-2 py-0.5 text-[11px] font-bold tabular-nums ${scoreTone(s) === 'ok' ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300' : scoreTone(s) === 'warn' ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300' : 'bg-[rgba(var(--accent-rgb),0.12)] text-[var(--accent)]'}`}
+                    >
+                      {l.toUpperCase()} {s}
+                    </span>
+                  ))}
+                </li>
+              );
+            })}
           </ul>
         ) : (
           <p className="mt-2 text-sm text-neutral-500">Rien pour l’instant.</p>

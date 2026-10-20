@@ -15,6 +15,8 @@ import { EditablePreview } from '../page/EditablePreview';
 import { withPreviewSrcs } from '../page/PageView';
 import { EditorBar, type Mode } from './ProjectEditor';
 import { useDraftClient, useDraftState, useStaged } from '../DraftContext';
+import { HealthCard } from '../health/HealthCard';
+import { siteHealth } from '../../content/health';
 import { pageClass } from '../ui';
 import { adminNavigate } from '../nav';
 
@@ -147,6 +149,19 @@ export function SiteEditor({ tab, query }: { key?: string; tab: SiteTab; query: 
       <div className={pageClass}>
         <ContentTabs current={tab} />
         <EditorBar title={TABS[tab].label} back={() => adminNavigate('/')} mode={mode} lang={lang} onMode={setMode} onLang={setLang} pageMode={!!TABS[tab].page} />
+        {tab === 'seo' && (
+          <HealthCard
+            health={siteHealth(state.content.site, lang, state.content)}
+            lang={lang}
+            onGo={(path) => document.querySelector(`[data-path="${path}"]`)?.scrollIntoView({ block: 'center' })}
+            google={{
+              title: fillTemplate(state.content.site.seo.home.title[lang], state.content, lang),
+              url: lang === 'fr' ? 'luca-leone.ch' : 'luca-leone.ch › en',
+              description: fillTemplate(state.content.site.seo.home.description[lang], state.content, lang),
+            }}
+            share={<img src="/og-image.jpg" alt="Image de partage de toutes les pages du site" className="w-full" />}
+          />
+        )}
         <SiteEditorView tab={tab} mode={mode} lang={lang} content={mode === 'page' ? content : state.content} onChange={onChange} onOpen={setDrawer} />
         {mode === 'page' && drawer && (
           <div className="fixed inset-0 z-40 flex justify-end bg-black/20" onClick={(e) => e.target === e.currentTarget && setDrawer(null)}>

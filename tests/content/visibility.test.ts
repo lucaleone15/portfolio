@@ -38,3 +38,11 @@ test('renamed projects redirect from content/projects.json', () => {
   expect(canonicalPagePath('/projets/hug-sangsationnel', CONTENT.index.redirects)).toBe('/projets/hug');
   expect(canonicalPagePath('/projets/autre.html', redirects)).toBe('/projets/autre');
 });
+
+test('a project page announces its own share image with its size', async () => {
+  const { getHeadData, renderHeadTags } = await import('../../src/seo');
+  const tags = renderHeadTags(getHeadData({ name: 'project', lang: 'fr', slug: 'hug' }));
+  expect(tags).toMatch(/<meta property="og:image" content="https:\/\/luca-leone\.ch\/og\/hug-fr-[0-9a-f]{8}\.jpg" \/>/);
+  expect(tags).toContain('<meta property="og:image:width" content="1200" />');
+  expect(tags).toContain('<meta property="og:image:height" content="630" />');
+});

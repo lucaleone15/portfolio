@@ -5,6 +5,7 @@ import { CONTENT } from './content/load';
 import { projectSeo, toCaseStudy, toProject, toSite, visibleProjects } from './content/localize';
 import { SITE_PAGES } from './content/sitePages';
 import { fillTemplate } from './content/derived';
+import { projectShareImage, SHARE_SIZE } from './content/og';
 import { homePath, pathFor, privacyPath, projectPath, Route, SECTION_IDS, SectionId, sectionPath } from './router';
 
 /**
@@ -291,7 +292,8 @@ function projectHead(lang: Language, slug: string): HeadData | null {
     canonical: url,
     alternates: alternatesFor({ name: 'project', lang, slug }),
     ogType: 'article',
-    image: images[0],
+    // The project's own share card (scripts/share-images.mjs), 1200×630
+    image: CONTENT.projects[slug] ? abs(projectShareImage(CONTENT.projects[slug], lang)) : images[0],
     imageAlt: `${project.name} – ${project.subtitle}`,
     jsonLd: {
       '@context': 'https://schema.org',
@@ -455,8 +457,8 @@ export function renderHeadTags(head: HeadData): string {
     `<meta property="og:locale" content="${ogLocale}" />`,
     `<meta property="og:locale:alternate" content="${ogLocaleAlt}" />`,
     `<meta property="og:image" content="${head.image}" />`,
-    ...(head.image === OG_IMAGE_URL
-      ? [`<meta property="og:image:width" content="1200" />`, `<meta property="og:image:height" content="630" />`]
+    ...(head.image === OG_IMAGE_URL || head.image.includes('/og/')
+      ? [`<meta property="og:image:width" content="${SHARE_SIZE.width}" />`, `<meta property="og:image:height" content="${SHARE_SIZE.height}" />`]
       : []),
     `<meta property="og:image:alt" content="${escapeAttr(head.imageAlt)}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
