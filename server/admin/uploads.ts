@@ -2,6 +2,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import sharp from 'sharp';
+import type { Metadata, OutputInfo } from 'sharp';
 import { UPLOAD_LIMITS, tooLargeMessage } from '../../src/content/uploadLimits';
 
 /**
@@ -74,7 +75,7 @@ export async function processUpload(input: {
     return { src };
   }
 
-  let meta: sharp.Metadata;
+  let meta: Metadata;
   try {
     meta = await sharp(body).metadata();
   } catch {
@@ -88,7 +89,7 @@ export async function processUpload(input: {
   const encode = (width: number, quality: number) =>
     sharp(body).rotate().resize({ width, withoutEnlargement: true }).toColourspace('srgb').webp({ quality }).toBuffer({ resolveWithObject: true });
 
-  let full: { data: Buffer; info: sharp.OutputInfo };
+  let full: { data: Buffer; info: OutputInfo };
   try {
     full = await encode(1920, 82);
   } catch {
