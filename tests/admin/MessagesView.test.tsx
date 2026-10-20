@@ -69,3 +69,21 @@ test('the reply link encodes the address', async () => {
   fireEvent.click(await screen.findByText('Camille'));
   expect(screen.getByRole('link', { name: /Répondre/ }).getAttribute('href')).toMatch(/^mailto:c%2Bx@example\.com\?/);
 });
+
+test('doubtful messages wait in "spam probable", and one click puts them back', async () => {
+  const api = fakeApi([msg('a', 'new', 'Camille'), msg('s', 'spam', 'Robot')]);
+  render(<MessagesView api={api} onUnread={() => {}} />);
+  await screen.findByText('Camille');
+  expect(screen.queryByText('Robot')).toBeNull();
+  fireEvent.click(screen.getByRole('tab', { name: /Spam probable/ }));
+  fireEvent.click(await screen.findByText('Robot'));
+  fireEvent.click(screen.getByRole('button', { name: 'Pas un spam' }));
+  await waitFor(() => expect(api.calls).toContain('s:new'));
+});
+
+test('spam kept without an email does not raise the "emails stopped" warning', async () => {
+  const api = fakeApi([{ ...msg('s', 'spam', 'Robot', new Date().toISOString()), emailed: false }, msg('a', 'new', 'Camille')]);
+  render(<MessagesView api={api} onUnread={() => {}} />);
+  await screen.findByText('Camille');
+  expect(screen.queryByText(/emails de notification ne partent plus/)).toBeNull();
+});

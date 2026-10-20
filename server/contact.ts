@@ -17,9 +17,11 @@ import type { MessageStore } from './messages';
  * kept for the atelier's inbox (server/messages.ts) before the emails go out: if sending
  * fails, the message isn't lost and the visitor still gets the thank-you.
  *
- * Protections: JSON body ≤ 20 KB, field validation, honeypot, 5 messages / 10 min per IP,
- * and at most 3 confirmations a day to the same address (the form can't be used to flood
- * someone's inbox).
+ * Protections: JSON body ≤ 20 KB, field validation, honeypot, a time trap (sent less than 3 s
+ * after the form appeared: a robot), 5 messages / 10 min per IP and 3 per address, and at most
+ * 3 confirmations a day to the same address (the form can't be used to flood someone's inbox).
+ * Doubtful messages (many links, the same text sent again) are kept as 'spam' in the atelier,
+ * with no email.
  */
 
 type Env = Record<string, string | undefined>;
@@ -27,6 +29,10 @@ type Env = Record<string, string | undefined>;
 const MAX_BODY_BYTES = 20_000;
 const RATE_WINDOW_MS = 10 * 60 * 1000;
 const RATE_MAX = 5;
+const RATE_MAX_PER_ADDRESS = 3;
+const MIN_FILL_MS = 3000;
+const MAX_LINKS = 3;
+const DUPLICATE_WINDOW_MS = 24 * 60 * 60 * 1000;
 // No characters that would mean something in a mailto: link (?, &, =, quotes…): a reply
 // from the atelier can't be made to carry extra recipients
 const EMAIL_RE = /^[^\s@?&=,;:<>"'()[\]\\]+@[^\s@?&=,;:<>"'()[\]\\]+\.[^\s@?&=,;:<>"'()[\]\\]{2,}$/;
@@ -112,6 +118,24 @@ export function createContactHandler(env: Env, deps: { messages?: MessageStore }
     return transporter;
   };
 
+  const addressHits = new Map<string, number[]>();
+  const addressLimited = (address: string) => {
+    const key = address.toLowerCase();
+    const now = Date.now();
+    const recent = [...(addressHits.get(key) ?? []).filter((t) => now - t < RATE_WINDOW_MS), now];
+    addressHits.set(key, recent);
+    return recent.length > RATE_MAX_PER_ADDRESS;
+  };
+
+  /** Many links, or the same text already received from that address today */
+  const looksLikeSpam = (email: string, message: string) => {
+    if ((message.match(/https?:\/\/|www\./gi) ?? []).length > MAX_LINKS) return true;
+    const now = Date.now();
+    return !!deps.messages
+      ?.list()
+      .some((m) => m.email.toLowerCase() === email.toLowerCase() && m.message.trim() === message && now - Date.parse(m.receivedAt) < DUPLICATE_WINDOW_MS);
+  };
+
   const rateLimited = (ip: string) => {
     const now = Date.now();
     const recent = (hits.get(ip) ?? []).filter((t) => now - t < RATE_WINDOW_MS);
@@ -144,8 +168,10 @@ export function createContactHandler(env: Env, deps: { messages?: MessageStore }
       return json(res, status, { error: status === 413 ? 'too_large' : 'invalid_json' });
     }
 
-    // Honeypot filled: pretend success, send nothing
+    // Honeypot filled, or sent faster than a person can type: pretend success, keep nothing
     if (oneLine(payload.honey, 200)) return json(res, 200, { ok: true });
+    const elapsed = Number(payload.elapsed);
+    if (payload.elapsed !== undefined && Number.isFinite(elapsed) && elapsed < MIN_FILL_MS) return json(res, 200, { ok: true });
 
     const name = oneLine(payload.name, 120);
     const email = oneLine(payload.email, 200);
@@ -158,7 +184,17 @@ export function createContactHandler(env: Env, deps: { messages?: MessageStore }
 
     const forwarded = String(req.headers['x-forwarded-for'] ?? '').split(',')[0].trim();
     const ip = forwarded || req.socket.remoteAddress || 'unknown';
-    if (rateLimited(ip)) return json(res, 429, { error: 'rate_limited' });
+    if (rateLimited(ip) || addressLimited(email)) return json(res, 429, { error: 'rate_limited' });
+
+    // Doubtful: kept for the atelier's "spam probable" folder, no email either way
+    if (looksLikeSpam(email, message)) {
+      try {
+        deps.messages?.add({ name, email, subject, message, lang, page, emailed: false, status: 'spam' });
+      } catch (err) {
+        console.error('[contact] could not keep a doubtful message:', err);
+      }
+      return json(res, 200, { ok: true, confirmed: false });
+    }
 
     // Kept first: whatever happens with the emails, the message reaches the atelier
     let stored: string | null = null;

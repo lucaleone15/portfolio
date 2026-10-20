@@ -23,6 +23,11 @@ export function ContactSection() {
   const [copied, setCopied] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  // When the form appeared: a message sent within seconds comes from a robot (server/contact.ts)
+  const shownAt = useRef(0);
+  useEffect(() => {
+    shownAt.current = Date.now();
+  }, []);
   const [statusMessage, setStatusMessage] = useState('');
   // Once sent, the form gives way to a thank-you: 'leaving' fades the fields out first
   const [phase, setPhase] = useState<'form' | 'leaving' | 'sent'>('form');
@@ -132,7 +137,7 @@ export function ContactSection() {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ ...formData, lang, page: window.location.pathname }),
+        body: JSON.stringify({ ...formData, lang, page: window.location.pathname, elapsed: Date.now() - shownAt.current }),
       });
       const data = await response.json().catch(() => ({}));
       if (!response.ok || !data?.ok) {
