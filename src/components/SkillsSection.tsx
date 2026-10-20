@@ -1,11 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import { usePrinting } from '../print';
-import { ArrowUpRight01Icon } from '@hugeicons/core-free-icons';
+import { ArrowDown01Icon, ArrowUpRight01Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
 import { useLanguage } from '../context/LanguageContext';
 import { useSite } from '../content/ContentContext';
 import { useEditAttrs } from '../content/edit';
+
+/** A panel element coming in when its row opens (fade + rise; just the fade with reduced motion) */
+const EASE = 'ease-[cubic-bezier(0.23,1,0.32,1)]';
+const reveal = (open: boolean) =>
+  `transition-[opacity,translate,clip-path] duration-600 ${EASE} ${
+    open ? 'opacity-100 translate-y-0 [clip-path:inset(0_0_0_0)]' : 'opacity-0 motion-safe:translate-y-3 motion-safe:[clip-path:inset(0_0_100%_0)]'
+  }`;
+/** The keywords pop in with a slight overshoot */
+const pop = (open: boolean) =>
+  `transition-[opacity,scale,translate] duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+    open ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 motion-safe:scale-75 motion-safe:translate-y-1'
+  }`;
 
 export function SkillsSection() {
   const { lang } = useLanguage();
@@ -101,9 +113,7 @@ export function SkillsSection() {
                 }}
                 onMouseEnter={() => openOnHover(skill.id)}
                 onMouseLeave={cancelHover}
-                className={`group transition-colors duration-200 ${
-                  isOpen ? 'bg-black/[0.02] dark:bg-white/[0.02]' : ''
-                }`}
+                className={`group transition-colors duration-300 ${isOpen ? 'bg-black/[0.02] dark:bg-white/[0.02]' : ''}`}
               >
                 {/* The whole row is clickable for the mouse; the <button> carries keyboard + a11y.
                     Its click bubbles here, so it toggles exactly once. */}
@@ -117,16 +127,36 @@ export function SkillsSection() {
                       toggleSkill(skill.id);
                     }
                   }}
-                  className="py-7 sm:py-8 cursor-pointer select-none"
+                  className="relative py-7 sm:py-8 pr-14 sm:pr-20 cursor-pointer select-none"
                 >
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-10 items-start">
+                  {/* An accent line draws itself under the open row */}
+                  <span
+                    aria-hidden="true"
+                    className={`absolute left-0 right-0 -bottom-px h-0.5 bg-[var(--accent)] origin-left transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+                      isOpen ? 'scale-x-100' : 'scale-x-0'
+                    }`}
+                  />
+                  {/* The row opens: a chevron at its end, set in from the edge, turned up once open */}
+                  <span
+                    aria-hidden="true"
+                    className={`absolute right-2 sm:right-6 top-7 sm:top-8 lg:top-1/2 lg:-translate-y-1/2 inline-flex items-center justify-center w-9 h-9 rounded-full transition-[rotate,color,background-color] duration-300 ${
+                      isOpen
+                        ? 'rotate-180 text-[var(--accent)] bg-[rgba(var(--accent-rgb),0.1)]'
+                        : 'text-neutral-500 dark:text-white/60 group-hover:text-[var(--accent)] group-hover:bg-[rgba(var(--accent-rgb),0.08)]'
+                    }`}
+                  >
+                    <Icon icon={ArrowDown01Icon} className="w-5 h-5" />
+                  </span>
+                  <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-10 items-start lg:items-center">
                     {/* Index + Titre principal */}
                     <h3 className="lg:col-span-5">
                       <button
                         type="button"
                         aria-expanded={isOpen}
                         aria-controls={panelId}
-                        className="flex items-baseline gap-4 sm:gap-6 text-left w-full cursor-pointer rounded-md"
+                        className={`flex items-baseline gap-4 sm:gap-6 text-left w-full cursor-pointer rounded-md motion-safe:transition-[translate] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+                          isOpen ? 'lg:translate-x-3' : 'lg:group-hover:translate-x-3'
+                        }`}
                       >
                         <span
                           className={`index-number text-base sm:text-lg transition-colors duration-200 ${
@@ -151,40 +181,40 @@ export function SkillsSection() {
                     </h3>
 
                     <div className="lg:col-span-7" id={panelId}>
-                      <AnimatePresence initial={false}>
-                        {isOpen ? (
-                          <motion.div
-                            key="content"
-                            // Printing: shown at once, no height animation the paper would freeze at 0
-                            initial={printing ? false : { opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0, transition: { duration: 0.18, ease: [0.23, 1, 0.32, 1] } }}
-                            transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
-                            className="space-y-4 overflow-hidden"
+                      {/* Large screens: the panel keeps its room while closed, so a row never changes
+                          height, it only fades in. Smaller ones: it opens under the title (the
+                          grid row grows from 0 to its content's height). */}
+                      <div
+                        aria-hidden={!isOpen}
+                        className={`grid transition-[grid-template-rows,opacity,visibility] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+                          isOpen ? 'grid-rows-[1fr] opacity-100 visible' : 'grid-rows-[0fr] lg:grid-rows-[1fr] opacity-0 invisible'
+                        }`}
+                      >
+                        <div className="min-h-0 overflow-hidden space-y-4">
+                          {/* Opening: the text is uncovered from the bottom, then the keywords pop in one by one */}
+                          <p
+                            {...edit(`skills.${index}.desc`)}
+                            className={`text-sm sm:text-base text-neutral-600 dark:text-[#A1A1AA] leading-relaxed max-w-2xl ${reveal(isOpen)}`}
+                            style={{ transitionDelay: isOpen ? '120ms' : '0ms' }}
                           >
-                            <p {...edit(`skills.${index}.desc`)} className="text-sm sm:text-base text-neutral-600 dark:text-[#A1A1AA] leading-relaxed max-w-2xl">
-                              {skill.desc}
-                            </p>
+                            {skill.desc}
+                          </p>
 
-                            {/* Tags des outils */}
-                            <div className="flex flex-wrap gap-2 pt-1 pb-1">
-                              {skill.tools.map((tool, t) => (
-                                <span
-                                  key={tool}
-                                  {...edit(`skills.${index}.tools.${t}`)}
-                                  className="h-7 px-3 rounded-full text-xs font-medium inline-flex items-center bg-black/[0.05] text-neutral-800 dark:bg-white/[0.08] dark:text-neutral-200"
-                                >
-                                  {tool}
-                                </span>
-                              ))}
-                            </div>
-                          </motion.div>
-                        ) : (
-                          <div className="hidden lg:flex items-center h-8 text-xs text-neutral-500 dark:text-neutral-400 group-hover:text-neutral-700 dark:group-hover:text-neutral-300 transition-colors">
-                            <span>{lang === 'fr' ? 'Survoler pour afficher' : 'Hover to reveal'}</span>
+                          {/* Tags des outils */}
+                          <div className="flex flex-wrap gap-2 pt-1 pb-1">
+                            {skill.tools.map((tool, t) => (
+                              <span
+                                key={tool}
+                                {...edit(`skills.${index}.tools.${t}`)}
+                                className={`h-7 px-3 rounded-full text-xs font-medium inline-flex items-center bg-black/[0.05] text-neutral-800 dark:bg-white/[0.08] dark:text-neutral-200 ${pop(isOpen)}`}
+                                style={{ transitionDelay: isOpen ? `${260 + t * 70}ms` : '0ms' }}
+                              >
+                                {tool}
+                              </span>
+                            ))}
                           </div>
-                        )}
-                      </AnimatePresence>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
