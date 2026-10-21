@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState, FormEvent } from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
+import { motion, AnimatePresence, useInView, useReducedMotion } from 'motion/react';
 import { useContact } from '../content/ContentContext';
 import { useLanguage } from '../context/LanguageContext';
 import { Link, privacyPath, sectionPath } from '../router';
 import { Add01Icon, ArrowUpRight01Icon, Call02Icon, Copy01Icon, Linkedin02Icon, Loading03Icon, Mail01Icon, Tick02Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
-import { ContactRow, FloatingField, RevealHeadline, RevealWords, Signature } from './ContactExtras';
+import { chipVariants, ContactRow, FloatingField, formRowVariants, RevealHeadline, RevealWords, Signature } from './ContactExtras';
 
 const TOPICS = {
   fr: ['Projet', 'Collaboration', 'Travail de Bachelor', 'Stage / emploi', 'Autre'],
@@ -35,6 +35,11 @@ export function ContactSection() {
   const thanksRef = useRef<HTMLHeadingElement>(null);
   const thanksBoxRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
+  // The form's rows come in once its first row is reached, and leave together after sending
+  const formTopRef = useRef<HTMLParagraphElement>(null);
+  const formSeen = useInView(formTopRef, { once: true, amount: 'some', margin: '0px 0px -10% 0px' });
+  const rowState = phase === 'leaving' ? 'leaving' : formSeen ? 'shown' : 'hidden';
+  const row = (i: number) => ({ variants: formRowVariants, custom: i, initial: 'hidden', animate: rowState });
 
   const [formData, setFormData] = useState({
     name: '',
@@ -240,14 +245,13 @@ export function ContactSection() {
           {phase !== 'sent' ? (
           <form
             onSubmit={handleFormSubmit}
-            data-leaving={phase === 'leaving' || undefined}
-            className="contents [&>*]:transition-[opacity,transform] [&>*]:duration-300 [&>*]:ease-out data-[leaving]:[&>*]:opacity-0 data-[leaving]:[&>*]:-translate-y-2"
+            className="contents"
           >
             {/* Row 1 — label */}
-            <p id="contact-topic-label" className="lg:col-span-7 lg:row-start-1 mb-3 lg:mb-4 self-end eyebrow text-white/70">
+            <motion.p ref={formTopRef} {...row(0)} id="contact-topic-label" className="lg:col-span-7 lg:row-start-1 mb-3 lg:mb-4 self-end eyebrow text-white/70">
               {lang === 'fr' ? 'Votre demande concerne' : 'This is about'}
               <span aria-hidden="true"> *</span>
-            </p>
+            </motion.p>
 
             {/* Row 2 — topic choice (one tap instead of typing a subject), required. Real buttons
                 (the pointer outline wraps them, like every other button),
@@ -256,7 +260,8 @@ export function ContactSection() {
                 Grid, so a second line stays a clean block: phones 2 columns with the long "Bachelor"
                 chip across both; wider screens 3 chips then 2 (6-column grid), each row filling the width,
                 so no single chip looks more important than the others. */}
-            <div
+            <motion.div
+              {...row(1)}
               role="radiogroup"
               aria-labelledby="contact-topic-label"
               aria-required="true"
@@ -279,8 +284,10 @@ export function ContactSection() {
                       // Roving focus: only the chosen chip (or the first one) is a Tab stop
                       const tabStop = formData.subject ? selected : i === 0;
                       return (
-                        <button
+                        <motion.button
                           key={topic}
+                          variants={chipVariants}
+                          custom={i}
                           type="button"
                           role="radio"
                           aria-checked={selected}
@@ -288,7 +295,7 @@ export function ContactSection() {
                           onClick={() => chooseTopic(topic)}
                           className={`font-syne group h-11 px-2.5 sm:px-3 max-[359px]:text-[13px] inline-flex items-center justify-center gap-1.5 rounded-full border text-sm font-bold whitespace-nowrap ${
                             i === 2 ? 'col-span-2' : i < 2 ? 'sm:col-span-2' : 'sm:col-span-3'
-                          } transition-[background-color,border-color,color,transform] duration-200 active:scale-[0.97] cursor-pointer ${
+                          } transition-[background-color,border-color,color,scale] duration-200 active:scale-[0.97] cursor-pointer ${
                             selected
                               ? 'bg-white border-white text-[var(--accent-light)]'
                               : `bg-transparent text-white hover:bg-white/15 hover:border-white ${topicMissing ? 'border-white' : 'border-white/50'}`
@@ -305,7 +312,7 @@ export function ContactSection() {
                             />
                           </span>
                           {topic}
-                        </button>
+                        </motion.button>
                       );
                     })}
               {topicMissing && (
@@ -313,10 +320,10 @@ export function ContactSection() {
                   {lang === 'fr' ? 'Choisissez le sujet de votre demande.' : 'Choose what your message is about.'}
                 </p>
               )}
-            </div>
+            </motion.div>
 
             {/* Row 3 — name + email, underlines on the row's bottom edge */}
-            <div className="lg:col-span-7 lg:row-start-3 self-end grid grid-cols-1 sm:grid-cols-2 gap-x-9 gap-y-2 pt-8">
+            <motion.div {...row(2)} className="lg:col-span-7 lg:row-start-3 self-end grid grid-cols-1 sm:grid-cols-2 gap-x-9 gap-y-2 pt-8">
               <FloatingField
                 id="contact-name"
                 name="name"
@@ -338,9 +345,10 @@ export function ContactSection() {
                 error={emailInvalid ? (lang === 'fr' ? 'Cette adresse email semble incomplète.' : 'This email address looks incomplete.') : undefined}
                 onBlur={(el) => setEmailInvalid(el.value.length > 0 && !el.validity.valid)}
               />
-            </div>
+            </motion.div>
 
             {/* Row 4 — message */}
+            <motion.div {...row(3)} className="lg:col-span-7 lg:row-start-4 self-end pt-10">
             <FloatingField
               id="contact-message"
               name="message"
@@ -349,8 +357,8 @@ export function ContactSection() {
               required
               value={formData.message}
               onChange={(v) => setFormData({ ...formData, message: v })}
-              className="lg:col-span-7 lg:row-start-4 self-end pt-10"
             />
+            </motion.div>
 
               {/* Honeypot: off-screen, skipped by keyboard and screen readers */}
               <div className="absolute -left-[9999px] w-px h-px overflow-hidden" aria-hidden="true">
@@ -367,7 +375,7 @@ export function ContactSection() {
               </div>
 
             {/* Row 5 — status + submit */}
-            <div className="lg:col-span-7 lg:row-start-5 pt-10 space-y-5">
+            <motion.div {...row(4)} className="lg:col-span-7 lg:row-start-5 pt-10 space-y-5">
                 {/* Submit Status Feedback (announced by screen readers) */}
                 <div role="status" aria-live="polite">
                   <AnimatePresence>
@@ -434,7 +442,7 @@ export function ContactSection() {
                   </Link>
                 </p>
               </div>
-            </div>
+            </motion.div>
           </form>
           ) : (
             /* Thank-you, in the form's place (rows 1–5 of the left column) */
@@ -479,9 +487,15 @@ export function ContactSection() {
           )}
 
           {/* Direct contact rows (rows 1–4 of the right column) */}
-          <p className="mt-16 lg:mt-0 lg:col-start-8 lg:col-span-5 lg:row-start-1 mb-3 lg:mb-4 self-end eyebrow text-white/70">
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-16 lg:mt-0 lg:col-start-8 lg:col-span-5 lg:row-start-1 mb-3 lg:mb-4 self-end eyebrow text-white/70"
+          >
             {lang === 'fr' ? 'Ou directement' : 'Or directly'}
-          </p>
+          </motion.p>
           <ul role="list" className="contents">
             <ContactRow
               className="lg:col-start-8 lg:col-span-5 lg:row-start-2 border-t"
@@ -503,6 +517,7 @@ export function ContactSection() {
               }
             />
             <ContactRow
+              index={1}
               className="lg:col-start-8 lg:col-span-5 lg:row-start-3"
               icon={<Icon icon={Call02Icon} className="w-5 h-5" />}
               label={lang === 'fr' ? 'Téléphone' : 'Phone'}
@@ -510,6 +525,7 @@ export function ContactSection() {
               href={`tel:${contact.phone.replace(/\s/g, '')}`}
             />
             <ContactRow
+              index={2}
               className="lg:col-start-8 lg:col-span-5 lg:row-start-4"
               icon={<Icon icon={Linkedin02Icon} className="w-5 h-5" />}
               label="LinkedIn"

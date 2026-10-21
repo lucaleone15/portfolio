@@ -3,7 +3,7 @@ import { Icon } from './Icon';
 import { motion } from 'motion/react';
 import { useContact, useSite } from '../content/ContentContext';
 import { useEditAttrs, useEditing } from '../content/edit';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
 /**
@@ -195,33 +195,35 @@ export function AboutSection() {
             </div>
 
 
-            {/* Langues & Centres d'intérêt */}
+            {/* Langues & Centres d'intérêt: the rows come in one by one as the block is reached,
+                each divider drawing itself from the left; on hover a row's name slides over
+                behind a short accent dash */}
             <div className="pt-4 border-t border-black/[0.08] dark:border-white/[0.08] grid grid-cols-1 sm:grid-cols-2 gap-6">
               {/* Langues: plain rows (not pills: nothing here is clickable) */}
               <div className="space-y-3">
                 <div className="eyebrow text-neutral-500 dark:text-[#A1A1AA]">
                   <span>{t('about.languagesTitle')}</span>
                 </div>
-                <ul className="divide-y divide-black/[0.06] dark:divide-white/[0.06]">
+                <ul>
                   {languages.map((item, idx) => (
-                    <li key={`lang-${idx}`} {...edit(`about.languages.${idx}`)} className="flex items-baseline justify-between gap-4 py-2 first:pt-0 last:pb-0">
-                      <span {...edit(`about.languages.${idx}.name`)} className="text-base font-semibold text-neutral-900 dark:text-white">{item.name}</span>
+                    <InfoRow key={`lang-${idx}`} index={idx} {...edit(`about.languages.${idx}`)}>
+                      <RowName {...edit(`about.languages.${idx}.name`)}>{item.name}</RowName>
                       <span {...edit(`about.languages.${idx}.level`)} className="text-sm text-neutral-500 dark:text-[#A1A1AA]">{item.level}</span>
-                    </li>
+                    </InfoRow>
                   ))}
                 </ul>
               </div>
 
-              {/* Passions: the same plain rows as the languages */}
+              {/* Passions: the same plain rows as the languages, a beat later */}
               <div className="space-y-3">
                 <div className="eyebrow text-neutral-500 dark:text-[#A1A1AA]">
                   <span>{t('about.passionsTitle')}</span>
                 </div>
-                <ul className="divide-y divide-black/[0.06] dark:divide-white/[0.06]">
+                <ul>
                   {passions.map((item, idx) => (
-                    <li key={`passion-${idx}`} {...edit(`about.passions.${idx}`)} className="py-2 first:pt-0 last:pb-0 text-base font-semibold text-neutral-900 dark:text-white">
-                      {item}
-                    </li>
+                    <InfoRow key={`passion-${idx}`} index={idx} delay={0.12} {...edit(`about.passions.${idx}`)}>
+                      <RowName>{item}</RowName>
+                    </InfoRow>
                   ))}
                 </ul>
               </div>
@@ -368,5 +370,60 @@ export function AboutSection() {
         </div>
       </div>
     </section>
+  );
+}
+
+const ROW_EASE = [0.16, 1, 0.3, 1] as const;
+// The divider follows its row's state: scaled to nothing, a line has no area to be "in view"
+const rowVariants = {
+  hidden: { opacity: 0, x: -14 },
+  shown: (at: number) => ({ opacity: 1, x: 0, transition: { duration: 0.55, delay: at, ease: ROW_EASE } }),
+};
+const dividerVariants = {
+  hidden: { scaleX: 0 },
+  shown: (at: number) => ({ scaleX: 1, transition: { duration: 0.8, delay: at, ease: ROW_EASE } }),
+};
+
+/** A language or interest row: rises in after the ones above it, its divider drawn from the left */
+function InfoRow({ index, delay = 0, children, ...attrs }: { index: number; delay?: number; children: ReactNode } & Record<string, unknown>) {
+  const at = delay + index * 0.08;
+  return (
+    <motion.li
+      {...attrs}
+      variants={rowVariants}
+      custom={at}
+      initial="hidden"
+      whileInView="shown"
+      viewport={{ once: true, margin: '-40px' }}
+      className="group/row relative flex items-baseline justify-between gap-4 py-2 first:pt-0 last:pb-0"
+    >
+      {index > 0 && (
+        <motion.span
+          aria-hidden="true"
+          variants={dividerVariants}
+          custom={at}
+          className="absolute left-0 right-0 top-0 h-px origin-left bg-black/[0.06] dark:bg-white/[0.06]"
+        />
+      )}
+      {children}
+    </motion.li>
+  );
+}
+
+/** The row's name: on hover it slides right behind a short accent dash */
+function RowName({ children, ...attrs }: { children: ReactNode } & Record<string, unknown>) {
+  return (
+    <span className="relative inline-flex items-baseline text-base font-semibold text-neutral-900 dark:text-white">
+      <span
+        aria-hidden="true"
+        className="absolute left-0 top-1/2 h-0.5 w-3 -translate-y-1/2 origin-left scale-x-0 rounded-full bg-[var(--accent)] transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover/row:scale-x-100"
+      />
+      <span
+        {...attrs}
+        className="transition-[translate,color] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] motion-safe:group-hover/row:translate-x-5 group-hover/row:text-[var(--accent)]"
+      >
+        {children}
+      </span>
+    </span>
   );
 }

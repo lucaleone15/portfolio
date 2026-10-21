@@ -213,7 +213,7 @@
    "preset": "front"
   },
   "align": 0.5,
-  "fitted_from": "matiere/_mockup-src/kv-update.png"
+  "fitted_from": "matiere/_mockup-src/kv-calendrier.png"
  },
  {
   "name": "karting__app-selection",
@@ -231,7 +231,7 @@
    "preset": "front"
   },
   "align": 0.5,
-  "fitted_from": "matiere/_mockup-src/kv-results.png"
+  "fitted_from": "matiere/_mockup-src/kv-resultats-2.png"
  },
  {
   "name": "karting__app-podium",
@@ -249,7 +249,34 @@
    "preset": "front"
   },
   "align": 0.5,
-  "fitted_from": "matiere/_mockup-src/kv-podium.png"
+  "fitted_from": "matiere/_mockup-src/kv-podium-2.png"
+ },
+ {
+  "name": "karting__app-visuels",
+  "model": "social-card",
+  "images": [
+   "matiere/kartingvuiteboeuf/visuels-app/00-cover.png",
+   "matiere/kartingvuiteboeuf/visuels-app/00a-podium-photo.png",
+   "matiere/kartingvuiteboeuf/visuels-app/01-junior-cup-pro-c1.png"
+  ],
+  "params": {
+   "account": "kartingvuiteboeuf",
+   "caption": "Les résultats de la Junior Cup Pro 🏁",
+   "avatarFit": "fill"
+  },
+  "paramImages": {
+   "avatar": "matiere/kartingvuiteboeuf/LOGO/KV - Logo/1.png"
+  },
+  "bg": [
+   "#e92643",
+   "#0d0e10"
+  ],
+  "resolution": "4k",
+  "ratio": "4:3",
+  "camera": {
+   "preset": "front"
+  },
+  "row": 14
  },
  {
   "name": "karting__posts-ask",

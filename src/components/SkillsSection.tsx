@@ -127,7 +127,7 @@ export function SkillsSection() {
                       toggleSkill(skill.id);
                     }
                   }}
-                  className="relative py-7 sm:py-8 pr-14 sm:pr-20 cursor-pointer select-none"
+                  className="relative py-7 sm:py-8 pl-4 sm:pl-6 pr-14 sm:pr-20 cursor-pointer select-none"
                 >
                   {/* An accent line draws itself under the open row */}
                   <span

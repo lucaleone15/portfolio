@@ -48,8 +48,30 @@ export function RevealHeadline({ className = '', children }: { className?: strin
 }
 
 /**
+ * The contact form's entrance: its rows rise in one after another once the form is reached
+ * (custom = the row's place), and fade up and out when a sent message gives way to the
+ * thank-you. Children follow the same states: the topic chips pop in one by one, the field
+ * lines draw themselves from the left.
+ */
+const EASE_OUT = [0.16, 1, 0.3, 1] as const;
+export const formRowVariants = {
+  hidden: { opacity: 0, y: 24 },
+  shown: (i: number) => ({ opacity: 1, y: 0, transition: { duration: 0.7, delay: i * 0.09, ease: EASE_OUT } }),
+  leaving: { opacity: 0, y: -8, transition: { duration: 0.3, ease: 'easeOut' as const } },
+};
+export const chipVariants = {
+  hidden: { opacity: 0, scale: 0.8, y: 10 },
+  shown: (i: number) => ({ opacity: 1, scale: 1, y: 0, transition: { delay: 0.2 + i * 0.06, type: 'spring' as const, stiffness: 420, damping: 22 } }),
+};
+const lineVariants = {
+  hidden: { scaleX: 0 },
+  shown: { scaleX: 1, transition: { duration: 0.9, delay: 0.25, ease: EASE_OUT } },
+};
+
+/**
  * Text field whose label sits inside the field and floats up when focused or filled; an
- * accent underline draws from the left on focus. Errors appear under the field.
+ * accent underline draws from the left on focus. Errors appear under the field. Its resting
+ * line is drawn in by the form's entrance (lineVariants).
  */
 export function FloatingField({
   id,
@@ -79,9 +101,7 @@ export function FloatingField({
   className?: string;
 }) {
   // Styled for the accent contact sheet (white on accent); autofill keeps the sheet's colours
-  const fieldClass = `peer w-full bg-transparent border-b pt-6 pb-2.5 text-base sm:text-lg text-white caret-white outline-none placeholder-transparent transition-colors [&:-webkit-autofill]:[-webkit-text-fill-color:white] [&:-webkit-autofill]:[transition:background-color_99999s] ${
-    error ? 'border-white' : 'border-white/35'
-  }`;
+  const fieldClass = `peer w-full bg-transparent pt-6 pb-2.5 text-base sm:text-lg text-white caret-white outline-none placeholder-transparent border-b border-transparent [&:-webkit-autofill]:[-webkit-text-fill-color:white] [&:-webkit-autofill]:[transition:background-color_99999s]`;
   const common = {
     id,
     name,
@@ -113,6 +133,11 @@ export function FloatingField({
         {label}
         {required && <span aria-hidden="true"> *</span>}
       </label>
+      <motion.span
+        variants={lineVariants}
+        className={`pointer-events-none absolute left-0 bottom-0 h-px w-full origin-left transition-colors ${error ? 'bg-white' : 'bg-white/35'}`}
+        aria-hidden="true"
+      />
       <span
         className="pointer-events-none absolute left-0 bottom-0 h-[2px] w-full origin-left scale-x-0 bg-white transition-transform duration-300 ease-out peer-focus:scale-x-100"
         aria-hidden="true"
@@ -141,6 +166,7 @@ export function ContactRow({
   trailing,
   aside,
   className = '',
+  index = 0,
 }: {
   icon: ReactNode;
   label: string;
@@ -153,9 +179,17 @@ export function ContactRow({
   /** Secondary action beside the row (e.g. copy), outside the link */
   aside?: ReactNode;
   className?: string;
+  /** Place in the list: the rows slide in one after another */
+  index?: number;
 }) {
   return (
-    <li className={`flex border-b border-white/25 ${className}`}>
+    <motion.li
+      initial={{ opacity: 0, x: 24 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.7, delay: 0.1 + index * 0.1, ease: EASE_OUT }}
+      className={`flex border-b border-white/25 ${className}`}
+    >
       <a
         href={href}
         onClick={onClick}
@@ -183,7 +217,7 @@ export function ContactRow({
         </span>
       </a>
       {aside}
-    </li>
+    </motion.li>
   );
 }
 
