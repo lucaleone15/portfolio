@@ -3,6 +3,7 @@ on the site's two reds). Writes public/favicon.svg and the PNGs (rendered by hea
 so they match the SVG exactly):
 
   favicon-32.png        browser tabs (full mark)
+  favicon.ico           16/32/48 px, for the browsers and crawlers that only ask for /favicon.ico
   apple-touch-icon.png  iOS home screen, 180 px (iOS rounds the corners itself: small margin)
   icon-192/512.png      Android / manifest, "maskable": the Ls stay inside the central safe
                         zone, the two reds run to the edges
@@ -59,6 +60,9 @@ def render(svg_text, size, out, transparent=False):
 
 open(os.path.join(PUBLIC, 'favicon.svg'), 'w').write(svg(radius=14))
 render(svg(), 32, os.path.join(PUBLIC, 'favicon-32.png'))
+with tempfile.TemporaryDirectory() as tmp:
+    render(svg(), 256, os.path.join(tmp, 'ico.png'))
+    Image.open(os.path.join(tmp, 'ico.png')).save(os.path.join(PUBLIC, 'favicon.ico'), sizes=[(16, 16), (32, 32), (48, 48)])
 render(svg(scale=0.86), 180, os.path.join(PUBLIC, 'apple-touch-icon.png'))
 render(svg(scale=0.78), 192, os.path.join(PUBLIC, 'icon-192.png'))
 render(svg(scale=0.78), 512, os.path.join(PUBLIC, 'icon-512.png'))

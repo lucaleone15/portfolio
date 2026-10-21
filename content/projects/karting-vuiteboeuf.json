@@ -729,18 +729,18 @@
             "steps": [
               {
                 "text": {
-                  "fr": "Un clic sur « Mettre à jour » récupère le calendrier, les résultats et les classements du circuit sur SWS (je valide moi-même la vérification anti-robot du site). L’app signale ce qui a changé depuis la dernière fois.",
-                  "en": "One click on “Mettre à jour” fetches the track’s calendar, results and standings from SWS (I pass the site’s anti-bot check myself). The app flags what has changed since last time.",
-                  "enOf": "015e84f8"
+                  "fr": "Un clic sur « Mettre à jour » récupère le calendrier, les résultats et les classements du circuit sur SWS (je valide moi-même la vérification anti-robot du site). L’app signale ce qui a changé depuis la dernière fois : les nouvelles courses sont entourées, et les pilotes qui ont bougé au classement montrent leur progression.",
+                  "en": "One click on “Mettre à jour” fetches the track’s calendar, results and standings from SWS (I pass the site’s anti-bot check myself). The app flags what has changed since last time: new races are outlined, and drivers who moved in the standings show how far.",
+                  "enOf": "00dd65fd"
                 },
                 "image": {
-                  "src": "/images/case/karting/app-mise-a-jour-mockup-2.webp",
+                  "src": "/images/case/karting/app-mise-a-jour-mockup-3.webp",
                   "width": 1600,
                   "height": 1200,
                   "alt": {
-                    "fr": "Application Karting Vuiteboeuf : calendrier des courses et bandeau « 8 nouveaux résultats · 4 changements de classement »",
-                    "en": "Karting Vuiteboeuf app: race calendar and a banner reading “8 new results · 4 standings changes”",
-                    "enOf": "692cf801"
+                    "fr": "Application Karting Vuiteboeuf : calendrier des courses, bandeau « 2 nouvelles courses au calendrier · 18 nouveaux résultats · 25 changements de classement » et la nouvelle course entourée en rouge",
+                    "en": "Karting Vuiteboeuf app: race calendar, a banner reading “2 new races in the calendar · 18 new results · 25 standings changes” and the new race outlined in red",
+                    "enOf": "10c0a8e2"
                   }
                 }
               },
@@ -751,30 +751,47 @@
                   "enOf": "7f8c4aba"
                 },
                 "image": {
-                  "src": "/images/case/karting/app-selection-mockup-2.webp",
+                  "src": "/images/case/karting/app-selection-mockup-3.webp",
                   "width": 1600,
                   "height": 1200,
                   "alt": {
-                    "fr": "Section Résultats de l’application, quatre courses Junior Cup cochées et le bouton « Générer les visuels (4) »",
-                    "en": "Results section of the app, four Junior Cup races ticked and the “Generate visuals (4)” button",
-                    "enOf": "a5515dcb"
+                    "fr": "Section Résultats de l’application, les nouveaux résultats entourés, quatre courses Junior Cup Pro cochées et le bouton « Générer les visuels (4) »",
+                    "en": "Results section of the app, new results outlined, four Junior Cup Pro races ticked and the “Generate visuals (4)” button",
+                    "enOf": "a95d427f"
                   }
                 }
               },
               {
                 "text": {
-                  "fr": "Pour mettre un visage sur chaque place, j’importe la photo du podium et je place un cadre sur chacun des trois premiers : l’app découpe la photo et met chaque pilote à sa place. La photo de groupe peut aussi s’ajouter en slide, juste après la couverture. (Ici, une photo et des noms fictifs.)",
-                  "en": "To put a face on each place, I import the podium photo and draw a frame on each of the top three: the app crops the photo and puts every driver in their spot. The group photo can also go in as a slide, right after the cover. (Here, a made-up photo and names.)",
-                  "enOf": "1feba121"
+                  "fr": "Pour mettre un visage sur chaque place, j’importe la photo du podium : les cadres des trois premiers sont déjà placés dans l’ordre de la marche (2e, 1er, 3e), je n’ai qu’à les ajuster. L’app découpe la photo et met chaque pilote à sa place ; un pilote parti avant la photo reçoit une carte aux couleurs du karting. (Ici, les noms des trois premiers sont inventés.)",
+                  "en": "To put a face on each place, I import the podium photo: the frames for the top three are already laid out in step order (2nd, 1st, 3rd), I only adjust them. The app crops the photo and puts every driver in their spot; a driver who left before the photo gets a card in the karting’s colours. (Here, the top three’s names are made up.)",
+                  "enOf": "e0161fe7"
                 },
                 "image": {
-                  "src": "/images/case/karting/app-podium-mockup-2.webp",
+                  "src": "/images/case/karting/app-podium-mockup-3.webp",
                   "width": 1600,
                   "height": 1200,
                   "alt": {
-                    "fr": "Recadrage d’une photo de podium dans l’app : un cadre de couleur sur chacun des trois pilotes, avec son nom (photo et noms fictifs pour l’exemple)",
-                    "en": "Cropping a podium photo in the app: a coloured frame on each of the three drivers, with their name (photo and names made up for the example)",
-                    "enOf": "77ec2cb5"
+                    "fr": "Recadrage de la photo du podium dans l’app : un cadre de couleur sur chacun des trois pilotes, avec son nom (noms inventés pour l’exemple)",
+                    "en": "Cropping the podium photo in the app: a coloured frame on each of the three drivers, with their name (names made up for the example)",
+                    "enOf": "934769ad"
+                  }
+                }
+              },
+              {
+                "text": {
+                  "fr": "Il ne reste qu’à publier : la couverture, la photo du podium en slide, puis le podium et le top 10 de chaque course, avec la photo de chaque pilote, au format Instagram.",
+                  "en": "All that’s left is to post: the cover, the podium photo as a slide, then each race’s podium and top 10, with each driver’s photo, in Instagram format.",
+                  "enOf": "d0d279f8"
+                },
+                "image": {
+                  "src": "/images/case/karting/app-visuels-mockup.webp",
+                  "width": 1600,
+                  "height": 1200,
+                  "alt": {
+                    "fr": "Trois slides générées par l’app, en publications Instagram du Karting de Vuiteboeuf : la couverture « Les résultats Junior Cup Pro », la photo du podium, puis le podium de la Junior Cup Pro C1 avec la photo des trois premiers et le classement",
+                    "en": "Three slides generated by the app, as Karting de Vuiteboeuf Instagram posts: the “Les résultats Junior Cup Pro” cover, the podium photo, then the Junior Cup Pro C1 podium with photos of the top three and the standings",
+                    "enOf": "3a74d9f0"
                   }
                 }
               }
