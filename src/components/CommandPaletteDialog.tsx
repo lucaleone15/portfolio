@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Command } from 'cmdk';
-import { ArrowUpRight01Icon, Copy01Icon, Folder01Icon, GithubIcon, HashtagIcon, InstagramIcon, Linkedin02Icon, Moon02Icon, Pdf02Icon, Search01Icon, Sun03Icon, TranslateIcon } from '@hugeicons/core-free-icons';
+import { ArrowUpRight01Icon, Copy01Icon, Folder01Icon, GithubIcon, HashtagIcon, Linkedin02Icon, Moon02Icon, Pdf02Icon, Search01Icon, Sun03Icon, TranslateIcon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
@@ -189,13 +189,6 @@ export default function CommandPaletteDialog({ open, onOpenChange }: { open: boo
             <Command.Item value="github code" onSelect={() => run(() => window.open(contact.github, '_blank', 'noopener'))} className={item}>
               <Icon icon={GithubIcon} className="w-4 h-4 shrink-0 opacity-60" />
               GitHub
-              <Icon icon={ArrowUpRight01Icon} className="w-3.5 h-3.5 ml-auto opacity-50" />
-            </Command.Item>
-          )}
-          {contact.instagram && (
-            <Command.Item value="instagram photo video" onSelect={() => run(() => window.open(contact.instagram, '_blank', 'noopener'))} className={item}>
-              <Icon icon={InstagramIcon} className="w-4 h-4 shrink-0 opacity-60" />
-              Instagram
               <Icon icon={ArrowUpRight01Icon} className="w-3.5 h-3.5 ml-auto opacity-50" />
             </Command.Item>
           )}

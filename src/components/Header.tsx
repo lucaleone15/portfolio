@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { ArrowUpRight01Icon, Cancel01Icon, GithubIcon, InstagramIcon, Linkedin02Icon, Menu01Icon, Moon02Icon, Sun03Icon } from '@hugeicons/core-free-icons';
+import { ArrowUpRight01Icon, Cancel01Icon, GithubIcon, Linkedin02Icon, Menu01Icon, Moon02Icon, Sun03Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
 import { motion, AnimatePresence, useScroll } from 'motion/react';
 import { useContact } from '../content/ContentContext';
@@ -269,25 +269,17 @@ export function Header({ activeSection }: HeaderProps) {
                   <Icon icon={ArrowUpRight01Icon} className="w-3 h-3" />
                 </a>
 
-                {/* GitHub and Instagram: icons only, the row stays one line on phones */}
-                {[
-                  { href: contact.github, icon: GithubIcon, label: 'GitHub' },
-                  { href: contact.instagram, icon: InstagramIcon, label: 'Instagram' },
-                ].map(
-                  (p) =>
-                    p.href && (
-                      <a
-                        key={p.label}
-                        href={p.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={p.label}
-                        title={p.label}
-                        className="shrink-0 w-10 rounded-full bg-black/[0.05] hover:bg-black hover:text-white dark:bg-white/[0.08] dark:hover:bg-white dark:hover:text-black text-neutral-900 dark:text-white inline-flex items-center justify-center transition-colors cursor-pointer"
-                      >
-                        <Icon icon={p.icon} className="w-4 h-4" />
-                      </a>
-                    ),
+                {contact.github && (
+                  <a
+                    href={contact.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 py-2.5 rounded-full bg-black/[0.05] hover:bg-black hover:text-white dark:bg-white/[0.08] dark:hover:bg-white dark:hover:text-black text-neutral-900 dark:text-white font-bold inline-flex items-center justify-center gap-1.5 transition-colors text-xs cursor-pointer"
+                  >
+                    <Icon icon={GithubIcon} className="w-4 h-4" />
+                    <span>GitHub</span>
+                    <Icon icon={ArrowUpRight01Icon} className="w-3 h-3" />
+                  </a>
                 )}
 
                 <a

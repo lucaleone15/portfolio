@@ -212,7 +212,7 @@ export const SiteSchema = z.object({
       phone: str('Téléphone'),
       linkedin: str('LinkedIn'),
       github: str('GitHub').optional(),
-      instagram: str('Instagram').optional(),
+      instagram: str('Instagram (données structurées et llms.txt, pas affiché sur le site)').optional(),
       cv: str('CV (pdf)'),
     })
     .describe('Contact'),

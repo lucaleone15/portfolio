@@ -4,7 +4,7 @@ import { useContact } from '../content/ContentContext';
 import { useLanguage } from '../context/LanguageContext';
 import { formatDate, siteDates } from '../content/pageDates';
 import { Link, privacyPath, sectionPath } from '../router';
-import { Add01Icon, ArrowUpRight01Icon, Call02Icon, Copy01Icon, GithubIcon, InstagramIcon, Linkedin02Icon, Loading03Icon, Mail01Icon, Tick02Icon } from '@hugeicons/core-free-icons';
+import { Add01Icon, ArrowUpRight01Icon, Call02Icon, Copy01Icon, GithubIcon, Linkedin02Icon, Loading03Icon, Mail01Icon, Tick02Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
 import { chipVariants, ContactRow, FloatingField, formRowVariants, RevealHeadline, RevealWords, Signature } from './ContactExtras';
 
@@ -487,19 +487,12 @@ export function ContactSection() {
             </motion.div>
           )}
 
-          {/* Direct contact rows (rows 1–4 of the right column) */}
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-16 lg:mt-0 lg:col-start-8 lg:col-span-5 lg:row-start-1 mb-3 lg:mb-4 self-end eyebrow text-white/70"
-          >
-            {lang === 'fr' ? 'Ou directement' : 'Or directly'}
-          </motion.p>
-          <ul role="list" className="contents">
+          {/* Direct contact rows, beside the form from the topics down */}
+          {/* A card of its own beside the form: its rows don't try to line up with the form's
+              fields, so the two sets of lines never look almost-but-not-quite aligned */}
+          <ul role="list" className="mt-16 lg:mt-0 lg:col-start-8 lg:col-span-5 lg:row-start-2 lg:row-span-4 self-start overflow-hidden rounded-3xl bg-white/[0.07] ring-1 ring-inset ring-white/20">
             <ContactRow
-              className="lg:col-start-8 lg:col-span-5 lg:row-start-2 border-t"
+              className="last:border-b-0"
               icon={<Icon icon={Mail01Icon} className="w-5 h-5" />}
               label={copied ? (lang === 'fr' ? 'Adresse copiée' : 'Address copied') : 'Email'}
               value={PRIMARY_EMAIL}
@@ -519,7 +512,7 @@ export function ContactSection() {
             />
             <ContactRow
               index={1}
-              className="lg:col-start-8 lg:col-span-5 lg:row-start-3"
+              className="last:border-b-0"
               icon={<Icon icon={Call02Icon} className="w-5 h-5" />}
               label={lang === 'fr' ? 'Téléphone' : 'Phone'}
               value={contact.phone}
@@ -527,44 +520,23 @@ export function ContactSection() {
             />
             <ContactRow
               index={2}
-              className="lg:col-start-8 lg:col-span-5 lg:row-start-4"
+              className="last:border-b-0"
               icon={<Icon icon={Linkedin02Icon} className="w-5 h-5" />}
               label="LinkedIn"
               value="in/leone-luca"
               href={contact.linkedin}
               external
             />
-            {/* GitHub and Instagram: pills level with the send button, so the rows above stay
-                aligned with the form's lines */}
-            {(contact.github || contact.instagram) && (
-              <motion.li
-                initial={{ opacity: 0, x: 24 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.7, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="lg:col-start-8 lg:col-span-5 lg:row-start-5 self-start pt-6 lg:pt-[5.625rem] flex flex-wrap gap-2"
-              >
-                {[
-                  { href: contact.github, icon: GithubIcon, label: 'GitHub' },
-                  { href: contact.instagram, icon: InstagramIcon, label: 'Instagram' },
-                ].map(
-                  (p) =>
-                    p.href && (
-                      <a
-                        key={p.label}
-                        href={p.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-syne group h-11 px-4 inline-flex items-center gap-2 rounded-full border border-white/50 text-sm font-bold text-white hover:bg-white/15 hover:border-white transition-colors active:scale-[0.97]"
-                      >
-                        <Icon icon={p.icon} className="w-4 h-4" />
-                        {p.label}
-                        <Icon icon={ArrowUpRight01Icon} className="w-3.5 h-3.5 opacity-70 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                        <span className="sr-only">{lang === 'fr' ? '(nouvel onglet)' : '(opens in a new tab)'}</span>
-                      </a>
-                    ),
-                )}
-              </motion.li>
+            {contact.github && (
+              <ContactRow
+                index={3}
+                className="last:border-b-0"
+                icon={<Icon icon={GithubIcon} className="w-5 h-5" />}
+                label="GitHub"
+                value={contact.github.replace(/^https?:\/\/(www\.)?github\.com\//, '').replace(/\/$/, '')}
+                href={contact.github}
+                external
+              />
             )}
           </ul>
           {/* Copy confirmation for screen readers */}
@@ -605,11 +577,6 @@ export function ContactSection() {
             {contact.github && (
               <a href={contact.github} target="_blank" rel="noopener noreferrer" className="whitespace-nowrap font-medium hover:text-white transition-colors">
                 GitHub
-              </a>
-            )}
-            {contact.instagram && (
-              <a href={contact.instagram} target="_blank" rel="noopener noreferrer" className="whitespace-nowrap font-medium hover:text-white transition-colors">
-                Instagram
               </a>
             )}
             <Link href={privacyPath(lang)} className="whitespace-nowrap font-medium hover:text-white transition-colors">
