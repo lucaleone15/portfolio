@@ -6,6 +6,16 @@ import { useEditAttrs, useEditing } from '../content/edit';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
+/** A school's or employer's name, linked to its own site when the content gives one */
+function Linked({ href, children }: { href?: string; children: ReactNode }) {
+  if (!href) return <>{children}</>;
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" className="underline decoration-current/30 underline-offset-2 transition-colors hover:text-[var(--accent)]">
+      {children}
+    </a>
+  );
+}
+
 /**
  * A bio paragraph: each word its own span (they sharpen while read); "**…**" marks what stands
  * out, in bold (see .bio-mark). Spaces stay plain text, so punctuation right after a marked
@@ -279,7 +289,7 @@ export function AboutSection() {
                         </>
                       ) : (
                         <>
-                          {item.company} {item.location ? `· ${item.location}` : ''}
+                          <Linked href={item.url}>{item.company}</Linked> {item.location ? `· ${item.location}` : ''}
                         </>
                       )}
                     </p>
@@ -351,7 +361,7 @@ export function AboutSection() {
                         </>
                       ) : (
                         <>
-                          {item.institution} · {item.location}
+                          <Linked href={item.url}>{item.institution}</Linked> · {item.location}
                         </>
                       )}
                     </p>

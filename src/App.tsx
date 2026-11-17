@@ -9,7 +9,6 @@ import { ContactSection } from './components/ContactSection';
 import { ProjectDetailView } from './components/ProjectDetailView';
 import { PointerHighlight } from './components/PointerHighlight';
 import { CommandPalette } from './components/CommandPalette';
-import { LanguageHint } from './components/LanguageHint';
 import { IntroCurtain, skipIntro } from './components/IntroCurtain';
 import { NotFound } from './components/NotFound';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
@@ -119,9 +118,6 @@ function PortfolioApp() {
 
       {/* ⌘K / Ctrl+K */}
       <CommandPalette />
-
-      {/* "English version available" for browsers that don't ask for French (and vice versa) */}
-      <LanguageHint />
 
       {/* Editorial Navigation Masthead */}
       <Header activeSection={activeSection} />

@@ -4,6 +4,7 @@
   "name": "Étoile Blanche",
   "number": "04",
   "year": "2026",
+  "published": "2026-10-08",
   "imageUrl": "/images/etoile-blanche-apercu.webp",
   "stack": [
     {
@@ -678,6 +679,24 @@
       "fr": "Agence Zest, Bachelor en Ingénierie des médias, HEIG-VD, pour le restaurant L’Étoile Blanche à Lausanne.",
       "en": "Zest agency, Bachelor in Media Engineering, HEIG-VD, for L’Étoile Blanche restaurant in Lausanne.",
       "enOf": "c18ce3c8"
-    }
+    },
+    "sources": [
+      {
+        "label": {
+          "fr": "L’Étoile Blanche · bar-restaurant à Lausanne",
+          "en": "L’Étoile Blanche · bar-restaurant in Lausanne",
+          "enOf": "915f964c"
+        },
+        "href": "https://etoileblanche.ch/"
+      },
+      {
+        "label": {
+          "fr": "HEIG-VD · ingénierie des médias",
+          "en": "HEIG-VD · Media Engineering",
+          "enOf": "f6fa277e"
+        },
+        "href": "https://heig-vd.ch/formation/bachelor/ingenierie-des-medias"
+      }
+    ]
   }
 }

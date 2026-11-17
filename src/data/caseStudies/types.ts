@@ -68,6 +68,8 @@ export interface CaseStudy {
   hero?: CaseImage;
   /** Public links shown under the intro (live site, social accounts…) */
   links?: { label: string; href: string }[];
+  /** External sources the case study relies on (client, data, tools), listed at the bottom */
+  sources?: { label: string; href: string }[];
   brief: { label: string; text: string }[];
   sections: CaseSection[];
   credits: { name: string; role: string }[];

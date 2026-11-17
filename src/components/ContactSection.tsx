@@ -2,8 +2,9 @@ import { useEffect, useRef, useState, FormEvent } from 'react';
 import { motion, AnimatePresence, useInView, useReducedMotion } from 'motion/react';
 import { useContact } from '../content/ContentContext';
 import { useLanguage } from '../context/LanguageContext';
+import { formatDate, siteDates } from '../content/pageDates';
 import { Link, privacyPath, sectionPath } from '../router';
-import { Add01Icon, ArrowUpRight01Icon, Call02Icon, Copy01Icon, Linkedin02Icon, Loading03Icon, Mail01Icon, Tick02Icon } from '@hugeicons/core-free-icons';
+import { Add01Icon, ArrowUpRight01Icon, Call02Icon, Copy01Icon, GithubIcon, InstagramIcon, Linkedin02Icon, Loading03Icon, Mail01Icon, Tick02Icon } from '@hugeicons/core-free-icons';
 import { Icon } from './Icon';
 import { chipVariants, ContactRow, FloatingField, formRowVariants, RevealHeadline, RevealWords, Signature } from './ContactExtras';
 
@@ -533,6 +534,38 @@ export function ContactSection() {
               href={contact.linkedin}
               external
             />
+            {/* GitHub and Instagram: pills level with the send button, so the rows above stay
+                aligned with the form's lines */}
+            {(contact.github || contact.instagram) && (
+              <motion.li
+                initial={{ opacity: 0, x: 24 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.7, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="lg:col-start-8 lg:col-span-5 lg:row-start-5 self-start pt-6 lg:pt-[5.625rem] flex flex-wrap gap-2"
+              >
+                {[
+                  { href: contact.github, icon: GithubIcon, label: 'GitHub' },
+                  { href: contact.instagram, icon: InstagramIcon, label: 'Instagram' },
+                ].map(
+                  (p) =>
+                    p.href && (
+                      <a
+                        key={p.label}
+                        href={p.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-syne group h-11 px-4 inline-flex items-center gap-2 rounded-full border border-white/50 text-sm font-bold text-white hover:bg-white/15 hover:border-white transition-colors active:scale-[0.97]"
+                      >
+                        <Icon icon={p.icon} className="w-4 h-4" />
+                        {p.label}
+                        <Icon icon={ArrowUpRight01Icon} className="w-3.5 h-3.5 opacity-70 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                        <span className="sr-only">{lang === 'fr' ? '(nouvel onglet)' : '(opens in a new tab)'}</span>
+                      </a>
+                    ),
+                )}
+              </motion.li>
+            )}
           </ul>
           {/* Copy confirmation for screen readers */}
           <span className="sr-only" role="status" aria-live="polite">{copied ? (lang === 'fr' ? 'Adresse copiée' : 'Address copied') : ''}</span>
@@ -543,13 +576,16 @@ export function ContactSection() {
             then "back to top" on its own line. Wider screens: one row. */}
         <footer className="mt-20 pt-8 border-t border-white/20 flex flex-col items-center gap-5 text-xs text-white/80 sm:flex-row sm:flex-wrap sm:justify-between">
           <div className="flex items-center gap-2 whitespace-nowrap">
-            <span className="font-bold text-white inline-flex items-baseline">
+            {/* The author's page */}
+            <Link href={sectionPath(lang, 'a-propos')} rel="author" className="font-bold text-white inline-flex items-baseline hover:text-white/80 transition-colors">
               Luca Leone<span className="text-[#0A0A0C] font-bold">.</span>
-            </span>
+            </Link>
             {/* Year may differ between build time and visit: not a real mismatch */}
             <span className="font-medium" suppressHydrationWarning>© {new Date().getFullYear()}</span>
             <span className="text-white/50">·</span>
-            <span className="font-medium">HEIG-VD</span>
+            <a href="https://heig-vd.ch/" target="_blank" rel="noopener noreferrer" className="font-medium hover:text-white transition-colors">
+              HEIG-VD
+            </a>
           </div>
           <nav aria-label={lang === 'fr' ? 'Pied de page' : 'Footer'} className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
             <Link href={sectionPath(lang, 'projets')} className="whitespace-nowrap font-medium hover:text-white transition-colors">
@@ -566,10 +602,25 @@ export function ContactSection() {
             >
               LinkedIn
             </a>
+            {contact.github && (
+              <a href={contact.github} target="_blank" rel="noopener noreferrer" className="whitespace-nowrap font-medium hover:text-white transition-colors">
+                GitHub
+              </a>
+            )}
+            {contact.instagram && (
+              <a href={contact.instagram} target="_blank" rel="noopener noreferrer" className="whitespace-nowrap font-medium hover:text-white transition-colors">
+                Instagram
+              </a>
+            )}
             <Link href={privacyPath(lang)} className="whitespace-nowrap font-medium hover:text-white transition-colors">
               {lang === 'fr' ? 'Confidentialité' : 'Privacy'}
             </Link>
           </nav>
+          {/* Last real update of the page (git, at build time) */}
+          <p className="whitespace-nowrap font-medium">
+            {lang === 'fr' ? 'Mis à jour le ' : 'Updated '}
+            <time dateTime={siteDates().modified}>{formatDate(siteDates().modified, lang)}</time>
+          </p>
           <button
             type="button"
             onClick={() =>

@@ -12,7 +12,7 @@ const root = process.cwd();
 const dist = path.join(root, process.env.BUILD_OUT_DIR || 'dist');
 const ssrEntry = path.join(root, 'dist-ssr', 'entry-server.js');
 
-const { render, getAllRoutes, getHeadData, renderHeadTags, renderSitemap, projectImagePaths, pathFor, USER_INFO, CONTENT, DERIVED_FILES, fillDerivedFile, checkContent, generateShareImages } = await import(
+const { render, getAllRoutes, getHeadData, renderHeadTags, renderSitemap, pathFor, USER_INFO, CONTENT, DERIVED_FILES, fillDerivedFile, checkContent, generateShareImages } = await import(
   pathToFileURL(ssrEntry).href
 );
 
@@ -62,8 +62,8 @@ for (const lang of ['fr', 'en']) {
   console.log(`prerendered ${file}`);
 }
 
-// Sitemap lastmod = date of the last commit touching the files a page is made of, so it only
-// moves when the page's content does. Without git (or for files never committed): today.
+// Sitemap: each page's lastmod is its dateModified (scripts/page-dates.mjs, read from git at
+// build time). The CV's: date of the last commit touching it. Without git: today.
 const today = new Date().toISOString().slice(0, 10);
 const lastCommit = (paths) => {
   try {
@@ -78,28 +78,7 @@ const lastCommit = (paths) => {
   }
 };
 
-const HOME_SOURCES = [
-  'content/site.json',
-  'content/projects.json',
-  ':(glob)content/projects/*.json',
-  'src/context/LanguageContext.tsx',
-  ...['Hero', 'HeroBandeau', 'SkillsSection', 'ProjectsSection', 'ProjectCard', 'AboutSection', 'ContactSection', 'ContactExtras'].map(
-    (name) => `src/components/${name}.tsx`,
-  ),
-  ':(glob)public/images/*.webp',
-];
-const sourcesFor = (route) => {
-  if (route.name === 'project') {
-    const folders = new Set(projectImagePaths(route.lang, route.slug).map((src) => `public${path.posix.dirname(src)}`));
-    return [`content/projects/${route.slug}.json`, ...folders];
-  }
-  return HOME_SOURCES;
-};
-
-const sitemap = renderSitemap({
-  page: (route) => lastCommit(sourcesFor(route)),
-  cv: lastCommit([path.posix.join('public', USER_INFO.cv)]),
-});
+const sitemap = renderSitemap({ cv: lastCommit([path.posix.join('public', USER_INFO.cv)]) });
 fs.writeFileSync(path.join(dist, 'sitemap.xml'), sitemap);
 console.log('wrote sitemap.xml');
 

@@ -6,6 +6,7 @@ import { projectSeo, toCaseStudy, toProject, toSite, visibleProjects } from './c
 import { SITE_PAGES } from './content/sitePages';
 import { fillTemplate } from './content/derived';
 import { personalShareImage, projectShareImage, SHARE_SIZE } from './content/og';
+import { projectDates, siteDates, type PageDates } from './content/pageDates';
 import { homePath, pathFor, privacyPath, projectPath, Route, SECTION_IDS, SectionId, sectionPath } from './router';
 
 /**
@@ -39,7 +40,15 @@ export interface HeadData {
   jsonLd: object | null;
   /** Kept out of search results (404, privacy policy): robots noindex, left out of the sitemap */
   noindex?: boolean;
+  /** Publication and last real update (home and project pages) */
+  dates?: PageDates;
 }
+
+/** The author's page: the "about" section of the home page in that language */
+export const authorUrl = (lang: Language) => abs(sectionPath(lang, 'a-propos'));
+
+/** The author, as every page's structured data names it */
+const authorRef = () => ({ '@type': 'Person', '@id': PERSON_ID, name: USER_INFO.name, url: `${SITE_URL}/` });
 
 export function getAllRoutes(): Route[] {
   const langs: Language[] = ['fr', 'en'];
@@ -126,7 +135,7 @@ function personNode() {
     url: `${SITE_URL}/`,
     image: { '@type': 'ImageObject', '@id': `${SITE_URL}/#portrait`, url: PORTRAIT_URL, caption: 'Portrait de Luca Leone' },
     mainEntityOfPage: { '@id': `${SITE_URL}/#profile-page` },
-    sameAs: ['https://www.linkedin.com/in/leone-luca'],
+    sameAs: ['https://www.linkedin.com/in/leone-luca', CONTENT.site.contact.github, CONTENT.site.contact.instagram].filter(Boolean),
     alumniOf: {
       '@type': 'EducationalOrganization',
       '@id': `${SITE_URL}/#heig-vd`,
@@ -139,6 +148,12 @@ function personNode() {
       '@type': 'Organization',
       '@id': `${SITE_URL}/#karting-vuiteboeuf`,
       name: 'Karting de Vuiteboeuf',
+      url: 'https://www.kartingvuiteboeuf.ch/',
+      sameAs: [
+        'https://www.instagram.com/kartingvuiteboeuf/',
+        'https://www.tiktok.com/@kartingvuiteboeuf',
+        'https://www.facebook.com/KartingVuiteboeuf/',
+      ],
       address: { '@type': 'PostalAddress', addressLocality: 'Vuiteboeuf', addressRegion: 'Vaud', addressCountry: 'CH' },
     },
     homeLocation: {
@@ -178,6 +193,7 @@ function homeHead(lang: Language): HeadData {
   const copy = HOME_COPY[lang];
   const url = abs(homePath(lang));
   const projects = projectsFor(lang);
+  const dates = siteDates();
 
   return {
     lang,
@@ -188,6 +204,7 @@ function homeHead(lang: Language): HeadData {
     ogType: 'profile',
     image: ogImageUrl(lang),
     imageAlt: copy.ogAlt,
+    dates,
     jsonLd: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -201,6 +218,10 @@ function homeHead(lang: Language): HeadData {
           description: copy.description,
           inLanguage: IN_LANGUAGE[lang],
           isPartOf: { '@id': WEBSITE_ID },
+          dateCreated: dates.published,
+          datePublished: dates.published,
+          dateModified: dates.modified,
+          author: { '@id': PERSON_ID },
           mainEntity: { '@id': PERSON_ID },
           primaryImageOfPage: { '@id': `${SITE_URL}/#portrait` },
           hasPart: { '@id': `${url}#projects` },
@@ -284,6 +305,8 @@ function projectHead(lang: Language, slug: string): HeadData | null {
   const meta = META[slug]?.[lang];
   const title = meta?.title ?? `${project.name} – ${project.subtitle} | Luca Leone`;
   const description = meta?.description ?? project.summary;
+  const study = getCaseStudy(slug, lang);
+  const dates = projectDates(slug, project.published);
 
   return {
     lang,
@@ -295,6 +318,7 @@ function projectHead(lang: Language, slug: string): HeadData | null {
     // The project's own share card (scripts/share-images.mjs), 1200×630
     image: CONTENT.projects[slug] ? abs(projectShareImage(CONTENT.projects[slug], lang, CONTENT.site)) : images[0],
     imageAlt: `${project.name} – ${project.subtitle}`,
+    dates,
     jsonLd: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -310,22 +334,32 @@ function projectHead(lang: Language, slug: string): HeadData | null {
           mainEntity: { '@id': `${url}#work` },
           breadcrumb: { '@id': `${url}#breadcrumb` },
           primaryImageOfPage: { '@type': 'ImageObject', url: images[0] },
+          datePublished: dates.published,
+          dateModified: dates.modified,
         },
         {
-          '@type': 'CreativeWork',
+          // The case study, written by Luca: an article about the project
+          '@type': 'Article',
           '@id': `${url}#work`,
           url,
+          mainEntityOfPage: { '@id': `${url}#webpage` },
           name: project.name,
-          headline: project.subtitle,
+          headline: study?.title ?? project.subtitle,
+          alternativeHeadline: project.subtitle,
           description,
           abstract: project.overview,
+          articleSection: project.category,
           genre: project.category,
           image: images,
           dateCreated: project.year,
+          datePublished: dates.published,
+          dateModified: dates.modified,
           inLanguage: IN_LANGUAGE[lang],
           keywords: project.stack.join(', '),
-          author: { '@id': PERSON_ID },
+          author: authorRef(),
           creator: { '@id': PERSON_ID },
+          publisher: { '@id': PERSON_ID },
+          ...(study?.sources?.length ? { citation: study.sources.map((s) => ({ '@type': 'CreativeWork', name: s.label, url: s.href })) } : {}),
         },
         {
           '@type': 'BreadcrumbList',
@@ -336,7 +370,6 @@ function projectHead(lang: Language, slug: string): HeadData | null {
             { '@type': 'ListItem', position: 3, name: project.name, item: url },
           ],
         },
-        { '@type': 'Person', '@id': PERSON_ID, name: USER_INFO.name, url: `${SITE_URL}/` },
         { '@type': 'WebSite', '@id': WEBSITE_ID, url: `${SITE_URL}/`, name: 'Luca Leone – Portfolio' },
       ],
     },
@@ -448,6 +481,7 @@ export function renderHeadTags(head: HeadData): string {
     `<meta name="description" content="${escapeAttr(head.description)}" />`,
     ...(head.noindex ? [`<meta name="robots" content="noindex, follow" />`] : []),
     `<link rel="canonical" href="${head.canonical}" />`,
+    `<link rel="author" href="${authorUrl(head.lang)}" />`,
     ...head.alternates.map((a) => `<link rel="alternate" hreflang="${a.hreflang}" href="${a.href}" />`),
     `<meta property="og:type" content="${head.ogType}" />`,
     `<meta property="og:url" content="${head.url ?? head.canonical}" />`,
@@ -461,6 +495,13 @@ export function renderHeadTags(head: HeadData): string {
       ? [`<meta property="og:image:width" content="${SHARE_SIZE.width}" />`, `<meta property="og:image:height" content="${SHARE_SIZE.height}" />`]
       : []),
     `<meta property="og:image:alt" content="${escapeAttr(head.imageAlt)}" />`,
+    ...(head.ogType === 'article' && head.dates
+      ? [
+          `<meta property="article:published_time" content="${head.dates.published}" />`,
+          `<meta property="article:modified_time" content="${head.dates.modified}" />`,
+          `<meta property="article:author" content="${SITE_URL}/" />`,
+        ]
+      : []),
     `<meta name="twitter:card" content="summary_large_image" />`,
     `<meta name="twitter:title" content="${escapeAttr(head.title)}" />`,
     `<meta name="twitter:description" content="${escapeAttr(head.description)}" />`,
@@ -474,11 +515,12 @@ export function renderHeadTags(head: HeadData): string {
 /**
  * sitemap.xml: indexable canonical pages only (the section URLs point to the home page, the
  * privacy policy is noindex), each with its
- * FR/EN alternates and the images it shows (Google Images), plus the CV. `lastmod` comes
- * from the caller (scripts/prerender.mjs: date of the page's last commit), so it only moves
- * when the page really changes; Google ignores a lastmod that changes on every build.
+ * FR/EN alternates and the images it shows (Google Images), plus the CV. A page's `lastmod` is
+ * its dateModified (src/content/pageDates.ts: date of its last commit), so it only moves when the
+ * page really changes; Google ignores a lastmod that changes on every build. The CV's comes
+ * from the caller (scripts/prerender.mjs).
  */
-export function renderSitemap(lastmod: { page: (route: Route) => string; cv: string }): string {
+export function renderSitemap(lastmod: { cv: string }): string {
   const imageTags = (paths: string[]) => paths.map((p) => `    <image:image><image:loc>${abs(p)}</image:loc></image:image>`);
 
   const pages = getAllRoutes()
@@ -495,7 +537,7 @@ export function renderSitemap(lastmod: { page: (route: Route) => string; cv: str
       return [
         '  <url>',
         `    <loc>${head.canonical}</loc>`,
-        `    <lastmod>${lastmod.page(route)}</lastmod>`,
+        `    <lastmod>${head.dates?.modified ?? siteDates().modified}</lastmod>`,
         ...links,
         ...imageTags(images),
         '  </url>',

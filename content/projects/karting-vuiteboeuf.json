@@ -4,6 +4,7 @@
   "name": "Karting de Vuiteboeuf",
   "number": "02",
   "year": "2026",
+  "published": "2026-10-02",
   "imageUrl": "/images/karting-vuiteboeuf-apercu.webp",
   "stack": [
     {
@@ -986,6 +987,40 @@
       "fr": "Emploi au Karting de Vuiteboeuf (VD), en parallèle du Bachelor en Ingénierie des médias, HEIG-VD.",
       "en": "Job at Karting de Vuiteboeuf (Vaud), alongside the Bachelor in Media Engineering, HEIG-VD.",
       "enOf": "65be5949"
-    }
+    },
+    "sources": [
+      {
+        "label": {
+          "fr": "Karting de Vuiteboeuf · site officiel",
+          "en": "Karting de Vuiteboeuf · official site",
+          "enOf": "37874a81"
+        },
+        "href": "https://www.kartingvuiteboeuf.ch/"
+      },
+      {
+        "label": {
+          "fr": "SWS · résultats et classements des courses",
+          "en": "SWS · race results and rankings",
+          "enOf": "fe0a599b"
+        },
+        "href": "https://www.sodiwseries.com/"
+      },
+      {
+        "label": {
+          "fr": "Electron",
+          "en": "Electron",
+          "enOf": "826d7453"
+        },
+        "href": "https://www.electronjs.org/"
+      },
+      {
+        "label": {
+          "fr": "Playwright",
+          "en": "Playwright",
+          "enOf": "42e9ab46"
+        },
+        "href": "https://playwright.dev/"
+      }
+    ]
   }
 }

@@ -131,6 +131,10 @@ export const StudySchema = z
     meta: z.array(z.object({ label: txt('Libellé'), value: txt('Valeur') }).describe('Info')).describe('Infos clés'),
     hero: ImageSchema.describe('Visuel principal').optional(),
     links: z.array(z.object({ label: txt('Libellé'), href: str('Adresse') }).describe('Lien')).describe('Liens publics').optional(),
+    sources: z
+      .array(z.object({ label: txt('Libellé'), href: str('Adresse') }).describe('Source'))
+      .describe('Sources externes (en bas de page)')
+      .optional(),
     brief: z.array(z.object({ label: txt('Libellé'), text: txt('Texte (long)') }).describe('Point')).describe('Brief'),
     sections: z.array(SectionSchema).describe('Sections'),
     credits: z.array(z.object({ name: str('Nom'), role: txt('Rôle') }).describe('Crédit')).describe('Crédits'),
@@ -156,6 +160,11 @@ export const StoredProjectSchema = z
     name: str('Nom'),
     number: str('Numéro'),
     year: str('Année'),
+    published: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/)
+      .describe('Date de publication (AAAA-MM-JJ ; vide : jour du premier enregistrement)')
+      .optional(),
     imageUrl: str('Couverture (image)'),
     stack: z.array(txt('Outil')).describe('Outils'),
     accentColor: str('Couleur du projet').optional(),
@@ -197,7 +206,15 @@ export { SITE_PAGES };
 
 export const SiteSchema = z.object({
   contact: z
-    .object({ name: str('Nom'), email: str('Email'), phone: str('Téléphone'), linkedin: str('LinkedIn'), cv: str('CV (pdf)') })
+    .object({
+      name: str('Nom'),
+      email: str('Email'),
+      phone: str('Téléphone'),
+      linkedin: str('LinkedIn'),
+      github: str('GitHub').optional(),
+      instagram: str('Instagram').optional(),
+      cv: str('CV (pdf)'),
+    })
     .describe('Contact'),
   hero: z
     .object({
@@ -221,14 +238,14 @@ export const SiteSchema = z.object({
       education: z
         .array(
           z
-            .object({ period: txt('Période'), title: txt('Titre'), institution: str('École'), location: txt('Lieu'), details: txt('Détails (long)') })
+            .object({ period: txt('Période'), title: txt('Titre'), institution: str('École'), url: str('Site de l’école').optional(), location: txt('Lieu'), details: txt('Détails (long)') })
             .describe('Formation'),
         )
         .describe('Formation'),
       experience: z
         .array(
           z
-            .object({ period: txt('Période'), title: txt('Poste'), company: str('Entreprise'), location: txt('Lieu'), description: txt('Description (long)') })
+            .object({ period: txt('Période'), title: txt('Poste'), company: str('Entreprise'), url: str('Site de l’entreprise').optional(), location: txt('Lieu'), description: txt('Description (long)') })
             .describe('Expérience'),
         )
         .describe('Expériences'),

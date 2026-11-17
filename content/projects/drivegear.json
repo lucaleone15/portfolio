@@ -4,6 +4,7 @@
   "name": "DriveGear",
   "number": "05",
   "year": "2025",
+  "published": "2026-10-02",
   "imageUrl": "/images/drivegear-apercu.webp",
   "stack": [
     {
@@ -539,6 +540,40 @@
       "fr": "Cours E-commerce du Bachelor en Ingénierie des médias, HEIG-VD, avec le professeur Arnaud Dufour.",
       "en": "E-commerce course of the Bachelor in Media Engineering, HEIG-VD, with Professor Arnaud Dufour.",
       "enOf": "29a67052"
-    }
+    },
+    "sources": [
+      {
+        "label": {
+          "fr": "WooCommerce",
+          "en": "WooCommerce",
+          "enOf": "46e34a7f"
+        },
+        "href": "https://woocommerce.com/"
+      },
+      {
+        "label": {
+          "fr": "Yoast SEO",
+          "en": "Yoast SEO",
+          "enOf": "b964c7be"
+        },
+        "href": "https://yoast.com/"
+      },
+      {
+        "label": {
+          "fr": "Google Analytics 4",
+          "en": "Google Analytics 4",
+          "enOf": "fe24fc0e"
+        },
+        "href": "https://marketingplatform.google.com/about/analytics/"
+      },
+      {
+        "label": {
+          "fr": "HEIG-VD · ingénierie des médias",
+          "en": "HEIG-VD · Media Engineering",
+          "enOf": "f6fa277e"
+        },
+        "href": "https://heig-vd.ch/formation/bachelor/ingenierie-des-medias"
+      }
+    ]
   }
 }

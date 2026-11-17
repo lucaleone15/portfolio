@@ -18,6 +18,8 @@ export interface Project {
   number: string;
   subtitle: string;
   year: string;
+  /** Publication date of the project's page (YYYY-MM-DD), when set by hand */
+  published?: string;
   category: string;
   hook?: string;
   badge?: string;

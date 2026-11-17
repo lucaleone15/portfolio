@@ -4,6 +4,7 @@
   "name": "HUG",
   "number": "01",
   "year": "2026",
+  "published": "2026-10-02",
   "imageUrl": "/images/hug-apercu.webp",
   "stack": [
     {
@@ -1027,6 +1028,40 @@
       "fr": "Projet d’intégration du Bachelor en Ingénierie des médias, HEIG-VD, pour le Centre de transfusion sanguine des HUG.",
       "en": "Integration project of the Bachelor in Media Engineering, HEIG-VD, for the HUG Blood Transfusion Centre.",
       "enOf": "a42ce9e1"
-    }
+    },
+    "sources": [
+      {
+        "label": {
+          "fr": "HUG · le don du sang à Genève",
+          "en": "HUG · blood donation in Geneva",
+          "enOf": "95368701"
+        },
+        "href": "https://www.hug.ch/don-du-sang"
+      },
+      {
+        "label": {
+          "fr": "HEIG-VD · ingénierie des médias",
+          "en": "HEIG-VD · Media Engineering",
+          "enOf": "f6fa277e"
+        },
+        "href": "https://heig-vd.ch/formation/bachelor/ingenierie-des-medias"
+      },
+      {
+        "label": {
+          "fr": "Laravel",
+          "en": "Laravel",
+          "enOf": "e3f40d32"
+        },
+        "href": "https://laravel.com/"
+      },
+      {
+        "label": {
+          "fr": "Vue.js",
+          "en": "Vue.js",
+          "enOf": "fff9acfc"
+        },
+        "href": "https://vuejs.org/"
+      }
+    ]
   }
 }

@@ -7,6 +7,7 @@ import {createAnalyticsHandler} from './server/analytics';
 import {createPodiumHandler} from './server/podium';
 import {createAdminRoutes} from './server/admin/routes';
 import {devEnv} from './server/devEnv';
+import {computePageDates} from './scripts/page-dates.mjs';
 import {createMessageStore} from './server/messages';
 import {execSync} from 'node:child_process';
 import {readFileSync} from 'node:fs';
@@ -101,7 +102,7 @@ export default defineConfig(({ isSsrBuild, mode }) => {
   const env = devEnv(mode, process.cwd());
   return {
     plugins: [contentForVisitors(), react(), tailwindcss(), siteApi(env)],
-    define: { __BUILD_INFO__: JSON.stringify(buildInfo()) },
+    define: { __BUILD_INFO__: JSON.stringify(buildInfo()), __PAGE_DATES__: JSON.stringify(computePageDates()) },
     build: {
       // The SSR bundle (dist-ssr) is only used by scripts/prerender.mjs: no need to copy public/
       copyPublicDir: !isSsrBuild,

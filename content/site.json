@@ -4,6 +4,8 @@
     "email": "luca@luca-leone.ch",
     "phone": "+41 79 868 72 04",
     "linkedin": "https://linkedin.com/in/leone-luca",
+    "github": "https://github.com/lucaleone15",
+    "instagram": "https://www.instagram.com/lucaleone.studio/",
     "cv": "/pdf/CV-LucaLeone2026.pdf"
   },
   "hero": {
@@ -163,6 +165,7 @@
           "enOf": "7c0b79c1"
         },
         "institution": "HEIG-VD",
+        "url": "https://heig-vd.ch/formation/bachelor/ingenierie-des-medias",
         "location": {
           "fr": "Yverdon-les-Bains",
           "en": "Yverdon-les-Bains",
@@ -186,6 +189,7 @@
           "enOf": "60603a1f"
         },
         "institution": "ERACOM",
+        "url": "https://eracom.ch/",
         "location": {
           "fr": "Lausanne",
           "en": "Lausanne",
@@ -209,6 +213,7 @@
           "enOf": "b3ddbcb2"
         },
         "institution": "Gymnase d'Yverdon",
+        "url": "https://gymnase-yverdon.ch/",
         "location": {
           "fr": "Yverdon-les-Bains",
           "en": "Yverdon-les-Bains",
@@ -234,6 +239,7 @@
           "enOf": "80b63cef"
         },
         "company": "Karting de Vuiteboeuf",
+        "url": "https://www.kartingvuiteboeuf.ch/",
         "location": {
           "fr": "",
           "en": "",
@@ -247,9 +253,9 @@
       },
       {
         "period": {
-          "fr": "Juillet 2022",
-          "en": "July 2022",
-          "enOf": "ce4e4040"
+          "fr": "Juin 2022",
+          "en": "June 2022",
+          "enOf": "430ee92f"
         },
         "title": {
           "fr": "Stagiaire",

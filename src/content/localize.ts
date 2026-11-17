@@ -68,6 +68,7 @@ export function toProject(p: StoredProject, lang: Language, keepIncomplete = fal
     name: p.name,
     number: p.number,
     year: p.year,
+    published: p.published,
     imageUrl: p.imageUrl,
     stack: localize<string[]>(p.stack, lang, keepIncomplete)!,
     accentColor: p.accentColor,
@@ -103,8 +104,8 @@ export interface LocalizedSite {
     quote: string;
     languages: { name: string; level: string }[];
     passions: string[];
-    education: { period: string; title: string; institution: string; location: string; details: string }[];
-    experience: { period: string; title: string; company: string; location: string; description: string }[];
+    education: { period: string; title: string; institution: string; url?: string; location: string; details: string }[];
+    experience: { period: string; title: string; company: string; url?: string; location: string; description: string }[];
   };
   skills: { id: string; number: string; title: string; desc: string; tools: string[] }[];
   seo: Record<keyof Site['seo'], { title: string; description: string }>;

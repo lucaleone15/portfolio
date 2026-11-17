@@ -19,7 +19,7 @@ test('a hidden project is nowhere', () => {
   expect(projectSlugs('fr')).not.toContain('drivegear');
   expect(projectSlugs('en')).not.toContain('drivegear');
   expect(visibleProjects(CONTENT, 'fr').map((p) => p.id)).not.toContain('drivegear');
-  const sitemap = renderSitemap({ page: () => '2026-10-18', cv: '2026-10-18' });
+  const sitemap = renderSitemap({ cv: '2026-10-18' });
   expect(sitemap).not.toContain('drivegear');
 });
 
@@ -28,7 +28,7 @@ test('a project without English exists in French only', () => {
   expect(projectSlugs('en')).not.toContain('oceansight');
   expect(toCaseStudy(CONTENT.projects.oceansight, 'en')).toBeNull();
   expect(getHeadData({ name: 'project', lang: 'fr', slug: 'oceansight' }).alternates.map((a) => a.hreflang)).toEqual(['fr', 'x-default']);
-  expect(renderSitemap({ page: () => '2026-10-18', cv: '2026-10-18' })).not.toContain('/en/projects/oceansight');
+  expect(renderSitemap({ cv: '2026-10-18' })).not.toContain('/en/projects/oceansight');
 });
 
 test('renamed projects redirect from content/projects.json', () => {

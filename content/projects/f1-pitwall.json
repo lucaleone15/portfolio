@@ -4,6 +4,7 @@
   "name": "F1 PitWall",
   "number": "06",
   "year": "2025",
+  "published": "2026-10-08",
   "imageUrl": "/images/f1-pitwall-apercu.webp",
   "stack": [
     {
@@ -634,6 +635,40 @@
       "fr": "Cours WebDon du Bachelor en Ingénierie des médias, HEIG-VD. Données et marques de Formule 1 utilisées à titre d’exemple.",
       "en": "WebDon course of the Bachelor in Media Engineering, HEIG-VD. Formula 1 data and brands used for illustration only.",
       "enOf": "e188cd5b"
-    }
+    },
+    "sources": [
+      {
+        "label": {
+          "fr": "OpenF1 · API de données de Formule 1",
+          "en": "OpenF1 · Formula 1 data API",
+          "enOf": "b7355c9e"
+        },
+        "href": "https://openf1.org/"
+      },
+      {
+        "label": {
+          "fr": "FastF1 · bibliothèque Python de données F1",
+          "en": "FastF1 · Python library for F1 data",
+          "enOf": "acddc243"
+        },
+        "href": "https://docs.fastf1.dev/"
+      },
+      {
+        "label": {
+          "fr": "LightGBM · documentation",
+          "en": "LightGBM · documentation",
+          "enOf": "63f8a526"
+        },
+        "href": "https://lightgbm.readthedocs.io/"
+      },
+      {
+        "label": {
+          "fr": "HEIG-VD · ingénierie des médias",
+          "en": "HEIG-VD · Media Engineering",
+          "enOf": "f6fa277e"
+        },
+        "href": "https://heig-vd.ch/formation/bachelor/ingenierie-des-medias"
+      }
+    ]
   }
 }

@@ -4,6 +4,7 @@
   "name": "OceanSight",
   "number": "03",
   "year": "2026",
+  "published": "2026-10-02",
   "imageUrl": "/images/oceansight-apercu.webp",
   "stack": [
     {
@@ -643,6 +644,32 @@
       "fr": "Cours Bases UI/UX du Bachelor en Ingénierie des médias, HEIG-VD. Accompagnement : Marie Kuter et Patrick Donaldson.",
       "en": "UI/UX Fundamentals course of the Bachelor in Media Engineering, HEIG-VD. Supervised by Marie Kuter and Patrick Donaldson.",
       "enOf": "d9ee2857"
-    }
+    },
+    "sources": [
+      {
+        "label": {
+          "fr": "ONU · ODD 14, vie aquatique",
+          "en": "UN · SDG 14, life below water",
+          "enOf": "eccb2a60"
+        },
+        "href": "https://sdgs.un.org/goals/goal14"
+      },
+      {
+        "label": {
+          "fr": "HEIG-VD · ingénierie des médias",
+          "en": "HEIG-VD · Media Engineering",
+          "enOf": "f6fa277e"
+        },
+        "href": "https://heig-vd.ch/formation/bachelor/ingenierie-des-medias"
+      },
+      {
+        "label": {
+          "fr": "Figma",
+          "en": "Figma",
+          "enOf": "c40cfa4b"
+        },
+        "href": "https://www.figma.com/"
+      }
+    ]
   }
 }

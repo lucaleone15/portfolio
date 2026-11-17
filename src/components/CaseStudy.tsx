@@ -11,6 +11,8 @@ import { PROJECT_KIND_LABEL } from '../data/portfolioData';
 import { projectMediaTransition } from '../viewTransitions';
 import type { CaseBlock, CaseFigure, CaseImage, CaseStep, CaseStudy as CaseStudyData } from '../data/caseStudies/types';
 import { EditSlot, EditWrap, useEditAt, useEditAttrs } from '../content/edit';
+import { formatDate, projectDates } from '../content/pageDates';
+import { sectionPath } from '../router';
 
 /**
  * Case study page told as a scroll story. One template for every project: the content
@@ -28,6 +30,15 @@ const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
 /** French typography: a narrow no-break space before ! ? ; : so they never start a line */
 const nbsp = (text: string) => text.replace(/ ([!?;:])/g, '\u202F$1');
+
+/** "example.ch" from "https://www.example.ch/page"; empty for an address that isn't one */
+function hostOf(href: string): string {
+  try {
+    return new URL(href).hostname.replace(/^www\./, '');
+  } catch {
+    return '';
+  }
+}
 
 /** Fades content up once as it enters the viewport */
 function Reveal({ children, className = '', delay = 0 }: { children: ReactNode; className?: string; delay?: number; key?: string | number }) {
@@ -643,6 +654,7 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
   const edit = useEditAttrs();
   const newTab = lang === 'fr' ? '(nouvel onglet)' : '(opens in a new tab)';
   const images = useMemo(() => caseImages(project, study), [project, study]);
+  const dates = projectDates(project.id, project.published);
   return (
     <LightboxProvider images={images}>
     <article>
@@ -700,6 +712,24 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
               </div>
             ))}
           </dl>
+          {/* Byline: who wrote it (link to the author's page) and when */}
+          <p className="mt-8 text-sm text-neutral-600 dark:text-[#A1A1AA]">
+            {lang === 'fr' ? 'Par ' : 'By '}
+            {/* Plain link: the case study also renders outside the router (admin preview) */}
+            <a href={sectionPath(lang, 'a-propos')} rel="author" className="font-bold text-neutral-900 underline decoration-black/20 underline-offset-4 transition-colors hover:decoration-current dark:text-white dark:decoration-white/30">
+              Luca Leone
+            </a>
+            {' · '}
+            {lang === 'fr' ? 'Publié le ' : 'Published '}
+            <time dateTime={dates.published}>{formatDate(dates.published, lang)}</time>
+            {dates.modified !== dates.published && (
+              <>
+                {' · '}
+                {lang === 'fr' ? 'mis à jour le ' : 'updated '}
+                <time dateTime={dates.modified}>{formatDate(dates.modified, lang)}</time>
+              </>
+            )}
+          </p>
         </Reveal>
       </header>
 
@@ -779,6 +809,33 @@ export function CaseStudy({ project, study }: { project: Project; study: CaseStu
         </ul>
         {study.creditsNote && <p {...edit('study.creditsNote')} className="mt-6 text-sm text-neutral-600 dark:text-[#A1A1AA]">{study.creditsNote}</p>}
       </section>
+
+      {/* External sources: the client, the data and the tools the case study relies on */}
+      {!!study.sources?.length && (
+        <section aria-labelledby="sources-title" className="mt-12 border-t border-black/10 dark:border-white/10 pt-10">
+          <h2 id="sources-title" className="eyebrow text-neutral-500 dark:text-[#A1A1AA]">
+            {lang === 'fr' ? 'Sources et liens' : 'Sources and links'}
+          </h2>
+          <ul className="mt-5 grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
+            {study.sources.map((source, i) => (
+              <li key={source.href} className="text-sm">
+                <a
+                  {...edit(`study.sources.${i}.label`)}
+                  href={source.href}
+                  target="_blank"
+                  rel="noopener"
+                  className="group inline-flex items-baseline gap-1.5 font-bold text-neutral-900 underline decoration-black/20 underline-offset-4 transition-colors hover:decoration-current dark:text-white dark:decoration-white/30"
+                >
+                  {source.label}
+                  <Icon icon={ArrowUpRight01Icon} className="w-3.5 h-3.5 self-center transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  <span className="sr-only">{newTab}</span>
+                </a>
+                {hostOf(source.href) && <span className="text-neutral-600 dark:text-[#A1A1AA]"> · {hostOf(source.href)}</span>}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
     </article>
     </LightboxProvider>
   );

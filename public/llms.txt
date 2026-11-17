@@ -9,6 +9,8 @@
 - [À Propos de Luca Leone](https://luca-leone.ch/a-propos)
 - [Contact Direct](https://luca-leone.ch/contact)
 - [Profil Professionnel LinkedIn](https://linkedin.com/in/leone-luca)
+- [Profil GitHub](https://github.com/lucaleone15)
+- [Instagram professionnel](https://www.instagram.com/lucaleone.studio/)
 - [CV de Luca Leone (PDF)](https://luca-leone.ch/pdf/CV-LucaLeone2026.pdf)
 
 ## À propos
@@ -16,7 +18,7 @@
 
 Luca Leone est un étudiant en dernière année de Bachelor en Ingénierie des Médias à la [HEIG-VD](https://heig-vd.ch) (Yverdon-les-Bains, Suisse). Son profil allie sensibilité graphique et compétences techniques dans le numérique. Il conçoit des projets digitaux de bout en bout : stratégie de communication, identité visuelle, interfaces UI/UX, développement de sites web interactifs et création de contenus audiovisuels.
 
-En parallèle de ses études, il exerce le rôle de Community Manager pour le [Karting de Vuiteboeuf](https://karting-vuiteboeuf.ch) (Canton de Vaud, Suisse), où il pilote la création de contenus photo et vidéo, l'animation des réseaux sociaux et le développement de la notoriété numérique de la marque.
+En parallèle de ses études, il exerce le rôle de Community Manager pour le [Karting de Vuiteboeuf](https://www.kartingvuiteboeuf.ch/) (Canton de Vaud, Suisse), où il pilote la création de contenus photo et vidéo, l'animation des réseaux sociaux et le développement de la notoriété numérique de la marque.
 
 ## Domaines d'expertise & Compétences
 - **Communication & Marketing Digital** : Stratégie de marque, Community Management, création de formats courts et engageants (Instagram, TikTok, LinkedIn), rédaction web, acquisition et promotion d'événements.
@@ -31,15 +33,25 @@ Chaque projet a sa propre étude de cas (contexte, démarche, résultats), en fr
 <!--projets:end-->
 
 ## Formation & Diplômes
-- **Bachelor of Science HES-SO en Ingénierie des Médias** : [HEIG-VD](https://heig-vd.ch), Yverdon-les-Bains, Suisse. Spécialisation en médias interactifs, gestion de projet et communication digitale.
+- **Bachelor of Science HES-SO en Ingénierie des Médias** : [HEIG-VD](https://heig-vd.ch/formation/bachelor/ingenierie-des-medias), Yverdon-les-Bains, Suisse. Spécialisation en médias interactifs, gestion de projet et communication digitale.
 
 ## Langues
 - Français (Langue maternelle)
 - Anglais (Niveau C1)
 - Italien (Niveau B2)
 
+## Questions fréquentes
+- **Qui est Luca Leone ?** Luca Leone est étudiant en dernière année de Bachelor en ingénierie des médias à la HEIG-VD, à Yverdon-les-Bains. Basé à Orbe, dans le canton de Vaud, il relie communication digitale, design UI/UX et développement web, de l’idée à la réalisation.
+- **Quelle formation suit-il ?** Un Bachelor of Science HES-SO en ingénierie des médias à la HEIG-VD (2024 – 2027) : marketing, gestion de projet, développement web et UX/UI. Avant, il a suivi une maturité spécialisée en communication et information à l’ERACOM, à Lausanne.
+- **Que fait-il au Karting de Vuiteboeuf ?** Depuis mai 2026, en parallèle de ses études, il est responsable de la communication digitale du Karting de Vuiteboeuf : stratégie, prises de vue photo et vidéo sur la piste, montage et publication sur Instagram, TikTok et Facebook.
+- **Que recherche-t-il ?** Une entreprise pour son travail de Bachelor, ainsi que des stages, des collaborations et des projets en communication digitale, design UI/UX ou développement web.
+- **Quelles langues parle-t-il ?** Le français (langue maternelle), l’anglais (niveau C1) et l’italien (niveau B2).
+- **Comment le contacter ?** Par le formulaire de contact de ce site, par e-mail à luca@luca-leone.ch, par téléphone au +41 79 868 72 04, sur LinkedIn ou sur Instagram (@lucaleone.studio).
+
 ## Contact & Réseaux
 - Email : [luca@luca-leone.ch](mailto:luca@luca-leone.ch)
 - Téléphone : [+41 79 868 72 04](tel:+41798687204)
 - LinkedIn : [Luca Leone sur LinkedIn](https://linkedin.com/in/leone-luca)
+- GitHub : [lucaleone15](https://github.com/lucaleone15)
+- Instagram : [@lucaleone.studio](https://www.instagram.com/lucaleone.studio/)
 - Localisation : Orbe (Canton de Vaud, Suisse romande) · études à la HEIG-VD, Yverdon-les-Bains
