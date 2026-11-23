@@ -123,6 +123,8 @@ npm start               # http://localhost:3000
 | `ADMIN_PUBLISH_MODE` | `git` sur le serveur (Publier = pull, commit, build, push), `files` en local (écrit seulement `content/` et `public/`) | `files` |
 | `ADMIN_GIT_SSH_KEY` | Clé privée de la clé de déploiement GitHub (serveur) | — |
 | `ADMIN_GIT_NAME` / `ADMIN_GIT_EMAIL` | Auteur des commits de l'admin | `Luca Leone (dashboard)` / `luca@luca-leone.ch` |
+| `DEPLOY_WEBHOOK_SECRET` | Secret du webhook GitHub : chaque push sur `main` met le site à jour (voir [Déploiement](#déploiement)) | — (pas de mise à jour automatique) |
+| `DEPLOY_RESTART` | `exit` : après un push qui change le code du serveur, l'application s'arrête pour qu'Infomaniak la relance | — (un email demande de redémarrer) |
 
 Sans configuration SMTP, le formulaire reste utilisable : il propose au visiteur d'envoyer son message depuis sa propre messagerie (lien pré-rempli).
 
@@ -137,6 +139,30 @@ npm ci
 npm run build
 npm start
 ```
+
+### Mise à jour automatique (push → en ligne)
+
+Chaque `git push` sur `main` met le site à jour tout seul : GitHub prévient le serveur (webhook signé sur `POST /api/deploy`), qui fait comme « Publier » dans l'atelier (`server/deploy.ts`) :
+
+1. `git fetch`, puis avance la copie du serveur (seulement si elle n'a pas divergé) ;
+2. `npm ci --include=dev`, seulement si `package.json` / `package-lock.json` ont changé ;
+3. construit le site à côté de celui en ligne (`dist-next`), plus l'atelier et le serveur si leur code a changé ;
+4. bascule `dist-next` → `dist` : le site en ligne ne s'arrête jamais.
+
+Un échec (build cassé, copie modifiée à la main…) ne change rien en ligne et la copie revient à son commit d'avant. Un email est envoyé (même compte SMTP que le formulaire). Un push pendant une publication de l'atelier attend qu'elle finisse ; deux pushes rapprochés font un second passage.
+
+**Le code du serveur** (`server/`, `src/content/`, dépendances) ne change qu'au redémarrage de l'application : après un tel push, un email demande de la redémarrer (Manager Infomaniak → site Node.js → Redémarrer). Avec `DEPLOY_RESTART=exit`, l'application s'arrête d'elle-même une fois le nouveau site en ligne, pour qu'Infomaniak la relance ; à n'activer qu'après avoir vérifié qu'Infomaniak relance bien une application arrêtée.
+
+Mise en place (une fois) :
+
+1. Générer un secret : `openssl rand -hex 32`.
+2. Dans le `.env` du serveur : `DEPLOY_WEBHOOK_SECRET=<le secret>`, puis redéployer une dernière fois à la main (voir plus bas) et redémarrer l'application.
+3. GitHub → dépôt → **Settings → Webhooks → Add webhook** : Payload URL `https://luca-leone.ch/api/deploy`, Content type `application/json`, Secret `<le même secret>`, « Just the push event ». GitHub envoie un `ping` : la livraison doit afficher **200 pong** (onglet *Recent Deliveries*).
+4. Pousser un petit changement et vérifier qu'il arrive en ligne (une à quelques minutes, le temps du build). En cas de doute : *Recent Deliveries* sur GitHub (doit afficher 202) et la console d'exécution du site dans le Manager (lignes `[deploy] …`).
+
+**Sans console, en secours** : dans le Manager (site Node.js → Configuration), mettre la commande de construction à `git pull --ff-only && npm ci --include=dev && npm run build` et la commande de lancement à `npm start`. Un clic sur « Redémarrer » refait alors un déploiement complet.
+
+### À la main
 
 Points d'attention :
 

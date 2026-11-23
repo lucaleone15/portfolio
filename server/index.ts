@@ -9,6 +9,8 @@ import { createPodiumHandler } from './podium';
 import { canonicalPagePath, loadRedirects } from './canonical';
 import { createAdminRoutes } from './admin/routes';
 import { createMessageStore } from './messages';
+import { createGit, runCommand } from './admin/git';
+import { createDeployer, createDeployHandler } from './deploy';
 
 /**
  * Production server (replaces `vite preview`, which Vite says isn't meant for production).
@@ -217,13 +219,43 @@ setInterval(() => messages.prune(), 86_400_000).unref();
 const contact = createContactHandler(env, { messages });
 const analytics = createAnalyticsHandler(env, dataDir);
 const podium = createPodiumHandler(dataDir);
-const admin = createAdminRoutes(env, {
-  dataDir,
+// Automatic deploy on every push to main (GitHub webhook → POST /api/deploy, server/deploy.ts)
+let deployer: ReturnType<typeof createDeployer> | null = null;
+const admin = createAdminRoutes(
+  env,
+  {
+    dataDir,
+    repoRoot: ROOT,
+    distAdmin: path.join(ROOT, 'dist-admin'),
+    notFound: sendNotFound,
+    onPublished: reloadDist,
+  },
+  { isBlocked: () => deployer?.isRunning() ?? false },
+);
+deployer = createDeployer({
   repoRoot: ROOT,
-  distAdmin: path.join(ROOT, 'dist-admin'),
-  notFound: sendNotFound,
-  onPublished: reloadDist,
+  git: createGit(runCommand, ROOT, {
+    sshKey: env.ADMIN_GIT_SSH_KEY || undefined,
+    name: env.ADMIN_GIT_NAME || 'Luca Leone (dashboard)',
+    email: env.ADMIN_GIT_EMAIL || 'luca@luca-leone.ch',
+  }),
+  run: runCommand,
+  isBusy: () => admin.publisher.status().state === 'running',
+  onDeployed: reloadDist,
+  // A short note by email (same SMTP account as the contact form) when a deploy fails or needs a restart
+  notify: env.SMTP_HOST
+    ? async (subject, text) => {
+        const { default: nodemailer } = await import('nodemailer');
+        const port = Number(env.SMTP_PORT || 465);
+        await nodemailer
+          .createTransport({ host: env.SMTP_HOST, port, secure: port === 465, auth: { user: env.SMTP_USER, pass: env.SMTP_PASS } })
+          .sendMail({ from: env.SMTP_FROM || env.SMTP_USER, to: env.CONTACT_TO || env.SMTP_USER, subject, text });
+      }
+    : undefined,
+  // Let the host start the app again on the new server code (only if it does: test it first)
+  exitForRestart: env.DEPLOY_RESTART === 'exit' ? () => setTimeout(() => process.exit(0), 1_000) : undefined,
 });
+const deploy = createDeployHandler(env.DEPLOY_WEBHOOK_SECRET || undefined, deployer);
 
 const server = http.createServer((req, res) => {
   for (const [name, value] of Object.entries(SECURITY_HEADERS)) res.setHeader(name, value);
@@ -239,7 +271,7 @@ const server = http.createServer((req, res) => {
   }
 
   // The admin (ADMIN_PATH) has its own addresses: none of the site's rules below apply to it
-  admin(req, res, () => site(req, res));
+  admin(req, res, () => deploy(req, res, () => site(req, res)));
 });
 
 function site(req: http.IncomingMessage, res: http.ServerResponse) {

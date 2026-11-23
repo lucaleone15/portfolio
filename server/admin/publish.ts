@@ -90,6 +90,8 @@ export function createPublisher(deps: {
   git?: Git;
   build?: () => Promise<{ ok: boolean; log: string }>;
   onPublished: () => void;
+  /** An automatic deploy is running (server/deploy.ts): both move the clone and dist/ */
+  isBlocked?: () => boolean;
 }) {
   let status: JobStatus = { state: 'idle' };
   let job: Promise<JobStatus> = Promise.resolve(status);
@@ -179,6 +181,7 @@ export function createPublisher(deps: {
   return {
     start(): JobStatus {
       if (status.state === 'running') return { ...status, error: { code: 'busy' } };
+      if (deps.isBlocked?.()) return { ...status, error: { code: 'busy' } };
       status = { state: 'running', step: deps.mode === 'git' ? 'pull' : 'check' };
       job = (deps.mode === 'git' ? runGit() : runFiles())
         .catch((err) => {

@@ -13,7 +13,7 @@ import { createMessageStore } from '../messages';
 type Env = Record<string, string | undefined>;
 
 /** The admin handler with all its API modules (content, uploads, publishing) */
-export function createAdminRoutes(env: Env, deps: AdminDeps) {
+export function createAdminRoutes(env: Env, deps: AdminDeps, opts: { isBlocked?: () => boolean } = {}) {
   const adminDir = path.join(deps.dataDir, 'admin');
   const stagingDir = path.join(adminDir, 'uploads');
   const draft = createDraftStore({ repoRoot: deps.repoRoot, dir: path.join(adminDir, 'draft') });
@@ -34,7 +34,9 @@ export function createAdminRoutes(env: Env, deps: AdminDeps) {
       return { ok: r.code === 0, log: r.stdout + r.stderr };
     },
     onPublished: deps.onPublished,
+    isBlocked: opts.isBlocked,
   });
   const routes: ApiRoute[] = [createContentRoutes(draft, stagingDir), createUploadRoutes(deps.dataDir), createPublishRoutes(publisher, draft), createStatsRoutes(deps.dataDir, draft), createMessageRoutes(createMessageStore(deps.dataDir))];
-  return createAdminHandler(env, deps, routes);
+  // The publisher too: the automatic deploy waits for it (server/deploy.ts)
+  return Object.assign(createAdminHandler(env, deps, routes), { publisher });
 }
